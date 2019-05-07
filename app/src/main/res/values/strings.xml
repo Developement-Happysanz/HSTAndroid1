@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">SkilEx-Android</string>
+    <string name="app_name">SkilEx</string>
+    <string name="empty" />
+    <string name="error_occurred">Failed to connect to the server. Please try again.</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -13,4 +15,15 @@
     <string name="menu_tools">Tools</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+
+
+    <!--Dialog Fragment-->
+    <string name="alert_button_ok">OK</string>
+    <string name="alert_button_cancel">Cancel</string>
+
+
+    <string name="mobile_number">Mobile Number</string>
+
+    <string name="google_android_map_api_key">AIzaSyD428E0W4-pf4kJuJ3rsqG5vCELRgmR2ok</string>
+
 </resources>

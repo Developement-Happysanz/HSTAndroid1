@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "185160289597",
+    "firebase_url": "https://skilex-android.firebaseio.com",
+    "project_id": "skilex-android",
+    "storage_bucket": "skilex-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185160289597:android:de38e53985322cfd",
+        "android_client_info": {
+          "package_name": "com.skilex.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "185160289597-ghgcjna19vbla5a6dt29d32sbas5fnrr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skilex.customer",
+            "certificate_hash": "d5f5f188ed8df203aa2b9b38dcb546e666af3623"
+          }
+        },
+        {
+          "client_id": "185160289597-vq491t9ncu8fjdk4m5mj0av60c4bac3b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvvXCtCxMndRDx1UkcQNiEcBO06nN8GY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "185160289597-vq491t9ncu8fjdk4m5mj0av60c4bac3b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
