@@ -23,6 +23,7 @@ import com.skilex.customer.interfaces.DialogClickListener;
 import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
+import com.skilex.customer.utils.FirstTimePreference;
 import com.skilex.customer.utils.PermissionUtil;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
@@ -62,7 +63,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edtNumber = (EditText) findViewById(R.id.edtMobileNumber);
         signIn = findViewById(R.id.sendcode);
         signIn.setOnClickListener(this);
-        requestAllPermissions();
+
+        FirstTimePreference prefFirstTime = new FirstTimePreference(getApplicationContext());
+
+        if (prefFirstTime.runTheFirstTime("FirstTimePermit")) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                requestAllPermissions();
+            }
+        }
 
     }
 
@@ -78,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         boolean requestPermission = PermissionUtil.requestAllPermissions(this);
 
-        if (requestPermission == true) {
+        if (requestPermission) {
 
             Log.i(TAG,
                     "Displaying contacts permission rationale to provide additional context.");
@@ -98,50 +106,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if (CommonUtils.haveNetworkConnection(getApplicationContext())) {
             if (v == signIn) {
-//                if (validateFields()) {
-//
-//                    String username = edtUsername.getText().toString();
-//                    String password = edtPassword.getText().toString();
-//
-//                    String GCMKey = PreferenceStorage.getGCM(getApplicationContext());
-//
-//                    JSONObject jsonObject = new JSONObject();
-//                    try {
-//                        jsonObject.put(SkilExConstants.PARAMS_USERNAME, username);
-//                        jsonObject.put(SkilExConstants.PARAMS_PASSWORD, password);
-//                        jsonObject.put(SkilExConstants.PARAMS_GCM_KEY, GCMKey);
-//                        jsonObject.put(SkilExConstants.PARAMS_MOBILE_TYPE, "1");
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-//                    String url = SkilExConstants.BUILD_URL + SkilExConstants.USER_LOGIN_API;
-//                    serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-//                }
+                if (validateFields()) {
+
+                    String number = edtNumber.getText().toString();
+                    PreferenceStorage.saveMobileNo(this, number);
+                    String GCMKey = PreferenceStorage.getGCM(getApplicationContext());
+
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put(SkilExConstants.PHONE_NUMBER, number);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+                    String url = SkilExConstants.BUILD_URL + SkilExConstants.MOBILE_VERIFICATION;
+                    serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+                }
             }
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection available");
         }
     }
 
-//    private boolean validateFields() {
-//        if (!SkilExValidator.checkNullString(this.edtUsername.getText().toString().trim())) {
-//            edtUsername.setError(getString(R.string.err_username));
-//            requestFocus(edtUsername);
-//            return false;
-//        } else if (!SkilExValidator.checkNullString(this.edtPassword.getText().toString().trim())) {
-//            edtPassword.setError(getString(R.string.err_empty_password));
-//            requestFocus(edtPassword);
-//            return false;
-//        } else if (!SkilExValidator.checkStringMinLength(4, this.edtPassword.getText().toString().trim())) {
-//            edtPassword.setError(getString(R.string.err_min_pass_length));
-//            requestFocus(edtPassword);
-//            return false;
-//        } else {
-//            return true;
-//        }
-//    }
+    private boolean validateFields() {
+        if (!SkilExValidator.checkMobileNumLength(this.edtNumber.getText().toString().trim())) {
+            edtNumber.setError(getString(R.string.error_number));
+            requestFocus(edtNumber);
+            return false;
+        }
+        if (!SkilExValidator.checkNullString(this.edtNumber.getText().toString().trim())) {
+            edtNumber.setError(getString(R.string.empty_entry));
+            requestFocus(edtNumber);
+            return false;
+        } else {
+            return true;
+        }
+    }
 
     private void requestFocus(View view) {
         if (view.requestFocus()) {
@@ -190,11 +191,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialogHelper.hideProgressDialog();
 
         if (validateSignInResponse(response)) {
-//            try {
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
+            try {
+                String userId = response.getString("user_master_id");
+                PreferenceStorage.saveUserId(this, userId);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Intent homeIntent = new Intent(getApplicationContext(), NumberVerificationActivity.class);
+            startActivity(homeIntent);
         }
     }
 
@@ -204,119 +208,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         AlertDialogHelper.showSimpleAlertDialog(this, error);
     }
 
-    private void saveUserData(JSONObject userData) {
-
-//        Log.d(TAG, "userData dictionary" + userData.toString());
-//
-//        String userId = "";
-//        String fullName = "";
-//        String userName = "";
-//        String userPicture = "";
-//        String userTypeName = "";
-//        String userType = "";
-//        String passwordStatus = "";
-//
-//        try {
-//
-//            if (userData != null) {
-//
-//                // User Preference - User Id
-//                userId = userData.getString("user_id");
-//                if ((userId != null) && !(userId.isEmpty()) && !userId.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.saveUserId(this, userId);
-//                }
-//
-//                // User Preference - User Full Name
-//                fullName = userData.getString("name");
-//                if ((fullName != null) && !(fullName.isEmpty()) && !fullName.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.saveName(this, fullName);
-//                }
-//
-//                // User Preference - User Name
-//                userName = userData.getString("user_name");
-//                if ((userName != null) && !(userName.isEmpty()) && !userName.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.saveUserName(this, userName);
-//                }
-//
-//                // User Preference - User Picture
-//                userPicture = userData.getString("user_pic");
-//                if ((userPicture != null) && !(userPicture.isEmpty()) && !userPicture.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.saveUserPicture(this, userPicture);
-//                }
-//
-//                // User Preference - User Type Name
-//                userTypeName = userData.getString("user_type_name");
-//                if ((userTypeName != null) && !(userTypeName.isEmpty()) && !userTypeName.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.saveUserTypeName(this, userTypeName);
-//                }
-//
-//                // User Preference - User Type
-//                userType = userData.getString("user_type");
-//                if ((userType != null) && !(userType.isEmpty()) && !userType.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.saveUserType(this, userType);
-//                }
-//            }
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
+    public void goToVerfication(View view) {
+        Intent homeIntent = new Intent(getApplicationContext(), NumberVerificationActivity.class);
+        startActivity(homeIntent);
     }
 
-    private void savePIAProfile(JSONObject piaProfile) {
-
-//        Log.d(TAG, "piaProfile dictionary" + piaProfile.toString());
-//
-//        String piaProfileId = "";
-//        String piaPRNNumber = "";
-//        String piaName = "";
-//        String piaAddress = "";
-//        String piaPhone = "";
-//        String piaEmail = "";
-//
-//        try {
-//
-//            if (piaProfile != null) {
-//
-//                // PIA Preference - PIA profile Id
-//                piaProfileId = piaProfile.getString("pia_profile_id");
-//                if ((piaProfileId != null) && !(piaProfileId.isEmpty()) && !piaProfileId.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.savePIAProfileId(this, piaProfileId);
-//                }
-//
-//                // PIA Preference - PIA PRN Number
-//                piaPRNNumber = piaProfile.getString("pia_unique_number");
-//                if ((piaPRNNumber != null) && !(piaPRNNumber.isEmpty()) && !piaPRNNumber.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.savePIAPRNNumber(this, piaPRNNumber);
-//                }
-//
-//                // PIA Preference - PIA Name
-//                piaName = piaProfile.getString("pia_name");
-//                if ((piaName != null) && !(piaName.isEmpty()) && !piaName.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.savePIAName(this, piaName);
-//                }
-//
-//                // PIA Preference - PIA Address
-//                piaAddress = piaProfile.getString("pia_address");
-//                if ((piaAddress != null) && !(piaAddress.isEmpty()) && !piaAddress.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.savePIAAddress(this, piaAddress);
-//                }
-//
-//                // PIA Preference - PIA Phone
-//                piaPhone = piaProfile.getString("pia_phone");
-//                if ((piaPhone != null) && !(piaPhone.isEmpty()) && !piaPhone.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.savePIAPhone(this, piaPhone);
-//                }
-//
-//                // PIA Preference - PIA PRN Number
-//                piaEmail = piaProfile.getString("pia_email");
-//                if ((piaEmail != null) && !(piaEmail.isEmpty()) && !piaEmail.equalsIgnoreCase("null")) {
-//                    PreferenceStorage.savePIAEmail(this, piaEmail);
-//                }
-//            }
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-
+    public void goToHomePage(View view) {
+        Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(homeIntent);
     }
 
 }
