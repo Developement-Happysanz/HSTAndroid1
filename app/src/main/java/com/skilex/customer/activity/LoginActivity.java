@@ -2,9 +2,12 @@ package com.skilex.customer.activity;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.skilex.customer.R;
 import com.skilex.customer.helper.AlertDialogHelper;
@@ -72,6 +76,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }
 
+        showLangAlert();
     }
 
     @Override
@@ -216,6 +221,27 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void goToHomePage(View view) {
         Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(homeIntent);
+    }
+
+    private void showLangAlert() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Language");
+        alertDialogBuilder.setMessage("Choose your prefered language");
+        alertDialogBuilder.setPositiveButton("English", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                PreferenceStorage.saveLang(getApplicationContext(),"Eng");
+                Toast.makeText(getApplicationContext(),"App language is set to English", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Tamil", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                PreferenceStorage.saveLang(getApplicationContext(),"Tam");
+                Toast.makeText(getApplicationContext(),"App language is set to Tamil", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alertDialogBuilder.show();
     }
 
 }

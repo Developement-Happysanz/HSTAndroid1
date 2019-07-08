@@ -11,15 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.skilex.customer.R;
-import com.skilex.customer.bean.support.Category;
 import com.skilex.customer.bean.support.SubCategory;
-import com.skilex.customer.utils.PreferenceStorage;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class SubCategoryListAdapter extends BaseAdapter {
+public class MainServiceListAdapter extends BaseAdapter {
 
     //    private final Transformation transformation;
     private Context context;
@@ -28,7 +26,7 @@ public class SubCategoryListAdapter extends BaseAdapter {
     private boolean mAnimateSearch = false;
     private ArrayList<Integer> mValidSearchIndices = new ArrayList<Integer>();
 
-    public SubCategoryListAdapter(Context context, ArrayList<SubCategory> subCategories) {
+    public MainServiceListAdapter(Context context, ArrayList<SubCategory> subCategories) {
         this.context = context;
         this.subCategories = subCategories;
         Collections.reverse(subCategories);
@@ -67,12 +65,12 @@ public class SubCategoryListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SubCategoryListAdapter.ViewHolder holder;
+        MainServiceListAdapter.ViewHolder holder;
         if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(R.layout.category_list_item, parent, false);
 
-            holder = new SubCategoryListAdapter.ViewHolder();
+            holder = new MainServiceListAdapter.ViewHolder();
             holder.txtCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
             holder.txtCatName.setText(subCategories.get(position).getSub_cat_name());
             holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
@@ -85,7 +83,7 @@ public class SubCategoryListAdapter extends BaseAdapter {
 //            holder.txtStatus.setText(categories.get(position).getStatus());
 //          convertView.setTag(holder);
         } else {
-            holder = (SubCategoryListAdapter.ViewHolder) convertView.getTag();
+            holder = (MainServiceListAdapter.ViewHolder) convertView.getTag();
         }
 
         if (mSearching) {

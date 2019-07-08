@@ -1,10 +1,11 @@
 package com.skilex.customer.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,10 +21,9 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.skilex.customer.R;
-import com.skilex.customer.adapter.CategoryListAdapter;
-import com.skilex.customer.adapter.SubCategoryListAdapter;
+import com.skilex.customer.adapter.MainServiceListAdapter;
+import com.skilex.customer.adapter.SubCategoryTabAdapter;
 import com.skilex.customer.bean.support.Category;
-import com.skilex.customer.bean.support.CategoryList;
 import com.skilex.customer.bean.support.SubCategory;
 import com.skilex.customer.bean.support.SubCategoryList;
 import com.skilex.customer.helper.AlertDialogHelper;
@@ -32,7 +32,6 @@ import com.skilex.customer.interfaces.DialogClickListener;
 import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
-import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
 
 import org.json.JSONArray;
@@ -52,10 +51,11 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
     int totalCount = 0, checkrun = 0;
     protected boolean isLoadingForFirstTime = true;
     ArrayList<SubCategory> categoryArrayList;
-    SubCategoryListAdapter categoryListAdapter;
+    MainServiceListAdapter categoryListAdapter;
     ListView loadMoreListView;
     Category category;
-
+    TabLayout tab;
+    ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,9 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         loadMoreListView = (ListView) findViewById(R.id.listView_sub_categories);
         loadMoreListView.setOnItemClickListener(this);
         callGetSubCategoryService();
+
+        tab = (TabLayout) findViewById(R.id.tab_layout);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
 
     }
 
@@ -187,7 +190,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
     protected void updateListAdapter(ArrayList<SubCategory> categoryArrayList) {
         this.categoryArrayList.addAll(categoryArrayList);
         if (categoryListAdapter == null) {
-            categoryListAdapter = new SubCategoryListAdapter(this, this.categoryArrayList);
+            categoryListAdapter = new MainServiceListAdapter(this, this.categoryArrayList);
             loadMoreListView.setAdapter(categoryListAdapter);
         } else {
             categoryListAdapter.notifyDataSetChanged();
@@ -306,6 +309,42 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
             }
         } catch (Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    private void initialiseTabs() {
+        for (int k = 0; k < 10; k++) {
+            tab.addTab(tab.newTab().setText("" + k));
+        }
+        SubCategoryTabAdapter adapter = new SubCategoryTabAdapter
+                (getSupportFragmentManager(), tab.getTabCount());
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(1);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
+        tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+        });
+//        tab.removeOnTabSelectedListener(TabLayout.OnTabSelectedListener);
+//Bonus Code : If your tab layout has more than 2 tabs then tab will scroll other wise they will take whole width of the screen
+        if (tab.getTabCount() == 2) {
+            tab.setTabMode(TabLayout.
+                    MODE_FIXED);
+        } else {
+            tab.setTabMode(TabLayout.
+                    MODE_SCROLLABLE);
         }
     }
 

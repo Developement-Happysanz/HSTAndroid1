@@ -62,31 +62,30 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:padding="30dp"
                     android:gravity="top"
                     android:background="@color/blue">
 
                     <ViewFlipper
+                        android:id="@+id/view_flipper"
                         android:layout_width="match_parent"
-                        android:layout_height="170dp"
+                        android:layout_height="200dp"
                         android:autoStart="true"
                         android:layout_alignParentTop="true"
-                        android:layout_marginBottom="10dp"
                         android:flipInterval="3000">
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="170dp"
+                            android:layout_height="200dp"
                             android:src="@drawable/physiotherapy_01" />
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="170dp"
+                            android:layout_height="200dp"
                             android:src="@drawable/physiotherapy_02" />
 
                         <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="170dp"
+                            android:layout_height="200dp"
                             android:src="@drawable/physiotherapy_03" />
                     </ViewFlipper>
 
@@ -99,6 +98,8 @@
                     android:background="@drawable/shadow_round"
                     android:layout_gravity="bottom"
                     android:queryHint="Search"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="50dp"/>
 

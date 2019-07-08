@@ -2,7 +2,6 @@ package com.skilex.customer.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,9 +32,7 @@ public class PreferenceListAdapter extends RecyclerView.Adapter<PreferenceListAd
     private OnItemClickListener onItemClickListener;
     private View.OnClickListener onClickListener;
     private final Transformation transformation;
-    private boolean mSearching = false;
-    private boolean mAnimateSearch = false;
-    private ArrayList<Integer> mValidSearchIndices = new ArrayList<Integer>();
+
     @Override
     public Filter getFilter() {
         return new Filter() {
@@ -182,33 +179,6 @@ public class PreferenceListAdapter extends RecyclerView.Adapter<PreferenceListAd
 
     public interface OnItemClickListener {
         public void onItemClick(View view, int position);
-    }
-
-    public void startSearch(String eventName) {
-        mSearching = true;
-        mAnimateSearch = false;
-        Log.d("EventListAdapter", "serach for event" + eventName);
-        mValidSearchIndices.clear();
-        for (int i = 0; i < categoryArrayList.size(); i++) {
-            String eventname = categoryArrayList.get(i).getCat_name();
-            if ((eventname != null) && !(eventname.isEmpty())) {
-                if (eventname.toLowerCase().contains(eventName.toLowerCase())) {
-                    mValidSearchIndices.add(i);
-                }
-            }
-        }
-        Log.d("Event List Adapter", "notify" + mValidSearchIndices.size());
-    }
-
-    public void exitSearch() {
-        mSearching = false;
-        mValidSearchIndices.clear();
-        mAnimateSearch = false;
-        // notifyDataSetChanged();
-    }
-
-    public void clearSearchFlag() {
-        mSearching = false;
     }
 
 }

@@ -13,9 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 
 import com.google.gson.Gson;
@@ -61,9 +64,9 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private GridLayoutManager mLayoutManager;
     private RecyclerView mRecyclerView;
     private SearchView searchView;
-
+    private Animation slide_in_left, slide_in_right, slide_out_left, slide_out_right;
     private View rootView;
-
+    private ViewFlipper viewFlipper;
     public static HomeFragment newInstance(int position) {
         HomeFragment frag = new HomeFragment();
         Bundle b = new Bundle();
@@ -87,8 +90,19 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         categoryArrayList = new ArrayList<>();
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.listView_categories);
 
+//      create animations
+        slide_in_left = AnimationUtils.loadAnimation(getActivity(), R.anim.in_from_left);
+        slide_in_right = AnimationUtils.loadAnimation(getActivity(), R.anim.in_from_right);
+        slide_out_left = AnimationUtils.loadAnimation(getActivity(), R.anim.out_to_left);
+        slide_out_right = AnimationUtils.loadAnimation(getActivity(), R.anim.out_to_right);
+
+        viewFlipper = rootView.findViewById(R.id.view_flipper);
+        viewFlipper.setInAnimation(slide_in_right);
+        //set the animation for the view leaving th screen
+        viewFlipper.setOutAnimation(slide_out_left);
 //        loadMoreListView = (ListView) rootView.findViewById(R.id.list_main_category);
 //        loadMoreListView.setOnItemClickListener(this);
+
         callGetClassTestService();
 
         mLayoutManager = new GridLayoutManager(getActivity(), 6);
@@ -106,16 +120,22 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         searchView = rootView.findViewById(R.id.search_cat_list);
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setIconified(false);
+            }
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                if(!query.isEmpty()){
-                    preferenceAdatper.startSearch(query);
-                }else{
-                    Toast.makeText(getActivity(), "No Match found", Toast.LENGTH_LONG).show();
-                }
+//                if (categoryArrayList.contains(query)) {
+                    preferenceAdatper.getFilter().filter(query);
+//                } else {
+//                    Toast.makeText(getActivity(), "No Match found", Toast.LENGTH_LONG).show();
+//                }
                 return false;
             }
 

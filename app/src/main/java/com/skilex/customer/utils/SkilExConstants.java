@@ -50,8 +50,11 @@ public class SkilExConstants {
     //    Shared IMEI No
     public static final String KEY_IMEI = "imei_code";
 
-    //    Shared IMEI No
+    //    Shared Phone No
     public static final String KEY_MOBILE_NUMBER = "number";
+
+    //    Shared Lang
+    public static final String KEY_LANGUAGE = "language";
 
     //    USER DATA
 

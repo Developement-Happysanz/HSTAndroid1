@@ -220,4 +220,22 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    /*To store language*/
+    public static void saveLang(Context context, String lang) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.KEY_LANGUAGE, lang);
+        editor.apply();
+    }
+
+    public static String getLang(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String mobileNo;
+        mobileNo = sharedPreferences.getString(SkilExConstants.KEY_LANGUAGE, "");
+        return mobileNo;
+    }
+    /*End*/
+
 }
