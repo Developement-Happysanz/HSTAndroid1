@@ -2,6 +2,7 @@ package com.skilex.customer.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.skilex.customer.R;
+import com.skilex.customer.bean.support.Service;
 import com.skilex.customer.bean.support.SubCategory;
 import com.squareup.picasso.Picasso;
 
@@ -21,15 +23,16 @@ public class MainServiceListAdapter extends BaseAdapter {
 
     //    private final Transformation transformation;
     private Context context;
-    private ArrayList<SubCategory> subCategories;
+    private ArrayList<Service> services;
     private boolean mSearching = false;
     private boolean mAnimateSearch = false;
+    Boolean click = false;
     private ArrayList<Integer> mValidSearchIndices = new ArrayList<Integer>();
 
-    public MainServiceListAdapter(Context context, ArrayList<SubCategory> subCategories) {
+    public MainServiceListAdapter(Context context, ArrayList<Service> services) {
         this.context = context;
-        this.subCategories = subCategories;
-        Collections.reverse(subCategories);
+        this.services = services;
+        Collections.reverse(services);
 //        transformation = new RoundedTransformationBuilder()
 //                .cornerRadiusDp(0)
 //                .oval(false)
@@ -45,16 +48,16 @@ public class MainServiceListAdapter extends BaseAdapter {
             }
             return mValidSearchIndices.size();
         } else {
-            return subCategories.size();
+            return services.size();
         }
     }
 
     @Override
     public Object getItem(int position) {
         if (mSearching) {
-            return subCategories.get(mValidSearchIndices.get(position));
+            return services.get(mValidSearchIndices.get(position));
         } else {
-            return subCategories.get(position);
+            return services.get(position);
         }
     }
 
@@ -65,19 +68,35 @@ public class MainServiceListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        MainServiceListAdapter.ViewHolder holder;
+        final MainServiceListAdapter.ViewHolder holder;
         if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(R.layout.category_list_item, parent, false);
 
             holder = new MainServiceListAdapter.ViewHolder();
             holder.txtCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
-            holder.txtCatName.setText(subCategories.get(position).getSub_cat_name());
+            holder.txtCatName.setText(services.get(position).getservice_name());
             holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
-            String url = subCategories.get(position).getSub_cat_pic_url();
+            String url = services.get(position).getservice_pic_url();
             if (((url != null) && !(url.isEmpty()))) {
                 Picasso.get().load(url).into(holder.imgCat);
             }
+            holder.addList = (ImageView) convertView.findViewById(R.id.add_to_list);
+            holder.addList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (v == holder.addList) {
+                        if (!click) {
+                            holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.green));
+                            holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
+
+                        } else {
+                            holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                            holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_control_point_black_24dp));
+                        }
+                    }
+                }
+            });
 //            holder.imgCat.setImageDrawable(subCategories.get(position).ge());
 //            holder.txtStatus = (TextView) convertView.findViewById(R.id.txt_mobilizer_status);
 //            holder.txtStatus.setText(categories.get(position).getStatus());
@@ -101,8 +120,8 @@ public class MainServiceListAdapter extends BaseAdapter {
         mAnimateSearch = false;
         Log.d("EventListAdapter", "serach for event" + eventName);
         mValidSearchIndices.clear();
-        for (int i = 0; i < subCategories.size(); i++) {
-            String homeWorkTitle = subCategories.get(i).getSub_cat_name();
+        for (int i = 0; i < services.size(); i++) {
+            String homeWorkTitle = services.get(i).getservice_name();
             if ((homeWorkTitle != null) && !(homeWorkTitle.isEmpty())) {
                 if (homeWorkTitle.toLowerCase().contains(eventName.toLowerCase())) {
                     mValidSearchIndices.add(i);
@@ -138,4 +157,5 @@ public class MainServiceListAdapter extends BaseAdapter {
             return 0;
         }
     }
+
 }

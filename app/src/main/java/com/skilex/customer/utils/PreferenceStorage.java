@@ -232,9 +232,45 @@ public class PreferenceStorage {
     public static String getLang(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        String mobileNo;
-        mobileNo = sharedPreferences.getString(SkilExConstants.KEY_LANGUAGE, "");
-        return mobileNo;
+        String lang;
+        lang = sharedPreferences.getString(SkilExConstants.KEY_LANGUAGE, "");
+        return lang;
+    }
+    /*End*/
+
+    /*To store category click*/
+    public static void saveCatClick(Context context, String cat) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.MAIN_CATEGORY_ID, cat);
+        editor.apply();
+    }
+
+    public static String getCatClick(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String catClick;
+        catClick = sharedPreferences.getString(SkilExConstants.MAIN_CATEGORY_ID, "");
+        return catClick;
+    }
+    /*End*/
+
+    /*To store click count*/
+    public static void saveClickCount(Context context, int cat) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(SkilExConstants.CAT_COUNT, cat);
+        editor.apply();
+    }
+
+    public static Integer getClickCount(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        Integer catClick;
+        catClick = sharedPreferences.getInt(SkilExConstants.MAIN_CATEGORY_ID, 0);
+        return catClick;
     }
     /*End*/
 

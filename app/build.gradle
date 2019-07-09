@@ -1,6 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    signingConfigs {
+        config {
+            keyAlias 'skilex_alias'
+            keyPassword 'skilex#123'
+            storeFile file('ensyfi.jks')
+            storePassword 'skilex#123'
+            flavorDimensions "default"
+        }
+    }
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.skilex.customer"

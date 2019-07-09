@@ -47,7 +47,7 @@ import java.util.ArrayList;
 
 import static android.util.Log.d;
 
-public class HomeFragment extends Fragment implements IServiceListener, DialogClickListener, AdapterView.OnItemClickListener, PreferenceListAdapter.OnItemClickListener {
+public class HomeFragment extends Fragment implements IServiceListener, DialogClickListener, PreferenceListAdapter.OnItemClickListener {
 
     private static final String TAG = HomeFragment.class.getName();
 
@@ -209,15 +209,15 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         return signInSuccess;
     }
 
-    protected void updateListAdapter(ArrayList<Category> categoryArrayList) {
-        this.categoryArrayList.addAll(categoryArrayList);
-        if (categoryListAdapter == null) {
-//            categoryListAdapter = new CategoryListAdapter(getActivity(), this.categoryArrayList);
-            loadMoreListView.setAdapter(categoryListAdapter);
-        } else {
-            categoryListAdapter.notifyDataSetChanged();
-        }
-    }
+//    protected void updateListAdapter(ArrayList<Category> categoryArrayList) {
+//        this.categoryArrayList.addAll(categoryArrayList);
+//        if (categoryListAdapter == null) {
+////            categoryListAdapter = new CategoryListAdapter(getActivity(), this.categoryArrayList);
+//            loadMoreListView.setAdapter(categoryListAdapter);
+//        } else {
+//            categoryListAdapter.notifyDataSetChanged();
+//        }
+//    }
 
     @Override
     public void onResponse(final JSONObject response) {
@@ -264,23 +264,6 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     @Override
     public void onError(String error) {
 
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        d(TAG, "onEvent list item click" + position);
-        Category category = null;
-        if ((categoryListAdapter != null) && (categoryListAdapter.ismSearching())) {
-            d(TAG, "while searching");
-            int actualindex = categoryListAdapter.getActualEventPos(position);
-            d(TAG, "actual index" + actualindex);
-            category = categoryArrayList.get(actualindex);
-        } else {
-            category = categoryArrayList.get(position);
-        }
-        Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
-        intent.putExtra("cat", category);
-        startActivity(intent);
     }
 
     @Override

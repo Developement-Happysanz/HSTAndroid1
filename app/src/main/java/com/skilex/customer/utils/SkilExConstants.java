@@ -85,6 +85,8 @@ public class SkilExConstants {
 
     // Category Parameters
     public static String MAIN_CATEGORY_ID = "main_cat_id";
+    public static String SUB_CATEGORY_ID = "sub_cat_id";
+    public static String CAT_COUNT = "count";
 
 
 }

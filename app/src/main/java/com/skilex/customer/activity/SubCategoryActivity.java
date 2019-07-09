@@ -32,6 +32,7 @@ import com.skilex.customer.interfaces.DialogClickListener;
 import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
+import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
 
 import org.json.JSONArray;
@@ -106,14 +107,16 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
                 SubCategoryList subCategoryList = gson.fromJson(response.toString(), SubCategoryList.class);
                 if (subCategoryList.getCategoryArrayList() != null && subCategoryList.getCategoryArrayList().size() > 0) {
                     totalCount = subCategoryList.getCount();
+                    this.categoryArrayList.addAll(subCategoryList.getCategoryArrayList());
                     isLoadingForFirstTime = false;
-                    updateListAdapter(subCategoryList.getCategoryArrayList());
+//                    updateListAdapter(subCategoryList.getCategoryArrayList());
                 } else {
                     if (categoryArrayList != null) {
                         categoryArrayList.clear();
-                        updateListAdapter(subCategoryList.getCategoryArrayList());
+//                        updateListAdapter(subCategoryList.getCategoryArrayList());
                     }
                 }
+                initialiseTabs(getData);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -148,6 +151,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         JSONObject jsonObject = new JSONObject();
         String id = "";
         id = category.getCat_id();
+        PreferenceStorage.saveCatClick(this, id);
         try {
             jsonObject.put(SkilExConstants.MAIN_CATEGORY_ID, id);
 
@@ -187,15 +191,15 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         return signInSuccess;
     }
 
-    protected void updateListAdapter(ArrayList<SubCategory> categoryArrayList) {
-        this.categoryArrayList.addAll(categoryArrayList);
-        if (categoryListAdapter == null) {
-            categoryListAdapter = new MainServiceListAdapter(this, this.categoryArrayList);
-            loadMoreListView.setAdapter(categoryListAdapter);
-        } else {
-            categoryListAdapter.notifyDataSetChanged();
-        }
-    }
+//    protected void updateListAdapter(ArrayList<SubCategory> categoryArrayList) {
+//        this.categoryArrayList.addAll(categoryArrayList);
+//        if (categoryListAdapter == null) {
+//            categoryListAdapter = new MainServiceListAdapter(this, this.categoryArrayList);
+//            loadMoreListView.setAdapter(categoryListAdapter);
+//        } else {
+//            categoryListAdapter.notifyDataSetChanged();
+//        }
+//    }
 
     private void loadMembersList(int memberCount) {
 
@@ -312,12 +316,17 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         }
     }
 
-    private void initialiseTabs() {
-        for (int k = 0; k < 10; k++) {
-            tab.addTab(tab.newTab().setText("" + k));
+    private void initialiseTabs(JSONArray subCategory) {
+
+        for (int k = 0; k < subCategory.length(); k++) {
+            try {
+                tab.addTab(tab.newTab().setText("" + subCategory.getJSONObject(k).get("sub_cat_name")));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         SubCategoryTabAdapter adapter = new SubCategoryTabAdapter
-                (getSupportFragmentManager(), tab.getTabCount());
+                (getSupportFragmentManager(), tab.getTabCount(), categoryArrayList);
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(1);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
@@ -339,7 +348,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         });
 //        tab.removeOnTabSelectedListener(TabLayout.OnTabSelectedListener);
 //Bonus Code : If your tab layout has more than 2 tabs then tab will scroll other wise they will take whole width of the screen
-        if (tab.getTabCount() == 2) {
+        if (tab.getTabCount() <= 2) {
             tab.setTabMode(TabLayout.
                     MODE_FIXED);
         } else {

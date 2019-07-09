@@ -25,7 +25,6 @@
             android:minHeight="60dp"
             android:paddingStart="13dp"
             android:paddingEnd="13dp"
-            android:visibility="invisible"
             android:src="@drawable/ic_arrow_back_white_24dp" />
 
         <TextView
@@ -36,7 +35,7 @@
             android:gravity="center_vertical|left"
             android:minHeight="60dp"
             android:padding="5dp"
-            android:text="Category"
+            android:text="Sub Category"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
