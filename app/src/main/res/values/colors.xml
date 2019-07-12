@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F6CB4</color>
-    <color name="colorPrimaryDark">#30538A</color>
+    <color name="colorPrimary">#135aa0</color>
+    <color name="colorPrimaryDark">#0D3779</color>
     <color name="colorAccent">#3C2E7D</color>
     <color name="white">#FFFFFF</color>
-    <color name="blue">#3F6CB4</color>
+    <color name="blue">#135aa0</color>
     <color name="black">#000000</color>
-    <color name="grey">#F1F2F2</color>
+    <color name="grey">#EDEEEF</color>
+    <color name="dary_grey">#939394</color>
     <color name="transparent">#00000000</color>
 
     <color name="request">#4CB7BF</color>
     <color name="ongoing">#ae84bb</color>
     <color name="history">#f0515d</color>
+    <color name="completed">#8dc63f</color>
+    <color name="Logout">#d91f26</color>
+    <color name="payment_success_bg">#E2F2F0</color>
+    <color name="payment_success_font">#3FAA84</color>
+    <color name="payment_failed_bg">#FBF2EC</color>
+    <color name="payment_failed_font">#EF4069</color>
 
-    <color name="green">#49D377</color>
+    <color name="green">#4CB748</color>
 
 
 </resources>

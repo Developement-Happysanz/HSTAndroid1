@@ -16,6 +16,9 @@ public class SkilExConstants {
     //LOGIN URL
     public static final String USER_LOGIN = "login/";
 
+    //GUEST LOGIN URL
+    public static final String GUEST_LOGIN = "guest_login/";
+
     //NUMBER VRIFICATION URL
     public static final String MOBILE_VERIFICATION = "mobile_check/";
 
@@ -37,6 +40,15 @@ public class SkilExConstants {
 
     //SERVICE URL
     public static final String SERVICE_LIST = "services_list/";
+
+    //SERVICE DETAIL URL
+    public static final String GET_SERVICE_DETAIL = "service_details/";
+
+    //SERVICE DETAIL URL
+    public static final String ADD_TO_CART = "add_service_to_cart/";
+
+    //SERVICE DETAIL URL
+    public static final String REMOVE_FROM_CART = "remove_service_to_cart/";
 
     //    Service Params
     public static String PARAM_MESSAGE = "msg";
@@ -82,11 +94,17 @@ public class SkilExConstants {
     public static String DEVICE_TOKEN = "device_token";
     public static String MOBILE_TYPE = "mobile_type";
     public static String USER_MASTER_ID = "user_master_id";
+    public static String UNIQUE_NUMBER = "unique_number";
+    public static String MOBILE_KEY = "mobile_key";
+    public static String USER_STATUS = "user_stat";
 
     // Category Parameters
     public static String MAIN_CATEGORY_ID = "main_cat_id";
     public static String SUB_CATEGORY_ID = "sub_cat_id";
     public static String CAT_COUNT = "count";
+
+    // Service Parameters
+    public static String SERVICE_ID = "service_id";
 
 
 }

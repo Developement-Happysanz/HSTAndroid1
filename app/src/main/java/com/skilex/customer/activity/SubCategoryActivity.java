@@ -99,7 +99,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
     @Override
     public void onResponse(final JSONObject response) {
         progressDialogHelper.hideProgressDialog();
-        if (validateSignInResponse(response)) {
+        if (validateResponse(response)) {
             try {
                 JSONArray getData = response.getJSONArray("sub_categories");
 //                loadMembersList(getData.length());
@@ -165,7 +165,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
     }
 
 
-    private boolean validateSignInResponse(JSONObject response) {
+    private boolean validateResponse(JSONObject response) {
         boolean signInSuccess = false;
         if ((response != null)) {
             try {

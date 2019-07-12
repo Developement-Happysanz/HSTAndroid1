@@ -237,7 +237,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private boolean validateSignInResponse(JSONObject response) {
+    private boolean validateResponse(JSONObject response) {
         boolean signInSuccess = false;
         if ((response != null)) {
             try {
@@ -267,7 +267,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
 
-        if (validateSignInResponse(response)) {
+        if (validateResponse(response)) {
             try {
                 String userId = response.getString("user_master_id");
                 PreferenceStorage.saveUserId(this, userId);

@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,7 +47,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private ProgressDialogHelper progressDialogHelper;
     private EditText edtNumber;
     private Button signIn;
-    private TextView txtForgotPsw;
+    private TextView skip;
+    String IMEINo = "", res = "";
+    private static final int PERMISSION_REQUEST_CODE = 1;
 
     private static String[] PERMISSIONS_ALL = {Manifest.permission.READ_CONTACTS,
             Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CALENDAR,
@@ -67,6 +71,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edtNumber = (EditText) findViewById(R.id.edtMobileNumber);
         signIn = findViewById(R.id.sendcode);
         signIn.setOnClickListener(this);
+        skip = findViewById(R.id.skip);
+        skip.setOnClickListener(this);
 
         FirstTimePreference prefFirstTime = new FirstTimePreference(getApplicationContext());
 
@@ -74,6 +80,30 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 requestAllPermissions();
             }
+        }
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+
+            TelephonyManager tm = (TelephonyManager)
+                    this.getSystemService(Context.TELEPHONY_SERVICE);
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                    == PackageManager.PERMISSION_DENIED) {
+
+                Log.d("permission", "permission denied to SEND_SMS - requesting it");
+                String[] permissions = {Manifest.permission.READ_PHONE_STATE};
+
+                requestPermissions(permissions, PERMISSION_REQUEST_CODE);
+            }
+            if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                IMEINo = tm.getImei(1);
+            } else {
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                        == PackageManager.PERMISSION_DENIED) {
+                    IMEINo = "";
+                } else {
+                    IMEINo = tm.getDeviceId(1);
+                }
+            }
+            PreferenceStorage.saveIMEI(this, IMEINo);
         }
 
         showLangAlert();
@@ -112,7 +142,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (CommonUtils.haveNetworkConnection(getApplicationContext())) {
             if (v == signIn) {
                 if (validateFields()) {
-
+                    res = "mob_verify";
                     String number = edtNumber.getText().toString();
                     PreferenceStorage.saveMobileNo(this, number);
                     String GCMKey = PreferenceStorage.getGCM(getApplicationContext());
@@ -128,6 +158,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     String url = SkilExConstants.BUILD_URL + SkilExConstants.MOBILE_VERIFICATION;
                     serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
                 }
+            }
+            if (v == skip) {
+                callGetSubCategoryService();
             }
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection available");
@@ -197,13 +230,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (validateSignInResponse(response)) {
             try {
-                String userId = response.getString("user_master_id");
-                PreferenceStorage.saveUserId(this, userId);
+                if (res.equalsIgnoreCase("guest_user")){
+                    Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(homeIntent);
+                } else {
+                    String userId = response.getString("user_master_id");
+                    PreferenceStorage.saveUserId(this, userId);
+                    Intent homeIntent = new Intent(getApplicationContext(), NumberVerificationActivity.class);
+                    startActivity(homeIntent);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Intent homeIntent = new Intent(getApplicationContext(), NumberVerificationActivity.class);
-            startActivity(homeIntent);
         }
     }
 
@@ -213,16 +251,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         AlertDialogHelper.showSimpleAlertDialog(this, error);
     }
 
-    public void goToVerfication(View view) {
-        Intent homeIntent = new Intent(getApplicationContext(), NumberVerificationActivity.class);
-        startActivity(homeIntent);
-    }
-
-    public void goToHomePage(View view) {
-        Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(homeIntent);
-    }
-
     private void showLangAlert() {
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Language");
@@ -230,18 +258,49 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         alertDialogBuilder.setPositiveButton("English", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-                PreferenceStorage.saveLang(getApplicationContext(),"Eng");
-                Toast.makeText(getApplicationContext(),"App language is set to English", Toast.LENGTH_SHORT).show();
+                PreferenceStorage.saveLang(getApplicationContext(), "Eng");
+                Toast.makeText(getApplicationContext(), "App language is set to English", Toast.LENGTH_SHORT).show();
             }
         });
         alertDialogBuilder.setNegativeButton("Tamil", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                PreferenceStorage.saveLang(getApplicationContext(),"Tam");
-                Toast.makeText(getApplicationContext(),"App language is set to Tamil", Toast.LENGTH_SHORT).show();
+                PreferenceStorage.saveLang(getApplicationContext(), "Tam");
+                Toast.makeText(getApplicationContext(), "App language is set to Tamil", Toast.LENGTH_SHORT).show();
             }
         });
         alertDialogBuilder.show();
+    }
+
+    public void callGetSubCategoryService() {
+//        if (classTestArrayList != null)
+//            classTestArrayList.clear();
+
+        if (CommonUtils.isNetworkAvailable(this)) {
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            loadCat();
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+        }
+    }
+
+    private void loadCat(){
+        res = "guest_user";
+        String GCMKey = PreferenceStorage.getGCM(getApplicationContext());
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.UNIQUE_NUMBER, IMEINo);
+            jsonObject.put(SkilExConstants.MOBILE_TYPE, "1");
+            jsonObject.put(SkilExConstants.MOBILE_KEY, GCMKey);
+            jsonObject.put(SkilExConstants.USER_STATUS, "Guest");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.GUEST_LOGIN;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
 }

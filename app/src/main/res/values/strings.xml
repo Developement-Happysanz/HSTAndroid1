@@ -66,6 +66,8 @@
 
     <string name="home">Home</string>
     <string name="services">Services</string>
+    <string name="category">Category</string>
+    <string name="subcategory">Sub Category</string>
 
 
     <!--Services Page-->
@@ -73,6 +75,13 @@
     <string name="req_services">Requested Services</string>
     <string name="ong_services">Ongoing Services</string>
     <string name="service_history">Service History</string>
+    <string name="service_detail">Service Detail</string>
+    <string name="service_cost">Cost after inspection. Minimum charge is</string>
+    <string name="book_now">Book Now</string>
+    <string name="inclusion">Inclusions</string>
+    <string name="exclusion">Exclusion</string>
+    <string name="procedure">Procedure</string>
+    <string name="booking">Booking summary</string>
 
     <!--Profile Settings Page-->
 

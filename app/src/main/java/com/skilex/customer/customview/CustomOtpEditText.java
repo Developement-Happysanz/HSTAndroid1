@@ -25,7 +25,7 @@ import android.widget.LinearLayout;
 import com.skilex.customer.R;
 
 public class CustomOtpEditText extends LinearLayout {
-    private EditText mOtpOneField, mOtpTwoField, mOtpThreeField, mOtpFourField, mOtpFiveField, mOtpSixField,
+    private EditText mOtpOneField, mOtpTwoField, mOtpThreeField, mOtpFourField,
             mCurrentlyFocusedEditText;
 
     public CustomOtpEditText(Context context) {
@@ -52,62 +52,59 @@ public class CustomOtpEditText extends LinearLayout {
         mOtpTwoField = (EditText) findViewById(R.id.otp_two_edit_text);
         mOtpThreeField = (EditText) findViewById(R.id.otp_three_edit_text);
         mOtpFourField = (EditText) findViewById(R.id.otp_four_edit_text);
-        mOtpFiveField = (EditText) findViewById(R.id.otp_five_edit_text);
-        mOtpSixField = (EditText) findViewById(R.id.otp_six_edit_text);
-//        styleEditTexts(styles);
+        styleEditTexts(styles);
         styles.recycle();
     }
 
     /**
      * Get an instance of the present otp
      */
-    private String makeOTP(){
-        StringBuilder stringBuilder=new StringBuilder();
+    private String makeOTP() {
+        StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append(mOtpOneField.getText().toString());
         stringBuilder.append(mOtpTwoField.getText().toString());
         stringBuilder.append(mOtpThreeField.getText().toString());
         stringBuilder.append(mOtpFourField.getText().toString());
-        stringBuilder.append(mOtpFiveField.getText().toString());
-        stringBuilder.append(mOtpSixField.getText().toString());
         return stringBuilder.toString();
     }
 
     /**
      * Checks if all four fields have been filled
+     *
      * @return length of OTP
      */
-    public boolean hasValidOTP(){
-        return makeOTP().length()==6;
+    public boolean hasValidOTP() {
+        return makeOTP().length() == 4;
     }
 
     /**
      * Returns the present otp entered by the user
+     *
      * @return OTP
      */
-    public String getOTP(){
+    public String getOTP() {
         return makeOTP();
     }
 
     /**
      * Used to set the OTP. More of cosmetic value than functional value
+     *
      * @param otp Send the four digit otp
      */
-    public void setOTP(String otp){
-        if(otp.length()!=6){
-            Log.e("OTPView","Invalid otp param");
+    public void setOTP(String otp) {
+        if (otp.length() != 4) {
+            Log.e("OTPView", "Invalid otp param");
             return;
         }
-        if(mOtpOneField.getInputType()== InputType.TYPE_CLASS_NUMBER
-                && !otp.matches("[0-9]+")){
-            Log.e("OTPView","OTP doesn't match INPUT TYPE");
+        if (mOtpOneField.getInputType() == InputType.TYPE_CLASS_NUMBER
+                && !otp.matches("[0-9]+")) {
+            Log.e("OTPView", "OTP doesn't match INPUT TYPE");
             return;
         }
         mOtpOneField.setText(otp.charAt(0));
         mOtpTwoField.setText(otp.charAt(1));
         mOtpThreeField.setText(otp.charAt(2));
         mOtpFourField.setText(otp.charAt(3));
-        mOtpFiveField.setText(otp.charAt(4));
-        mOtpSixField.setText(otp.charAt(5));
     }
 
     private void styleEditTexts(TypedArray styles) {
@@ -116,26 +113,20 @@ public class CustomOtpEditText extends LinearLayout {
                 styles.getColor(R.styleable.CustomOtpEditText_text_background_color, Color.TRANSPARENT);
         if (styles.getColor(R.styleable.CustomOtpEditText_text_background_color, Color.TRANSPARENT)
                 != Color.TRANSPARENT) {
-            mOtpOneField.setBackgroundColor(backgroundColor);
-            mOtpTwoField.setBackgroundColor(backgroundColor);
-            mOtpThreeField.setBackgroundColor(backgroundColor);
-            mOtpFourField.setBackgroundColor(backgroundColor);
-            mOtpFiveField.setBackgroundColor(backgroundColor);
-            mOtpSixField.setBackgroundColor(backgroundColor);
+//            mOtpOneField.setBackgroundColor(backgroundColor);
+//            mOtpTwoField.setBackgroundColor(backgroundColor);
+//            mOtpThreeField.setBackgroundColor(backgroundColor);
+//            mOtpFourField.setBackgroundColor(backgroundColor);
         } else {
-            mOtpOneField.getBackground().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
-            mOtpTwoField.getBackground().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
-            mOtpThreeField.getBackground().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
-            mOtpFourField.getBackground().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
-            mOtpFiveField.getBackground().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
-            mOtpSixField.getBackground().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
+//            mOtpOneField.getBackground().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
+//            mOtpTwoField.getBackground().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
+//            mOtpThreeField.getBackground().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
+//            mOtpFourField.getBackground().mutate().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
         }
         mOtpOneField.setTextColor(textColor);
         mOtpTwoField.setTextColor(textColor);
         mOtpThreeField.setTextColor(textColor);
         mOtpFourField.setTextColor(textColor);
-        mOtpFiveField.setTextColor(textColor);
-        mOtpSixField.setTextColor(textColor);
         setEditTextInputStyle(styles);
     }
 
@@ -146,16 +137,12 @@ public class CustomOtpEditText extends LinearLayout {
         mOtpTwoField.setInputType(inputType);
         mOtpThreeField.setInputType(inputType);
         mOtpFourField.setInputType(inputType);
-        mOtpFiveField.setInputType(inputType);
-        mOtpSixField.setInputType(inputType);
         String text = styles.getString(R.styleable.CustomOtpEditText_otp);
-        if (!TextUtils.isEmpty(text) && text.length() == 6) {
+        if (!TextUtils.isEmpty(text) && text.length() == 4) {
             mOtpOneField.setText(String.valueOf(text.charAt(0)));
             mOtpTwoField.setText(String.valueOf(text.charAt(1)));
             mOtpThreeField.setText(String.valueOf(text.charAt(2)));
             mOtpFourField.setText(String.valueOf(text.charAt(3)));
-            mOtpFiveField.setText(String.valueOf(text.charAt(4)));
-            mOtpSixField.setText(String.valueOf(text.charAt(5)));
         }
         setFocusListener();
         setOnTextChangeListener();
@@ -173,8 +160,6 @@ public class CustomOtpEditText extends LinearLayout {
         mOtpTwoField.setOnFocusChangeListener(onFocusChangeListener);
         mOtpThreeField.setOnFocusChangeListener(onFocusChangeListener);
         mOtpFourField.setOnFocusChangeListener(onFocusChangeListener);
-        mOtpFiveField.setOnFocusChangeListener(onFocusChangeListener);
-        mOtpSixField.setOnFocusChangeListener(onFocusChangeListener);
     }
 
     public void disableKeypad() {
@@ -194,8 +179,6 @@ public class CustomOtpEditText extends LinearLayout {
         mOtpTwoField.setOnTouchListener(touchListener);
         mOtpThreeField.setOnTouchListener(touchListener);
         mOtpFourField.setOnTouchListener(touchListener);
-        mOtpFiveField.setOnTouchListener(touchListener);
-        mOtpSixField.setOnTouchListener(touchListener);
     }
 
     public void enableKeypad() {
@@ -209,8 +192,6 @@ public class CustomOtpEditText extends LinearLayout {
         mOtpTwoField.setOnTouchListener(touchListener);
         mOtpThreeField.setOnTouchListener(touchListener);
         mOtpFourField.setOnTouchListener(touchListener);
-        mOtpFiveField.setOnTouchListener(touchListener);
-        mOtpSixField.setOnTouchListener(touchListener);
     }
 
     public EditText getCurrentFoucusedEditText() {
@@ -231,10 +212,10 @@ public class CustomOtpEditText extends LinearLayout {
             @Override
             public void afterTextChanged(Editable s) {
                 if (mCurrentlyFocusedEditText.getText().length() >= 1
-                        && mCurrentlyFocusedEditText != mOtpSixField) {
+                        && mCurrentlyFocusedEditText != mOtpFourField) {
                     mCurrentlyFocusedEditText.focusSearch(View.FOCUS_RIGHT).requestFocus();
                 } else if (mCurrentlyFocusedEditText.getText().length() >= 1
-                        && mCurrentlyFocusedEditText == mOtpSixField) {
+                        && mCurrentlyFocusedEditText == mOtpFourField) {
                     InputMethodManager imm =
                             (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                     if (imm != null) {
@@ -252,8 +233,6 @@ public class CustomOtpEditText extends LinearLayout {
         mOtpTwoField.addTextChangedListener(textWatcher);
         mOtpThreeField.addTextChangedListener(textWatcher);
         mOtpFourField.addTextChangedListener(textWatcher);
-        mOtpFiveField.addTextChangedListener(textWatcher);
-        mOtpSixField.addTextChangedListener(textWatcher);
     }
 
     public void simulateDeletePress() {

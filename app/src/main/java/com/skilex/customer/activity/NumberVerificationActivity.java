@@ -83,10 +83,12 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
                 checkVerify = "Confirm";
                 JSONObject jsonObject = new JSONObject();
                 try {
+                    jsonObject.put(SkilExConstants.KEY_USER_MASTER_ID, PreferenceStorage.getUserId(getApplicationContext()));
                     jsonObject.put(SkilExConstants.PHONE_NUMBER, PreferenceStorage.getMobileNo(getApplicationContext()));
                     jsonObject.put(SkilExConstants.OTP, code);
                     jsonObject.put(SkilExConstants.DEVICE_TOKEN, PreferenceStorage.getGCM(getApplicationContext()));
                     jsonObject.put(SkilExConstants.MOBILE_TYPE, "1");
+                    jsonObject.put(SkilExConstants.UNIQUE_NUMBER, PreferenceStorage.getIMEI(getApplicationContext()));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -189,6 +191,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
                         jsonObject.put(SkilExConstants.OTP, otpEditText.getOTP());
                         jsonObject.put(SkilExConstants.DEVICE_TOKEN, PreferenceStorage.getGCM(getApplicationContext()));
                         jsonObject.put(SkilExConstants.MOBILE_TYPE, "1");
+                        jsonObject.put(SkilExConstants.UNIQUE_NUMBER, PreferenceStorage.getIMEI(getApplicationContext()));
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -217,7 +220,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 
     }
 
-    private boolean validateSignInResponse(JSONObject response) {
+    private boolean validateResponse(JSONObject response) {
         boolean signInSuccess = false;
         if ((response != null)) {
             try {
@@ -246,7 +249,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
     @Override
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
-        if (validateSignInResponse(response)) {
+        if (validateResponse(response)) {
             try {
                 if (checkVerify.equalsIgnoreCase("Resend")) {
 
@@ -255,12 +258,14 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
                 } else if (checkVerify.equalsIgnoreCase("Confirm")) {
                     PreferenceStorage.setFirstTimeLaunch(getApplicationContext(), false);
                     database.app_info_check_insert("Y");
-                    Toast.makeText(getApplicationContext(), "Login successfully", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "Login successfully", Toast.LENGTH_SHORT).show();
                     JSONObject data = response.getJSONObject("userData");
+
                     String userId = data.getString("user_master_id");
                     String fullName = data.getString("full_name");
                     String gender = data.getString("gender");
-                    String address = data.getString("address");
+                    String mobileVerify = data.getString("mobile_verify");
+                    String phoneNo = data.getString("phone_no");
                     String profilePic = data.getString("profile_pic");
                     String email = data.getString("email");
                     String emailVerifyStatus = data.getString("email_verify");
@@ -269,7 +274,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
                     PreferenceStorage.saveUserId(getApplicationContext(), userId);
                     PreferenceStorage.saveName(getApplicationContext(), fullName);
                     PreferenceStorage.saveGender(getApplicationContext(), gender);
-                    PreferenceStorage.saveAddress(getApplicationContext(), address);
+//                    PreferenceStorage.saveAddress(getApplicationContext(), address);
                     PreferenceStorage.saveProfilePic(getApplicationContext(), profilePic);
                     PreferenceStorage.saveEmail(getApplicationContext(), email);
                     PreferenceStorage.saveEmailVerify(getApplicationContext(), emailVerifyStatus);

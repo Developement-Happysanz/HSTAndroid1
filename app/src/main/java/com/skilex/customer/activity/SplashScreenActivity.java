@@ -5,7 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.skilex.customer.R;
 import com.skilex.customer.bean.database.SQLiteHelper;
 import com.skilex.customer.utils.PreferenceStorage;
@@ -28,12 +32,20 @@ public class SplashScreenActivity extends Activity {
             @Override
             public void run() {
 
-                if (PreferenceStorage.getUserId(getApplicationContext())!= null && SkilExValidator.checkNullString(PreferenceStorage.getUserId(getApplicationContext()))) {
+                if (PreferenceStorage.getUserId(getApplicationContext()) != null && SkilExValidator.checkNullString(PreferenceStorage.getUserId(getApplicationContext()))) {
                     Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
                     startActivity(i);
                     finish();
                 } else {
                     Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                    FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(SplashScreenActivity.this, new OnSuccessListener<InstanceIdResult>() {
+                        @Override
+                        public void onSuccess(InstanceIdResult instanceIdResult) {
+                            String newToken = instanceIdResult.getToken();
+                            Log.e("newToken", newToken);
+                            PreferenceStorage.saveGCM(getApplicationContext(), newToken);
+                        }
+                    });
                     startActivity(i);
                     finish();
                 }

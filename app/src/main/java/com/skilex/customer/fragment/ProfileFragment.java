@@ -16,6 +16,7 @@ import com.skilex.customer.activity.ProfileActivity;
 import com.skilex.customer.activity.SplashScreenActivity;
 import com.skilex.customer.customview.CircleImageView;
 import com.skilex.customer.interfaces.DialogClickListener;
+import com.skilex.customer.utils.PreferenceStorage;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener, DialogClickListener {
 
@@ -92,7 +93,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, D
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         sharedPreferences.edit().clear().apply();
 //        TwitterUtil.getInstance().resetTwitterRequestToken();
-
         Intent homeIntent = new Intent(getActivity(), SplashScreenActivity.class);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(homeIntent);

@@ -256,22 +256,23 @@ public class PreferenceStorage {
     }
     /*End*/
 
-    /*To store click count*/
-    public static void saveClickCount(Context context, int cat) {
+    /*To store category click*/
+    public static void saveSubCatClick(Context context, String cat) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt(SkilExConstants.CAT_COUNT, cat);
+        editor.putString(SkilExConstants.SUB_CATEGORY_ID, cat);
         editor.apply();
     }
 
-    public static Integer getClickCount(Context context) {
+    public static String getSubCatClick(Context context) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
-        Integer catClick;
-        catClick = sharedPreferences.getInt(SkilExConstants.MAIN_CATEGORY_ID, 0);
+        String catClick;
+        catClick = sharedPreferences.getString(SkilExConstants.SUB_CATEGORY_ID, "");
         return catClick;
     }
     /*End*/
+
 
 }

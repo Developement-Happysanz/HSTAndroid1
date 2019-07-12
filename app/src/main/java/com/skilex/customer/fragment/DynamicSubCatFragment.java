@@ -1,6 +1,7 @@
 package com.skilex.customer.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.skilex.customer.R;
+import com.skilex.customer.activity.ServiceDetailActivity;
 import com.skilex.customer.activity.SubCategoryActivity;
 import com.skilex.customer.adapter.MainServiceListAdapter;
 import com.skilex.customer.bean.support.Category;
@@ -73,9 +75,11 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
 //        categories = subCategoryList.getCategoryArrayList();
 //        categories = subCategoryList.getCategoryArrayList();
         subCatId = subCategoryArrayList.get(val).getSub_cat_id();
+        PreferenceStorage.saveSubCatClick(getActivity(), subCatId);
 //        c = view.findViewById(R.id.c);
 //        c.setText("" + subCatId);
         loadMoreListView = view.findViewById(R.id.serviceList);
+        loadMoreListView.setOnItemClickListener(this);
         loadCat();
         return view;
     }
@@ -169,7 +173,20 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(TAG, "onEvent list item clicked" + position);
+        Service service = null;
+        if ((serviceListAdapter != null) && (serviceListAdapter.ismSearching())) {
+            Log.d(TAG, "while searching");
+            int actualindex = serviceListAdapter.getActualEventPos(position);
+            Log.d(TAG, "actual index" + actualindex);
+            service = serviceArrayList.get(actualindex);
+        } else {
+            service = serviceArrayList.get(position);
+        }
 
+        Intent intent = new Intent(getActivity(), ServiceDetailActivity.class);
+        intent.putExtra("serviceObj", service);
+        startActivity(intent);
     }
 
 }
