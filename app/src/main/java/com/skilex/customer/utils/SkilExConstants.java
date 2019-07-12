@@ -105,6 +105,8 @@ public class SkilExConstants {
 
     // Service Parameters
     public static String SERVICE_ID = "service_id";
+    public static String SERVICE_RATE = "service_rate";
+    public static String SERVICE_COUNT = "service_count";
 
 
 }

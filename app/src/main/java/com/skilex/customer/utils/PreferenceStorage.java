@@ -274,5 +274,41 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    /*To store category click*/
+    public static void saveRate(Context context, String rate) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.SERVICE_RATE, rate);
+        editor.apply();
+    }
+
+    public static String getRate(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String catClick;
+        catClick = sharedPreferences.getString(SkilExConstants.SERVICE_RATE, "");
+        return catClick;
+    }
+    /*End*/
+
+    /*To store category click*/
+    public static void saveServiceCount(Context context, String cat) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.SERVICE_COUNT, cat);
+        editor.apply();
+    }
+
+    public static String getServiceCount(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String catClick;
+        catClick = sharedPreferences.getString(SkilExConstants.SERVICE_COUNT, "");
+        return catClick;
+    }
+    /*End*/
+
 
 }

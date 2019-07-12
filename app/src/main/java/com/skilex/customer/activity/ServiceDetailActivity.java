@@ -1,8 +1,10 @@
 package com.skilex.customer.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -24,7 +26,7 @@ import org.json.JSONObject;
 
 import static android.util.Log.d;
 
-public class ServiceDetailActivity extends AppCompatActivity implements IServiceListener {
+public class ServiceDetailActivity extends AppCompatActivity implements IServiceListener, View.OnClickListener {
     private static final String TAG = ServiceDetailActivity.class.getName();
 
     private ServiceHelper serviceHelper;
@@ -33,6 +35,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
     private TextView serviceCost, serviceIncludes, serviceExcludes, serviceProcedure;
     private ScrollView scrollView;
     Service service;
+    Button bookNow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +52,9 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         serviceExcludes = (TextView) findViewById(R.id.exclude_text);
         serviceProcedure = (TextView) findViewById(R.id.procedure_text);
         scrollView = (ScrollView) findViewById(R.id.extras);
+        bookNow = (Button) findViewById(R.id.book_now);
+        bookNow.setOnClickListener(this);
+
         callGetSubCategoryService();
     }
 
@@ -130,5 +136,13 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
     @Override
     public void onError(String error) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == bookNow) {
+            Intent newIntent = new Intent(this, BookingSummaryAcivity.class);
+            startActivity(newIntent);
+        }
     }
 }

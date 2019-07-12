@@ -19,6 +19,7 @@ import com.skilex.customer.R;
 import com.skilex.customer.activity.SplashScreenActivity;
 import com.skilex.customer.bean.support.Service;
 import com.skilex.customer.bean.support.SubCategory;
+import com.skilex.customer.fragment.DynamicSubCatFragment;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.servicehelpers.ServiceHelper;
@@ -109,9 +110,10 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
                 public void onClick(View v) {
                     if (v == holder.addList) {
                         if (!click) {
-                            holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.green));
-                            holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
-                            checkLogin(finalPosition);
+                            if(checkLogin(finalPosition)) {
+                                holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.green));
+                                holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
+                            }
                         } else {
                             holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
                             holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_control_point_black_24dp));
@@ -193,7 +195,12 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
     public void onResponse(JSONObject response) {
         if(validateSignInResponse(response)){
             try {
-                String data = response.getString("count");
+                JSONObject data = response.getJSONObject("cart_total");
+                String rate = data.getString("total_amt");
+                String count = data.getString("service_count");
+                PreferenceStorage.saveRate(context, rate);
+                PreferenceStorage.saveServiceCount(context, count);
+//                DynamicSubCatFragment.setrates(rate , count);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -222,10 +229,12 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
         }
     }
 
-    private void checkLogin(int position) {
+    private boolean checkLogin(int position) {
         String id = PreferenceStorage.getUserId(context);
+        boolean a = false;
         if(!id.isEmpty()){
             loadCat(position);
+            a = true;
         } else {
             android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(context);
             alertDialogBuilder.setTitle("Login");
@@ -244,6 +253,7 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
             });
             alertDialogBuilder.show();
         }
+        return a;
     }
 
     private void doLogout() {

@@ -82,6 +82,10 @@
     <string name="exclusion">Exclusion</string>
     <string name="procedure">Procedure</string>
     <string name="booking">Booking summary</string>
+    <string name="service_charge">Service charge</string>
+    <string name="additional_charge">Additional charges</string>
+    <string name="grand_total">Grand total</string>
+    <string name="view_summary">View Summary</string>
 
     <!--Profile Settings Page-->
 

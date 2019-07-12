@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.skilex.customer.R;
+import com.skilex.customer.activity.BookingSummaryAcivity;
 import com.skilex.customer.activity.ServiceDetailActivity;
 import com.skilex.customer.activity.SubCategoryActivity;
 import com.skilex.customer.adapter.MainServiceListAdapter;
@@ -39,7 +40,7 @@ import java.util.ArrayList;
 
 import static android.util.Log.d;
 
-public class DynamicSubCatFragment extends Fragment implements IServiceListener, AdapterView.OnItemClickListener {
+public class DynamicSubCatFragment extends Fragment implements IServiceListener, AdapterView.OnItemClickListener, View.OnClickListener {
     Context context;
     View view;
     static ArrayList<SubCategory> subCategoryArrayList;
@@ -52,8 +53,9 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
     int totalCount = 0, checkrun = 0;
     protected boolean isLoadingForFirstTime = true;
     private ProgressDialogHelper progressDialogHelper;
-    TextView c;
+    TextView rateCount, summary;
     ListView loadMoreListView;
+    Boolean msgErr = false;
 
     public static DynamicSubCatFragment newInstance(int val, ArrayList<SubCategory> categoryArrayList) {
         DynamicSubCatFragment fragment = new DynamicSubCatFragment();
@@ -76,6 +78,9 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
 //        categories = subCategoryList.getCategoryArrayList();
         subCatId = subCategoryArrayList.get(val).getSub_cat_id();
         PreferenceStorage.saveSubCatClick(getActivity(), subCatId);
+        rateCount = (TextView) view.findViewById(R.id.service_count);
+        summary = (TextView) view.findViewById(R.id.view_summary);
+        summary.setOnClickListener(this);
 //        c = view.findViewById(R.id.c);
 //        c.setText("" + subCatId);
         loadMoreListView = view.findViewById(R.id.serviceList);
@@ -125,7 +130,10 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(getActivity(), msg);
+                        if (msg.equalsIgnoreCase("Services not found")){
+                            msgErr = true;
+                        }
+//                        AlertDialogHelper.showSimpleAlertDialog(getActivity(), msg);
 
                     } else {
                         signInSuccess = true;
@@ -162,6 +170,11 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
     }
 
     protected void updateListAdapter(ArrayList<Service> serviceArrayList) {
+        if (msgErr){
+            AlertDialogHelper.showSimpleAlertDialog(getActivity(), "No Service found");
+        } else {
+
+        }
         this.serviceArrayList.addAll(serviceArrayList);
         if (serviceListAdapter == null) {
             serviceListAdapter = new MainServiceListAdapter(getActivity(), this.serviceArrayList);
@@ -189,4 +202,18 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
         startActivity(intent);
     }
 
+    public void setrates(String rate, String count){
+        PreferenceStorage.saveRate(context,rate);
+        PreferenceStorage.saveServiceCount(context, count);
+        rateCount.setText(": " + count + " | ₹" +rate);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == summary) {
+            Intent i = new Intent(getActivity(), BookingSummaryAcivity.class);
+            startActivity(i);
+        }
+    }
 }
