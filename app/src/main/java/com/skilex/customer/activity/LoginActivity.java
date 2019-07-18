@@ -233,11 +233,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (res.equalsIgnoreCase("guest_user")){
                     Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(homeIntent);
+                    finish();
                 } else {
                     String userId = response.getString("user_master_id");
                     PreferenceStorage.saveUserId(this, userId);
                     Intent homeIntent = new Intent(getApplicationContext(), NumberVerificationActivity.class);
                     startActivity(homeIntent);
+                    finish();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -310,5 +310,23 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    /*To store category click*/
+    public static void savePurchaseStatus(Context context, boolean cat) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(SkilExConstants.SERVICE_STATUS, cat);
+        editor.apply();
+    }
+
+    public static boolean getPurchaseStatus(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        boolean catClick;
+        catClick = sharedPreferences.getBoolean(SkilExConstants.SERVICE_STATUS, false);
+        return catClick;
+    }
+    /*End*/
+
 
 }

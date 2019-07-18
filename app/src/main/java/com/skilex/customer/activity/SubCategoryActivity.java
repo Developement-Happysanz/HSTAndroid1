@@ -1,5 +1,7 @@
 package com.skilex.customer.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +28,7 @@ import com.skilex.customer.adapter.SubCategoryTabAdapter;
 import com.skilex.customer.bean.support.Category;
 import com.skilex.customer.bean.support.SubCategory;
 import com.skilex.customer.bean.support.SubCategoryList;
+import com.skilex.customer.fragment.DynamicSubCatFragment;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -40,10 +43,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.util.Log.d;
 
-public class SubCategoryActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, AdapterView.OnItemClickListener {
+public class SubCategoryActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, AdapterView.OnItemClickListener, View.OnClickListener {
     private static final String TAG = SubCategoryActivity.class.getName();
 
     private ServiceHelper serviceHelper;
@@ -57,6 +62,23 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
     Category category;
     TabLayout tab;
     ViewPager viewPager;
+    String res = "";
+    int tabPosition;
+    TextView rateCount, summary;
+
+    private Timer timer;
+    private TimerTask timerTask;
+    private Handler handler = new Handler();
+
+    //To start timer
+    public void startTimer() {
+        handler.postDelayed(new Runnable(){
+            public void run(){
+                setrates();
+                handler.postDelayed(this, 1000);
+            }
+        }, 1000);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +87,6 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
-
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,12 +94,16 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
             }
         });
 
+        rateCount = (TextView) findViewById(R.id.service_count);
+        summary = (TextView) findViewById(R.id.view_summary);
+        summary.setOnClickListener(this);
+
         categoryArrayList = new ArrayList<>();
 
         category = (Category) getIntent().getSerializableExtra("cat");
 //        loadMoreListView = (LinearLayout) findViewById(R.id.layout_member_list);
-        loadMoreListView = (ListView) findViewById(R.id.listView_sub_categories);
-        loadMoreListView.setOnItemClickListener(this);
+//        loadMoreListView = (ListView) findViewById(R.id.listView_sub_categories);
+//        loadMoreListView.setOnItemClickListener(this);
         callGetSubCategoryService();
 
         tab = (TabLayout) findViewById(R.id.tab_layout);
@@ -101,22 +126,27 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         progressDialogHelper.hideProgressDialog();
         if (validateResponse(response)) {
             try {
-                JSONArray getData = response.getJSONArray("sub_categories");
+                if (res.equalsIgnoreCase("clear")){
+                    viewPager.setCurrentItem(tabPosition);
+                } else{
+                    JSONArray getData = response.getJSONArray("sub_categories");
 //                loadMembersList(getData.length());
-                Gson gson = new Gson();
-                SubCategoryList subCategoryList = gson.fromJson(response.toString(), SubCategoryList.class);
-                if (subCategoryList.getCategoryArrayList() != null && subCategoryList.getCategoryArrayList().size() > 0) {
-                    totalCount = subCategoryList.getCount();
-                    this.categoryArrayList.addAll(subCategoryList.getCategoryArrayList());
-                    isLoadingForFirstTime = false;
+                    Gson gson = new Gson();
+                    SubCategoryList subCategoryList = gson.fromJson(response.toString(), SubCategoryList.class);
+                    if (subCategoryList.getCategoryArrayList() != null && subCategoryList.getCategoryArrayList().size() > 0) {
+                        totalCount = subCategoryList.getCount();
+                        this.categoryArrayList.addAll(subCategoryList.getCategoryArrayList());
+                        isLoadingForFirstTime = false;
 //                    updateListAdapter(subCategoryList.getCategoryArrayList());
-                } else {
-                    if (categoryArrayList != null) {
-                        categoryArrayList.clear();
+                    } else {
+                        if (categoryArrayList != null) {
+                            categoryArrayList.clear();
 //                        updateListAdapter(subCategoryList.getCategoryArrayList());
+                        }
                     }
+                    initialiseTabs(getData);
                 }
-                initialiseTabs(getData);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -317,7 +347,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
     }
 
     private void initialiseTabs(JSONArray subCategory) {
-
+        startTimer();
         for (int k = 0; k < subCategory.length(); k++) {
             try {
                 tab.addTab(tab.newTab().setText("" + subCategory.getJSONObject(k).get("sub_cat_name")));
@@ -328,12 +358,34 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         SubCategoryTabAdapter adapter = new SubCategoryTabAdapter
                 (getSupportFragmentManager(), tab.getTabCount(), categoryArrayList);
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(1);
+        viewPager.setOffscreenPageLimit(0);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
         tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+                if (!PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                } else {
+                    tabPosition = tab.getPosition();
+                    android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(SubCategoryActivity.this);
+                    alertDialogBuilder.setTitle("Cart");
+                    alertDialogBuilder.setMessage("You need to clear current items in your cart to continue.");
+                    alertDialogBuilder.setPositiveButton("Clear", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            clearCart();
+                            PreferenceStorage.savePurchaseStatus(SubCategoryActivity.this, false);
+                        }
+                    });
+                    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertDialogBuilder.show();
+                }
+
             }
 
             @Override
@@ -354,6 +406,39 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         } else {
             tab.setTabMode(TabLayout.
                     MODE_SCROLLABLE);
+        }
+    }
+
+    private void clearCart() {
+        res = "clear";
+        JSONObject jsonObject = new JSONObject();
+        String id = "";
+        id = PreferenceStorage.getUserId(getApplicationContext());
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.CLEAR_CART;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+
+    public void setrates() {
+        String rate = PreferenceStorage.getRate(this);
+        String count = PreferenceStorage.getServiceCount(this);
+
+        rateCount.setText(": " + count + " | ₹" + rate);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == summary) {
+            Intent i = new Intent(this, BookingSummaryAcivity.class);
+            startActivity(i);
         }
     }
 

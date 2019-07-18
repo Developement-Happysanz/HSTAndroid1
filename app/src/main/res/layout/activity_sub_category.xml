@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/grey"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/tool_bar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_result"
@@ -43,9 +45,10 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/tool_bar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/tool_bar"
+        android:layout_marginBottom="50dp"
         android:orientation="vertical">
 
         <android.support.design.widget.TabLayout
@@ -58,8 +61,8 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:tabGravity="center"
-            app:tabMode="scrollable"
-            app:tabIndicatorColor="@color/white" />
+            app:tabIndicatorColor="@color/white"
+            app:tabMode="scrollable" />
 
 
         <android.support.v4.view.ViewPager
@@ -70,31 +73,41 @@
 
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/listView_sub_categories"
+    <RelativeLayout
+        android:id="@+id/bot_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:divider="@color/grey"
-        android:dividerHeight="0dp"/>
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary">
 
-    <!--<ScrollView-->
-        <!--android:id="@+id/ScrollView01"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="1"-->
-        <!--android:fadeScrollbars="false"-->
-        <!--android:layout_marginLeft="2dp"-->
-        <!--android:layout_marginRight="2dp">-->
+        <TextView
+            android:id="@+id/service_count_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/services"
+            android:textColor="@color/white" />
 
+        <TextView
+            android:id="@+id/service_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/service_count_txt"
+            android:layout_toEndOf="@id/service_count_txt"
+            android:text=""
+            android:textColor="@color/white" />
 
-        <!--<LinearLayout-->
-            <!--android:id="@+id/layout_member_list"-->
-            <!--android:layout_marginBottom="20dp"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@color/blue"-->
-            <!--android:orientation="vertical" />-->
+        <TextView
+            android:id="@+id/view_summary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="10dp"
+            android:text="@string/view_summary"
+            android:textColor="@color/white" />
 
-    <!--</ScrollView>-->
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

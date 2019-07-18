@@ -48,6 +48,10 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
     private ArrayList<Integer> mValidSearchIndices = new ArrayList<Integer>();
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
+    private ArrayList<Integer> pos = new ArrayList<>();
+
+    DynamicSubCatFragment dsf = new DynamicSubCatFragment();
+
     public MainServiceListAdapter(Context context, ArrayList<Service> services) {
         this.context = context;
         this.services = services;
@@ -104,13 +108,22 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
                 Picasso.get().load(url).into(holder.imgCat);
             }
             holder.addList = (ImageView) convertView.findViewById(R.id.add_to_list);
+            if (pos.contains(position)) {
+                holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.green));
+                holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
+
+            } else {
+                holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_control_point_black_24dp));
+            }
             final int finalPosition = position;
             holder.addList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (v == holder.addList) {
-                        if (!click) {
-                            if(checkLogin(finalPosition)) {
+                        if (!pos.contains(finalPosition)) {
+                            pos.add(finalPosition);
+                            if (checkLogin(finalPosition)) {
                                 holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.green));
                                 holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
                             }
@@ -193,14 +206,15 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
 
     @Override
     public void onResponse(JSONObject response) {
-        if(validateSignInResponse(response)){
+        if (validateSignInResponse(response)) {
             try {
                 JSONObject data = response.getJSONObject("cart_total");
                 String rate = data.getString("total_amt");
                 String count = data.getString("service_count");
                 PreferenceStorage.saveRate(context, rate);
                 PreferenceStorage.saveServiceCount(context, count);
-//                DynamicSubCatFragment.setrates(rate , count);
+//                dsf.setrates(rate , count);
+                PreferenceStorage.savePurchaseStatus(context, true);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -232,7 +246,7 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
     private boolean checkLogin(int position) {
         String id = PreferenceStorage.getUserId(context);
         boolean a = false;
-        if(!id.isEmpty()){
+        if (!id.isEmpty()) {
             loadCat(position);
             a = true;
         } else {
@@ -265,7 +279,7 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
         Intent homeIntent = new Intent(context, SplashScreenActivity.class);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(homeIntent);
-        ((Activity)context).finish();
+        ((Activity) context).finish();
     }
 
     private void loadCat(int position) {
@@ -276,12 +290,14 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
         idCat = PreferenceStorage.getCatClick(context);
         String idSub = "";
         idSub = PreferenceStorage.getSubCatClick(context);
+        String id = "";
+        id = PreferenceStorage.getUserId(context);
 
         try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
             jsonObject.put(SkilExConstants.SERVICE_ID, idService);
             jsonObject.put(SkilExConstants.MAIN_CATEGORY_ID, idCat);
             jsonObject.put(SkilExConstants.SUB_CATEGORY_ID, idSub);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

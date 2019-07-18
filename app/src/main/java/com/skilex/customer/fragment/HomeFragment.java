@@ -145,6 +145,8 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                 return false;
             }
         });
+        PreferenceStorage.saveServiceCount(getActivity(), "");
+        PreferenceStorage.saveRate(getActivity(), "");
 
         return rootView;
     }

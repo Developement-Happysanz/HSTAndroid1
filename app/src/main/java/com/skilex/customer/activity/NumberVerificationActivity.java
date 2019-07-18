@@ -287,6 +287,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 ////                    homeIntent.putExtra("profile_state", "new");
                     startActivity(homeIntent);
 //                    this.finish();
+                    finish();
 
                 }
             } catch (JSONException e) {

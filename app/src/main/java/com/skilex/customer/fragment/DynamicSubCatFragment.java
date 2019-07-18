@@ -3,6 +3,7 @@ package com.skilex.customer.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -37,10 +38,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static android.util.Log.d;
 
-public class DynamicSubCatFragment extends Fragment implements IServiceListener, AdapterView.OnItemClickListener, View.OnClickListener {
+public class DynamicSubCatFragment extends Fragment implements IServiceListener, AdapterView.OnItemClickListener {
     Context context;
     View view;
     static ArrayList<SubCategory> subCategoryArrayList;
@@ -53,7 +56,6 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
     int totalCount = 0, checkrun = 0;
     protected boolean isLoadingForFirstTime = true;
     private ProgressDialogHelper progressDialogHelper;
-    TextView rateCount, summary;
     ListView loadMoreListView;
     Boolean msgErr = false;
 
@@ -65,7 +67,7 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
         subCategoryArrayList = categoryArrayList;
         return fragment;
     }
-    
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -78,9 +80,9 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
 //        categories = subCategoryList.getCategoryArrayList();
         subCatId = subCategoryArrayList.get(val).getSub_cat_id();
         PreferenceStorage.saveSubCatClick(getActivity(), subCatId);
-        rateCount = (TextView) view.findViewById(R.id.service_count);
-        summary = (TextView) view.findViewById(R.id.view_summary);
-        summary.setOnClickListener(this);
+//        rateCount = (TextView) view.findViewById(R.id.service_count);
+//        summary = (TextView) view.findViewById(R.id.view_summary);
+//        summary.setOnClickListener(this);
 //        c = view.findViewById(R.id.c);
 //        c.setText("" + subCatId);
         loadMoreListView = view.findViewById(R.id.serviceList);
@@ -130,7 +132,7 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        if (msg.equalsIgnoreCase("Services not found")){
+                        if (msg.equalsIgnoreCase("Services not found")) {
                             msgErr = true;
                         }
 //                        AlertDialogHelper.showSimpleAlertDialog(getActivity(), msg);
@@ -154,9 +156,12 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
     private void loadCat() {
         JSONObject jsonObject = new JSONObject();
         String id = "";
+        String id1 = "";
 //        id = category.getCat_id();
         id = PreferenceStorage.getCatClick(getActivity());
+        id1 = PreferenceStorage.getUserId(getActivity());
         try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id1);
             jsonObject.put(SkilExConstants.MAIN_CATEGORY_ID, id);
             jsonObject.put(SkilExConstants.SUB_CATEGORY_ID, subCatId);
 
@@ -170,11 +175,12 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
     }
 
     protected void updateListAdapter(ArrayList<Service> serviceArrayList) {
-        if (msgErr){
+        if (msgErr) {
             AlertDialogHelper.showSimpleAlertDialog(getActivity(), "No Service found");
         } else {
 
         }
+        this.serviceArrayList.clear();
         this.serviceArrayList.addAll(serviceArrayList);
         if (serviceListAdapter == null) {
             serviceListAdapter = new MainServiceListAdapter(getActivity(), this.serviceArrayList);
@@ -202,18 +208,4 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
         startActivity(intent);
     }
 
-    public void setrates(String rate, String count){
-        PreferenceStorage.saveRate(context,rate);
-        PreferenceStorage.saveServiceCount(context, count);
-        rateCount.setText(": " + count + " | ₹" +rate);
-
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v == summary) {
-            Intent i = new Intent(getActivity(), BookingSummaryAcivity.class);
-            startActivity(i);
-        }
-    }
 }

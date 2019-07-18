@@ -8,7 +8,7 @@ public class SkilExConstants {
 
     //URL'S
     //BASE URL
-    private static final String BASE_URL = "http://skilex.in/";
+    private static final String BASE_URL = "https://skilex.in/";
 
     //BUILD URL
     public static final String BUILD_URL = BASE_URL + "development/apicustomer/";
@@ -48,7 +48,19 @@ public class SkilExConstants {
     public static final String ADD_TO_CART = "add_service_to_cart/";
 
     //SERVICE DETAIL URL
+    public static final String CART_LIST = "view_cart_summary/";
+
+    //SERVICE DETAIL URL
     public static final String REMOVE_FROM_CART = "remove_service_to_cart/";
+
+    //SERVICE DETAIL URL
+    public static final String CLEAR_CART = "clear_cart/";
+
+    //SERVICE DETAIL URL
+    public static final String GET_TIME_SLOT = "view_time_slot/";
+
+    //SERVICE DETAIL URL
+    public static final String BOOK = "proceed_to_book_order/";
 
     //    Service Params
     public static String PARAM_MESSAGE = "msg";
@@ -107,6 +119,17 @@ public class SkilExConstants {
     public static String SERVICE_ID = "service_id";
     public static String SERVICE_RATE = "service_rate";
     public static String SERVICE_COUNT = "service_count";
+    public static String SERVICE_DATE = "service_date";
+    public static String SERVICE_STATUS = "sat";
+
+    // Service Parameters
+    public static String CONTACT_PERSON = "contact_person_name";
+    public static String CONTACT_PERSON_NUMBER = "contact_person_number";
+    public static String SERVICE_LATLNG = "service_latlon";
+    public static String SERVICE_LOCATION = "service_location";
+    public static String SERVICE_ADDRESS = "service_address";
+    public static String ORDER_DATE = "order_date";
+    public static String ORDER_TIMESLOT = "order_timeslot_id";
 
 
 }

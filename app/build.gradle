@@ -6,7 +6,7 @@ android {
         config {
             keyAlias 'skilex_alias'
             keyPassword 'skilex#123'
-            storeFile file('ensyfi.jks')
+            storeFile file('skilex.jks')
             storePassword 'skilex#123'
             flavorDimensions "default"
         }
@@ -21,13 +21,35 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
-
+            shrinkResources false
+            debuggable false
+            jniDebuggable false
+            zipAlignEnabled true
+            signingConfig signingConfigs.config
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dexOptions {
+        preDexLibraries = false
+        javaMaxHeapSize "4g"
+    }
+
+    afterEvaluate {
+        tasks.matching {
+            it.name.startsWith('dex')
+        }.each { dx ->
+            if (dx.additionalParameters == null) {
+                dx.additionalParameters = []
+            }
+            dx.additionalParameters += "--set-max-idx-number=55000"
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/DEPENDENCIES'
         exclude 'META-INF/LICENSE'
@@ -37,6 +59,22 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/notice.txt'
         exclude 'META-INF/ASL2.0'
+    }
+
+    android.applicationVariants.all { variant ->
+
+        variant.outputs.all { output ->
+//            output.outputFile = file("$project.buildDir/apk/MQube.apk")
+            outputFileName = "${variant.name}-${variant.versionName}.apk"
+        }
+    }
+
+    productFlavors {
+        flavor {
+        }
+    }
+    lintOptions {
+        abortOnError false
     }
 }
 
