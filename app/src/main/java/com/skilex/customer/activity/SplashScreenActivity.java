@@ -32,7 +32,7 @@ public class SplashScreenActivity extends Activity {
             @Override
             public void run() {
 
-                if (PreferenceStorage.getUserId(getApplicationContext()) != null && SkilExValidator.checkNullString(PreferenceStorage.getUserId(getApplicationContext()))) {
+                if (!PreferenceStorage.isFirstTimeLaunch(getApplicationContext()) && SkilExValidator.checkNullString(PreferenceStorage.getUserId(getApplicationContext()))) {
                     Intent i = new Intent(SplashScreenActivity.this, MainActivity.class);
                     startActivity(i);
                     finish();

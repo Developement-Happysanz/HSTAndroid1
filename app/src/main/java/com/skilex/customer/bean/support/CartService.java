@@ -38,6 +38,10 @@ public class CartService implements Serializable {
     @Expose
     private String status;
 
+    @SerializedName("size")
+    @Expose
+    private int size = 3;
+
     /**
      * @return The cart_id
      */
@@ -148,6 +152,14 @@ public class CartService implements Serializable {
      */
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
 }

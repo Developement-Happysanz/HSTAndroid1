@@ -70,23 +70,25 @@
                         android:layout_height="200dp"
                         android:autoStart="true"
                         android:layout_alignParentTop="true"
-                        android:flipInterval="3000">
+                        android:flipInterval="3000"/>
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="185dp"
-                            android:src="@drawable/banner_img_sample" />
+                        <!--<ImageView-->
+                            <!--android:id="@+id/temp"-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="185dp"-->
+                            <!--android:visibility="gone"-->
+                            <!--android:src="@drawable/banner_img_sample" />-->
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:src="@drawable/physiotherapy_02" />
+                        <!--<ImageView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="200dp"-->
+                            <!--android:src="@drawable/physiotherapy_02" />-->
 
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="200dp"
-                            android:src="@drawable/physiotherapy_03" />
-                    </ViewFlipper>
+                        <!--<ImageView-->
+                            <!--android:layout_width="match_parent"-->
+                            <!--android:layout_height="200dp"-->
+                            <!--android:src="@drawable/physiotherapy_03" />-->
+
 
                 </RelativeLayout>
 

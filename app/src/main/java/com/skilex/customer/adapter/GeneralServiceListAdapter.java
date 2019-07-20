@@ -2,11 +2,6 @@ package com.skilex.customer.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,32 +11,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.skilex.customer.R;
-import com.skilex.customer.activity.SplashScreenActivity;
 import com.skilex.customer.bean.support.CartService;
 import com.skilex.customer.bean.support.Service;
 import com.skilex.customer.fragment.DynamicSubCatFragment;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.servicehelpers.ServiceHelper;
-import com.skilex.customer.serviceinterfaces.IServiceListener;
-import com.skilex.customer.utils.PreferenceStorage;
-import com.skilex.customer.utils.SkilExConstants;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static android.util.Log.d;
-import static com.android.volley.VolleyLog.TAG;
 
 public class GeneralServiceListAdapter extends BaseAdapter{
 
     //    private final Transformation transformation;
     private Context context;
-    private ArrayList<CartService> services;
+    private ArrayList<Service> services;
     private boolean mSearching = false;
     private boolean mAnimateSearch = false;
     Boolean click = false;
@@ -51,7 +37,7 @@ public class GeneralServiceListAdapter extends BaseAdapter{
 
     DynamicSubCatFragment dsf = new DynamicSubCatFragment();
 
-    public GeneralServiceListAdapter(Context context, ArrayList<CartService> services) {
+    public GeneralServiceListAdapter(Context context, ArrayList<Service> services) {
         this.context = context;
         this.services = services;
         Collections.reverse(services);
@@ -99,7 +85,7 @@ public class GeneralServiceListAdapter extends BaseAdapter{
             holder.txtCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
             holder.txtCatName.setText(services.get(position).getservice_name());
             holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
-            String url = services.get(position).getService_picture();
+            String url = services.get(position).getservice_pic_url();
             if (((url != null) && !(url.isEmpty()))) {
                 Picasso.get().load(url).into(holder.imgCat);
             }

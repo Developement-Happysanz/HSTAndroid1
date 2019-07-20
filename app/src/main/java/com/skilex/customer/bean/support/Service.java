@@ -22,6 +22,9 @@ public class Service implements Serializable {
     @Expose
     private String service_pic_url;
 
+    @SerializedName("size")
+    @Expose
+    private int size = 3;
 
     /**
      * @return The service_id
@@ -79,4 +82,11 @@ public class Service implements Serializable {
         this.service_pic_url = service_pic_url;
     }
 
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
 }

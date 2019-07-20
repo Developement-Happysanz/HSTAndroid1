@@ -328,5 +328,23 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    /*To search*/
+    public static void setSearchFor(Context context, String ser) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.SEARCH_STATUS, ser);
+        editor.apply();
+    }
+
+    public static String getSearchFor(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String ser;
+        ser = sharedPreferences.getString(SkilExConstants.SEARCH_STATUS, "");
+        return ser;
+    }
+    /*End*/
+
 
 }

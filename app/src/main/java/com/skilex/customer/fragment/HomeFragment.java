@@ -1,6 +1,7 @@
 package com.skilex.customer.fragment;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
@@ -25,6 +27,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.skilex.customer.R;
 import com.skilex.customer.activity.MainActivity;
+import com.skilex.customer.activity.SearchResultActivity;
 import com.skilex.customer.activity.SubCategoryActivity;
 import com.skilex.customer.adapter.CategoryListAdapter;
 import com.skilex.customer.adapter.PreferenceListAdapter;
@@ -37,6 +40,7 @@ import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,7 +54,7 @@ import static android.util.Log.d;
 public class HomeFragment extends Fragment implements IServiceListener, DialogClickListener, PreferenceListAdapter.OnItemClickListener {
 
     private static final String TAG = HomeFragment.class.getName();
-
+    Context context;
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     Handler mHandler = new Handler();
@@ -67,6 +71,10 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private Animation slide_in_left, slide_in_right, slide_out_left, slide_out_right;
     private View rootView;
     private ViewFlipper viewFlipper;
+    private String res = "";
+    private ArrayList<String> imgUrl = new ArrayList<>();
+    String id = "";
+
     public static HomeFragment newInstance(int position) {
         HomeFragment frag = new HomeFragment();
         Bundle b = new Bundle();
@@ -97,13 +105,13 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         slide_out_right = AnimationUtils.loadAnimation(getActivity(), R.anim.out_to_right);
 
         viewFlipper = rootView.findViewById(R.id.view_flipper);
+
+
         viewFlipper.setInAnimation(slide_in_right);
         //set the animation for the view leaving th screen
         viewFlipper.setOutAnimation(slide_out_left);
 //        loadMoreListView = (ListView) rootView.findViewById(R.id.list_main_category);
 //        loadMoreListView.setOnItemClickListener(this);
-
-        callGetClassTestService();
 
         mLayoutManager = new GridLayoutManager(getActivity(), 6);
         mLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -132,10 +140,14 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
             public boolean onQueryTextSubmit(String query) {
 
 //                if (categoryArrayList.contains(query)) {
-                    preferenceAdatper.getFilter().filter(query);
+//                    preferenceAdatper.getFilter().filter(query);
 //                } else {
 //                    Toast.makeText(getActivity(), "No Match found", Toast.LENGTH_LONG).show();
 //                }
+                if (query != null) {
+                    makeSearch(query);
+                }
+
                 return false;
             }
 
@@ -148,7 +160,13 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         PreferenceStorage.saveServiceCount(getActivity(), "");
         PreferenceStorage.saveRate(getActivity(), "");
 
+        getBannerImg();
         return rootView;
+    }
+
+    private void makeSearch(String eventname) {
+        PreferenceStorage.setSearchFor(getActivity(), eventname);
+        startActivity(new Intent(getActivity(), SearchResultActivity.class));
     }
 
     public void initiateServices() {
@@ -159,20 +177,48 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
 
     }
 
+    public void getBannerImg() {
+        /*if(eventsListAdapter != null){
+            eventsListAdapter.clearSearchFlag();
+        }*/
+
+//        if (CommonUtils.isNetworkAvailable(getActivity())) {
+        res = "bannerImg";
+        JSONObject jsonObject = new JSONObject();
+        id = PreferenceStorage.getUserId(getActivity());
+        try {
+//            jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(getActivity()));
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_BANNER_IMAGES;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+//        } else {
+//            AlertDialogHelper.showSimpleAlertDialog(getActivity(), getString(R.string.error_no_net));
+//        }
+
+    }
+
     public void callGetClassTestService() {
 
-        if (CommonUtils.isNetworkAvailable(getActivity())) {
-            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            loadMob();
-        } else {
-            AlertDialogHelper.showSimpleAlertDialog(getActivity(), "No Network connection");
-        }
+//        if (CommonUtils.isNetworkAvailable(getActivity())) {
+//            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        loadMob();
+//        } else {
+//            AlertDialogHelper.showSimpleAlertDialog(getActivity(), "No Network connection");
+//        }
     }
 
     private void loadMob() {
+        res = "category";
         JSONObject jsonObject = new JSONObject();
-        String id = "";
-        id = PreferenceStorage.getUserId(getActivity());
+////        String id = "";
+//        id = PreferenceStorage.getUserId(getContext());
+//        id = PreferenceStorage.getUserId(getActivity());
+
         try {
             jsonObject.put(SkilExConstants.KEY_USER_MASTER_ID, id);
 
@@ -226,13 +272,26 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
             try {
-                JSONArray getData = response.getJSONArray("categories");
-                Gson gson = new Gson();
-                Type listType = new TypeToken<ArrayList<Category>>() {
-                }.getType();
-                categoryArrayList = (ArrayList<Category>) gson.fromJson(getData.toString(), listType);
-                preferenceAdatper = new PreferenceListAdapter(getActivity(), categoryArrayList, HomeFragment.this);
-                mRecyclerView.setAdapter(preferenceAdatper);
+                if (res.equalsIgnoreCase("bannerImg")) {
+                    JSONArray imgdata = response.getJSONArray("banners");
+                    for (int i = 0; i < imgdata.length(); i++) {
+                        imgUrl.add(imgdata.getJSONObject(i).getString("banner_img"));
+                    }
+                    for (int i = 0; i < imgUrl.size(); i++) {
+                        // create dynamic image view and add them to ViewFlipper
+                        setImageInFlipr(imgUrl.get(i));
+                    }
+                    loadMob();
+
+                } else if (res.equalsIgnoreCase("category")) {
+                    JSONArray getData = response.getJSONArray("categories");
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<ArrayList<Category>>() {
+                    }.getType();
+                    categoryArrayList = (ArrayList<Category>) gson.fromJson(getData.toString(), listType);
+                    preferenceAdatper = new PreferenceListAdapter(getActivity(), categoryArrayList, HomeFragment.this);
+                    mRecyclerView.setAdapter(preferenceAdatper);
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -294,4 +353,11 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         intent.putExtra("cat", category);
         startActivity(intent);
     }
+
+    private void setImageInFlipr(String imgUrl) {
+        ImageView image = new ImageView(rootView.getContext());
+        Picasso.get().load(imgUrl).into(image);
+        viewFlipper.addView(image);
+    }
+
 }

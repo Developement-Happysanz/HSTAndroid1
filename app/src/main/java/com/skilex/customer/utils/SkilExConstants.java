@@ -33,6 +33,9 @@ public class SkilExConstants {
     public static final String UPLOAD_IMAGE = "profile_pic_upload/";
 
     //CATEGORY LIST URL
+    public static final String GET_BANNER_IMAGES = "view_banner_list/";
+
+    //CATEGORY LIST URL
     public static final String GET_MAIN_CAT_LIST = "view_maincategory/";
 
     //SUB CATEGORY LIST URL
@@ -40,6 +43,9 @@ public class SkilExConstants {
 
     //SERVICE URL
     public static final String SERVICE_LIST = "services_list/";
+
+    //SERVICE URL
+    public static final String SEARCH_SERVICE_LIST = "search_service/";
 
     //SERVICE DETAIL URL
     public static final String GET_SERVICE_DETAIL = "service_details/";
@@ -123,6 +129,14 @@ public class SkilExConstants {
     public static String SERVICE_STATUS = "sat";
 
     // Service Parameters
+    public static String CART_ID = "cart_id";
+
+    // Service Parameters
+    public static String SEARCH_STATUS = "search_status";
+    public static String SEARCH_TEXT = "search_txt";
+    public static String SEARCH_TEXT_TA = "search_txt_ta";
+
+    // Booking Parameters
     public static String CONTACT_PERSON = "contact_person_name";
     public static String CONTACT_PERSON_NUMBER = "contact_person_number";
     public static String SERVICE_LATLNG = "service_latlon";

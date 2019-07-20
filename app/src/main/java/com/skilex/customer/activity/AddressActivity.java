@@ -20,6 +20,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -47,6 +48,7 @@ import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
+import com.skilex.customer.utils.SkilExValidator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -439,23 +441,68 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
             e.printStackTrace();
         }
         newDate = sdf.format(date);
-        try {
-            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
-            jsonObject.put(SkilExConstants.CONTACT_PERSON, customerName.getText().toString());
-            jsonObject.put(SkilExConstants.CONTACT_PERSON_NUMBER, customerNumber.getText().toString());
-            jsonObject.put(SkilExConstants.SERVICE_LATLNG, position);
-            jsonObject.put(SkilExConstants.SERVICE_LOCATION, addresses.get(0).getSubLocality());
-            jsonObject.put(SkilExConstants.SERVICE_ADDRESS, customerAddress.getText().toString());
-            jsonObject.put(SkilExConstants.ORDER_DATE, newDate);
-            jsonObject.put(SkilExConstants.ORDER_TIMESLOT, timeSlotId);
+        if (validateFields()) {
+            try {
+                jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+                jsonObject.put(SkilExConstants.CONTACT_PERSON, customerName.getText().toString());
+                jsonObject.put(SkilExConstants.CONTACT_PERSON_NUMBER, customerNumber.getText().toString());
+                jsonObject.put(SkilExConstants.SERVICE_LATLNG, position);
+                jsonObject.put(SkilExConstants.SERVICE_LOCATION, addresses.get(0).getSubLocality());
+                jsonObject.put(SkilExConstants.SERVICE_ADDRESS, customerAddress.getText().toString());
+                jsonObject.put(SkilExConstants.ORDER_DATE, newDate);
+                jsonObject.put(SkilExConstants.ORDER_TIMESLOT, timeSlotId);
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            String url = SkilExConstants.BUILD_URL + SkilExConstants.BOOK;
+            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
         }
 
-        String url = SkilExConstants.BUILD_URL + SkilExConstants.BOOK;
-        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
     }
+
+    private boolean validateFields() {
+        if (!SkilExValidator.checkMobileNumLength(this.customerNumber.getText().toString().trim())) {
+            customerNumber.setError(getString(R.string.error_number));
+            requestFocus(customerNumber);
+            return false;
+        }
+        if (!SkilExValidator.checkNullString(this.customerNumber.getText().toString().trim())) {
+            customerNumber.setError(getString(R.string.empty_entry));
+            requestFocus(customerNumber);
+            return false;
+        }
+        if (!SkilExValidator.checkNullString(this.customerName.getText().toString().trim())) {
+            customerName.setError(getString(R.string.empty_entry));
+            requestFocus(customerName);
+            return false;
+        }
+        if (!SkilExValidator.checkNullString(this.customerAddress.getText().toString().trim())) {
+            customerAddress.setError(getString(R.string.empty_entry));
+            requestFocus(customerAddress);
+            return false;
+        }
+        if (!SkilExValidator.checkNullString(this.serviceTimeSlot.getText().toString().trim())) {
+            serviceTimeSlot.setError(getString(R.string.empty_entry));
+            requestFocus(serviceTimeSlot);
+            return false;
+        }
+        if (!SkilExValidator.checkNullString(this.serviceDate.getText().toString().trim())) {
+            customerAddress.setError(getString(R.string.empty_entry));
+            requestFocus(customerAddress);
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
     private void showTimeSlotList() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.header_layout, null);

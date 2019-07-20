@@ -3,20 +3,20 @@ package com.skilex.customer.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.skilex.customer.R;
-import com.skilex.customer.adapter.GeneralServiceListAdapter;
-import com.skilex.customer.adapter.MainServiceListAdapter;
+import com.skilex.customer.adapter.CartServiceDeleteListAdapter;
+import com.skilex.customer.adapter.SwipeToDeleteCallback;
 import com.skilex.customer.bean.support.CartService;
-import com.skilex.customer.bean.support.CartServiceList;
-import com.skilex.customer.bean.support.Service;
-import com.skilex.customer.bean.support.ServiceList;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -30,11 +30,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static android.util.Log.d;
 
-public class BookingSummaryAcivity extends AppCompatActivity implements IServiceListener, DialogClickListener {
+public class BookingSummaryAcivity extends AppCompatActivity implements IServiceListener, DialogClickListener, CartServiceDeleteListAdapter.OnItemClickListener {
 
     private static final String TAG = BookingSummaryAcivity.class.getName();
     int totalCount = 0, checkrun = 0;
@@ -42,8 +43,10 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     ArrayList<CartService> serviceArrayList = new ArrayList<>();
-    GeneralServiceListAdapter serviceListAdapter;
-    ListView loadMoreListView;
+    CartServiceDeleteListAdapter serviceListAdapter;
+    //    ListView loadMoreListView;
+    private RecyclerView mRecyclerView;
+
     TextView advanceAmount, totalCost;
     String res = "";
     Button confrm;
@@ -76,7 +79,8 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
             }
         });
 
-        loadMoreListView = findViewById(R.id.listSumService);
+//        loadMoreListView = findViewById(R.id.listSumService);
+        mRecyclerView = findViewById(R.id.listSumService);
         advanceAmount = (TextView) findViewById(R.id.additional_cost);
         totalCost = (TextView) findViewById(R.id.total_cost);
         confrm = (Button) findViewById(R.id.confirm);
@@ -114,27 +118,32 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         progressDialogHelper.hideProgressDialog();
         if (validateResponse(response)) {
             try {
-                if (res.equalsIgnoreCase("clear")){
+                if (res.equalsIgnoreCase("clear")) {
                     Intent i = new Intent(this, BookingSummaryAcivity.class);
                     startActivity(i);
                     finish();
-                }
-                else {
+                } else {
                     JSONArray getData = response.getJSONArray("cart_list");
-//                loadMembersList(getData.length());
+//                    loadMembersList(getData.length());
                     Gson gson = new Gson();
-                    CartServiceList serviceList = gson.fromJson(response.toString(), CartServiceList.class);
-                    if (serviceList.getserviceArrayList() != null && serviceList.getserviceArrayList().size() > 0) {
-                        totalCount = serviceList.getCount();
-//                    this.categoryArrayList.addAll(subCategoryList.getCategoryArrayList());
-                        isLoadingForFirstTime = false;
-                        updateListAdapter(serviceList.getserviceArrayList());
-                    } else {
-                        if (serviceArrayList != null) {
-                            serviceArrayList.clear();
-                            updateListAdapter(serviceList.getserviceArrayList());
-                        }
-                    }
+//                    CartServiceList serviceList = gson.fromJson(response.toString(), CartServiceList.class);
+//                    if (serviceList.getserviceArrayList() != null && serviceList.getserviceArrayList().size() > 0) {
+//                        totalCount = serviceList.getCount();
+//                        this.categoryArrayList.addAll(subCategoryList.getCategoryArrayList());
+//                        isLoadingForFirstTime = false;
+//                        updateListAdapter(serviceList.getserviceArrayList());
+//                    } else {
+//                        if (serviceArrayList != null) {
+//                            serviceArrayList.clear();
+//                            updateListAdapter(serviceList.getserviceArrayList());
+//                        }
+//                    }
+                    Type listType = new TypeToken<ArrayList<CartService>>() {
+                    }.getType();
+                    serviceArrayList = (ArrayList<CartService>) gson.fromJson(getData.toString(), listType);
+                    serviceListAdapter = new CartServiceDeleteListAdapter(this, serviceArrayList, BookingSummaryAcivity.this);
+//                    mRecyclerView.setAdapter(serviceListAdapter);
+                    setUpRecyclerView();
                 }
 
             } catch (JSONException e) {
@@ -145,26 +154,26 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         }
     }
 
-    protected void updateListAdapter(ArrayList<CartService> serviceArrayList) {
-        this.serviceArrayList.clear();
-        this.serviceArrayList.addAll(serviceArrayList);
-        if (serviceListAdapter == null) {
-            serviceListAdapter = new GeneralServiceListAdapter(this, this.serviceArrayList);
-            loadMoreListView.setAdapter(serviceListAdapter);
-            advanceAmount.setText("" + serviceArrayList.get(0).getAdvance_amount());
-            ArrayList<Integer> a = new ArrayList<>();
-            for (int i = 0; i < serviceArrayList.size(); i++) {
-//                a.add(Integer.parseInt(serviceArrayList.get(i).getRate_card()));
-            }
-            int sum = 0;
-            for (Integer d : a) {
-                sum += d;
-            }
-            totalCost.setText("" + sum);
-        } else {
-            serviceListAdapter.notifyDataSetChanged();
-        }
-    }
+//    protected void updateListAdapter(ArrayList<CartService> serviceArrayList) {
+//        this.serviceArrayList.clear();
+//        this.serviceArrayList.addAll(serviceArrayList);
+//        if (serviceListAdapter == null) {
+//            serviceListAdapter = new GeneralServiceListAdapter(this, this.serviceArrayList);
+//            loadMoreListView.setAdapter(serviceListAdapter);
+//            advanceAmount.setText("" + serviceArrayList.get(0).getAdvance_amount());
+//            ArrayList<Integer> a = new ArrayList<>();
+//            for (int i = 0; i < serviceArrayList.size(); i++) {
+////                a.add(Integer.parseInt(serviceArrayList.get(i).getRate_card()));
+//            }
+//            int sum = 0;
+//            for (Integer d : a) {
+//                sum += d;
+//            }
+//            totalCost.setText("" + sum);
+//        } else {
+//            serviceListAdapter.notifyDataSetChanged();
+//        }
+//    }
 
     @Override
     public void onError(String error) {
@@ -223,4 +232,16 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
+    private void setUpRecyclerView() {
+        mRecyclerView.setAdapter(serviceListAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        ItemTouchHelper itemTouchHelper = new
+                ItemTouchHelper(new SwipeToDeleteCallback(serviceListAdapter));
+        itemTouchHelper.attachToRecyclerView(mRecyclerView);
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
+    }
 }
