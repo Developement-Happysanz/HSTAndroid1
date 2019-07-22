@@ -46,6 +46,12 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
         service = (Service) getIntent().getSerializableExtra("serviceObj");
+        findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         serviceCost = (TextView) findViewById(R.id.cost);
         serviceIncludes = (TextView) findViewById(R.id.include_text);
@@ -64,13 +70,29 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
 
         if (CommonUtils.isNetworkAvailable(this)) {
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            loadCat();
+            getServiceDetail();
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
         }
     }
 
-    private void loadCat() {
+    private void getServiceDetail() {
+        JSONObject jsonObject = new JSONObject();
+        String id = "";
+        id = service.getservice_id();
+        try {
+            jsonObject.put(SkilExConstants.SERVICE_ID, id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_SERVICE_DETAIL;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void bookService() {
         JSONObject jsonObject = new JSONObject();
         String id = "";
         id = service.getservice_id();

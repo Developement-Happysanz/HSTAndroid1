@@ -34,7 +34,7 @@
             android:minHeight="60dp"
             android:layout_toRightOf="@+id/back_btn"
             android:padding="5dp"
-            android:text="Profile"
+            android:text="@string/profile_title"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"/>

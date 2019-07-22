@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.skilex.customer.R;
 import com.skilex.customer.bean.support.Category;
 import com.skilex.customer.bean.support.SubCategory;
+import com.skilex.customer.utils.PreferenceStorage;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,6 +74,11 @@ public class CategoryListAdapter extends BaseAdapter {
 
             holder = new ViewHolder();
             holder.categoryName = (TextView) convertView.findViewById(R.id.sub_category_name);
+            if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+                holder.categoryName.setText(categories.get(position).getSub_cat_ta_name());
+            } else {
+                holder.categoryName.setText(categories.get(position).getSub_cat_name());
+            }
             holder.categoryName.setText(categories.get(position).getSub_cat_name());
             holder.categoryImage = (ImageView) convertView.findViewById(R.id.sub_category_image);
             holder.add = (ImageView) convertView.findViewById(R.id.add_to_list);

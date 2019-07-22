@@ -74,7 +74,8 @@
     <string name="services">Services</string>
     <string name="category">Category</string>
     <string name="subcategory">Sub Category</string>
-
+    <string name="search_result">Search Result</string>
+    <string name="search">Search</string>
 
     <!--Services Page-->
 
@@ -87,11 +88,17 @@
     <string name="inclusion">Inclusions</string>
     <string name="exclusion">Exclusion</string>
     <string name="procedure">Procedure</string>
+
+
+    <!--Booking Page-->
+
+    <string name="track">Tracking</string>
     <string name="booking">Booking summary</string>
     <string name="service_charge">Service charge</string>
     <string name="additional_charge">Advance amount</string>
     <string name="grand_total">Total Service Cost</string>
     <string name="view_summary">View Summary</string>
+    <string name="clear">Clear All</string>
 
     <!--Profile Settings Page-->
 

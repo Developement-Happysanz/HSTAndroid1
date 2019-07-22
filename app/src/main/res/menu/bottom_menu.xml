@@ -7,14 +7,14 @@
         android:enabled="true"
         android:icon="@drawable/ic_home"
         app:labelVisibilityMode="selected"
-        android:title="Home"
+        android:title="@string/home"
         app:showAsAction="ifRoom|withText" />
 
     <item
         android:id="@+id/action_services"
         android:enabled="true"
         android:icon="@drawable/ic_service"
-        android:title="Services"
+        android:title="@string/services"
         app:labelVisibilityMode="selected"
         app:showAsAction="ifRoom|withText" />
 
@@ -23,7 +23,7 @@
         android:enabled="true"
         android:icon="@drawable/ic_profile_black"
         app:labelVisibilityMode="selected"
-        android:title="Profile"
+        android:title="@string/profile_title"
         app:showAsAction="ifRoom|withText" />
 
 </menu>

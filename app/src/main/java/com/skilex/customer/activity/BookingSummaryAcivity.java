@@ -238,6 +238,20 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         ItemTouchHelper itemTouchHelper = new
                 ItemTouchHelper(new SwipeToDeleteCallback(serviceListAdapter));
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
+        if(serviceArrayList.get(0).getAdvance_amount().isEmpty()){
+            advanceAmount.setText("₹ 0");
+        } else {
+            advanceAmount.setText("₹ " + serviceArrayList.get(0).getAdvance_amount());
+        }
+        ArrayList<Double> a = new ArrayList<>();
+        for (int i = 0; i < serviceArrayList.size(); i++) {
+            a.add(Double.parseDouble(serviceArrayList.get(i).getRate_card()));
+        }
+        int sum = 0;
+        for (Double d : a) {
+            sum += d;
+        }
+        totalCost.setText("₹ " + sum);
     }
 
     @Override

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/shadow_round"
+        android:elevation="6dp">
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category"
+            android:textColor="@color/blue"
+            android:layout_marginStart="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sub_category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/category_name"
+            android:layout_marginStart="10dp"
+            android:text="@string/subcategory"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/service_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sub_category_name"
+            android:layout_toEndOf="@id/img_date"
+            android:layout_marginTop="5dp"
+            android:text="@string/date"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/img_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/service_date"
+            android:layout_alignBottom="@id/service_date"
+            android:layout_alignParentStart ="true"
+            android:src="@drawable/ic_date_blue" />
+
+        <TextView
+            android:id="@+id/service_time_slot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/service_date"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/img_time"
+            android:text="@string/time"
+            android:textSize="16sp" />
+
+
+        <ImageView
+            android:id="@+id/img_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/service_time_slot"
+            android:layout_alignBottom="@id/service_time_slot"
+            android:layout_alignParentStart ="true"
+            android:src="@drawable/ic_time_blue" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_requested_service"
+            android:layout_alignParentTop="true"
+            android:layout_alignBottom="@id/img_time"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@color/request"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

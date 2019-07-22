@@ -34,7 +34,7 @@
             android:gravity="center_vertical|left"
             android:minHeight="60dp"
             android:padding="5dp"
-            android:text="Tracking"
+            android:text="@string/track"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />

@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.skilex.customer.R;
 import com.skilex.customer.bean.support.Category;
+import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExValidator;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
@@ -142,7 +143,11 @@ public class PreferenceListAdapter extends RecyclerView.Adapter<PreferenceListAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mPrefTextView.setText(categoryArrayList.get(position).getCat_name());
+        if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+            holder.mPrefTextView.setText(categoryArrayList.get(position).getCat_ta_name());
+        } else {
+            holder.mPrefTextView.setText(categoryArrayList.get(position).getCat_name());
+        }
 
         //imageLoader.displayImage(events.get(position).getEventLogo(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());
         if (SkilExValidator.checkNullString(categoryArrayList.get(position).getCat_pic_url())) {

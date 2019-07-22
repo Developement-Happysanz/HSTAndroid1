@@ -101,6 +101,11 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
 
             holder = new MainServiceListAdapter.ViewHolder();
             holder.txtCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
+            if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+                holder.txtCatName.setText(services.get(position).getservice_ta_name());
+            } else {
+                holder.txtCatName.setText(services.get(position).getservice_name());
+            }
             holder.txtCatName.setText(services.get(position).getservice_name());
             holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
             String url = services.get(position).getservice_pic_url();

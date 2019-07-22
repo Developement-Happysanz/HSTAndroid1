@@ -64,7 +64,8 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
     ViewPager viewPager;
     String res = "";
     int tabPosition;
-    TextView rateCount, summary;
+    private TextView rateCount, summary;
+    private RelativeLayout summaryLayout;
 
     private Timer timer;
     private TimerTask timerTask;
@@ -72,8 +73,8 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
 
     //To start timer
     public void startTimer() {
-        handler.postDelayed(new Runnable(){
-            public void run(){
+        handler.postDelayed(new Runnable() {
+            public void run() {
                 setrates();
                 handler.postDelayed(this, 1000);
             }
@@ -95,8 +96,11 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         });
 
         rateCount = (TextView) findViewById(R.id.service_count);
+
         summary = (TextView) findViewById(R.id.view_summary);
         summary.setOnClickListener(this);
+
+        summaryLayout = (RelativeLayout) findViewById(R.id.bot_layout);
 
         categoryArrayList = new ArrayList<>();
 
@@ -126,9 +130,11 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         progressDialogHelper.hideProgressDialog();
         if (validateResponse(response)) {
             try {
-                if (res.equalsIgnoreCase("clear")){
+                if (res.equalsIgnoreCase("clear")) {
                     viewPager.setCurrentItem(tabPosition);
-                } else{
+                    PreferenceStorage.saveServiceCount(this,"");
+                    PreferenceStorage.saveRate(this,"");
+                } else {
                     JSONArray getData = response.getJSONArray("sub_categories");
 //                loadMembersList(getData.length());
                     Gson gson = new Gson();
@@ -350,7 +356,11 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         startTimer();
         for (int k = 0; k < subCategory.length(); k++) {
             try {
-                tab.addTab(tab.newTab().setText("" + subCategory.getJSONObject(k).get("sub_cat_name")));
+                if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                    tab.addTab(tab.newTab().setText("" + subCategory.getJSONObject(k).get("sub_cat_ta_name")));
+                } else {
+                    tab.addTab(tab.newTab().setText("" + subCategory.getJSONObject(k).get("sub_cat_name")));
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -432,6 +442,11 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         String count = PreferenceStorage.getServiceCount(this);
 
         rateCount.setText(": " + count + " | ₹" + rate);
+        if (count.isEmpty()) {
+            summaryLayout.setVisibility(View.GONE);
+        } else {
+            summaryLayout.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

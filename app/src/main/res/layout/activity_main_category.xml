@@ -36,7 +36,7 @@
             android:gravity="center_vertical|left"
             android:minHeight="60dp"
             android:padding="5dp"
-            android:text="Category"
+            android:text="@string/category"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/shadow_round"
                     android:layout_gravity="bottom"
-                    android:queryHint="Search"
+                    android:queryHint="@string/search"
                     android:clickable="true"
                     android:focusable="true"
                     android:layout_marginLeft="50dp"

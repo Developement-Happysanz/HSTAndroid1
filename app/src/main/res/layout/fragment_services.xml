@@ -31,11 +31,11 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/back_btn"
             android:gravity="center_vertical|left"
             android:minHeight="60dp"
             android:padding="5dp"
-            android:layout_marginLeft="10dp"
             android:text="@string/services"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -67,99 +67,111 @@
 
     </RelativeLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="1dp"
         android:background="@color/white"
-        android:clipToPadding="false"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/req_service_layout"
             android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_margin="20dp"
-            android:gravity="center_vertical"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
             android:clipToPadding="false"
-            android:background="@drawable/button_requested_services"
-            android:elevation="12dp">
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/button_requested_services_filled"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:src="@drawable/ic_requested_service"/>
-
-            <TextView
+            <LinearLayout
+                android:id="@+id/req_service_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/req_services"
-                android:textSize="20sp" />
+                android:layout_height="75dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_requested_services"
+                android:clipToPadding="false"
+                android:elevation="12dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/button_requested_services_filled"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_requested_service" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/req_services"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ong_service_layout"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_ongoing_services"
+                android:elevation="12dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/button_ongoing_services_filled"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_ongoing_service" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/ong_services"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/service_history_layout"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_services_history"
+                android:elevation="12dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:background="@drawable/button_services_history_filled"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_service_history" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/service_history"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ong_service_layout"
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_margin="20dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/button_ongoing_services"
-            android:elevation="12dp">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/button_ongoing_services_filled"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:src="@drawable/ic_ongoing_service"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/ong_services"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/service_history_layout"
-            android:layout_width="match_parent"
-            android:layout_height="75dp"
-            android:layout_margin="20dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            android:background="@drawable/button_services_history"
-            android:elevation="12dp">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/button_services_history_filled"
-                android:layout_gravity="center"
-                android:padding="10dp"
-                android:src="@drawable/ic_service_history"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/service_history"
-                android:textSize="20sp" />
-
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

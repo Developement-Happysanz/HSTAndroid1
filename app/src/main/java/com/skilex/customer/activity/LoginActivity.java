@@ -30,6 +30,7 @@ import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
 import com.skilex.customer.utils.FirstTimePreference;
+import com.skilex.customer.utils.LocaleHelper;
 import com.skilex.customer.utils.PermissionUtil;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
@@ -106,7 +107,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             PreferenceStorage.saveIMEI(this, IMEINo);
         }
 
-        showLangAlert();
+        if (PreferenceStorage.getLang(this).isEmpty()){
+            showLangAlert();
+        }
     }
 
     @Override
@@ -260,15 +263,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         alertDialogBuilder.setPositiveButton("English", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
-                PreferenceStorage.saveLang(getApplicationContext(), "Eng");
+                PreferenceStorage.saveLang(getApplicationContext(), "eng");
                 Toast.makeText(getApplicationContext(), "App language is set to English", Toast.LENGTH_SHORT).show();
+                LocaleHelper.setLocale(LoginActivity.this, "en");
+//                LocaleHelper.setLocale(LoginActivity.this, "");
+
+                //It is required to recreate the activity to reflect the change in UI.
+                recreate();
             }
         });
         alertDialogBuilder.setNegativeButton("Tamil", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                PreferenceStorage.saveLang(getApplicationContext(), "Tam");
+                PreferenceStorage.saveLang(getApplicationContext(), "tamil");
                 Toast.makeText(getApplicationContext(), "App language is set to Tamil", Toast.LENGTH_SHORT).show();
+                LocaleHelper.setLocale(LoginActivity.this, "ta");
+
+                //It is required to recreate the activity to reflect the change in UI.
+                recreate();
             }
         });
         alertDialogBuilder.show();

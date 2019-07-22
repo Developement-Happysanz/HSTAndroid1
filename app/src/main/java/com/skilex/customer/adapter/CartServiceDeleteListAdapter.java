@@ -1,6 +1,7 @@
 package com.skilex.customer.adapter;
 
 import android.content.Context;
+import android.preference.PreferenceScreen;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.skilex.customer.bean.support.CartService;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
+import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
 import com.skilex.customer.utils.SkilExValidator;
 import com.squareup.picasso.Picasso;
@@ -137,7 +139,11 @@ public class CartServiceDeleteListAdapter extends RecyclerView.Adapter<CartServi
     public void onBindViewHolder(CartServiceDeleteListAdapter.ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_name());
+        if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+            holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_ta_name());
+        } else {
+            holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_name());
+        }
 
         //imageLoader.displayImage(events.get(position).getEventLogo(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());
         if (SkilExValidator.checkNullString(categoryArrayList.get(position).getService_picture())) {

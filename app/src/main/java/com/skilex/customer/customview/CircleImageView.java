@@ -30,9 +30,9 @@ public class CircleImageView extends AppCompatImageView {
     private static final Bitmap.Config BITMAP_CONFIG = Bitmap.Config.ARGB_8888;
     private static final int COLORDRAWABLE_DIMENSION = 2;
 
-    private static final int DEFAULT_BORDER_WIDTH = 8;
-    private static final int DEFAULT_BORDER_COLOR = Color.BLACK;
-    private static final int DEFAULT_FILL_COLOR = Color.BLACK;
+    private static final int DEFAULT_BORDER_WIDTH = 1;
+    private static final int DEFAULT_BORDER_COLOR = R.color.colorPrimary;
+    private static final int DEFAULT_FILL_COLOR = R.color.colorPrimary;
     private static final boolean DEFAULT_BORDER_OVERLAY = false;
 
     private final RectF mDrawableRect = new RectF();
