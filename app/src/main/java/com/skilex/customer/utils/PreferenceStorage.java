@@ -347,4 +347,23 @@ public class PreferenceStorage {
     /*End*/
 
 
+    /*To store order id*/
+    public static void saveOrderId(Context context, String orderId) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.ORDER_ID, orderId);
+        editor.apply();
+    }
+
+    public static String getOrderId(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String orderId;
+        orderId = sharedPreferences.getString(SkilExConstants.ORDER_ID, "");
+        return orderId;
+    }
+    /*End*/
+
+
 }

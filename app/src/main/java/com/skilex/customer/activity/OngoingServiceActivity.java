@@ -7,12 +7,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.skilex.customer.R;
 import com.skilex.customer.adapter.OngoingServiceListAdapter;
+import com.skilex.customer.bean.support.Category;
 import com.skilex.customer.bean.support.OngoingService;
 import com.skilex.customer.bean.support.OngoingServiceList;
+import com.skilex.customer.bean.support.Service;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -30,8 +33,8 @@ import java.util.ArrayList;
 
 import static android.util.Log.d;
 
-public class RequestedServicesActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, AdapterView.OnItemClickListener {
-    private static final String TAG = RequestedServicesActivity.class.getName();
+public class OngoingServiceActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, AdapterView.OnItemClickListener {
+    private static final String TAG = OngoingServiceActivity.class.getName();
 
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
@@ -44,7 +47,7 @@ public class RequestedServicesActivity extends AppCompatActivity implements ISer
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_requested_services);
+        setContentView(R.layout.activity_ongoing_services);
 
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
@@ -57,7 +60,7 @@ public class RequestedServicesActivity extends AppCompatActivity implements ISer
             }
         });
 
-        loadMoreListView = findViewById(R.id.req_service_list);
+        loadMoreListView = findViewById(R.id.ong_service_list);
         loadMoreListView.setOnItemClickListener(this);
 
         callGetSubCategoryService();
@@ -67,13 +70,13 @@ public class RequestedServicesActivity extends AppCompatActivity implements ISer
     public void callGetSubCategoryService() {
         if (CommonUtils.isNetworkAvailable(this)) {
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            loadReqService();
+            loadOnGoService();
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
         }
     }
 
-    private void loadReqService() {
+    private void loadOnGoService() {
         JSONObject jsonObject = new JSONObject();
         String id = "";
         id = PreferenceStorage.getUserId(this);
@@ -85,7 +88,7 @@ public class RequestedServicesActivity extends AppCompatActivity implements ISer
         }
 
 //        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-        String url = SkilExConstants.BUILD_URL + SkilExConstants.REQUESTED_SERVICES;
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.ONGOING_SERVICES;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
@@ -102,7 +105,7 @@ public class RequestedServicesActivity extends AppCompatActivity implements ISer
             service = ongoingServiceArrayList.get(position);
         }
 
-        Intent intent = new Intent(this, RequestedServicesDetailActivity.class);
+        Intent intent = new Intent(this, OngoingServiceDetailActivity.class);
         intent.putExtra("serviceObj", service);
         startActivity(intent);
     }
@@ -170,8 +173,8 @@ public class RequestedServicesActivity extends AppCompatActivity implements ISer
     }
 
     protected void updateListAdapter(ArrayList<OngoingService> ongoingServiceArrayLists) {
-        ongoingServiceArrayList.clear();
-        ongoingServiceArrayList.addAll(ongoingServiceArrayLists);
+       ongoingServiceArrayList.clear();
+       ongoingServiceArrayList.addAll(ongoingServiceArrayLists);
         if (ongoingServiceListAdapter == null) {
             ongoingServiceListAdapter = new OngoingServiceListAdapter(this, ongoingServiceArrayList);
             loadMoreListView.setAdapter(ongoingServiceListAdapter);

@@ -74,6 +74,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private String res = "";
     private ArrayList<String> imgUrl = new ArrayList<>();
     String id = "";
+    Intent intent;
 
     public static HomeFragment newInstance(int position) {
         HomeFragment frag = new HomeFragment();
@@ -291,6 +292,11 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                     categoryArrayList = (ArrayList<Category>) gson.fromJson(getData.toString(), listType);
                     preferenceAdatper = new PreferenceListAdapter(getActivity(), categoryArrayList, HomeFragment.this);
                     mRecyclerView.setAdapter(preferenceAdatper);
+                } else if (res.equalsIgnoreCase("clear")) {
+                    PreferenceStorage.saveServiceCount(rootView.getContext(), "");
+                    PreferenceStorage.saveRate(rootView.getContext(), "");
+                    PreferenceStorage.savePurchaseStatus(rootView.getContext(), false);
+                    startActivity(intent);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -349,15 +355,31 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         } else {
             category = categoryArrayList.get(position);
         }
-        Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+        intent = new Intent(getActivity(), SubCategoryActivity.class);
         intent.putExtra("cat", category);
-        startActivity(intent);
+        clearCart();
+
     }
 
     private void setImageInFlipr(String imgUrl) {
         ImageView image = new ImageView(rootView.getContext());
         Picasso.get().load(imgUrl).into(image);
         viewFlipper.addView(image);
+    }
+
+    private void clearCart() {
+        res = "clear";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.CLEAR_CART;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
 }

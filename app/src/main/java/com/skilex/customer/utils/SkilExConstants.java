@@ -66,7 +66,31 @@ public class SkilExConstants {
     public static final String GET_TIME_SLOT = "view_time_slot/";
 
     //SERVICE DETAIL URL
-    public static final String BOOK = "proceed_to_book_order/";
+    public static final String PROCEED_TO_BOOK = "proceed_to_book_order/";
+
+    //SERVICE DETAIL URL
+    public static final String ONGOING_SERVICES = "ongoing_services/";
+
+    //SERVICE DETAIL URL
+    public static final String REQUESTED_SERVICES = "requested_services/";
+
+    //SERVICE DETAIL URL
+    public static final String HISTORY_SERVICES = "ongoing_services/";
+
+    //SERVICE DETAIL URL
+    public static final String ONGOING_SERVICE_DETAILS = "service_order_details/";
+
+    //SERVICE DETAIL URL
+    public static final String SERVICE_ALLOCATION = "service_provider_allocation/";
+
+    //SERVICE DETAIL URL
+    public static final String SERVICE_ORDER_SUMMARY = "service_order_summary/";
+
+    //SERVICE DETAIL URL
+    public static final String COUPON_LIST = "service_coupon_list/";
+
+    //SERVICE DETAIL URL
+    public static final String APPLY_COUPON = "apply_coupon_to_service/";
 
     //    Service Params
     public static String PARAM_MESSAGE = "msg";
@@ -118,11 +142,14 @@ public class SkilExConstants {
 
     // Category Parameters
     public static String MAIN_CATEGORY_ID = "main_cat_id";
+    public static String CATEGORY_ID = "category_id";
     public static String SUB_CATEGORY_ID = "sub_cat_id";
+    public static String SUB_CAT_ID = "sub_category_id";
     public static String CAT_COUNT = "count";
 
     // Service Parameters
     public static String SERVICE_ID = "service_id";
+    public static String SERVICE_ORDER_ID = "service_order_id";
     public static String SERVICE_RATE = "service_rate";
     public static String SERVICE_COUNT = "service_count";
     public static String SERVICE_DATE = "service_date";
@@ -130,6 +157,10 @@ public class SkilExConstants {
 
     // Service Parameters
     public static String CART_ID = "cart_id";
+
+    // Order Parameters
+    public static String ORDER_ID = "cart_id";
+    public static String TIME_INTERVAL = "display_minute";
 
     // Service Parameters
     public static String SEARCH_STATUS = "search_status";

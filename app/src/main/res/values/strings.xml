@@ -89,6 +89,11 @@
     <string name="exclusion">Exclusion</string>
     <string name="procedure">Procedure</string>
 
+    <!--Ongoing Page-->
+    <string name="about_service_person">About Service Person</string>
+    <string name="service_provider">Service Provider</string>
+    <string name="service_starting_time">Service starting time</string>
+    <string name="service_approximate">Estimated cost</string>
 
     <!--Booking Page-->
 

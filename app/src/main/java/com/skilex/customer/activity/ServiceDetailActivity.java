@@ -36,6 +36,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
     private ScrollView scrollView;
     Service service;
     Button bookNow;
+    String res = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
     }
 
     private void getServiceDetail() {
+        res = "detail";
         JSONObject jsonObject = new JSONObject();
         String id = "";
         id = service.getservice_id();
@@ -93,6 +95,8 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
     }
 
     private void bookService() {
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        res = "cart";
         JSONObject jsonObject = new JSONObject();
         String id = "";
         id = service.getservice_id();
@@ -104,7 +108,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         }
 
 //        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-        String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_SERVICE_DETAIL;
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.ADD_TO_CART;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
@@ -139,14 +143,19 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         progressDialogHelper.hideProgressDialog();
         if (validateResponse(response)) {
             try {
-                JSONObject data = response.getJSONObject("service_details");
-                serviceCost.setText("₹"+data.getString("rate_card"));
-                if (!data.getString("inclusions").isEmpty() ||
-                        !data.getString("exclusions").isEmpty() || !data.getString("service_procedure").isEmpty()) {
-                    serviceIncludes.setText(data.getString("inclusions"));
-                    serviceExcludes.setText(data.getString("exclusions"));
-                    serviceProcedure.setText(data.getString("service_procedure"));
-                    scrollView.setVisibility(View.VISIBLE);
+                if (res.equalsIgnoreCase("details")) {
+                    JSONObject data = response.getJSONObject("service_details");
+                    serviceCost.setText("₹" + data.getString("rate_card"));
+                    if (!data.getString("inclusions").isEmpty() ||
+                            !data.getString("exclusions").isEmpty() || !data.getString("service_procedure").isEmpty()) {
+                        serviceIncludes.setText(data.getString("inclusions"));
+                        serviceExcludes.setText(data.getString("exclusions"));
+                        serviceProcedure.setText(data.getString("service_procedure"));
+                        scrollView.setVisibility(View.VISIBLE);
+                    }
+                } else if (res.equalsIgnoreCase("cart")) {
+                    Intent newIntent = new Intent(this, BookingSummaryAcivity.class);
+                    startActivity(newIntent);
                 }
 
             } catch (JSONException e) {
@@ -163,8 +172,8 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
     @Override
     public void onClick(View v) {
         if (v == bookNow) {
-            Intent newIntent = new Intent(this, BookingSummaryAcivity.class);
-            startActivity(newIntent);
+            bookService();
+
         }
     }
 }

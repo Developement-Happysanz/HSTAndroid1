@@ -33,7 +33,7 @@
             android:gravity="center_vertical|left"
             android:minHeight="60dp"
             android:padding="5dp"
-            android:text="@string/req_services"
+            android:text="@string/service_history"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -41,7 +41,7 @@
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/req_service_list"
+        android:id="@+id/ong_service_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:dividerHeight="0dp"/>

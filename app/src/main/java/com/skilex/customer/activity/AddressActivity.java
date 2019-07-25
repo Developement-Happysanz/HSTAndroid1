@@ -1,6 +1,7 @@
 package com.skilex.customer.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -162,7 +163,7 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
 
             @Override
             public void onClick(View v) {
-                sendVals();
+                setVals();
             }
         });
     }
@@ -404,8 +405,18 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
                     };
 
 
-                } else {
-
+                } else if (res.equalsIgnoreCase("send")){
+                    JSONObject getData = response.getJSONObject("service_details");
+                    PreferenceStorage.saveOrderId(this, getData.getString("order_id"));
+                    if(getData.getString("advance_payment_status").equalsIgnoreCase("NA")) {
+                        Toast.makeText(this, "Order Placed", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(this, AssignProviderActivity.class);
+                        startActivity(i);
+                        finish();
+                    } else if (getData.getString("advance_payment_status").equalsIgnoreCase("N")) {
+//                        getData.getString("advance_amount");
+//                        i.putExtra("advpay")
+                    }
                 }
 
             } catch (JSONException e) {
@@ -421,15 +432,14 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
 
     }
 
-    private void sendVals() {
-        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-        res = "time";
-        JSONObject jsonObject = new JSONObject();
+    private void setVals() {
+
         String id = "";
+        id = PreferenceStorage.getUserId(this);
+
         String oldDate = "";
         Date date = null;
         String newDate = "";
-        PreferenceStorage.getUserId(this);
         oldDate = serviceDate.getText().toString();
         String myFormat = "yyyy-MM-dd"; //In which you need put here
         String format = "dd-MM-yyyy"; //In which you need put here
@@ -441,12 +451,23 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
             e.printStackTrace();
         }
         newDate = sdf.format(date);
+
+        String latlng = "";
+        latlng = position.latitude + "," +position.longitude;
+        sendVals(id,latlng,newDate);
+
+    }
+
+    private void sendVals(String id, String latLng, String newDate) {
         if (validateFields()) {
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            res = "send";
+            JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
                 jsonObject.put(SkilExConstants.CONTACT_PERSON, customerName.getText().toString());
                 jsonObject.put(SkilExConstants.CONTACT_PERSON_NUMBER, customerNumber.getText().toString());
-                jsonObject.put(SkilExConstants.SERVICE_LATLNG, position);
+                jsonObject.put(SkilExConstants.SERVICE_LATLNG, latLng);
                 jsonObject.put(SkilExConstants.SERVICE_LOCATION, addresses.get(0).getSubLocality());
                 jsonObject.put(SkilExConstants.SERVICE_ADDRESS, customerAddress.getText().toString());
                 jsonObject.put(SkilExConstants.ORDER_DATE, newDate);
@@ -455,11 +476,9 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            String url = SkilExConstants.BUILD_URL + SkilExConstants.BOOK;
+            String url = SkilExConstants.BUILD_URL + SkilExConstants.PROCEED_TO_BOOK;
             serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
         }
-
-
     }
 
     private boolean validateFields() {

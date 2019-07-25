@@ -91,7 +91,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/button_requested_services"
                 android:clipToPadding="false"
-                android:elevation="12dp"
+                android:elevation="6dp"
                 android:gravity="center_vertical">
 
                 <ImageView
@@ -120,7 +120,7 @@
                 android:layout_marginRight="40dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/button_ongoing_services"
-                android:elevation="12dp"
+                android:elevation="6dp"
                 android:gravity="center_vertical">
 
                 <ImageView
@@ -149,7 +149,7 @@
                 android:layout_marginRight="40dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/button_services_history"
-                android:elevation="12dp"
+                android:elevation="6dp"
                 android:gravity="center_vertical">
 
                 <ImageView

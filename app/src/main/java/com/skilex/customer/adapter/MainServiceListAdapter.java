@@ -301,8 +301,8 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
         try {
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
             jsonObject.put(SkilExConstants.SERVICE_ID, idService);
-            jsonObject.put(SkilExConstants.MAIN_CATEGORY_ID, idCat);
-            jsonObject.put(SkilExConstants.SUB_CATEGORY_ID, idSub);
+            jsonObject.put(SkilExConstants.CATEGORY_ID, idCat);
+            jsonObject.put(SkilExConstants.SUB_CAT_ID, idSub);
         } catch (JSONException e) {
             e.printStackTrace();
         }

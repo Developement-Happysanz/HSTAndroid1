@@ -9,7 +9,6 @@
         android:id="@+id/rlPref"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
         android:background="@color/grey">
 
         <!--<ImageView-->
@@ -26,8 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:gravity="center"
+            android:layout_margin="10dp"
             android:background="@drawable/shadow_round"
+            android:elevation="6dp"
+            android:gravity="center"
             android:orientation="vertical">
 
             <!--<com.palprotech.heylaapp.customview.CircleImageView
@@ -40,10 +41,10 @@
                 android:id="@+id/txt_preference_name"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:maxHeight="75dp"
+                android:layout_marginBottom="10dp"
                 android:maxWidth="75dp"
-                android:padding="10dp"
-                android:layout_marginBottom="10dp" />
+                android:maxHeight="75dp"
+                android:padding="10dp" />
 
             <!--android:src="@drawable/ic_default_profile"-->
 

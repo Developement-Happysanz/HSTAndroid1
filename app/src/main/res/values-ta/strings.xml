@@ -71,8 +71,8 @@
 
     <string name="home">முகப்பு பக்கம்</string>
     <string name="services">சேவைகள்</string>
-    <string name="category">வகை</string>
-    <string name="subcategory">துணை வகை</string>
+    <string name="category">சேவை வகை</string>
+    <string name="subcategory">சேவை துணை வகை</string>
 
 
     <!--Services Page-->
@@ -86,6 +86,12 @@
     <string name="inclusion">இச்சேவையில் உள்ளடங்கியவை</string>
     <string name="exclusion">இச்சேவையிலிருந்து விலக்கப்பட்டவை</string>
     <string name="procedure">இச்சேவைக்கான செயல்முறை</string>
+
+    <!--Ongoing Page-->
+    <string name="about_service_person">சேவை நபர் பற்றிய தகவல்</string>
+    <string name="service_provider">சேவை வழங்குநர்</string>
+    <string name="service_starting_time">சேவை தொடக்க நேரம்</string>
+    <string name="service_approximate">மதிப்பிடப்பட்ட செலவு</string>
 
     <!--Booking Page-->
 

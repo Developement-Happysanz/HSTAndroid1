@@ -269,7 +269,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                LocaleHelper.setLocale(LoginActivity.this, "");
 
                 //It is required to recreate the activity to reflect the change in UI.
-                recreate();
+//                recreate();
+//                LoginActivity.this.recreate();
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
+                finish();
             }
         });
         alertDialogBuilder.setNegativeButton("Tamil", new DialogInterface.OnClickListener() {
@@ -280,7 +284,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 LocaleHelper.setLocale(LoginActivity.this, "ta");
 
                 //It is required to recreate the activity to reflect the change in UI.
-                recreate();
+//                recreate();
+//                LoginActivity.this.recreate();
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                startActivity(i);
+                finish();
             }
         });
         alertDialogBuilder.show();

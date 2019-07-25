@@ -55,6 +55,7 @@
             android:layout_below="@id/service_date"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/img_time"
+            android:paddingBottom="10dp"
             android:text="@string/time"
             android:textSize="16sp" />
 
@@ -65,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_alignTop="@id/service_time_slot"
             android:layout_alignBottom="@id/service_time_slot"
+            android:paddingBottom="5dp"
             android:layout_alignParentStart ="true"
             android:src="@drawable/ic_time_blue" />
 

@@ -65,17 +65,22 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
                 finish();
             }
         });
+
         findViewById(R.id.clear).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clearCart();
             }
         });
+
         findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), AddressActivity.class);
-                startActivity(i);
+                if(PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
+                    Intent i = new Intent(getApplicationContext(), AddressActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         });
 
@@ -83,7 +88,8 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         mRecyclerView = findViewById(R.id.listSumService);
         advanceAmount = (TextView) findViewById(R.id.additional_cost);
         totalCost = (TextView) findViewById(R.id.total_cost);
-        confrm = (Button) findViewById(R.id.confirm);
+//        confrm = (Button) findViewById(R.id.confirm);
+//        confrm.setOnClickListener(this);
         callGetSubCategoryService();
     }
 
@@ -119,6 +125,9 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         if (validateResponse(response)) {
             try {
                 if (res.equalsIgnoreCase("clear")) {
+                    PreferenceStorage.saveServiceCount(this, "");
+                    PreferenceStorage.saveRate(this, "");
+                    PreferenceStorage.savePurchaseStatus(this, false);
                     Intent i = new Intent(this, BookingSummaryAcivity.class);
                     startActivity(i);
                     finish();
@@ -183,13 +192,13 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
     public void callGetSubCategoryService() {
         if (CommonUtils.isNetworkAvailable(this)) {
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            loadCat();
+            loadCart();
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
         }
     }
 
-    private void loadCat() {
+    private void loadCart() {
         JSONObject jsonObject = new JSONObject();
         String id = "";
         id = PreferenceStorage.getUserId(this);
