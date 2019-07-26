@@ -22,6 +22,10 @@ public class Service implements Serializable {
     @Expose
     private String service_pic_url;
 
+    @SerializedName("selected")
+    @Expose
+    private String selected;
+
     @SerializedName("size")
     @Expose
     private int size = 3;
@@ -80,6 +84,20 @@ public class Service implements Serializable {
      */
     public void setservice_pic_url(String service_pic_url) {
         this.service_pic_url = service_pic_url;
+    }
+
+    /**
+     * @return The selected
+     */
+    public String getSelected() {
+        return selected;
+    }
+
+    /**
+     * @param selected The selected
+     */
+    public void setSelected(String selected) {
+        this.selected = selected;
     }
 
     public int getSize() {

@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.skilex.customer.R;
 import com.skilex.customer.activity.SplashScreenActivity;
+import com.skilex.customer.activity.SubCategoryActivity;
 import com.skilex.customer.bean.support.Service;
 import com.skilex.customer.bean.support.SubCategory;
 import com.skilex.customer.fragment.DynamicSubCatFragment;
@@ -49,7 +50,7 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     private ArrayList<Integer> pos = new ArrayList<>();
-
+    private String res = "";
     DynamicSubCatFragment dsf = new DynamicSubCatFragment();
 
     public MainServiceListAdapter(Context context, ArrayList<Service> services) {
@@ -113,7 +114,7 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
                 Picasso.get().load(url).into(holder.imgCat);
             }
             holder.addList = (ImageView) convertView.findViewById(R.id.add_to_list);
-            if (pos.contains(position)) {
+            if (services.get(position).getSelected().equalsIgnoreCase("1")) {
                 holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.green));
                 holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
 
@@ -122,21 +123,26 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
                 holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_control_point_black_24dp));
             }
             final int finalPosition = position;
+            final int finalPosition1 = position;
             holder.addList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (v == holder.addList) {
-                        if (!pos.contains(finalPosition)) {
-                            pos.add(finalPosition);
-                            if (checkLogin(finalPosition)) {
+                        if (services.get(finalPosition1).getSelected().equalsIgnoreCase("0")) {
+                            if (checkLogin(finalPosition1)) {
                                 holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.green));
                                 holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
+                                services.get(finalPosition1).setSelected("1");
                             }
-                        } else {
-                            holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
-                            holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_control_point_black_24dp));
                         }
+//                        else {
+//                            holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+//                            holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_control_point_black_24dp));
+//                            removeService(finalPosition1);
+//                            services.get(finalPosition1).setSelected("0");
+//                        }
                     }
+                    notifyDataSetChanged();
                 }
             });
 //            holder.imgCat.setImageDrawable(subCategories.get(position).ge());
@@ -213,6 +219,7 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
     public void onResponse(JSONObject response) {
         if (validateSignInResponse(response)) {
             try {
+
                 JSONObject data = response.getJSONObject("cart_total");
                 String rate = data.getString("total_amt");
                 String count = data.getString("service_count");
@@ -288,6 +295,7 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
     }
 
     private void loadCat(int position) {
+        res = "add";
         JSONObject jsonObject = new JSONObject();
         String idService = "";
         idService = services.get(position).getservice_id();

@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.skilex.customer.R;
 import com.skilex.customer.helper.AlertDialogHelper;
@@ -29,6 +30,7 @@ public class AssignProviderActivity extends AppCompatActivity implements IServic
     private ProgressBar progressBar;
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
+    boolean doubleBackToExitPressedOnce = false;
 
     private Handler handler = new Handler();
 
@@ -83,12 +85,13 @@ public class AssignProviderActivity extends AppCompatActivity implements IServic
 
             public void onFinish() {
                 // DO something when 1 minute is up
+                handler.removeCallbacksAndMessages(null);
                 finish();
 
             }
         }.start();
+        checkProviderAssign();
         startTimer();
-
     }
 
     private void checkProviderAssign() {
@@ -140,7 +143,12 @@ public class AssignProviderActivity extends AppCompatActivity implements IServic
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        if (msg.equalsIgnoreCase("No Service Provider found")){
+                            handler.removeCallbacksAndMessages(null);
+                            finish();
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        }
 
                     } else {
                         signInSuccess = true;
@@ -151,6 +159,27 @@ public class AssignProviderActivity extends AppCompatActivity implements IServic
             }
         }
         return signInSuccess;
+    }
+
+    @Override
+    public void onBackPressed() {
+        //Checking for fragment count on backstack
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else if (!doubleBackToExitPressedOnce) {
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit.", Toast.LENGTH_SHORT).show();
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        } else {
+            super.onBackPressed();
+            return;
+        }
     }
 
     @Override

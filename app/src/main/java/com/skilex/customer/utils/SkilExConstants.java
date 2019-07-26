@@ -75,7 +75,13 @@ public class SkilExConstants {
     public static final String REQUESTED_SERVICES = "requested_services/";
 
     //SERVICE DETAIL URL
-    public static final String HISTORY_SERVICES = "ongoing_services/";
+    public static final String CANCEL_SERVICE = "cancel_service_order/";
+
+    //SERVICE DETAIL URL
+    public static final String ADVANCE_PAYMENT = "skilex.in/ccavenue_app/customer_advance.php/";
+
+    //SERVICE DETAIL URL
+    public static final String HISTORY_SERVICES = "service_history/";
 
     //SERVICE DETAIL URL
     public static final String ONGOING_SERVICE_DETAILS = "service_order_details/";
@@ -159,12 +165,12 @@ public class SkilExConstants {
     public static String CART_ID = "cart_id";
 
     // Order Parameters
-    public static String ORDER_ID = "cart_id";
+    public static String ORDER_ID = "order_id";
     public static String TIME_INTERVAL = "display_minute";
 
     // Service Parameters
     public static String SEARCH_STATUS = "search_status";
-    public static String SEARCH_TEXT = "search_txt";
+    public static String SEARCH_TEXT = "service_txt";
     public static String SEARCH_TEXT_TA = "search_txt_ta";
 
     // Booking Parameters
@@ -176,5 +182,9 @@ public class SkilExConstants {
     public static String ORDER_DATE = "order_date";
     public static String ORDER_TIMESLOT = "order_timeslot_id";
 
+
+    // Advance Payment
+    public static String ADVANCE_AMOUNT = "advance_amount";
+    public static String ADVANCE_STATUS = "advance_payment_status";
 
 }

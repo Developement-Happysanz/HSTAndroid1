@@ -2,6 +2,9 @@ package com.skilex.customer.activity;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
@@ -29,6 +32,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -37,10 +46,12 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.skilex.customer.R;
 import com.skilex.customer.bean.support.StoreTimeSlot;
 import com.skilex.customer.bean.support.SubCategoryList;
+import com.skilex.customer.ccavenue.activity.InitialScreenActivity;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -66,7 +77,8 @@ import java.util.Locale;
 
 import static android.util.Log.d;
 
-public class AddressActivity extends FragmentActivity implements OnMapReadyCallback, IServiceListener, DialogClickListener {
+public class AddressActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback, IServiceListener, DialogClickListener {
     private static final String TAG = SubCategoryActivity.class.getName();
 
     LatLng position, myPosition;
@@ -84,6 +96,21 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
     ArrayAdapter<StoreTimeSlot> timeSlotAdapter = null;
     ArrayList<StoreTimeSlot> timeList;
     String timeSlotId = "";
+
+    private Location location;
+    private TextView locationTv;
+    private GoogleApiClient googleApiClient;
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private LocationRequest locationRequest;
+    private static final long UPDATE_INTERVAL = 5000, FASTEST_INTERVAL = 5000; // = 5 seconds
+    // lists for permissions
+    private ArrayList<String> permissionsToRequest;
+    private ArrayList<String> permissionsRejected = new ArrayList<>();
+    private ArrayList<String> permissions = new ArrayList<>();
+    // integer for permissions results request
+    private static final int ALL_PERMISSIONS_RESULT = 1011;
+    private FusedLocationProviderClient fusedLocationClient;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,26 +139,7 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
 
-        LocationManager locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-        Criteria criteria = new Criteria();
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            showAlert();
-            return;
-        }
-        Location location = locationManager.getLastKnownLocation(locationManager
-                .getBestProvider(criteria, false));
-        double latitude = location.getLatitude();
-        double longitude = location.getLongitude();
-        myPosition = new LatLng(latitude, longitude);
     }
 
     private void initializeThings() {
@@ -166,6 +174,66 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
                 setVals();
             }
         });
+
+//        LocationManager locationManager = (LocationManager)
+//                getSystemService(Context.LOCATION_SERVICE);
+//        Criteria criteria = new Criteria();
+//
+//        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//            // TODO: Consider calling
+//            //    ActivityCompat#requestPermissions
+//            // here to request the missing permissions, and then overriding
+//            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//            //                                          int[] grantResults)
+//            // to handle the case where the user grants the permission. See the documentation
+//            // for ActivityCompat#requestPermissions for more details.
+//            showAlert();
+//            return;
+//        }
+//        Location location = locationManager.getLastKnownLocation(locationManager
+//                .getBestProvider(criteria, false));
+//        double latitude = location.getLatitude();
+//        double longitude = location.getLongitude();
+//        myPosition = new LatLng(latitude, longitude);
+
+        // we add permissions we need to request location of the users
+        permissions.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        permissions.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        permissionsToRequest = permissionsToRequest(permissions);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (permissionsToRequest.size() > 0) {
+                requestPermissions(permissionsToRequest.toArray(
+                        new String[permissionsToRequest.size()]), ALL_PERMISSIONS_RESULT);
+            }
+        }
+
+        // we build google api client
+        googleApiClient = new GoogleApiClient.Builder(this).
+                addApi(LocationServices.API).
+                addConnectionCallbacks(this).
+                addOnConnectionFailedListener(this).build();
+    }
+
+    private ArrayList<String> permissionsToRequest(ArrayList<String> wantedPermissions) {
+        ArrayList<String> result = new ArrayList<>();
+
+        for (String perm : wantedPermissions) {
+            if (!hasPermission(perm)) {
+                result.add(perm);
+            }
+        }
+
+        return result;
+    }
+
+    private boolean hasPermission(String permission) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+        }
+
+        return true;
     }
 
     DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
@@ -216,12 +284,18 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
     @Override
     protected void onResume() {
         super.onResume();
+        if (!checkPlayServices()) {
+            locationTv.setText("You need to install Google Play Services to use the App properly");
+        }
         mapView.onResume();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
         mapView.onStart();
     }
 
@@ -233,8 +307,13 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     protected void onPause() {
-        mapView.onPause();
         super.onPause();
+        // stop location updates
+        if (googleApiClient != null && googleApiClient.isConnected()) {
+//            LocationServices.FusedLocationApi.removeLocationUpdates(googleApiClient, this);
+            googleApiClient.disconnect();
+        }
+        mapView.onPause();
     }
 
     @Override
@@ -251,14 +330,15 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
+        mMap = googleMap;
         int height = 48;
         int width = 48;
         BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_current_location);
         Bitmap b = bitmapdraw.getBitmap();
         final Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-//        LatLng latLng = new LatLng(11.0168, 76.9558);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 12));
-        googleMap.addMarker(new MarkerOptions().position(myPosition).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+        LatLng latLng = new LatLng(11.0168, 76.9558);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+//        googleMap.addMarker(new MarkerOptions().position(myPosition).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
 
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -405,17 +485,21 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
                     };
 
 
-                } else if (res.equalsIgnoreCase("send")){
+                } else if (res.equalsIgnoreCase("send")) {
                     JSONObject getData = response.getJSONObject("service_details");
                     PreferenceStorage.saveOrderId(this, getData.getString("order_id"));
-                    if(getData.getString("advance_payment_status").equalsIgnoreCase("NA")) {
+                    if (getData.getString("advance_payment_status").equalsIgnoreCase("NA")) {
                         Toast.makeText(this, "Order Placed", Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(this, AssignProviderActivity.class);
                         startActivity(i);
                         finish();
                     } else if (getData.getString("advance_payment_status").equalsIgnoreCase("N")) {
-//                        getData.getString("advance_amount");
-//                        i.putExtra("advpay")
+                        PreferenceStorage.saveAdvanceAmt(this, getData.getString("advance_amount"));
+                        Intent i = new Intent(this, InitialScreenActivity.class);
+                        i.putExtra("advpay", getData.getString("advance_amount"));
+                        i.putExtra("page", "advance_pay");
+                        startActivity(i);
+                        finish();
                     }
                 }
 
@@ -453,8 +537,8 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
         newDate = sdf.format(date);
 
         String latlng = "";
-        latlng = position.latitude + "," +position.longitude;
-        sendVals(id,latlng,newDate);
+        latlng = position.latitude + "," + position.longitude;
+        sendVals(id, latlng, newDate);
 
     }
 
@@ -540,5 +624,180 @@ public class AddressActivity extends FragmentActivity implements OnMapReadyCallb
                 });
         builderSingle.show();
     }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST);
+            } else {
+                finish();
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        if (location != null) {
+            // Logic to handle location object
+
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            myPosition = new LatLng(latitude, longitude);
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        // Permissions ok, we get last location
+//        location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+//        if (location != null) {
+//            locationTv.setText("Latitude : " + location.getLatitude() + "\nLongitude : " + location.getLongitude());
+//        }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            myPosition = new LatLng(latitude, longitude);
+
+                            int height = 48;
+                            int width = 48;
+                            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_current_location);
+                            Bitmap b = bitmapdraw.getBitmap();
+                            final Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 20));
+                            mMap.addMarker(new MarkerOptions().position(myPosition).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+
+                        }
+                    }
+                });
+
+
+        startLocationUpdates();
+    }
+
+    private void startLocationUpdates() {
+        locationRequest = new LocationRequest();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(UPDATE_INTERVAL);
+        locationRequest.setFastestInterval(FASTEST_INTERVAL);
+
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(this, "You need to enable permissions to display location !", Toast.LENGTH_SHORT).show();
+        }
+
+//        LocationServices.FusedLocationApi.requestLocationUpdates(googleApiClient, locationRequest, this);
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            myPosition = new LatLng(latitude, longitude);
+
+                            int height = 48;
+                            int width = 48;
+                            BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.ic_current_location);
+                            Bitmap b = bitmapdraw.getBitmap();
+                            final Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 20));
+                            mMap.addMarker(new MarkerOptions().position(myPosition).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+                        }
+                    }
+                });
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case ALL_PERMISSIONS_RESULT:
+                for (String perm : permissionsToRequest) {
+                    if (!hasPermission(perm)) {
+                        permissionsRejected.add(perm);
+                    }
+                }
+
+                if (permissionsRejected.size() > 0) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
+                            new AlertDialog.Builder(AddressActivity.this).
+                                    setMessage("These permissions are mandatory to get your location. You need to allow them.").
+                                    setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                                requestPermissions(permissionsRejected.
+                                                        toArray(new String[permissionsRejected.size()]), ALL_PERMISSIONS_RESULT);
+                                            }
+                                        }
+                                    }).setNegativeButton("Cancel", null).create().show();
+
+                            return;
+                        }
+                    }
+                } else {
+                    if (googleApiClient != null) {
+                        googleApiClient.connect();
+                    }
+                }
+
+                break;
+        }
+    }
+
 
 }

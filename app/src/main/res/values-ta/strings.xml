@@ -57,6 +57,7 @@
     <string name="ok">சரி</string>
     <string name="time">நேரத்தைத் தேர்ந்தெடுக்கவும்</string>
     <string name="date">தேதி தேர்ந்தெடுக்கவும்</string>
+    <string name="customer_name">வாடிக்கையாளர் பெயர்</string>
 
     <!--OTP Page-->
 
@@ -92,11 +93,13 @@
     <string name="service_provider">சேவை வழங்குநர்</string>
     <string name="service_starting_time">சேவை தொடக்க நேரம்</string>
     <string name="service_approximate">மதிப்பிடப்பட்ட செலவு</string>
+    <string name="cancel_service">சேவையை ரத்துசெய்</string>
 
     <!--Booking Page-->
 
     <string name="track">பின்தொடர்</string>
     <string name="booking">சேவைகளின் நிறைவுச்சுருக்கம்</string>
+    <string name="booking_status">முன்பதிவு நிலை</string>
     <string name="service_charge">சேவை கட்டணம்</string>
     <string name="additional_charge">முன்கூட்டியே தொகை</string>
     <string name="grand_total">மொத்த சேவை செலவு</string>
@@ -111,5 +114,37 @@
     <string name="about">நிறுவனம் பற்றி</string>
     <string name="share">பகிரவும்</string>
     <string name="logout">வெளியேறு</string>
+
+    <!--Payment Page-->
+
+    <string name="access_code">Access Code</string>
+    <string name="pay_button">Pay</string>
+    <string name="merchant_id">Merchant Id</string>
+    <string name="currency">Currency</string>
+    <string name="amount">Amount</string>
+    <string name="redirect_url_advance">https://www.skilex.in/development/ccavenue_app/customer_advance.php</string>
+    <string name="redirect_url">https://www.skilex.in/development/ccavenue_app/service_net_amount.php</string>
+    <string name="cancel_url">Cancel Url</string>
+    <string name="rsa_url">RSA Key Url</string>
+    <string name="advance_payment">பணம் செலுத்துதல்</string>
+    <string name="advance_amount">முன் பணம்</string>
+    <string name="status">கட்டண நிலை</string>
+    <string name="booking_success">வெற்றி!</string>
+    <string name="booking_failed">மன்னிக்கவும்!</string>
+    <string name="booking_success_comment">உங்கள் முன்பதிவு வெற்றிகரமாக முடிந்தது</string>
+    <string name="booking_failed_comment">உங்கள் முன்பதிவு தோல்வியடைந்தது</string>
+    <string name="payment_success">Success!</string>
+    <string name="payment_failed">Sorry!</string>
+    <string name="payment_success_comment">Your booking completed successfully</string>
+    <string name="payment_failed_comment">Your booking failed</string>
+    <string name="go_home">முகப்பு பக்கத்திற்குத் திரும்பு</string>
+    <string name="try_again">மீண்டும் முயற்சி செய்</string>
+
+
+    <!--Rating Page-->
+    <string name="rating_title">Rate Service</string>
+    <string name="rating_text">Rate your service</string>
+    <string name="rate">Rate</string>
+
 
 </resources>

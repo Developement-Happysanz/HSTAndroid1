@@ -1,0 +1,257 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@id/toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar_result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue"
+                android:minHeight="60dp" />
+
+            <ImageView
+                android:id="@+id/back_btn"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:minHeight="60dp"
+                android:paddingStart="13dp"
+                android:paddingEnd="13dp"
+                android:src="@drawable/ic_arrow_back_white_24dp" />
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@+id/back_btn"
+                android:gravity="center_vertical|left"
+                android:minHeight="60dp"
+                android:padding="5dp"
+                android:text="@string/advance_payment"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/shadow_round"
+            android:elevation="6dp"
+            android:layout_margin="40dp"
+            android:gravity="center"
+            android:layout_below="@+id/toolbar">
+
+            <RelativeLayout
+                android:id="@+id/disp_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+                
+                <ImageView
+                    android:id="@+id/payment_icon"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_pay_online"/>
+                
+                <TextView
+                    android:id="@+id/adv_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/advance_amount"
+                    android:textSize="20sp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_below="@+id/payment_icon"/>
+
+                <TextView
+                    android:id="@+id/amount_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/black"
+                    android:layout_below="@id/adv_txt"
+                    android:textSize="20sp"/>
+                
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/pay"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="@string/pay_button"
+                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:onClick="onClick"
+                android:layout_below="@id/disp_layout"
+                android:background="@drawable/button_round_color"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:text="@string/access_code" />
+
+            <EditText
+                android:id="@+id/accessCode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="AVQM86GG76CA98MQAC">
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:text="@string/merchant_id" />
+
+            <EditText
+                android:id="@+id/merchantId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="225068" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:text="Order Id" />
+
+            <EditText
+                android:id="@+id/orderId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:text="@string/currency" />
+
+            <EditText
+                android:id="@+id/currency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="INR" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:text="@string/amount" />
+
+            <EditText
+                android:id="@+id/amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="1.00" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:text="@string/redirect_url" />
+
+            <EditText
+                android:id="@+id/redirectUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textUri"
+                android:text="" />
+            <!--http://122.182.6.216/merchant/ccavResponseHandler.jsp-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:text="@string/cancel_url" />
+
+            <EditText
+                android:id="@+id/cancelUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textUri"
+                android:text="https://www.skilex.in/development/ccavenue_app/customer_advance.php" />
+            <!--http://122.182.6.216/merchant/ccavResponseHandler.jsp-->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10dp"
+                android:text="@string/rsa_url" />
+
+            <EditText
+                android:id="@+id/rsaUrl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textUri"
+                android:text="https://www.skilex.in/development/ccavenue_app/GetRSA.php" />
+            <!--https://secure.ccavenue.com/transaction/jsp/GetRSA.jsp-->
+
+            <Button
+                android:id="@+id/nextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="48dp"
+                android:onClick="onClick"
+                android:text="@string/pay_button" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

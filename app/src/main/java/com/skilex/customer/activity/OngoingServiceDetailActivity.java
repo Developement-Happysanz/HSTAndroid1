@@ -160,24 +160,24 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
 //                        "estimated_cost": 1234,
 //                        "contact_person_name": "nnn",
 //                        "contact_person_number": "9566883430"
-                JSONArray getData = response.getJSONArray("service_list");
+                JSONObject getData = response.getJSONObject("service_list");
                 if(PreferenceStorage.getLang(this).equalsIgnoreCase("tam")){
-                    catName.setText(getData.getJSONObject(0).getString("main_category_ta"));
-                    subCatName.setText(getData.getJSONObject(0).getString("service_ta_name"));
+                    catName.setText(getData.getString("main_category_ta"));
+                    subCatName.setText(getData.getString("service_ta_name"));
 
                 } else {
-                    catName.setText(getData.getJSONObject(0).getString("main_category"));
-                    subCatName.setText(getData.getJSONObject(0).getString("service_name"));
+                    catName.setText(getData.getString("main_category"));
+                    subCatName.setText(getData.getString("service_name"));
 
                 }
-                custName.setText(getData.getJSONObject(0).getString("contact_person_name"));
-                servicedate.setText(getData.getJSONObject(0).getString("order_date"));
-                orderID.setText(getData.getJSONObject(0).getString("service_order_id"));
-                serviceProvider.setText(getData.getJSONObject(0).getString("provider_name"));
-                servicePerson.setText(getData.getJSONObject(0).getString("person_name"));
-                servicePersonPhone.setText(getData.getJSONObject(0).getString("person_number"));
-                serviceStartTime.setText(getData.getJSONObject(0).getString("time_slot"));
-                estimatedCost.setText(getData.getJSONObject(0).getString("estimated_cost"));
+                custName.setText(getData.getString("contact_person_name"));
+                servicedate.setText(getData.getString("order_date"));
+                orderID.setText(getData.getString("service_order_id"));
+                serviceProvider.setText(getData.getString("provider_name"));
+                servicePerson.setText(getData.getString("person_name"));
+                servicePersonPhone.setText(getData.getString("person_number"));
+                serviceStartTime.setText(getData.getString("time_slot"));
+                estimatedCost.setText(getData.getString("estimated_cost"));
 
 
 

@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 import com.skilex.customer.R;
 import com.skilex.customer.adapter.OngoingServiceListAdapter;
+import com.skilex.customer.adapter.RequestedServiceListAdapter;
 import com.skilex.customer.bean.support.OngoingService;
 import com.skilex.customer.bean.support.OngoingServiceList;
 import com.skilex.customer.helper.AlertDialogHelper;
@@ -39,7 +40,7 @@ public class RequestedServicesActivity extends AppCompatActivity implements ISer
     private ListView loadMoreListView;
     int totalCount = 0, checkrun = 0;
     protected boolean isLoadingForFirstTime = true;
-    OngoingServiceListAdapter ongoingServiceListAdapter;
+    RequestedServiceListAdapter ongoingServiceListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -173,7 +174,7 @@ public class RequestedServicesActivity extends AppCompatActivity implements ISer
         ongoingServiceArrayList.clear();
         ongoingServiceArrayList.addAll(ongoingServiceArrayLists);
         if (ongoingServiceListAdapter == null) {
-            ongoingServiceListAdapter = new OngoingServiceListAdapter(this, ongoingServiceArrayList);
+            ongoingServiceListAdapter = new RequestedServiceListAdapter(this, ongoingServiceArrayList);
             loadMoreListView.setAdapter(ongoingServiceListAdapter);
         } else {
             ongoingServiceListAdapter.notifyDataSetChanged();

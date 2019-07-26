@@ -275,6 +275,24 @@ public class PreferenceStorage {
     /*End*/
 
     /*To store category click*/
+    public static void saveAdvanceAmt(Context context, String rate) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.ADVANCE_AMOUNT, rate);
+        editor.apply();
+    }
+
+    public static String getAdvanceAmt(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String catClick;
+        catClick = sharedPreferences.getString(SkilExConstants.ADVANCE_AMOUNT, "");
+        return catClick;
+    }
+    /*End*/
+
+    /*To store category click*/
     public static void saveRate(Context context, String rate) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);

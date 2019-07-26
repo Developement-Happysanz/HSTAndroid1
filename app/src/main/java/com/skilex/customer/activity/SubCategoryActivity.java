@@ -91,6 +91,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.removeCallbacksAndMessages(null);
                 finish();
             }
         });
@@ -454,6 +455,8 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         if (v == summary) {
             Intent i = new Intent(this, BookingSummaryAcivity.class);
             startActivity(i);
+            handler.removeCallbacksAndMessages(null);
+
         }
     }
 
