@@ -48,63 +48,144 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/adv_pay_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_margin="40dp"
+            android:visibility="gone"
             android:background="@drawable/shadow_round"
             android:elevation="6dp"
-            android:layout_margin="40dp"
-            android:gravity="center"
-            android:layout_below="@+id/toolbar">
+            android:gravity="center">
 
             <RelativeLayout
                 android:id="@+id/disp_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true">
-                
+
                 <ImageView
                     android:id="@+id/payment_icon"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_pay_online"/>
-                
+                    android:src="@drawable/ic_pay_online" />
+
                 <TextView
                     android:id="@+id/adv_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/advance_amount"
-                    android:textSize="20sp"
+                    android:layout_below="@+id/payment_icon"
                     android:layout_marginTop="40dp"
                     android:layout_marginBottom="10dp"
+                    android:text="@string/advance_amount"
                     android:textColor="@color/colorPrimary"
-                    android:layout_below="@+id/payment_icon"/>
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/amount_display"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:layout_centerHorizontal="true"
-                    android:textColor="@color/black"
                     android:layout_below="@id/adv_txt"
-                    android:textSize="20sp"/>
-                
+                    android:layout_centerHorizontal="true"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
             </RelativeLayout>
 
             <Button
                 android:id="@+id/pay"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:text="@string/pay_button"
-                android:textColor="@color/white"
+                android:layout_below="@id/disp_layout"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/button_round_color"
                 android:onClick="onClick"
-                android:layout_below="@id/disp_layout"
-                android:background="@drawable/button_round_color"/>
+                android:text="@string/pay_button"
+                android:textColor="@color/white" />
 
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/serv_pay_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:visibility="gone"
+            android:layout_margin="20dp"
+            android:background="@drawable/shadow_round"
+            android:elevation="6dp"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/amt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:textSize="22sp"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/black"/>
+
+            <RelativeLayout
+                android:id="@+id/online_layout"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/online_payment_icon"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_pay_online" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/pay_online"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/online_layout"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_round_color"
+                android:onClick="onClick"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:text="@string/pay_button_online"
+                android:textColor="@color/white" />
+
+            <RelativeLayout
+                android:id="@+id/cash_layout"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/cash_payment_icon"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_pay_cash" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/pay_cash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:background="@drawable/button_round_color"
+                android:onClick="onCashClick"
+                android:text="@string/pay_button_cash"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
 
 
     </RelativeLayout>

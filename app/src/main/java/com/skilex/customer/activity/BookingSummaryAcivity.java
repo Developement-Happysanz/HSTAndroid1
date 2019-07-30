@@ -1,5 +1,6 @@
 package com.skilex.customer.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -62,14 +63,45 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(BookingSummaryAcivity.this);
+                alertDialogBuilder.setTitle("Cart");
+                alertDialogBuilder.setMessage("Items in cart will be cleared. Do you wish to continue?");
+                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        clearCart();
+                    }
+                });
+                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertDialogBuilder.show();
+
             }
         });
 
         findViewById(R.id.clear).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clearCart();
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(BookingSummaryAcivity.this);
+                alertDialogBuilder.setTitle("Cart");
+                alertDialogBuilder.setMessage("Items in cart will be cleared. Do you wish to continue?");
+                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        clearCart();
+                    }
+                });
+                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertDialogBuilder.show();
             }
         });
 
@@ -106,6 +138,9 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
+                        if (msg.equalsIgnoreCase("Cart is Empty")) {
+                            finish();
+                        }
                         AlertDialogHelper.showSimpleAlertDialog(this, msg);
 
                     } else {
@@ -128,8 +163,8 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
                     PreferenceStorage.saveServiceCount(this, "");
                     PreferenceStorage.saveRate(this, "");
                     PreferenceStorage.savePurchaseStatus(this, false);
-                    Intent i = new Intent(this, BookingSummaryAcivity.class);
-                    startActivity(i);
+//                    Intent i = new Intent(this, BookingSummaryAcivity.class);
+//                    startActivity(i);
                     finish();
                 } else {
                     JSONArray getData = response.getJSONArray("cart_list");

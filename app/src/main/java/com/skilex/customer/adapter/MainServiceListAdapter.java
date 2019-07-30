@@ -23,6 +23,7 @@ import com.skilex.customer.bean.support.SubCategory;
 import com.skilex.customer.fragment.DynamicSubCatFragment;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
+import com.skilex.customer.interfaces.DialogClickListener;
 import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.PreferenceStorage;
@@ -38,7 +39,7 @@ import java.util.Collections;
 import static android.util.Log.d;
 import static com.android.volley.VolleyLog.TAG;
 
-public class MainServiceListAdapter extends BaseAdapter implements IServiceListener {
+public class MainServiceListAdapter extends BaseAdapter implements IServiceListener, DialogClickListener {
 
     //    private final Transformation transformation;
     private Context context;
@@ -148,9 +149,53 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
 //            holder.imgCat.setImageDrawable(subCategories.get(position).ge());
 //            holder.txtStatus = (TextView) convertView.findViewById(R.id.txt_mobilizer_status);
 //            holder.txtStatus.setText(categories.get(position).getStatus());
-//          convertView.setTag(holder);
+          convertView.setTag(holder);
         } else {
             holder = (MainServiceListAdapter.ViewHolder) convertView.getTag();
+            holder.txtCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
+            if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+                holder.txtCatName.setText(services.get(position).getservice_ta_name());
+            } else {
+                holder.txtCatName.setText(services.get(position).getservice_name());
+            }
+            holder.txtCatName.setText(services.get(position).getservice_name());
+            holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
+            String url = services.get(position).getservice_pic_url();
+            if (((url != null) && !(url.isEmpty()))) {
+                Picasso.get().load(url).into(holder.imgCat);
+            }
+            holder.addList = (ImageView) convertView.findViewById(R.id.add_to_list);
+            if (services.get(position).getSelected().equalsIgnoreCase("1")) {
+                holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.green));
+                holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
+
+            } else {
+                holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_control_point_black_24dp));
+            }
+            final int finalPosition = position;
+            final int finalPosition1 = position;
+            holder.addList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (v == holder.addList) {
+                        if (services.get(finalPosition1).getSelected().equalsIgnoreCase("0")) {
+                            if (checkLogin(finalPosition1)) {
+                                holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.green));
+                                holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
+                                services.get(finalPosition1).setSelected("1");
+                            }
+                        }
+//                        else {
+//                            holder.addList.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+//                            holder.addList.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_control_point_black_24dp));
+//                            removeService(finalPosition1);
+//                            services.get(finalPosition1).setSelected("0");
+//                        }
+                    }
+                    notifyDataSetChanged();
+                }
+            });
         }
 
         if (mSearching) {
@@ -235,6 +280,16 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
 
     @Override
     public void onError(String error) {
+
+    }
+
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
 
     }
 

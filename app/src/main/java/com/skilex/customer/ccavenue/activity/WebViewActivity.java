@@ -101,6 +101,8 @@ public class WebViewActivity extends AppCompatActivity {
                     intent.putExtra("page", page);
 
                     startActivity(intent);
+                    finish();
+
                 }
             }
 

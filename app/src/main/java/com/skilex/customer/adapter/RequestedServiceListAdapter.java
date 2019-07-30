@@ -36,7 +36,7 @@ public class RequestedServiceListAdapter extends BaseAdapter {
     public RequestedServiceListAdapter(Context context, ArrayList<OngoingService> services) {
         this.context = context;
         this.services = services;
-        Collections.reverse(services);
+//        Collections.reverse(services);
 //        transformation = new RoundedTransformationBuilder()
 //                .cornerRadiusDp(0)
 //                .oval(false)
@@ -73,6 +73,7 @@ public class RequestedServiceListAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final RequestedServiceListAdapter.ViewHolder holder;
+//        ViewHolder holder;
         if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             convertView = inflater.inflate(R.layout.requested_service_list_item, parent, false);
@@ -91,9 +92,26 @@ public class RequestedServiceListAdapter extends BaseAdapter {
             holder.txtDate.setText(services.get(position).getOrder_date());
             holder.txtTime = (TextView) convertView.findViewById(R.id.service_time_slot);
             holder.txtTime.setText(services.get(position).getTime_slot());
+            convertView.setTag(holder);
 
         } else {
             holder = (RequestedServiceListAdapter.ViewHolder) convertView.getTag();
+
+            holder.txtCatName = (TextView) convertView.findViewById(R.id.category_name);
+            holder.txtSubCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
+            if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+                holder.txtCatName.setText(services.get(position).getmain_category_ta());
+                holder.txtSubCatName.setText(services.get(position).getservice_ta_name());
+            } else {
+                holder.txtCatName.setText(services.get(position).getmain_category());
+                holder.txtSubCatName.setText(services.get(position).getservice_name());
+            }
+            holder.txtDate = (TextView) convertView.findViewById(R.id.service_date);
+            holder.txtDate.setText(services.get(position).getOrder_date());
+            holder.txtTime = (TextView) convertView.findViewById(R.id.service_time_slot);
+            holder.txtTime.setText(services.get(position).getTime_slot());
+
+
         }
 
         if (mSearching) {

@@ -216,9 +216,6 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private void loadMob() {
         res = "category";
         JSONObject jsonObject = new JSONObject();
-////        String id = "";
-//        id = PreferenceStorage.getUserId(getContext());
-//        id = PreferenceStorage.getUserId(getActivity());
 
         try {
             jsonObject.put(SkilExConstants.KEY_USER_MASTER_ID, id);
@@ -258,16 +255,6 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         return signInSuccess;
     }
 
-//    protected void updateListAdapter(ArrayList<Category> categoryArrayList) {
-//        this.categoryArrayList.addAll(categoryArrayList);
-//        if (categoryListAdapter == null) {
-////            categoryListAdapter = new CategoryListAdapter(getActivity(), this.categoryArrayList);
-//            loadMoreListView.setAdapter(categoryListAdapter);
-//        } else {
-//            categoryListAdapter.notifyDataSetChanged();
-//        }
-//    }
-
     @Override
     public void onResponse(final JSONObject response) {
         progressDialogHelper.hideProgressDialog();
@@ -292,11 +279,11 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                     categoryArrayList = (ArrayList<Category>) gson.fromJson(getData.toString(), listType);
                     preferenceAdatper = new PreferenceListAdapter(getActivity(), categoryArrayList, HomeFragment.this);
                     mRecyclerView.setAdapter(preferenceAdatper);
+                    clearCart();
                 } else if (res.equalsIgnoreCase("clear")) {
                     PreferenceStorage.saveServiceCount(rootView.getContext(), "");
                     PreferenceStorage.saveRate(rootView.getContext(), "");
                     PreferenceStorage.savePurchaseStatus(rootView.getContext(), false);
-                    startActivity(intent);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -357,7 +344,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         }
         intent = new Intent(getActivity(), SubCategoryActivity.class);
         intent.putExtra("cat", category);
-        clearCart();
+        startActivity(intent);
 
     }
 

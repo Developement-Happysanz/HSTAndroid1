@@ -58,6 +58,8 @@
     <string name="time">நேரத்தைத் தேர்ந்தெடுக்கவும்</string>
     <string name="date">தேதி தேர்ந்தெடுக்கவும்</string>
     <string name="customer_name">வாடிக்கையாளர் பெயர்</string>
+    <string name="time_selected">தேர்ந்தெடுத நேரம்</string>
+    <string name="date_selected">தேர்ந்தெடுத தேதி</string>
 
     <!--OTP Page-->
 
@@ -102,8 +104,10 @@
     <string name="booking_status">முன்பதிவு நிலை</string>
     <string name="service_charge">சேவை கட்டணம்</string>
     <string name="additional_charge">முன்கூட்டியே தொகை</string>
+    <string name="additional_services">கூடுதலான சேவைகள்</string>
     <string name="grand_total">மொத்த சேவை செலவு</string>
     <string name="view_summary">சுருக்கம் காண்க</string>
+    <string name="service_summary">சேவை Summary</string>
     <string name="clear">அனைத்தையும் அழி</string>
     <string name="search_result">தேடல் முடிவு</string>
     <string name="search">தேடுதல்</string>
@@ -119,6 +123,9 @@
 
     <string name="access_code">Access Code</string>
     <string name="pay_button">Pay</string>
+    <string name="payment">பணம் செலுத்துதல்</string>
+    <string name="pay_button_online">Pay Online</string>
+    <string name="pay_button_cash">Pay Cash</string>
     <string name="merchant_id">Merchant Id</string>
     <string name="currency">Currency</string>
     <string name="amount">Amount</string>
@@ -139,12 +146,25 @@
     <string name="payment_failed_comment">Your booking failed</string>
     <string name="go_home">முகப்பு பக்கத்திற்குத் திரும்பு</string>
     <string name="try_again">மீண்டும் முயற்சி செய்</string>
+    <string name="failed">தோல்வியடைந்தது</string>
+    <string name="completed">முடிந்தது</string>
+    <string name="view_bill">பில் காண்க</string>
 
 
     <!--Rating Page-->
     <string name="rating_title">Rate Service</string>
     <string name="rating_text">Rate your service</string>
     <string name="rate">Rate</string>
+
+    <!--History Page-->
+    <!--<string name="service_charge">Service Charge</string>-->
+    <string name="sub_total">Sub Total</string>
+    <string name="coupon_applied">Coupon Applied</string>
+    <string name="select_coupon">Select Coupon</string>
+    <string name="apply_coupon">Apply</string>
+    <string name="grand_total_pay">Grand Total</string>
+    <string name="service_person">Service Person</string>
+    <string name="share_invoice">Share Invoice</string>
 
 
 </resources>

@@ -90,13 +90,19 @@ public class SkilExConstants {
     public static final String SERVICE_ALLOCATION = "service_provider_allocation/";
 
     //SERVICE DETAIL URL
+    public static final String SERVICE_PERSON_LOCATION = "service_person_tracking/";
+
+    //SERVICE DETAIL URL
     public static final String SERVICE_ORDER_SUMMARY = "service_order_summary/";
+
+    //SERVICE DETAIL URL
+    public static final String SERVICE_ORDER_STATUS = "service_order_status/";
 
     //SERVICE DETAIL URL
     public static final String COUPON_LIST = "service_coupon_list/";
 
     //SERVICE DETAIL URL
-    public static final String APPLY_COUPON = "apply_coupon_to_service/";
+    public static final String APPLY_COUPON = "apply_coupon_to_order/";
 
     //    Service Params
     public static String PARAM_MESSAGE = "msg";
@@ -163,6 +169,7 @@ public class SkilExConstants {
 
     // Service Parameters
     public static String CART_ID = "cart_id";
+    public static String SERVICE_PERSON_ID = "person_id";
 
     // Order Parameters
     public static String ORDER_ID = "order_id";
@@ -186,5 +193,7 @@ public class SkilExConstants {
     // Advance Payment
     public static String ADVANCE_AMOUNT = "advance_amount";
     public static String ADVANCE_STATUS = "advance_payment_status";
+    public static String COUPON_ID = "coupon_id";
+    public static String COUPON_TEXT = "coupon_text";
 
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.skilex.customer.R;
+import com.skilex.customer.activity.AdvancePaymentActivity;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
 import com.skilex.customer.servicehelpers.ServiceHelper;
@@ -51,7 +52,10 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 		page = (String) mainIntent.getStringExtra("page");
 
 		setPageVal();
-		sendAdvanceStatus();
+
+		if (page.equalsIgnoreCase("advance_payment")) {
+			sendAdvanceStatus();
+		}
 
 	}
 
@@ -157,7 +161,15 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 
 	@Override
 	public void onResponse(JSONObject response) {
-
+		try {
+			if (response.getString("msg").equalsIgnoreCase("Advance paid Successfully")) {
+				Intent intent = new Intent(this, AdvancePaymentActivity.class);
+				startActivity(intent);
+				finish();
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

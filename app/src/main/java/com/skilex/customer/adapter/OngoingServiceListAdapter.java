@@ -94,9 +94,22 @@ public class OngoingServiceListAdapter extends BaseAdapter {
             holder.txtDate.setText(services.get(position).getContact_person_name());
             holder.txtTime = (TextView) convertView.findViewById(R.id.service_date);
             holder.txtTime.setText(services.get(position).getOrder_date());
-
+            convertView.setTag(holder);
         } else {
             holder = (OngoingServiceListAdapter.ViewHolder) convertView.getTag();
+            holder.txtCatName = (TextView) convertView.findViewById(R.id.category_name);
+            holder.txtSubCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
+            if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+                holder.txtCatName.setText(services.get(position).getmain_category_ta());
+                holder.txtSubCatName.setText(services.get(position).getservice_ta_name());
+            } else {
+                holder.txtCatName.setText(services.get(position).getmain_category());
+                holder.txtSubCatName.setText(services.get(position).getservice_name());
+            }
+            holder.txtDate = (TextView) convertView.findViewById(R.id.customer_name);
+            holder.txtDate.setText(services.get(position).getContact_person_name());
+            holder.txtTime = (TextView) convertView.findViewById(R.id.service_date);
+            holder.txtTime.setText(services.get(position).getOrder_date());
         }
 
         if (mSearching) {

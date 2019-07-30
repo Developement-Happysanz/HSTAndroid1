@@ -1,5 +1,6 @@
 package com.skilex.customer.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,7 +25,7 @@ import org.json.JSONObject;
 
 import static android.util.Log.d;
 
-public class OngoingServiceDetailActivity extends AppCompatActivity implements IServiceListener, DialogClickListener{
+public class OngoingServiceDetailActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, View.OnClickListener {
 
     private static final String TAG = OngoingServiceDetailActivity.class.getName();
     private ServiceHelper serviceHelper;
@@ -111,6 +112,8 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
         servicePersonPhone = (TextView) findViewById(R.id.service_person_experience);
         serviceStartTime = (TextView) findViewById(R.id.service_statring_time_text);
         estimatedCost = (TextView) findViewById(R.id.service_estimate_text);
+        track = (Button) findViewById(R.id.track);
+        track.setOnClickListener(this);
     }
 
     private boolean validateResponse(JSONObject response) {
@@ -190,5 +193,14 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
     @Override
     public void onError(String error) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == track) {
+            Intent i = new Intent(getApplicationContext(), ServicePersonTrackingActivity.class);
+            startActivity(i);
+            finish();
+        }
     }
 }

@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,8 +25,10 @@ import java.util.Random;
 public class InitialScreenActivity extends AppCompatActivity {
 
     private EditText accessCode, merchantId, currency, amount, orderId, rsaKeyUrl, redirectUrl, cancelUrl;
-    private TextView amountDisplay;
+    private TextView amountDisplay, amtP;
     String page;
+    RelativeLayout advPay;
+    LinearLayout servPay;
 
     private void init() {
         accessCode = (EditText) findViewById(R.id.accessCode);
@@ -36,6 +40,9 @@ public class InitialScreenActivity extends AppCompatActivity {
         redirectUrl = (EditText) findViewById(R.id.redirectUrl);
         cancelUrl = (EditText) findViewById(R.id.cancelUrl);
         amountDisplay = (TextView) findViewById(R.id.amount_display);
+        amtP = (TextView) findViewById(R.id.amt);
+        advPay = (RelativeLayout) findViewById(R.id.adv_pay_layout);
+        servPay = (LinearLayout) findViewById(R.id.serv_pay_layout);
 
         String adv = (String) getIntent().getSerializableExtra("advpay");
         page = (String) getIntent().getSerializableExtra("page");
@@ -43,12 +50,15 @@ public class InitialScreenActivity extends AppCompatActivity {
         if (page.equalsIgnoreCase("advance_pay")) {
             redirectUrl.setText(R.string.redirect_url_advance);
             cancelUrl.setText(R.string.redirect_url_advance);
+            advPay.setVisibility(View.VISIBLE);
+            amountDisplay.setText("₹ "+ adv);
         } else {
             redirectUrl.setText(R.string.redirect_url);
             cancelUrl.setText(R.string.redirect_url);
+            servPay.setVisibility(View.VISIBLE);
+            amtP.setText(adv);
         }
         amount.setText(adv);
-        amountDisplay.setText("₹ "+ adv);
         orderId.setText(PreferenceStorage.getOrderId(this));
 
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
@@ -107,9 +117,24 @@ public class InitialScreenActivity extends AppCompatActivity {
             intent.putExtra("page", page);
 
             startActivity(intent);
+            finish();
         } else {
             showToast("All parameters are mandatory.");
         }
+    }
+
+    public void onCashClick(View view) {
+        //Mandatory parameters. Other parameters can be added if required.
+        String status = null;
+        status = "Transaction Successful!";
+        Intent intent = new Intent(this, StatusActivity.class);
+
+            intent.putExtra("transStatus", status);
+            intent.putExtra("page", page);
+
+            startActivity(intent);
+            finish();
+
     }
 
     public void showToast(String msg) {
@@ -121,8 +146,8 @@ public class InitialScreenActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         //generating new order number for every transaction
-        Integer randomNum = ServiceUtility.randInt(0, 9999999);
-        orderId.setText(randomNum.toString());
+//        Integer randomNum = ServiceUtility.randInt(0, 9999999);
+//        orderId.setText(randomNum.toString());
     }
 
 }

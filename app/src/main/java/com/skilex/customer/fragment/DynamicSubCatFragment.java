@@ -28,6 +28,7 @@ import com.skilex.customer.bean.support.SubCategory;
 import com.skilex.customer.bean.support.SubCategoryList;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
+import com.skilex.customer.interfaces.DialogClickListener;
 import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.PreferenceStorage;
@@ -43,7 +44,7 @@ import java.util.TimerTask;
 
 import static android.util.Log.d;
 
-public class DynamicSubCatFragment extends Fragment implements IServiceListener, AdapterView.OnItemClickListener {
+public class DynamicSubCatFragment extends Fragment implements IServiceListener, AdapterView.OnItemClickListener, DialogClickListener {
     Context context;
     View view;
     static ArrayList<SubCategory> subCategoryArrayList;
@@ -58,6 +59,9 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
     private ProgressDialogHelper progressDialogHelper;
     ListView loadMoreListView;
     Boolean msgErr = false;
+    Boolean noService = false;
+
+    static boolean _hasLoadedOnce = false; // your boolean field
 
     public static DynamicSubCatFragment newInstance(int val, ArrayList<SubCategory> categoryArrayList) {
         DynamicSubCatFragment fragment = new DynamicSubCatFragment();
@@ -65,7 +69,31 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
         args.putInt("someInt", val);
         fragment.setArguments(args);
         subCategoryArrayList = categoryArrayList;
+        if (String.valueOf(val).equalsIgnoreCase("1")) {
+            _hasLoadedOnce = true;
+        } else {
+            _hasLoadedOnce = false;
+        }
         return fragment;
+    }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isFragmentVisible_) {
+        super.setUserVisibleHint(true);
+
+        if (this.isVisible()) {
+            // we check that the fragment is becoming visible
+            if (isFragmentVisible_ && !_hasLoadedOnce) {
+                loadCat();
+
+                _hasLoadedOnce = true;
+//                if(noService) {
+                    AlertDialogHelper.showSimpleAlertDialog(getActivity(), "No service found");
+//                    noService = false;
+//                }
+            }
+        }
     }
 
     @Nullable
@@ -136,6 +164,9 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
                             msgErr = true;
                         }
 //                        AlertDialogHelper.showSimpleAlertDialog(getActivity(), msg);
+                        if (msg.equalsIgnoreCase("Service not found")){
+                            noService = true;
+                        }
 
                     } else {
                         signInSuccess = true;
@@ -208,4 +239,13 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
         startActivity(intent);
     }
 
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
+
+    }
 }

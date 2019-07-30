@@ -61,11 +61,11 @@ public class RequestedServicesActivity extends AppCompatActivity implements ISer
         loadMoreListView = findViewById(R.id.req_service_list);
         loadMoreListView.setOnItemClickListener(this);
 
-        callGetSubCategoryService();
+        callReqService();
 
     }
 
-    public void callGetSubCategoryService() {
+    public void callReqService() {
         if (CommonUtils.isNetworkAvailable(this)) {
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadReqService();

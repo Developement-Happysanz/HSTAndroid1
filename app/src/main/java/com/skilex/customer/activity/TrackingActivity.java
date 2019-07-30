@@ -36,7 +36,7 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tracking);
+        setContentView(R.layout.activity_contact_address);
 
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override

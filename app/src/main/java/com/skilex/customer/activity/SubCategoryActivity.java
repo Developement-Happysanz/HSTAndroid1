@@ -376,6 +376,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
             public void onTabSelected(TabLayout.Tab tab) {
                 if (!PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
                     viewPager.setCurrentItem(tab.getPosition());
+                    viewPager.performClick();
                 } else {
                     tabPosition = tab.getPosition();
                     android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(SubCategoryActivity.this);
@@ -455,7 +456,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         if (v == summary) {
             Intent i = new Intent(this, BookingSummaryAcivity.class);
             startActivity(i);
-            handler.removeCallbacksAndMessages(null);
+//            handler.removeCallbacksAndMessages(null);
 
         }
     }

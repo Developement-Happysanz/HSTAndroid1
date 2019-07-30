@@ -84,9 +84,18 @@ public class CategoryListAdapter extends BaseAdapter {
             holder.add = (ImageView) convertView.findViewById(R.id.add_to_list);
 
 //            holder.txtStatus.setText(categories.get(position).getStatus());
-//          convertView.setTag(holder);
+          convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
+            holder.categoryName = (TextView) convertView.findViewById(R.id.sub_category_name);
+            if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+                holder.categoryName.setText(categories.get(position).getSub_cat_ta_name());
+            } else {
+                holder.categoryName.setText(categories.get(position).getSub_cat_name());
+            }
+            holder.categoryName.setText(categories.get(position).getSub_cat_name());
+            holder.categoryImage = (ImageView) convertView.findViewById(R.id.sub_category_image);
+            holder.add = (ImageView) convertView.findViewById(R.id.add_to_list);
         }
 
         if (mSearching) {

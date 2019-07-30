@@ -7,17 +7,14 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Address;
-import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -44,13 +41,10 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.gson.Gson;
 import com.skilex.customer.R;
 import com.skilex.customer.bean.support.StoreTimeSlot;
-import com.skilex.customer.bean.support.SubCategoryList;
 import com.skilex.customer.ccavenue.activity.InitialScreenActivity;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
@@ -115,7 +109,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tracking);
+        setContentView(R.layout.activity_contact_address);
 
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
@@ -489,8 +483,8 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                     JSONObject getData = response.getJSONObject("service_details");
                     PreferenceStorage.saveOrderId(this, getData.getString("order_id"));
                     if (getData.getString("advance_payment_status").equalsIgnoreCase("NA")) {
-                        Toast.makeText(this, "Order Placed", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(this, AssignProviderActivity.class);
+//                        Toast.makeText(this, "Order Placed", Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(this, AdvancePaymentActivity.class);
                         startActivity(i);
                         finish();
                     } else if (getData.getString("advance_payment_status").equalsIgnoreCase("N")) {
@@ -538,7 +532,11 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 
         String latlng = "";
         latlng = position.latitude + "," + position.longitude;
-        sendVals(id, latlng, newDate);
+        if (latlng.isEmpty() || latlng.equalsIgnoreCase(",")) {
+            AlertDialogHelper.showSimpleAlertDialog(this, "Please pick your location in map.");
+        } else {
+            sendVals(id, latlng, newDate);
+        }
 
     }
 
@@ -552,7 +550,11 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                 jsonObject.put(SkilExConstants.CONTACT_PERSON, customerName.getText().toString());
                 jsonObject.put(SkilExConstants.CONTACT_PERSON_NUMBER, customerNumber.getText().toString());
                 jsonObject.put(SkilExConstants.SERVICE_LATLNG, latLng);
-                jsonObject.put(SkilExConstants.SERVICE_LOCATION, addresses.get(0).getSubLocality());
+                if (addresses.isEmpty()){
+                    jsonObject.put(SkilExConstants.SERVICE_LOCATION, "");
+                } else {
+                    jsonObject.put(SkilExConstants.SERVICE_LOCATION, addresses.get(0).getSubLocality());
+                }
                 jsonObject.put(SkilExConstants.SERVICE_ADDRESS, customerAddress.getText().toString());
                 jsonObject.put(SkilExConstants.ORDER_DATE, newDate);
                 jsonObject.put(SkilExConstants.ORDER_TIMESLOT, timeSlotId);
