@@ -99,7 +99,6 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
                 serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
             }
         });
-
     }
 
     @Override

@@ -91,7 +91,6 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="@string/skip"
-            android:onClick="goToHomePage"
             android:textSize="16sp"
             android:textAllCaps="false"
             android:textColor="@color/blue"
