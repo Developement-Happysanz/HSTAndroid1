@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_result"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/blue"
+            android:minHeight="60dp" />
+
+        <ImageView
+            android:id="@+id/back_btn"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:minHeight="60dp"
+            android:paddingStart="13dp"
+            android:paddingEnd="13dp"
+            android:src="@drawable/ic_arrow_back_white_24dp" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/back_btn"
+            android:gravity="center_vertical|left"
+            android:minHeight="60dp"
+            android:padding="5dp"
+            android:fontFamily="@font/helvetica"
+            android:text="@string/service_summary"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="60dp"
+                android:background="@drawable/shadow_round"
+                android:elevation="6dp">
+
+                <TextView
+                    android:id="@+id/service_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="ABBBBVVCCA"
+                    android:fontFamily="@font/helvetica"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/service_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/service_category"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/helvetica"
+                    android:gravity="center"
+                    android:text="adfasdfasdf"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/customer_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/service_name"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_toEndOf="@id/img_customer"
+                    android:paddingBottom="10dp"
+                    android:text="@string/customer_name"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/customer_name_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/service_name"
+                    android:layout_marginStart="30dp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_toEndOf="@id/service_time_slot"
+                    android:paddingBottom="10dp"
+                    android:text="@string/customer_name"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_customer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/customer_name"
+                    android:layout_alignBottom="@id/customer_name"
+                    android:paddingBottom="10dp"
+                    android:src="@drawable/ic_customer_name" />
+
+                <TextView
+                    android:id="@+id/service_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/customer_name"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/img_date"
+                    android:paddingBottom="10dp"
+                    android:text="@string/date_selected"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/service_date_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/customer_name_txt"
+                    android:layout_alignTop="@id/service_date"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_marginStart="30dp"
+                    android:layout_toEndOf="@id/service_time_slot"
+                    android:paddingBottom="10dp"
+                    android:text="@string/date"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/service_date"
+                    android:layout_alignBottom="@id/service_date"
+                    android:paddingBottom="10dp"
+                    android:src="@drawable/ic_date_gray" />
+
+                <TextView
+                    android:id="@+id/service_time_slot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_below="@id/service_date"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/img_time"
+                    android:paddingBottom="10dp"
+                    android:text="@string/time_selected"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/service_time_slot_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_below="@id/service_date_txt"
+                    android:layout_alignTop="@+id/service_time_slot"
+                    android:layout_marginStart="30dp"
+                    android:layout_toEndOf="@id/service_time_slot"
+                    android:paddingBottom="10dp"
+                    android:text="@string/time"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/service_time_slot"
+                    android:layout_alignBottom="@id/service_time_slot"
+                    android:paddingBottom="5dp"
+                    android:src="@drawable/ic_time_gray" />
+
+
+                <TextView
+                    android:id="@+id/service_provider_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/service_time_slot"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/img_time"
+                    android:paddingBottom="10dp"
+                    android:fontFamily="@font/helvetica"
+                    android:text="@string/service_provider"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/service_provider_name_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/service_time_slot_txt"
+                    android:layout_alignTop="@+id/service_provider_name"
+                    android:layout_marginStart="30dp"
+                    android:layout_toEndOf="@id/service_time_slot"
+                    android:fontFamily="@font/helvetica"
+                    android:paddingBottom="10dp"
+                    android:text="@string/time"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_service_provider_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/service_provider_name"
+                    android:layout_alignBottom="@id/service_provider_name"
+                    android:paddingBottom="5dp"
+                    android:src="@drawable/ic_company_provider_gray" />
+
+
+                <TextView
+                    android:id="@+id/service_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/service_provider_name"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/img_time"
+                    android:paddingBottom="10dp"
+                    android:text="@string/service_person"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/service_person_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/service_provider_name_txt"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_alignTop="@+id/service_person"
+                    android:layout_marginStart="30dp"
+                    android:layout_toEndOf="@id/service_time_slot"
+                    android:paddingBottom="10dp"
+                    android:text="@string/time"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:id="@+id/img_service_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@id/service_person"
+                    android:layout_alignBottom="@id/service_person"
+                    android:paddingBottom="10dp"
+                    android:src="@drawable/ic_service_person" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/service_person"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@color/grey" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/start_end_layout"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@color/grey" />
+
+                <LinearLayout
+                    android:id="@+id/start_end_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/service_person"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/grey"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="0.5dp"
+                        android:layout_weight="0.5"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_date_gray" />
+
+                        <TextView
+                            android:id="@+id/service_start_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/helvetica"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="asdfasdfasdfasdfadsfasdfdfadfadfadfasdff"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="0.5dp"
+                        android:layout_weight="0.5"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp">
+
+                        <ImageView
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:src="@drawable/ic_date_gray" />
+
+                        <TextView
+                            android:id="@+id/service_end_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/helvetica"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center"
+                            android:text="asdfasdfasdfasdfadsfasdfdfadfadfadfasdff"
+                            android:textSize="16sp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/additional_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/start_end_layout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="40dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/add_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_round_color_border"
+                        android:paddingStart="40dp"
+                        android:fontFamily="@font/helvetica"
+                        android:textAllCaps="false"
+                        android:paddingEnd="40dp"
+                        android:text="@string/additional_services" />
+
+                    <ImageView
+                        android:id="@+id/go"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="20dp"
+                        android:background="@drawable/button_round_color"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_next_white"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/material_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/additional_layout"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/helvetica"
+                        android:text="Materials Used"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/view_bills"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="20dp"
+                        android:padding="10dp"
+                        android:text="@string/view_bill"
+                        android:fontFamily="@font/helvetica"
+                        android:textColor="@color/blue"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/material_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/view_bills"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/helvetica"
+                        android:text="lopemipsum"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/material_layout"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@color/grey" />
+
+                <RelativeLayout
+                    android:id="@+id/payment_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/material_layout"
+                    android:layout_marginTop="40dp"
+                    android:paddingBottom="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/payment"
+                        android:fontFamily="@font/helvetica"
+                        android:textColor="@color/black"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/service_charge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/helvetica"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="40dp"
+                        android:text="@string/service_charge"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/service_charge_amount"
+                        android:layout_width="wrap_content"
+                        android:fontFamily="@font/helvetica"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/service_charge"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp" />
+
+                    <TextView
+                        android:id="@+id/additional_service_charge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/service_charge"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="@font/helvetica"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/additional_charge"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/additional_service_charge_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/additional_service_charge"
+                        android:fontFamily="@font/helvetica"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp" />
+
+                    <TextView
+                        android:id="@+id/sub_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/additional_service_charge"
+                        android:fontFamily="@font/helvetica"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/sub_total"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/sub_total_amount"
+                        android:layout_width="wrap_content"
+                        android:fontFamily="@font/helvetica"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/sub_total"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/coupon_applied_layoout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/sub_total">
+
+                        <TextView
+                            android:id="@+id/coupon_applied"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/helvetica"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/coupon_applied"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/coupon_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/coupon_applied"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="20dp"
+                            android:fontFamily="@font/helvetica"
+                            android:text="@string/select_coupon"
+                            android:textColor="@color/green"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/coupon_applied_amount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/helvetica"
+                            android:layout_alignTop="@id/coupon_applied"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="20dp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/choose_coupon_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/sub_total"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/textview_round"
+                        android:gravity="center_vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/coupon_select"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentStart="true"
+                            android:fontFamily="@font/helvetica"
+                            android:layout_centerVertical="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_toLeftOf="@+id/apply_coupon"
+                            android:gravity="center_vertical"
+                            android:text="@string/select_coupon"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/apply_coupon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignTop="@id/coupon_select"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="@font/helvetica"
+                            android:layout_marginEnd="20dp"
+                            android:gravity="center_vertical"
+                            android:padding="5dp"
+                            android:text="@string/apply_coupon"
+                            android:textAllCaps="true"
+                            android:textColor="@color/blue" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/advance_charge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/helvetica"
+                        android:layout_below="@+id/coupon_applied_layoout"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/advance_amount"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/advance_charge_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/helvetica"
+                        android:layout_alignTop="@id/advance_charge"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp" />
+
+                    <TextView
+                        android:id="@+id/grand_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/advance_charge"
+                        android:layout_marginStart="20dp"
+                        android:fontFamily="@font/helvetica"
+                        android:layout_marginTop="20dp"
+                        android:text="@string/grand_total_pay"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/grand_total_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/helvetica"
+                        android:layout_alignTop="@id/grand_total"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp" />
+
+                </RelativeLayout>
+
+                <Button
+                    android:id="@+id/invoice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/payment_layout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/button_round_color"
+                    android:fontFamily="@font/helvetica"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="40dp"
+                    android:textAllCaps="false"
+                    android:text="@string/share_invoice"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/payment_layout"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/helvetica"
+                    android:textAllCaps="false"
+                    android:background="@drawable/button_round_color"
+                    android:paddingStart="40dp"
+                    android:paddingEnd="40dp"
+                    android:text="@string/pay_button"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

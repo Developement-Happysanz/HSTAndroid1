@@ -46,10 +46,16 @@ public class CartServiceDeleteListAdapter extends RecyclerView.Adapter<CartServi
     public void onResponse(JSONObject response) {
         try {
             String status = response.getString("status");
-            if(status.equalsIgnoreCase("success")) {
+            if (status.equalsIgnoreCase("success")) {
                 Toast.makeText(context, "Service Removed", Toast.LENGTH_SHORT).show();
                 categoryArrayList.remove(mRecentlyDeletedItemPosition);
-                notifyItemRemoved(mRecentlyDeletedItemPosition); }
+                notifyItemRemoved(mRecentlyDeletedItemPosition);
+                if (categoryArrayList.size() == 0) {
+                    PreferenceStorage.savePurchaseStatus(context,false);
+                } else {
+                    PreferenceStorage.saveCartStatus(context, true);
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -139,7 +145,7 @@ public class CartServiceDeleteListAdapter extends RecyclerView.Adapter<CartServi
     public void onBindViewHolder(CartServiceDeleteListAdapter.ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+        if (PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
             holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_ta_name());
         } else {
             holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_name());

@@ -34,18 +34,11 @@
             android:minHeight="60dp"
             android:layout_toRightOf="@+id/back_btn"
             android:padding="5dp"
+            android:fontFamily="@font/helvetica"
             android:text="@string/profile_title"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"/>
-
-        <ImageView
-            android:id="@+id/img_edit_profile"
-            android:layout_width="50dp"
-            android:layout_height="60dp"
-            android:padding="10dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_edit"/>
 
         <ImageView
             android:id="@+id/img_save_profile"
@@ -58,113 +51,135 @@
 
     </RelativeLayout>
 
-    <FrameLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/colorPrimary"/>
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <com.skilex.customer.customview.CircleImageView
-            android:id="@+id/img"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/ic_user_profile_image"
-            android:layout_gravity="center_horizontal"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    </FrameLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@color/colorPrimary"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/ti_user_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+                <com.skilex.customer.customview.CircleImageView
+                    android:id="@+id/img"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/ic_user_profile_image"
+                    android:layout_gravity="center_horizontal"/>
 
-        <EditText
-            android:id="@+id/edtUserName"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/user_name"
-            android:inputType="text"
-            android:clickable="false"
-            android:singleLine="true"
-            android:textSize="14sp" />
+            </FrameLayout>
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/ti_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/ti_user_gender"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+                <EditText
+                    android:id="@+id/edtUserName"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/user_name"
+                    android:fontFamily="@font/helvetica"
+                    android:inputType="text"
+                    android:clickable="false"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/edtUserGender"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/user_gender"
-            android:inputType="text"
-            android:clickable="false"
-            android:singleLine="true"
-            android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/ti_user_gender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/ti_user_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+                <EditText
+                    android:id="@+id/edtUserGender"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/user_gender"
+                    android:inputType="text"
+                    android:fontFamily="@font/helvetica"
+                    android:clickable="false"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/edtUserAddress"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/user_address"
-            android:inputType="text"
-            android:singleLine="true"
-            android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/ti_user_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:visibility="gone"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/ti_user_mail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp">
+                <EditText
+                    android:id="@+id/edtUserAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/user_address"
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
 
-        <EditText
-            android:id="@+id/edtUserMail"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:hint="@string/user_mail"
-            android:clickable="false"
-            android:inputType="textEmailAddress"
-            android:singleLine="true"
-            android:textSize="14sp" />
+            </android.support.design.widget.TextInputLayout>
 
-    </android.support.design.widget.TextInputLayout>
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/ti_user_mail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
 
-    <Button
-        android:id="@+id/update"
-        android:layout_width="120dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/white"
-        android:visibility="gone"
-        android:background="@drawable/button_round_color"
-        android:layout_gravity="center_horizontal"
-        android:text="@string/alert_button_ok"/>
+                <EditText
+                    android:id="@+id/edtUserMail"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="@string/user_mail"
+                    android:clickable="false"
+                    android:fontFamily="@font/helvetica"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:textSize="14sp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/update"
+                android:layout_width="120dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/helvetica"
+                android:textAllCaps="false"
+                android:background="@drawable/button_round_color"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/alert_button_ok"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
 
 </LinearLayout>

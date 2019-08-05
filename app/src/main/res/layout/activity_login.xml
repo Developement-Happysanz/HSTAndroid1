@@ -25,6 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/app_name"
+            android:fontFamily="@font/helvetica"
             android:textColor="@color/blue"
             android:textSize="30sp" />
 
@@ -34,6 +35,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
             android:text="@string/welcome"
+            android:fontFamily="@font/helvetica"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -45,6 +47,7 @@
             android:layout_marginTop="20dp"
             android:maxLines="1"
             android:text="@string/enter_text"
+            android:fontFamily="@font/helvetica"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -57,6 +60,7 @@
             android:layout_marginTop="20dp"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
+            android:fontFamily="@font/helvetica"
             android:paddingBottom="20dp"
             android:paddingStart="10dp"
             android:drawableStart="@drawable/ic_mobile_number"
@@ -78,6 +82,7 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="@string/login"
+            android:fontFamily="@font/helvetica"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textStyle="bold" />
@@ -90,7 +95,9 @@
             android:layout_marginTop="10dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:text="@string/skip"
+            android:fontFamily="@font/helvetica"
+            android:text="@string/skip_login"
+            android:onClick="goToHomePage"
             android:textSize="16sp"
             android:textAllCaps="false"
             android:textColor="@color/blue"

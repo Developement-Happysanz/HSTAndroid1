@@ -96,10 +96,23 @@ public class GeneralServiceListAdapter extends BaseAdapter{
             }
             holder.addList = (ImageView) convertView.findViewById(R.id.add_to_list);
             holder.addList.setVisibility(View.GONE);
+            convertView.setTag(holder);
 
         } else {
             holder = (GeneralServiceListAdapter.ViewHolder) convertView.getTag();
-        }
+            holder.txtCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
+            if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+                holder.txtCatName.setText(services.get(position).getservice_ta_name());
+            } else {
+                holder.txtCatName.setText(services.get(position).getservice_name());
+            }
+            holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
+            String url = services.get(position).getservice_pic_url();
+            if (((url != null) && !(url.isEmpty()))) {
+                Picasso.get().load(url).into(holder.imgCat);
+            }
+            holder.addList = (ImageView) convertView.findViewById(R.id.add_to_list);
+            holder.addList.setVisibility(View.GONE);}
 
         if (mSearching) {
             position = mValidSearchIndices.get(position);

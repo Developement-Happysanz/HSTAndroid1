@@ -74,6 +74,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private String res = "";
     private ArrayList<String> imgUrl = new ArrayList<>();
     String id = "";
+    Intent intent;
 
     public static HomeFragment newInstance(int position) {
         HomeFragment frag = new HomeFragment();
@@ -159,8 +160,8 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         });
         PreferenceStorage.saveServiceCount(getActivity(), "");
         PreferenceStorage.saveRate(getActivity(), "");
+        loadMob();
 
-        getBannerImg();
         return rootView;
     }
 
@@ -185,7 +186,6 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
 //        if (CommonUtils.isNetworkAvailable(getActivity())) {
         res = "bannerImg";
         JSONObject jsonObject = new JSONObject();
-        id = PreferenceStorage.getUserId(getActivity());
         try {
 //            jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(getActivity()));
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
@@ -193,7 +193,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
             e.printStackTrace();
         }
 
-        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_BANNER_IMAGES;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 //        } else {
@@ -215,9 +215,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private void loadMob() {
         res = "category";
         JSONObject jsonObject = new JSONObject();
-////        String id = "";
-//        id = PreferenceStorage.getUserId(getContext());
-//        id = PreferenceStorage.getUserId(getActivity());
+        id = PreferenceStorage.getUserId(getActivity());
 
         try {
             jsonObject.put(SkilExConstants.KEY_USER_MASTER_ID, id);
@@ -226,7 +224,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
             e.printStackTrace();
         }
 
-//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_MAIN_CAT_LIST;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
@@ -257,16 +255,6 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         return signInSuccess;
     }
 
-//    protected void updateListAdapter(ArrayList<Category> categoryArrayList) {
-//        this.categoryArrayList.addAll(categoryArrayList);
-//        if (categoryListAdapter == null) {
-////            categoryListAdapter = new CategoryListAdapter(getActivity(), this.categoryArrayList);
-//            loadMoreListView.setAdapter(categoryListAdapter);
-//        } else {
-//            categoryListAdapter.notifyDataSetChanged();
-//        }
-//    }
-
     @Override
     public void onResponse(final JSONObject response) {
         progressDialogHelper.hideProgressDialog();
@@ -281,7 +269,6 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                         // create dynamic image view and add them to ViewFlipper
                         setImageInFlipr(imgUrl.get(i));
                     }
-                    loadMob();
 
                 } else if (res.equalsIgnoreCase("category")) {
                     JSONArray getData = response.getJSONArray("categories");
@@ -291,6 +278,14 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                     categoryArrayList = (ArrayList<Category>) gson.fromJson(getData.toString(), listType);
                     preferenceAdatper = new PreferenceListAdapter(getActivity(), categoryArrayList, HomeFragment.this);
                     mRecyclerView.setAdapter(preferenceAdatper);
+                    clearCart();
+
+                } else if (res.equalsIgnoreCase("clear")) {
+                    PreferenceStorage.saveServiceCount(rootView.getContext(), "");
+                    PreferenceStorage.saveRate(rootView.getContext(), "");
+                    PreferenceStorage.savePurchaseStatus(rootView.getContext(), false);
+                    getBannerImg();
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -349,15 +344,31 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         } else {
             category = categoryArrayList.get(position);
         }
-        Intent intent = new Intent(getActivity(), SubCategoryActivity.class);
+        intent = new Intent(getActivity(), SubCategoryActivity.class);
         intent.putExtra("cat", category);
         startActivity(intent);
+
     }
 
     private void setImageInFlipr(String imgUrl) {
         ImageView image = new ImageView(rootView.getContext());
         Picasso.get().load(imgUrl).into(image);
         viewFlipper.addView(image);
+    }
+
+    private void clearCart() {
+        res = "clear";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.CLEAR_CART;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
 }

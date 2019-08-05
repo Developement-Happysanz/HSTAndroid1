@@ -30,12 +30,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class SearchResultActivity extends AppCompatActivity  implements IServiceListener, AdapterView.OnItemClickListener, DialogClickListener {
+import static android.util.Log.d;
+
+public class SearchResultActivity extends AppCompatActivity implements IServiceListener, AdapterView.OnItemClickListener, DialogClickListener {
     private static final String TAG = "AdvaSearchResAct";
     private ListView loadMoreListView;
     View view;
     String className;
-    String event="";
+    String event = "";
     GeneralServiceListAdapter generalServiceListAdapter;
     private ServiceHelper serviceHelper;
     ArrayList<Service> serviceArrayList;
@@ -65,11 +67,12 @@ public class SearchResultActivity extends AppCompatActivity  implements IService
             }
         });
         event = PreferenceStorage.getSearchFor(this);
-        if(!event.isEmpty()){
+        if (!event.isEmpty()) {
             makeSearch(event);
             PreferenceStorage.setSearchFor(this, "");
-        } 
+        }
     }
+
     public void makeSearch(String event) {
         /*if(eventsListAdapter != null){
             eventsListAdapter.clearSearchFlag();
@@ -80,11 +83,7 @@ public class SearchResultActivity extends AppCompatActivity  implements IService
         if (CommonUtils.isNetworkAvailable(this)) {
             JSONObject jsonObject = new JSONObject();
             try {
-                if (PreferenceStorage.getLang(this).equalsIgnoreCase("Eng")) {
-                    jsonObject.put(SkilExConstants.SEARCH_TEXT, "" + event);
-                } else  {
-                    jsonObject.put(SkilExConstants.SEARCH_TEXT_TA, event);
-                }
+                jsonObject.put(SkilExConstants.SEARCH_TEXT, "" + event);
                 jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(this));
 
 
@@ -101,21 +100,44 @@ public class SearchResultActivity extends AppCompatActivity  implements IService
 
     }
 
+    private boolean validateResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        finish();
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
+    }
+
     @Override
     public void onResponse(final JSONObject response) {
         progressDialogHelper.hideProgressDialog();
-        try {
-            if (response.getString("status").equalsIgnoreCase("success")) {
-                Gson gson = new Gson();
-                ServiceList serviceList = gson.fromJson(response.toString(), ServiceList.class);
-                if (serviceList.getserviceArrayList() != null && serviceList.getserviceArrayList().size() > 0) {
-                    totalCount = serviceList.getCount();
-                    isLoadingForFirstTime = false;
-                    updateListAdapter(serviceList.getserviceArrayList());
-                }
+        if (validateResponse(response)) {
+            Gson gson = new Gson();
+            ServiceList serviceList = gson.fromJson(response.toString(), ServiceList.class);
+            if (serviceList.getserviceArrayList() != null && serviceList.getserviceArrayList().size() > 0) {
+                totalCount = serviceList.getCount();
+                isLoadingForFirstTime = false;
+                updateListAdapter(serviceList.getserviceArrayList());
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
     }
 

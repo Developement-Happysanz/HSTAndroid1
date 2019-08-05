@@ -41,7 +41,8 @@
     <!--Login-->
 
     <string name="login">Login</string>
-    <string name="skip">Skip for now</string>
+    <string name="skip_login">Skip for now</string>
+    <string name="skip">Skip</string>
     <string name="welcome">Welcome!</string>
     <string name="enter_text">Enter Mobile Number</string>
 
@@ -58,6 +59,9 @@
     <string name="ok">OK</string>
     <string name="time">Select Time Slot</string>
     <string name="date">Select Date</string>
+    <string name="time_selected">Requested Time Slot</string>
+    <string name="date_selected">Selected Date</string>
+    <string name="customer_name">Customer Name</string>
 
     <!--OTP Page-->
 
@@ -89,16 +93,57 @@
     <string name="exclusion">Exclusion</string>
     <string name="procedure">Procedure</string>
 
+    <!--Ongoing Page-->
+    <string name="about_service_person">About Service Person</string>
+    <string name="service_provider">Service Provider</string>
+    <string name="service_starting_time">Service starting time</string>
+    <string name="service_approximate">Estimated cost</string>
+    <string name="cancel_service">Cancel Service</string>
 
     <!--Booking Page-->
 
     <string name="track">Tracking</string>
     <string name="booking">Booking summary</string>
+    <string name="booking_status">Booking status</string>
     <string name="service_charge">Service charge</string>
-    <string name="additional_charge">Advance amount</string>
+    <string name="additional_charge">Additional charge</string>
+    <string name="additional_services">Addditional Services </string>
     <string name="grand_total">Total Service Cost</string>
     <string name="view_summary">View Summary</string>
+    <string name="service_summary">Service Summary</string>
     <string name="clear">Clear All</string>
+
+    <!--Payment Page-->
+
+    <string name="access_code">Access Code</string>
+    <string name="pay_button">Pay</string>
+    <string name="pay_button_online">Pay Online</string>
+    <string name="pay_button_cash">Pay Cash</string>
+    <string name="payment">Payment</string>
+    <string name="merchant_id">Merchant Id</string>
+    <string name="currency">Currency</string>
+    <string name="amount">Amount</string>
+    <string name="redirect_url_advance">https://www.skilex.in/development/ccavenue_app/customer_advance.php</string>
+    <string name="redirect_url">https://www.skilex.in/development/ccavenue_app/service_net_amount.php</string>
+    <string name="cancel_url">Cancel Url</string>
+    <string name="rsa_url">RSA Key Url</string>
+    <string name="advance_payment">Payment</string>
+    <string name="advance_amount">Advance Amount</string>
+    <string name="status">Payment Status</string>
+    <string name="booking_success">Success!</string>
+    <string name="booking_failed">Sorry!</string>
+    <string name="booking_success_comment">Your booking completed successfully</string>
+    <string name="booking_failed_comment">Your booking failed</string>
+    <string name="payment_success">Awesome!</string>
+    <string name="payment_failed">Something\'s wrong!</string>
+    <string name="payment_success_comment">Your service order completed successfully</string>
+    <string name="payment_failed_comment">Your service order failed</string>
+    <string name="go_home">Back to Home </string>
+    <string name="try_again">Try Again</string>
+    <string name="failed">Failed</string>
+    <string name="completed">Completed</string>
+    <string name="view_bill">View Bill</string>
+
 
     <!--Profile Settings Page-->
 
@@ -106,5 +151,23 @@
     <string name="about">About</string>
     <string name="share">Share app</string>
     <string name="logout">Logout</string>
+
+
+    <!--Rating Page-->
+    <string name="rating_title">Rate Service</string>
+    <string name="rating_text">Rate your service</string>
+    <string name="rate">Rate</string>
+
+    <!--History Page-->
+    <!--<string name="service_charge">Service Charge</string>-->
+    <string name="sub_total">Sub Total</string>
+    <string name="coupon_applied">Coupon Applied</string>
+    <string name="select_coupon">Select Coupon</string>
+    <string name="apply_coupon">Apply</string>
+    <string name="grand_total_pay">Grand Total</string>
+    <string name="service_person">Service Person</string>
+    <string name="share_invoice">Share Invoice</string>
+
+
 
 </resources>

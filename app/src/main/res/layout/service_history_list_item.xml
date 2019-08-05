@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_hist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/shadow_round"
+        android:elevation="6dp">
+
+        <TextView
+            android:id="@+id/service_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/helvetica"
+            android:text="ABBBBVVCCA"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/service_name"
+            android:layout_width="wrap_content"
+            android:fontFamily="@font/helvetica"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_below="@+id/service_category"
+            android:text="adfasdfasdf"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/service_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/service_name"
+            android:fontFamily="@font/helvetica"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="2dp"
+            android:layout_toEndOf="@id/img_date"
+            android:text="@string/date"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/img_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/service_date"
+            android:paddingBottom="2dp"
+            android:layout_alignBottom="@id/service_date"
+            android:src="@drawable/ic_date_blue" />
+
+        <TextView
+            android:id="@+id/service_time_slot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/service_date"
+            android:fontFamily="@font/helvetica"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/img_time"
+            android:paddingBottom="10dp"
+            android:text="@string/time"
+            android:textSize="16sp" />
+
+
+        <ImageView
+            android:id="@+id/img_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/service_time_slot"
+            android:layout_alignBottom="@id/service_time_slot"
+            android:paddingBottom="5dp"
+            android:src="@drawable/ic_time_blue" />
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/img_time"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/grey" />
+
+        <ImageView
+            android:id="@+id/status_image"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:padding="5dp"
+            android:layout_below="@+id/img_time"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/button_circle_completed"
+            android:src="@drawable/ic_completed"/>
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/status_image"
+            android:layout_alignTop="@id/status_image"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/helvetica"
+            android:gravity="center"
+            android:text="@string/completed"
+            android:layout_alignBottom="@id/status_image"
+            android:textSize="16sp"/>
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/status"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:numStars="5"
+            android:visibility="gone"
+            android:stepSize="1" />
+
+    </RelativeLayout>
+
+</LinearLayout>

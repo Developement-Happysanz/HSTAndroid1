@@ -275,6 +275,24 @@ public class PreferenceStorage {
     /*End*/
 
     /*To store category click*/
+    public static void saveAdvanceAmt(Context context, String rate) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.ADVANCE_AMOUNT, rate);
+        editor.apply();
+    }
+
+    public static String getAdvanceAmt(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String catClick;
+        catClick = sharedPreferences.getString(SkilExConstants.ADVANCE_AMOUNT, "");
+        return catClick;
+    }
+    /*End*/
+
+    /*To store category click*/
     public static void saveRate(Context context, String rate) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
@@ -328,6 +346,24 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    /*To store category click*/
+    public static void saveCartStatus(Context context, boolean cat) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(SkilExConstants.CART_STATUS, cat);
+        editor.apply();
+    }
+
+    public static boolean getCartStatus(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        boolean catClick;
+        catClick = sharedPreferences.getBoolean(SkilExConstants.CART_STATUS, false);
+        return catClick;
+    }
+    /*End*/
+
     /*To search*/
     public static void setSearchFor(Context context, String ser) {
         SharedPreferences sharedPreferences = PreferenceManager
@@ -343,6 +379,61 @@ public class PreferenceStorage {
         String ser;
         ser = sharedPreferences.getString(SkilExConstants.SEARCH_STATUS, "");
         return ser;
+    }
+    /*End*/
+
+
+    /*To store order id*/
+    public static void saveOrderId(Context context, String orderId) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.ORDER_ID, orderId);
+        editor.apply();
+    }
+
+    public static String getOrderId(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String orderId;
+        orderId = sharedPreferences.getString(SkilExConstants.ORDER_ID, "");
+        return orderId;
+    }
+    /*End*/
+
+    /*To store coupon cooment*/
+    public static void saveCoupon(Context context, String orderId) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.COUPON_TEXT, orderId);
+        editor.apply();
+    }
+
+    public static String getCoupon(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String orderId;
+        orderId = sharedPreferences.getString(SkilExConstants.COUPON_TEXT, "");
+        return orderId;
+    }
+    /*End*/
+
+    /*To store coupon cooment*/
+    public static void savePersonId(Context context, String orderId) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.COUPON_TEXT, orderId);
+        editor.apply();
+    }
+
+    public static String getPersonId(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String orderId;
+        orderId = sharedPreferences.getString(SkilExConstants.COUPON_TEXT, "");
+        return orderId;
     }
     /*End*/
 

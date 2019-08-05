@@ -8,12 +8,14 @@
         android:icon="@drawable/ic_home"
         app:labelVisibilityMode="selected"
         android:title="@string/home"
+        android:fontFamily="@font/helvetica"
         app:showAsAction="ifRoom|withText" />
 
     <item
         android:id="@+id/action_services"
         android:enabled="true"
         android:icon="@drawable/ic_service"
+        android:fontFamily="@font/helvetica"
         android:title="@string/services"
         app:labelVisibilityMode="selected"
         app:showAsAction="ifRoom|withText" />
@@ -21,6 +23,7 @@
     <item
         android:id="@+id/action_profile"
         android:enabled="true"
+        android:fontFamily="@font/helvetica"
         android:icon="@drawable/ic_profile_black"
         app:labelVisibilityMode="selected"
         android:title="@string/profile_title"

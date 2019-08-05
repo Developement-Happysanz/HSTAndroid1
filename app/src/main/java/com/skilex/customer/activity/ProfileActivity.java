@@ -28,8 +28,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -102,6 +104,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public static final String DATE_FORMAT = "yyyyMMdd_HHmmss";
     public static final String IMAGE_DIRECTORY = "ImageScalling";
 
+    private List<String> mGenderList = new ArrayList<String>();
+    private ArrayAdapter<String> mGenderAdapter = null;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,24 +129,18 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         edtName = (EditText) findViewById(R.id.edtUserName);
         edtMail = (EditText) findViewById(R.id.edtUserMail);
         edtGender = (EditText) findViewById(R.id.edtUserGender);
+        edtGender.setFocusable(false);
         edtAddress = (EditText) findViewById(R.id.edtUserAddress);
-        findViewById(R.id.img).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkPermission(getApplicationContext());
-                openImageIntent();
-            }
-        });
-        edit = (ImageView) findViewById(R.id.img_edit_profile);
-        edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edtName.setClickable(true);
-                edtMail.setClickable(true);
-                edtGender.setClickable(true);
-                edtAddress.setClickable(true);
-            }
-        });
+//        findViewById(R.id.img).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(checkPermission(getApplicationContext())){
+//                    openImageIntent();
+//                }
+//            }
+//        });
+        profilePic.setOnClickListener(this);
+
         edtName.setText(PreferenceStorage.getName(this));
         edtMail.setText(PreferenceStorage.getEmail(this));
         edtGender.setText(PreferenceStorage.getGender(this));
@@ -157,6 +157,54 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             }
         });
 
+        edtGender.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showGenderList();
+            }
+        });
+
+        mGenderList.add("Male");
+        mGenderList.add("Female");
+        mGenderList.add("Other");
+        mGenderList.add("Rather not say");
+
+        mGenderAdapter = new ArrayAdapter<String>(this, R.layout.time_slot_layout, R.id.time_slot_range, mGenderList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                Log.d(TAG, "getview called" + position);
+                View view = getLayoutInflater().inflate(R.layout.time_slot_layout, parent, false);
+                TextView gendername = (TextView) view.findViewById(R.id.time_slot_range);
+                gendername.setText(mGenderList.get(position));
+
+                // ... Fill in other views ...
+                return view;
+            }
+        };
+
+    }
+
+    private void showGenderList() {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
+
+        builderSingle.setTitle("Select Gender");
+        View view = getLayoutInflater().inflate(R.layout.header_layout, null);
+        TextView header = (TextView) view.findViewById(R.id.header);
+        header.setText("Select Gender");
+        builderSingle.setCustomTitle(view);
+
+        builderSingle.setAdapter(mGenderAdapter
+                ,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String strName = mGenderList.get(which);
+                        edtGender.setText(strName);
+                        PreferenceStorage.saveGender(getApplicationContext(), edtGender.getText().toString());
+
+                    }
+                });
+        builderSingle.show();
     }
 
     @Override
@@ -171,12 +219,30 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (CommonUtils.haveNetworkConnection(getApplicationContext())) {
+            if (v == profilePic) {
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                        == PackageManager.PERMISSION_DENIED) {
+                    ActivityCompat.requestPermissions(ProfileActivity.this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                } else {
+                    if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_DENIED) {
+                        ActivityCompat.requestPermissions(ProfileActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                    } else {
+                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                                == PackageManager.PERMISSION_DENIED) {
+                            ActivityCompat.requestPermissions(ProfileActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+                        }
+                        openImageIntent();
+                    }
+                }
+            }
             if (v == confrim) {
                 if (validateFields()) {
 
                     String id = PreferenceStorage.getUserId(this);
                     String name = edtName.getText().toString();
                     String mail = edtMail.getText().toString();
+                    String gender = edtGender.getText().toString();
                     String address = edtAddress.getText().toString();
                     PreferenceStorage.saveName(this, name);
                     PreferenceStorage.saveEmail(this, mail);
@@ -187,7 +253,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                         jsonObject.put(SkilExConstants.KEY_USER_MASTER_ID, id);
                         jsonObject.put(SkilExConstants.KEY_USER_NAME, name);
                         jsonObject.put(SkilExConstants.KEY_USER_MAIL, mail);
-                        jsonObject.put(SkilExConstants.KEY_USER_GENDER, mail);
+                        jsonObject.put(SkilExConstants.KEY_USER_GENDER, gender);
                         jsonObject.put(SkilExConstants.KEY_USER_ADDRESS, address);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -268,17 +334,23 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         progressDialogHelper.hideProgressDialog();
 
         if (validateResponse(response)) {
-            try {
-                String userId = response.getString("user_master_id");
-                PreferenceStorage.saveUserId(this, userId);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                String userId = response.getString("user_master_id");
+//                String gender = response.getString("gender");
+//                String address = response.getString("address");
+//                String email = response.getString("email");
+//                String name = response.getString("name");
+//
+//                PreferenceStorage.saveUserId(this, userId);
+//                PreferenceStorage.saveName(this, name);
+//                PreferenceStorage.saveEmail(this, email);
+//                PreferenceStorage.saveGender(this, gender);
+//                PreferenceStorage.saveAddress(this, address);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
             Toast.makeText(this, "Profile Updated", Toast.LENGTH_SHORT).show();
-            edtName.setClickable(false);
-            edtMail.setClickable(false);
-            edtGender.setClickable(false);
-            edtAddress.setClickable(false);
+            finish();
         }
     }
 
@@ -291,7 +363,11 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private void openImageIntent() {
 
 // Determine Uri of camera image to save.
-        final File root = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MyDir");
+        File pictureFolder = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES
+        );
+        final File root = new File(pictureFolder, "SkilExImages");
+//        final File root = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "MyDir");
 
         if (!root.exists()) {
             if (!root.mkdirs()) {
@@ -633,18 +709,19 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         Toast.makeText(getApplicationContext(), "Upload succesful", Toast.LENGTH_SHORT).show();
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    //    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public static boolean checkPermission(final Context context) {
         int currentAPIVersion = Build.VERSION.SDK_INT;
         if (currentAPIVersion >= android.os.Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if ((ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) ||
+                    ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.READ_EXTERNAL_STORAGE)) {
                     AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
                     alertBuilder.setCancelable(true);
                     alertBuilder.setTitle("Permission necessary");
                     alertBuilder.setMessage("External storage permission is necessary");
                     alertBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+                        //                        @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                         public void onClick(DialogInterface dialog, int which) {
                             ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
                         }
@@ -661,6 +738,23 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             }
         } else {
             return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(
+            int requestCode,
+            String permissions[],
+            int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    openImageIntent();
+//                    Toast.makeText(ProfileActivity.this, "Permission Granted!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ProfileActivity.this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+                }
         }
     }
 

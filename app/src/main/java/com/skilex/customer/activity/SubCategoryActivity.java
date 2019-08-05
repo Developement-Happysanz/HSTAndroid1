@@ -91,6 +91,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                handler.removeCallbacksAndMessages(null);
                 finish();
             }
         });
@@ -132,8 +133,8 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
             try {
                 if (res.equalsIgnoreCase("clear")) {
                     viewPager.setCurrentItem(tabPosition);
-                    PreferenceStorage.saveServiceCount(this,"");
-                    PreferenceStorage.saveRate(this,"");
+                    PreferenceStorage.saveServiceCount(this, "");
+                    PreferenceStorage.saveRate(this, "");
                 } else {
                     JSONArray getData = response.getJSONArray("sub_categories");
 //                loadMembersList(getData.length());
@@ -365,26 +366,34 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
                 e.printStackTrace();
             }
         }
+        PreferenceStorage.saveSubCatClick(getApplicationContext(), categoryArrayList.get(0).getSub_cat_id());
         SubCategoryTabAdapter adapter = new SubCategoryTabAdapter
                 (getSupportFragmentManager(), tab.getTabCount(), categoryArrayList);
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(0);
+//        viewPager.setOffscreenPageLimit(0);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
         tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                String id = "";
+                id = categoryArrayList.get(tab.getPosition()).getSub_cat_id();
+                PreferenceStorage.saveSubCatClick(getApplicationContext(), id);
                 if (!PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
                     viewPager.setCurrentItem(tab.getPosition());
+                    viewPager.performClick();
                 } else {
                     tabPosition = tab.getPosition();
                     android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(SubCategoryActivity.this);
                     alertDialogBuilder.setTitle("Cart");
-                    alertDialogBuilder.setMessage("You need to clear current items in your cart to continue.");
+                    alertDialogBuilder.setMessage("You need to clear the services in your cart before you continue.");
                     alertDialogBuilder.setPositiveButton("Clear", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
                             clearCart();
                             PreferenceStorage.savePurchaseStatus(SubCategoryActivity.this, false);
+                            viewPager.setCurrentItem(tabPosition);
+                            viewPager.performClick();
+                             recreate();
                         }
                     });
                     alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -400,12 +409,40 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                viewPager.setCurrentItem(tab.getPosition());
+//                 recreate();
+                String id = "";
+                id = categoryArrayList.get(tab.getPosition()).getSub_cat_id();
+                PreferenceStorage.saveSubCatClick(getApplicationContext(), id);
+                if (!PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                    viewPager.performClick();
+                } else {
+                    tabPosition = tab.getPosition();
+                    android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(SubCategoryActivity.this);
+                    alertDialogBuilder.setTitle("Cart");
+                    alertDialogBuilder.setMessage("You need to clear current items in your cart to continue.");
+                    alertDialogBuilder.setPositiveButton("Clear", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            clearCart();
+                            PreferenceStorage.savePurchaseStatus(SubCategoryActivity.this, false);
+                            viewPager.setCurrentItem(tabPosition);
+                            viewPager.performClick();
+                            recreate();
+                        }
+                    });
+                    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+                    alertDialogBuilder.show();
+                }
             }
         });
 //        tab.removeOnTabSelectedListener(TabLayout.OnTabSelectedListener);
@@ -452,8 +489,15 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
     @Override
     public void onClick(View v) {
         if (v == summary) {
-            Intent i = new Intent(this, BookingSummaryAcivity.class);
-            startActivity(i);
+            Boolean abc;
+            if (PreferenceStorage.getPurchaseStatus(this)) {
+                Intent i = new Intent(this, BookingSummaryAcivity.class);
+                i.putExtra("cat", category);
+                startActivity(i);
+                finish();
+            }
+//            handler.removeCallbacksAndMessages(null);
+
         }
     }
 

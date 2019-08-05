@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:elevation="6dp"
+        android:background="@drawable/shadow_round">
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/helvetica"
+            android:layout_marginTop="10dp"
+            android:text="@string/category"
+            android:textColor="@color/blue"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/sub_category_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/category_name"
+            android:fontFamily="@font/helvetica"
+            android:layout_marginStart="10dp"
+            android:text="@string/subcategory"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/customer_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/sub_category_name"
+            android:fontFamily="@font/helvetica"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/img_date"
+            android:text="@string/user_name"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/img_customer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/customer_name"
+            android:layout_alignBottom="@id/customer_name"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_profile_default_blue" />
+
+        <TextView
+            android:id="@+id/service_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/customer_name"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/helvetica"
+            android:layout_toEndOf="@id/img_date"
+            android:text="@string/date"
+            android:paddingBottom="10dp"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/img_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/service_date"
+            android:layout_alignBottom="@id/service_date"
+            android:layout_alignParentStart="true"
+            android:paddingBottom="10dp"
+            android:src="@drawable/ic_date_blue" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/img_date"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="@color/ongoing"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:src="@drawable/ic_ongoing_service" />
+
+    </RelativeLayout>
+
+</LinearLayout>
