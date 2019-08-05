@@ -56,6 +56,14 @@ public class ServiceHistory implements Serializable {
     @Expose
     private String order_status;
 
+    @SerializedName("rating")
+    @Expose
+    private String rating;
+
+    @SerializedName("review")
+    @Expose
+    private String review;
+
 
     /**
      * @return The service_order_id
@@ -210,6 +218,34 @@ public class ServiceHistory implements Serializable {
      */
     public void settime_slot(String time_slot) {
         this.time_slot = time_slot;
+    }
+
+    /**
+     * @return The rating
+     */
+    public String getRating() {
+        return rating;
+    }
+
+    /**
+     * @param rating The rating
+     */
+    public void setRating(String rating) {
+        this.rating = rating;
+    }
+
+    /**
+     * @return The review
+     */
+    public String getReview() {
+        return review;
+    }
+
+    /**
+     * @param review The review
+     */
+    public void setReview(String review) {
+        this.review = review;
     }
 
     /**

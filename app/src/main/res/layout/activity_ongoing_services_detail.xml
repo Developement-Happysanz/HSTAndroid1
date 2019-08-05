@@ -32,6 +32,7 @@
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/back_btn"
             android:gravity="center_vertical|left"
+            android:fontFamily="@font/helvetica"
             android:minHeight="60dp"
             android:padding="5dp"
             android:text="@string/ong_services"
@@ -60,6 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/helvetica"
                 android:text="@string/category"
                 android:textColor="@color/blue"
                 android:textSize="20sp"
@@ -70,6 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/category_name"
+                android:fontFamily="@font/helvetica"
                 android:layout_marginStart="10dp"
                 android:text="@string/subcategory"
                 android:textSize="16sp" />
@@ -81,6 +84,7 @@
                 android:layout_below="@id/sub_category_name"
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@id/img_date"
+                android:fontFamily="@font/helvetica"
                 android:text="@string/user_name"
                 android:textSize="16sp" />
 
@@ -100,6 +104,7 @@
                 android:layout_below="@id/customer_name"
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@id/img_date"
+                android:fontFamily="@font/helvetica"
                 android:text="@string/date"
                 android:textSize="16sp" />
 
@@ -137,23 +142,44 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:gravity="center_horizontal">
 
-            <TextView
-                android:id="@+id/order_id"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Order id : 000"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_toLeftOf="@id/order_id"
+                    android:text="Order id : "
+                    android:fontFamily="@font/helvetica"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/order_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/helvetica"
+                    android:text="000"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
 
             <com.skilex.customer.customview.CircleImageView
                 android:id="@+id/user_profile_img"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_gravity="center_vertical"
+                android:layout_alignParentStart="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:src="@drawable/ic_user_profile_image" />
@@ -167,7 +193,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/user_profile_img"
                 android:gravity="center"
-                android:text="Bala Murali Krishna"
+                android:fontFamily="@font/helvetica"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -179,7 +205,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="20dp"
                 android:layout_toRightOf="@id/user_profile_img"
-                android:text="1234567890"
+                android:fontFamily="@font/helvetica"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -191,7 +217,7 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="20dp"
                 android:layout_toRightOf="@id/user_profile_img"
-                android:text="@string/about_service_person"
+                android:fontFamily="@font/helvetica"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </RelativeLayout>
@@ -216,6 +242,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/helvetica"
                 android:gravity="center"
                 android:text="@string/service_provider"
                 android:textColor="@color/black"
@@ -225,12 +252,14 @@
                 android:id="@+id/service_statring_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/helvetica"
                 android:layout_below="@+id/service_provider_name"
                 android:layout_gravity="center"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:text="@string/service_starting_time"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/service_estimate"
@@ -238,19 +267,23 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/service_statring_time"
                 android:layout_gravity="center"
+                android:fontFamily="@font/helvetica"
+                android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/about_service_person"
+                android:text="@string/service_approximate"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/service_provider_name_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/service_estimate_text"
+                android:layout_alignLeft="@id/service_statring_time_text"
+                android:fontFamily="@font/helvetica"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/service_provider_name"
+                android:text="sadfasdfsdf"
                 android:gravity="center"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -260,8 +293,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/service_provider_name"
-                android:layout_alignLeft="@id/service_estimate_text"
                 android:layout_gravity="center"
+                android:fontFamily="@font/helvetica"
+                android:layout_marginStart="20dp"
+                android:layout_alignTop="@id/service_statring_time"
+                android:text="sadfasdfsdf"
                 android:layout_toRightOf="@id/service_statring_time"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -271,12 +307,36 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/service_statring_time_text"
+                android:layout_alignLeft="@id/service_statring_time_text"
                 android:layout_gravity="center"
-                android:layout_marginStart="20dp"
+                android:fontFamily="@font/helvetica"
+                android:layout_alignTop="@id/service_estimate"
+                android:text="sadfasdfsdf"
                 android:layout_toRightOf="@id/service_estimate"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about_service_person"
+            android:gravity="center_horizontal"
+            android:fontFamily="@font/helvetica"
+            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/service_person_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/helvetica"
+            android:text="@string/about_service_person"
+            android:gravity="center_horizontal"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/blue"/>
 
         <Button
             android:id="@+id/track"
@@ -284,9 +344,11 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/helvetica"
             android:layout_marginBottom="20dp"
             android:background="@drawable/button_round_color"
             android:text="@string/track"
+            android:textAllCaps="false"
             android:textColor="@color/white" />
 
     </LinearLayout>

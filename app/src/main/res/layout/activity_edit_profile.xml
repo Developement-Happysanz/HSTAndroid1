@@ -34,6 +34,7 @@
             android:minHeight="60dp"
             android:layout_toRightOf="@+id/back_btn"
             android:padding="5dp"
+            android:fontFamily="@font/helvetica"
             android:text="@string/profile_title"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -91,6 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:hint="@string/user_name"
+                    android:fontFamily="@font/helvetica"
                     android:inputType="text"
                     android:clickable="false"
                     android:singleLine="true"
@@ -112,6 +114,7 @@
                     android:layout_height="50dp"
                     android:hint="@string/user_gender"
                     android:inputType="text"
+                    android:fontFamily="@font/helvetica"
                     android:clickable="false"
                     android:singleLine="true"
                     android:textSize="14sp" />
@@ -123,6 +126,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:visibility="gone"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp">
 
@@ -151,6 +155,7 @@
                     android:layout_height="50dp"
                     android:hint="@string/user_mail"
                     android:clickable="false"
+                    android:fontFamily="@font/helvetica"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:textSize="14sp" />
@@ -163,6 +168,8 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:textColor="@color/white"
+                android:fontFamily="@font/helvetica"
+                android:textAllCaps="false"
                 android:background="@drawable/button_round_color"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/alert_button_ok"/>

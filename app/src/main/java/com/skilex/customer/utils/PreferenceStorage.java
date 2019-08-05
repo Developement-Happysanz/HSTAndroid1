@@ -346,6 +346,24 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    /*To store category click*/
+    public static void saveCartStatus(Context context, boolean cat) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(SkilExConstants.CART_STATUS, cat);
+        editor.apply();
+    }
+
+    public static boolean getCartStatus(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        boolean catClick;
+        catClick = sharedPreferences.getBoolean(SkilExConstants.CART_STATUS, false);
+        return catClick;
+    }
+    /*End*/
+
     /*To search*/
     public static void setSearchFor(Context context, String ser) {
         SharedPreferences sharedPreferences = PreferenceManager

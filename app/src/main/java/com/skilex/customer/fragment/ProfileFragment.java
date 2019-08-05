@@ -10,21 +10,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.skilex.customer.R;
+import com.skilex.customer.activity.LoginActivity;
 import com.skilex.customer.activity.ProfileActivity;
 import com.skilex.customer.activity.SplashScreenActivity;
 import com.skilex.customer.customview.CircleImageView;
+import com.skilex.customer.helper.AlertDialogHelper;
+import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
+import com.skilex.customer.servicehelpers.ServiceHelper;
+import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.PreferenceStorage;
+import com.skilex.customer.utils.SkilExConstants;
+import com.squareup.picasso.Picasso;
 
-public class ProfileFragment extends Fragment implements View.OnClickListener, DialogClickListener {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static android.util.Log.d;
+
+public class ProfileFragment extends Fragment implements View.OnClickListener, IServiceListener, DialogClickListener {
 
     private static final String TAG = ProfileFragment.class.getName();
-
+    private ServiceHelper serviceHelper;
+    private ProgressDialogHelper progressDialogHelper;
     private View rootView;
     private CircleImageView profileImage;
     private LinearLayout profile, about, share, logout;
+    TextView userNmae,number, mail;
 
     public static ProfileFragment newInstance(int position) {
         ProfileFragment frag = new ProfileFragment();
@@ -45,6 +60,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, D
 
         rootView = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
+        serviceHelper = new ServiceHelper(rootView.getContext());
+        serviceHelper.setServiceListener(this);
+        progressDialogHelper = new ProgressDialogHelper(rootView.getContext());
+
         profileImage = rootView.findViewById(R.id.user_profile_img);
 
         profile = rootView.findViewById(R.id.layout_profile);
@@ -55,10 +74,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, D
         share.setOnClickListener(this);
         logout = rootView.findViewById(R.id.layout_logout);
         logout.setOnClickListener(this);
+        userNmae = rootView.findViewById(R.id.user_name);
+        number = rootView.findViewById(R.id.user_phone_number);
+        mail = rootView.findViewById(R.id.user_mail);
+
+        getUserInfo();
 
         return rootView;
     }
 
+    private void getUserInfo() {
+        String id ="";
+        if (!PreferenceStorage.getUserId(rootView.getContext()).isEmpty()) {
+            id = PreferenceStorage.getUserId(rootView.getContext());
+        }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.KEY_USER_MASTER_ID, id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.PROFILE_INFO;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
 
     @Override
     public void onClick(View v) {
@@ -99,4 +139,54 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, D
         getActivity().finish();
     }
 
+    private boolean validateResponse(JSONObject response) {
+        boolean signInSuccess = false;
+        if ((response != null)) {
+            try {
+                String status = response.getString("status");
+                String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                d(TAG, "status val" + status + "msg" + msg);
+
+                if ((status != null)) {
+                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+                        signInSuccess = false;
+                        d(TAG, "Show error dialog");
+                        AlertDialogHelper.showSimpleAlertDialog(rootView.getContext(), msg);
+
+                    } else {
+                        signInSuccess = true;
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return signInSuccess;
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        progressDialogHelper.hideProgressDialog();
+        if (validateResponse(response)) {
+            try {
+                JSONObject data = response.getJSONObject("user_details");
+                String url = data.getString("profile_pic");
+                if (!url.isEmpty()) {
+                    Picasso.get().load(url).into(profileImage);
+                }
+                userNmae.setText(data.getString("full_name"));
+                number.setText(data.getString("phone_no"));
+                mail.setText(data.getString("email"));
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public void onError(String error) {
+
+    }
 }

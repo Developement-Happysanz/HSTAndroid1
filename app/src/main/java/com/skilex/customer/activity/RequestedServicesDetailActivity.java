@@ -1,6 +1,7 @@
 package com.skilex.customer.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -86,21 +87,25 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
     }
 
     private void cencelOrder() {
-        res = "cancel";
-        JSONObject jsonObject = new JSONObject();
-        String id = "";
-        id = ongoingService.getservice_order_id();
-        try {
-            jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(this));
-            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, id);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-        String url = SkilExConstants.BUILD_URL + SkilExConstants.CANCEL_SERVICE;
-        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+//        res = "cancel";
+//        JSONObject jsonObject = new JSONObject();
+//        String id = "";
+//        id = ongoingService.getservice_order_id();
+//        try {
+//            jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(this));
+//            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, id);
+//
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+////        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+//        String url = SkilExConstants.BUILD_URL + SkilExConstants.CANCEL_SERVICE;
+//        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+        Intent intent = new Intent(this, CancelRequestedServiceActivity.class);
+        intent.putExtra("serviceObj", ongoingService);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -191,8 +196,10 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
             try {
 
                 if (res.equalsIgnoreCase("cancel")) {
-                    Toast.makeText(this, "Service cancellation initiated.", Toast.LENGTH_SHORT).show();
-                    finish();
+//                    Toast.makeText(this, "Service cancellation initiated.", Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(this, CancelRequestedServiceActivity.class);
+//                    startActivity(intent);
+//                    finish();
                 } else {
 
                     JSONObject getData = response.getJSONObject("service_list");

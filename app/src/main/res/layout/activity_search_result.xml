@@ -36,6 +36,7 @@
             android:minHeight="60dp"
             android:padding="5dp"
             android:text="@string/search_result"
+            android:fontFamily="@font/helvetica"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />

@@ -32,6 +32,7 @@
             android:layout_toRightOf="@+id/back_btn"
             android:gravity="center_vertical|left"
             android:minHeight="60dp"
+            android:fontFamily="@font/helvetica"
             android:padding="5dp"
             android:text="@string/req_services"
             android:textColor="@color/white"

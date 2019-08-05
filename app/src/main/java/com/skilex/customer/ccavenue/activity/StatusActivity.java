@@ -13,6 +13,12 @@ import android.widget.Toast;
 
 import com.skilex.customer.R;
 import com.skilex.customer.activity.AdvancePaymentActivity;
+import com.skilex.customer.activity.BookingSummaryAcivity;
+import com.skilex.customer.activity.MainActivity;
+import com.skilex.customer.activity.RateServiceActivity;
+import com.skilex.customer.activity.ServiceHistoryActivity;
+import com.skilex.customer.activity.ServiceSummaryActivity;
+import com.skilex.customer.bean.support.ServiceHistory;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
 import com.skilex.customer.servicehelpers.ServiceHelper;
@@ -55,6 +61,8 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 
 		if (page.equalsIgnoreCase("advance_payment")) {
 			sendAdvanceStatus();
+		} else {
+
 		}
 
 	}
@@ -71,7 +79,7 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 		bookingComment = findViewById(R.id.status_comment_text);
 		booking = findViewById(R.id.home_booking);
 
-		payLayout = findViewById(R.id.payment_layout);
+		payLayout = findViewById(R.id.final_payment_layout);
 		paymentIcon = findViewById(R.id.payment_status_icon);
 		paymentStatus = findViewById(R.id.payment_status_text);
 		paymentComment = findViewById(R.id.payment_status_comment_text);
@@ -91,13 +99,30 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 				bookingStatus.setText(R.string.booking_failed);
 				bookingComment.setText(R.string.booking_failed_comment);
 				booking.setText(R.string.try_again);
+				booking.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent newIntent = new Intent(getApplicationContext(), BookingSummaryAcivity.class);
+						startActivity(newIntent);
+						finish();
+					}
+				});
+
 			} else {
 				bookingIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_servicebook_success));
 				bookingStatus.setText(R.string.booking_success);
 				bookingComment.setText(R.string.booking_success_comment);
 				booking.setText(R.string.go_home);
+				booking.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
+						startActivity(newIntent);
+						finish();
+					}
+				});
 			}
-		} else {
+		} else if (page.equalsIgnoreCase("service_pay")){
 			advLayout.setVisibility(View.GONE);
 			findViewById(R.id.toolbar).setVisibility(View.GONE);
 			payLayout.setVisibility(View.VISIBLE);
@@ -106,9 +131,19 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 				payLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.payment_failed_bg));
 				paymentIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_payment_failed));
 				paymentStatus.setText(R.string.payment_failed);
+				paymentStatus.setTextColor(ContextCompat.getColor(this, R.color.payment_failed_font));
 				paymentComment.setText(R.string.payment_failed_comment);
+				paymentComment.setTextColor(ContextCompat.getColor(this, R.color.payment_failed_font));
 				rate.setText(R.string.try_again);
 				rate.setBackground(ContextCompat.getDrawable(this, R.drawable.button_try_again));
+				rate.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getApplicationContext(), ServiceHistoryActivity.class);
+						startActivity(intent);
+						finish();
+					}
+				});
 
 			} else {
 
@@ -118,6 +153,14 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 				paymentComment.setText(R.string.payment_success_comment);
 				rate.setText(R.string.rating_text);
 				rate.setBackground(ContextCompat.getDrawable(this, R.drawable.button_rate_service));
+				rate.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent(getApplicationContext(), RateServiceActivity.class);
+						startActivity(intent);
+						finish();
+					}
+				});
 
 			}
 		}

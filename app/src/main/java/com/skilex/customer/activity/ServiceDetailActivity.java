@@ -24,6 +24,7 @@ import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +65,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         serviceExcludes = (TextView) findViewById(R.id.exclude_text);
         serviceProcedure = (TextView) findViewById(R.id.procedure_text);
         scrollView = (ScrollView) findViewById(R.id.extras);
+        serviceImage = (ImageView) findViewById(R.id.service_image);
         bookNow = (Button) findViewById(R.id.book_now);
         bookNow.setOnClickListener(this);
 
@@ -173,6 +175,11 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                             serviceProcedure.setText(data.getString("service_procedure"));
                             scrollView.setVisibility(View.VISIBLE);
                         }
+                    }
+                    String url = "";
+                    url = data.getString("service_pic_url");
+                    if (!url.isEmpty()) {
+                        Picasso.get().load(url).into(serviceImage);
                     }
                 } else if (res.equalsIgnoreCase("cart")) {
 

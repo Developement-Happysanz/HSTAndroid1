@@ -3,6 +3,7 @@ package com.skilex.customer.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +19,7 @@ import com.skilex.customer.R;
 import com.skilex.customer.adapter.CartServiceDeleteListAdapter;
 import com.skilex.customer.adapter.SwipeToDeleteCallback;
 import com.skilex.customer.bean.support.CartService;
+import com.skilex.customer.bean.support.Category;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -47,10 +49,39 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
     CartServiceDeleteListAdapter serviceListAdapter;
     //    ListView loadMoreListView;
     private RecyclerView mRecyclerView;
+    Category category;
 
     TextView advanceAmount, totalCost;
     String res = "";
     Button confrm;
+    private Handler handler = new Handler();
+
+    //To start timer
+    public void startTimer() {
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (!PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
+                    handler.removeCallbacksAndMessages(null);
+                    showExit();
+                }
+                handler.postDelayed(this, 1000);
+            }
+        }, 1000);
+    }
+
+    //To start timer
+    public void startcartTimer() {
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                if (PreferenceStorage.getCartStatus(getApplicationContext())) {
+                    PreferenceStorage.saveCartStatus(getApplicationContext(),false);
+                    loadCart();
+                }
+                handler.postDelayed(this, 1000);
+            }
+        }, 1000);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +90,9 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+
+        startTimer();
+        startcartTimer();
 
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,9 +143,12 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
             @Override
             public void onClick(View v) {
                 if(PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
+                    handler.removeCallbacksAndMessages(null);
                     Intent i = new Intent(getApplicationContext(), AddressActivity.class);
                     startActivity(i);
                     finish();
+                } else {
+                    showExit();
                 }
             }
         });
@@ -122,7 +159,30 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         totalCost = (TextView) findViewById(R.id.total_cost);
 //        confrm = (Button) findViewById(R.id.confirm);
 //        confrm.setOnClickListener(this);
+        category = (Category) getIntent().getSerializableExtra("cat");
+
         callGetSubCategoryService();
+    }
+
+    private void showExit() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(BookingSummaryAcivity.this);
+        alertDialogBuilder.setTitle("Cart");
+        alertDialogBuilder.setMessage("All orders cancelled");
+        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                finish();
+                handler.removeCallbacksAndMessages(null);
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                handler.removeCallbacksAndMessages(null);
+            }
+        });
+        alertDialogBuilder.show();
     }
 
     private boolean validateResponse(JSONObject response) {
@@ -160,11 +220,13 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         if (validateResponse(response)) {
             try {
                 if (res.equalsIgnoreCase("clear")) {
+                    handler.removeCallbacksAndMessages(null);
                     PreferenceStorage.saveServiceCount(this, "");
                     PreferenceStorage.saveRate(this, "");
                     PreferenceStorage.savePurchaseStatus(this, false);
-//                    Intent i = new Intent(this, BookingSummaryAcivity.class);
-//                    startActivity(i);
+                    Intent i = new Intent(this, SubCategoryActivity.class);
+                    i.putExtra("cat", category);
+                    startActivity(i);
                     finish();
                 } else {
                     JSONArray getData = response.getJSONArray("cart_list");

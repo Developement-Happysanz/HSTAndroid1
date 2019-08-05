@@ -34,6 +34,7 @@
             android:minHeight="60dp"
             android:layout_toRightOf="@+id/back_btn"
             android:padding="5dp"
+            android:fontFamily="@font/helvetica"
             android:text="@string/service_detail"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -53,8 +54,7 @@
             <ImageView
                 android:id="@+id/service_image"
                 android:layout_width="match_parent"
-                android:layout_height="180dp"
-                android:background="@drawable/banner_img_sample"/>
+                android:layout_height="200dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -78,6 +78,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/helvetica"
                     android:layout_marginTop="10dp"
                     android:text="@string/service_cost"/>
 
@@ -89,6 +90,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/cost_text"
+                    android:fontFamily="@font/helvetica"
                     android:text="200"
                     android:layout_centerInParent="true"
                     android:textSize="26sp"/>
@@ -99,6 +101,8 @@
                     android:layout_height="50dp"
                     android:layout_alignParentBottom="true"
                     android:text="@string/book_now"
+                    android:fontFamily="@font/helvetica"
+                    android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:background="@color/colorPrimary"/>
 

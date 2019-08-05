@@ -72,7 +72,7 @@ import java.util.Locale;
 import static android.util.Log.d;
 
 public class AddressActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
-        GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback, IServiceListener, DialogClickListener {
+        GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback, IServiceListener, DialogClickListener, View.OnClickListener {
     private static final String TAG = SubCategoryActivity.class.getName();
 
     LatLng position, myPosition;
@@ -105,6 +105,8 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     private static final int ALL_PERMISSIONS_RESULT = 1011;
     private FusedLocationProviderClient fusedLocationClient;
     private GoogleMap mMap;
+
+    private DatePickerDialog fromDatePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,16 +143,45 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         customerName = (EditText) findViewById(R.id.customer_name);
         customerNumber = (EditText) findViewById(R.id.customer_phone);
         serviceDate = (EditText) findViewById(R.id.date);
-        serviceDate.setOnClickListener(new View.OnClickListener() {
+        serviceDate.setOnClickListener(this);
+//        serviceDate.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                // TODO Auto-generated method stub
+//                new DatePickerDialog(AddressActivity.this, date, myCalendar
+//                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+//                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+//            }
+//        });
 
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                new DatePickerDialog(AddressActivity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+        Calendar newCalendar = Calendar.getInstance();
+        fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                Calendar newDate = Calendar.getInstance();
+//                newDate.set(year, monthOfYear, dayOfMonth);
+//                String myFormat = "dd-MM-yyyy"; //In which you need put here
+//                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
+//
+//                serviceDate.setText(sdf.format(myCalendar.getTime()));
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+//                updateLabel();
+                updateLabel();
+                callTimeSlotService();
+
             }
-        });
+
+        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        DatePicker dP = fromDatePickerDialog.getDatePicker();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_MONTH, 2);
+        Date result = cal.getTime();
+        dP.setMinDate(System.currentTimeMillis()-1000);
+        dP.setMaxDate(result.getTime());
 
         serviceTimeSlot = (EditText) findViewById(R.id.time_slot);
         serviceTimeSlot.setOnClickListener(new View.OnClickListener() {
@@ -230,41 +261,23 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         return true;
     }
 
-    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+//    private void setDateTimeField() {
+//        serviceDate.setOnClickListener(this);
+//
+//        Calendar newCalendar = Calendar.getInstance();
+//        fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+//
+//            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                Calendar newDate = Calendar.getInstance();
+//                newDate.set(year, monthOfYear, dayOfMonth);
+//                fromDateEtxt.setText(dateFormatter.format(newDate.getTime()));
+//            }
+//
+//        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+//
+//    }
 
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear,
-                              int dayOfMonth) {
-            // TODO Auto-generated method stub
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date date1, date2;
-            try {
-                date1 = sdf.parse("" + year + "-" + monthOfYear + "-" + dayOfMonth);
-                date2 = sdf.parse("" + Calendar.getInstance().get(Calendar.YEAR) + "-" + Calendar.getInstance().get(Calendar.MONTH) +
-                        "-" + Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-                if (date1.before(date2)) {
-                    android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(AddressActivity.this);
-                    alertDialogBuilder.setTitle("Date");
-                    alertDialogBuilder.setMessage("The minimum date is today.");
-                    alertDialogBuilder.setNegativeButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    alertDialogBuilder.show();
-                } else {
-                    myCalendar.set(Calendar.YEAR, year);
-                    myCalendar.set(Calendar.MONTH, monthOfYear);
-                    myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                    updateLabel();
-                }
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
 
-        }
-    };
 
 
     private void updateLabel() {
@@ -531,7 +544,11 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         newDate = sdf.format(date);
 
         String latlng = "";
-        latlng = position.latitude + "," + position.longitude;
+        if (position != null) {
+            latlng = position.latitude + "," + position.longitude;
+        } else {
+            latlng = "";
+        }
         if (latlng.isEmpty() || latlng.equalsIgnoreCase(",")) {
             AlertDialogHelper.showSimpleAlertDialog(this, "Please pick your location in map.");
         } else {
@@ -802,4 +819,10 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     }
 
 
+    @Override
+    public void onClick(View v) {
+        if(v == serviceDate) {
+            fromDatePickerDialog.show();
+        }
+    }
 }

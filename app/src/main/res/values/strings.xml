@@ -41,7 +41,8 @@
     <!--Login-->
 
     <string name="login">Login</string>
-    <string name="skip">Skip for now</string>
+    <string name="skip_login">Skip for now</string>
+    <string name="skip">Skip</string>
     <string name="welcome">Welcome!</string>
     <string name="enter_text">Enter Mobile Number</string>
 
@@ -106,7 +107,7 @@
     <string name="booking_status">Booking status</string>
     <string name="service_charge">Service charge</string>
     <string name="additional_charge">Additional charge</string>
-    <string name="additional_services">Addditional Services</string>
+    <string name="additional_services">Addditional Services </string>
     <string name="grand_total">Total Service Cost</string>
     <string name="view_summary">View Summary</string>
     <string name="service_summary">Service Summary</string>

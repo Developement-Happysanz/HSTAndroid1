@@ -34,6 +34,7 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
     private TextView catName, subCatName, custName, servicedate, orderID, serviceProvider, servicePerson, servicePersonPhone,
             serviceStartTime, estimatedCost;
     Button track;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +110,8 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
         orderID = (TextView) findViewById(R.id.order_id);
         serviceProvider = (TextView) findViewById(R.id.service_provider_name_text);
         servicePerson = (TextView) findViewById(R.id.service_person_name);
-        servicePersonPhone = (TextView) findViewById(R.id.service_person_experience);
+//        servicePersonPhone = (TextView) findViewById(R.id.service_person_experience);
+        servicePersonPhone = (TextView) findViewById(R.id.service_person_number);
         serviceStartTime = (TextView) findViewById(R.id.service_statring_time_text);
         estimatedCost = (TextView) findViewById(R.id.service_estimate_text);
         track = (Button) findViewById(R.id.track);
@@ -148,23 +150,27 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
         progressDialogHelper.hideProgressDialog();
         if (validateResponse(response)) {
             try {
-//                "service_order_id": "17",
-//                        "service_name": "Insurance 5",
-//                        "service_ta_name": "Insurance 5",
-//                        "order_date": "2019-07-24",
-//                        "time_slot": "15:00:00-16:00:00",
-//                        "main_category": "Appliance Repair",
-//                        "main_category_ta": "வீடு பழுது பார்த்தல்",
-//                        "sub_category": "Salon at home for Women",
-//                        "sub_category_ta": "பெண்கள் வீட்டிற்கு வரவேற்பு",
-//                        "provider_name": "",
-//                        "person_name": "",
-//                        "person_number": "",
-//                        "estimated_cost": 1234,
-//                        "contact_person_name": "nnn",
-//                        "contact_person_number": "9566883430"
+//                "service_order_id": "45",
+//    "main_category": "Appliance Repair",
+//    "main_category_ta": "வீடு பழுது பார்த்தல்",
+//    "sub_category": "AC Service and Repair",
+//    "sub_category_ta": "AC சேவை மற்றும் பழுதுபார்க்கும்",
+//    "service_name": "Insurance 3",
+//    "service_ta_name": "Insurance 3",
+//    "contact_person_name": "bala",
+//    "contact_person_number": "9500923685",
+//    "service_address": "Neelikonam Palayam, Coimbatore, India, ",
+//    "order_date": "2019-07-26",
+//    "time_slot": "20:00:00-21:00:00",
+//    "provider_name": "Victor",
+//    "person_name": "Ganesh",
+//    "person_id": "24",
+//    "person_number": "1565643456",
+//    "pic": "",
+//    "estimated_cost": 200,
+//    "order_status": "Initiated"
                 JSONObject getData = response.getJSONObject("service_list");
-                if(PreferenceStorage.getLang(this).equalsIgnoreCase("tam")){
+                if (PreferenceStorage.getLang(this).equalsIgnoreCase("tam")) {
                     catName.setText(getData.getString("main_category_ta"));
                     subCatName.setText(getData.getString("service_ta_name"));
 
@@ -180,8 +186,8 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
                 servicePerson.setText(getData.getString("person_name"));
                 servicePersonPhone.setText(getData.getString("person_number"));
                 serviceStartTime.setText(getData.getString("time_slot"));
-                estimatedCost.setText(getData.getString("estimated_cost"));
-
+                estimatedCost.setText("₹"+getData.getInt("estimated_cost"));
+                PreferenceStorage.savePersonId(this, getData.getString("person_id"));
 
 
             } catch (JSONException e) {

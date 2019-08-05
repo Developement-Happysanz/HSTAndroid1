@@ -231,7 +231,7 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
 
         try {
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
-            jsonObject.put(SkilExConstants.SERVICE_PERSON_ID, "18");
+            jsonObject.put(SkilExConstants.SERVICE_PERSON_ID, orderId);
 
         } catch (JSONException e) {
             e.printStackTrace();

@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/helvetica"
                 android:text="@string/verificationcode"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -37,6 +38,7 @@
                 android:id="@+id/user_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/helvetica"
                 android:layout_below="@+id/code_title"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
@@ -62,14 +64,15 @@
             <RelativeLayout
                 android:id="@+id/txtresend"
                 android:layout_width="wrap_content"
+                android:layout_below="@+id/sendcode_layout"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/otp_view"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="10dp">
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/contentresend"
                     android:layout_width="wrap_content"
+                    android:fontFamily="@font/helvetica"
                     android:layout_height="wrap_content"
                     android:text="@string/didntrecievecode" />
 
@@ -78,14 +81,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"
-                    android:layout_toRightOf="@+id/contentresend"
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_below="@+id/contentresend"
                     android:text="@string/resend" />
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/sendcode_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtresend"
+                android:layout_below="@+id/otp_view"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:gravity="center"

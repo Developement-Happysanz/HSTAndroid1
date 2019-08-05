@@ -39,6 +39,8 @@ import com.skilex.customer.utils.SkilExValidator;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Random;
+
 import static android.util.Log.d;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener {
@@ -52,10 +54,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String IMEINo = "", res = "";
     private static final int PERMISSION_REQUEST_CODE = 1;
 
-    private static String[] PERMISSIONS_ALL = {Manifest.permission.READ_CONTACTS,
-            Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CALENDAR,
+    private static String[] PERMISSIONS_ALL = { Manifest.permission.READ_CALENDAR,
             Manifest.permission.WRITE_CALENDAR, Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CALL_PHONE,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
             Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
     private static final int REQUEST_PERMISSION_All = 111;
@@ -95,13 +96,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 requestPermissions(permissions, PERMISSION_REQUEST_CODE);
             }
             if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                IMEINo = tm.getImei(1);
+//                IMEINo = tm.getImei(1);
+                IMEINo = String.valueOf(generateRandom(12));
             } else {
                 if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
                         == PackageManager.PERMISSION_DENIED) {
                     IMEINo = "";
                 } else {
-                    IMEINo = tm.getDeviceId(1);
+                    IMEINo = String.valueOf(generateRandom(12));
                 }
             }
             PreferenceStorage.saveIMEI(this, IMEINo);
@@ -110,6 +112,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (PreferenceStorage.getLang(this).isEmpty()){
             showLangAlert();
         }
+    }
+    public static long generateRandom(int length) {
+        Random random = new Random();
+        char[] digits = new char[length];
+        digits[0] = (char) (random.nextInt(9) + '1');
+        for (int i = 1; i < length; i++) {
+            digits[i] = (char) (random.nextInt(10) + '0');
+        }
+        return Long.parseLong(new String(digits));
     }
 
     @Override

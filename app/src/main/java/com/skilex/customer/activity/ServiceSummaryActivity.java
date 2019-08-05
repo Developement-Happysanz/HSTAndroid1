@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,7 +43,10 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     ServiceHistory serviceHistory;
-    String res = "";
+    String res = "", serviceOrder = "";
+
+    Button additionalService;
+    ImageView go;
 
     TextView catName, serviceName, custName, serviceDate, timeSlot, providerName, servicePersonName, couponAmt,
             serviceStartTime, serviceEndTime, materials, serviceCharge, additionalCharge, subTotal, advanceAmt, advanceAmtLayout, total, viewBill,
@@ -109,9 +113,17 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                cancelCoupon();
+                PreferenceStorage.saveCoupon(getApplicationContext(), "");
                 finish();
             }
         });
+
+        additionalService = (Button) findViewById(R.id.add_service);
+        additionalService.setOnClickListener(this);
+
+        go = (ImageView) findViewById(R.id.go);
+        go.setOnClickListener(this);
     }
 
     public void callGetServiceSummary() {
@@ -180,8 +192,26 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             e.printStackTrace();
         }
 
-//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.COUPON_LIST;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void cancelCoupon() {
+        res = "remove_coupon";
+        JSONObject jsonObject = new JSONObject();
+        String id = "";
+        id = PreferenceStorage.getUserId(this);
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.REMOVE_COUPON;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
@@ -190,6 +220,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         JSONObject jsonObject = new JSONObject();
         String id = "";
         id = PreferenceStorage.getUserId(this);
+
         try {
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
             jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
@@ -201,6 +232,24 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
 
 //        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.APPLY_COUPON;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void proceedPay() {
+        res = "proceed_pay";
+        JSONObject jsonObject = new JSONObject();
+        String id = "";
+        id = PreferenceStorage.getUserId(this);
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.PROCEED_TO_PAY;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
@@ -260,7 +309,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                         catName.setText(getData.getString("main_category"));
                         serviceName.setText(getData.getString("service_name"));
                     }
-
+                    serviceOrder = getData.getString("service_order_id");
                     custName.setText(getData.getString("contact_person_name"));
                     serviceDate.setText(getData.getString("order_date"));
                     timeSlot.setText(getData.getString("time_slot"));
@@ -271,22 +320,21 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     materials.setText(getData.getString("material_notes"));
                     serviceCharge.setText(getData.getString("service_amount"));
                     additionalCharge.setText(getData.getString("additional_service_amt"));
+                    additionalService.setText("Additional services - " + getData.getString("additional_service"));
+                    if (getData.getString("additional_service").equalsIgnoreCase("0") ||
+                            getData.getString("additional_service_amt").isEmpty()) {
+                        additionalServiceLayout.setVisibility(View.GONE);
+                    }
                     subTotal.setText(getData.getString("total_service_cost"));
                     advanceAmt.setText(getData.getString("paid_advance_amt"));
-                    total.setText(getData.getString("payable_amount"));
                     couponAmt.setText(getData.getString("discount_amt"));
+//                    if (couponAmt.getText().toString().equalsIgnoreCase("0") ||
+//                            couponAmt.getText().toString().isEmpty()) {
+//                        total.setText(getData.getString("net_service_amount"));
+//                    } else {
+//                        total.setText(getData.getString("payable_amount"));
+//                    }
 
-//                            "additional_service": "0",
-//                            "": "",
-//                            "": "100.00",
-//                            "": "1000.00",
-//                            "": "0.00",
-//                            "coupon_id": "0",
-//                            "discount_amt": "0.00",
-//                            "": "1000.00",
-//                            "": "1000.00",
-//                            "": "0.00"
-//                "order_id": "1564304397-1-17-2"
 
                     callGetServiceStatus();
                 }
@@ -306,7 +354,6 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                             params.addRule(RelativeLayout.BELOW, R.id.choose_coupon_layout);
 //                        params.addRule(RelativeLayout.BELOW, applyCouponLayout);
                             advanceAmtLayout.setLayoutParams(params);
-                            getCouponList();
                         } else {
                             couponAppliedLayout.setVisibility(View.VISIBLE);
                             applyCouponLayout.setVisibility(View.GONE);
@@ -328,6 +375,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                         shareInvoice.setVisibility(View.VISIBLE);
 
                     }
+                    proceedPay();
                 }
                 if (res.equalsIgnoreCase("coupon")) {
                     JSONArray getData = response.getJSONArray("offer_details");
@@ -339,7 +387,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     for (int i = 0; i < getLength; i++) {
 
                         timeId = getData.getJSONObject(i).getString("id");
-                        timeName = getData.getJSONObject(i).getString("offer_description");
+                        timeName = getData.getJSONObject(i).getString("offer_code");
                         timeList.add(new StoreTimeSlot(timeId, timeName));
                     }
 
@@ -360,8 +408,15 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     couponContent.setText(response.getString("msg") + "%");
                     PreferenceStorage.saveCoupon(this, couponContent.getText().toString());
                     Intent i = new Intent(this, ServiceSummaryActivity.class);
+                    i.putExtra("serviceObj", serviceHistory);
                     startActivity(i);
                     finish();
+                }
+                if (res.equalsIgnoreCase("proceed_pay")) {
+                    JSONObject getData = response.getJSONObject("payment_details");
+                    total.setText(String.valueOf(Float.valueOf(getData.getString("payable_amount"))));
+                    PreferenceStorage.saveOrderId(this, getData.getString("order_id"));
+                    getCouponList();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -386,7 +441,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         StoreTimeSlot cty = timeList.get(which);
-//                        couponAmt.setText(cty.getTimeName());
+                        chooseCoupon.setText(cty.getTimeName());
                         timeSlotId = cty.getTimeId();
                     }
                 });
@@ -400,6 +455,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         }
         if (v == payBill) {
             Intent i = new Intent(this, InitialScreenActivity.class);
+            PreferenceStorage.saveCoupon(this, "");
             i.putExtra("advpay", total.getText().toString());
             i.putExtra("page", "service_pay");
             startActivity(i);
@@ -412,7 +468,20 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             showTimeSlotList();
         }
         if (v == applyCoupon) {
-            applyCoupon();
+            if (timeSlotId.isEmpty()) {
+                AlertDialogHelper.showSimpleAlertDialog(this, "Please choose coupon to apply");
+            } else {
+                applyCoupon();
+            }
+        }
+        if (v == additionalService) {
+            Intent i = new Intent(this, AdditionalServiceListActivity.class);
+            i.putExtra("serv", serviceOrder);
+            startActivity(i);
+        }
+        if (v == go) {
+            Intent i = new Intent(this, AdditionalServiceListActivity.class);
+            startActivity(i);
         }
     }
 }

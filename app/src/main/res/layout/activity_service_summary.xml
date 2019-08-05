@@ -34,6 +34,7 @@
             android:gravity="center_vertical|left"
             android:minHeight="60dp"
             android:padding="5dp"
+            android:fontFamily="@font/helvetica"
             android:text="@string/service_summary"
             android:textColor="@color/white"
             android:textSize="18sp"
@@ -64,6 +65,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:text="ABBBBVVCCA"
+                    android:fontFamily="@font/helvetica"
                     android:textColor="@color/colorPrimary"
                     android:textSize="20sp" />
 
@@ -73,6 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/service_category"
                     android:layout_marginStart="10dp"
+                    android:fontFamily="@font/helvetica"
                     android:gravity="center"
                     android:text="adfasdfasdf"
                     android:textSize="18sp" />
@@ -83,6 +86,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/service_name"
                     android:layout_marginTop="5dp"
+                    android:fontFamily="@font/helvetica"
                     android:layout_toEndOf="@id/img_customer"
                     android:paddingBottom="10dp"
                     android:text="@string/customer_name"
@@ -96,6 +100,7 @@
                     android:layout_below="@id/service_name"
                     android:layout_marginStart="30dp"
                     android:layout_marginTop="5dp"
+                    android:fontFamily="@font/helvetica"
                     android:layout_toEndOf="@id/service_time_slot"
                     android:paddingBottom="10dp"
                     android:text="@string/customer_name"
@@ -116,6 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/customer_name"
+                    android:fontFamily="@font/helvetica"
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/img_date"
                     android:paddingBottom="10dp"
@@ -129,6 +135,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/customer_name_txt"
                     android:layout_alignTop="@id/service_date"
+                    android:fontFamily="@font/helvetica"
                     android:layout_marginStart="30dp"
                     android:layout_toEndOf="@id/service_time_slot"
                     android:paddingBottom="10dp"
@@ -149,6 +156,7 @@
                     android:id="@+id/service_time_slot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
                     android:layout_below="@id/service_date"
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/img_time"
@@ -162,6 +170,7 @@
                     android:id="@+id/service_time_slot_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
                     android:layout_below="@id/service_date_txt"
                     android:layout_alignTop="@+id/service_time_slot"
                     android:layout_marginStart="30dp"
@@ -189,6 +198,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/img_time"
                     android:paddingBottom="10dp"
+                    android:fontFamily="@font/helvetica"
                     android:text="@string/service_provider"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -202,6 +212,7 @@
                     android:layout_alignTop="@+id/service_provider_name"
                     android:layout_marginStart="30dp"
                     android:layout_toEndOf="@id/service_time_slot"
+                    android:fontFamily="@font/helvetica"
                     android:paddingBottom="10dp"
                     android:text="@string/time"
                     android:textColor="@color/black"
@@ -222,6 +233,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/service_provider_name"
+                    android:fontFamily="@font/helvetica"
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/img_time"
                     android:paddingBottom="10dp"
@@ -235,6 +247,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/service_provider_name_txt"
+                    android:fontFamily="@font/helvetica"
                     android:layout_alignTop="@+id/service_person"
                     android:layout_marginStart="30dp"
                     android:layout_toEndOf="@id/service_time_slot"
@@ -297,6 +310,7 @@
                             android:id="@+id/service_start_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/helvetica"
                             android:layout_marginTop="5dp"
                             android:gravity="center"
                             android:text="asdfasdfasdfasdfadsfasdfdfadfadfadfasdff"
@@ -324,6 +338,7 @@
                             android:id="@+id/service_end_time"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/helvetica"
                             android:layout_marginTop="5dp"
                             android:gravity="center"
                             android:text="asdfasdfasdfasdfadsfasdfdfadfadfadfasdff"
@@ -344,11 +359,14 @@
                     android:orientation="horizontal">
 
                     <Button
+                        android:id="@+id/add_service"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_round_color_border"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
+                        android:paddingStart="40dp"
+                        android:fontFamily="@font/helvetica"
+                        android:textAllCaps="false"
+                        android:paddingEnd="40dp"
                         android:text="@string/additional_services" />
 
                     <ImageView
@@ -378,6 +396,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
+                        android:fontFamily="@font/helvetica"
                         android:text="Materials Used"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
@@ -391,6 +410,7 @@
                         android:layout_marginEnd="20dp"
                         android:padding="10dp"
                         android:text="@string/view_bill"
+                        android:fontFamily="@font/helvetica"
                         android:textColor="@color/blue"
                         android:textSize="16sp" />
 
@@ -401,6 +421,7 @@
                         android:layout_below="@id/view_bills"
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
+                        android:fontFamily="@font/helvetica"
                         android:text="lopemipsum"
                         android:textSize="16sp" />
 
@@ -428,6 +449,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/payment"
+                        android:fontFamily="@font/helvetica"
                         android:textColor="@color/black"
                         android:textSize="18sp" />
 
@@ -435,6 +457,7 @@
                         android:id="@+id/service_charge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/helvetica"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="40dp"
                         android:text="@string/service_charge"
@@ -443,6 +466,7 @@
                     <TextView
                         android:id="@+id/service_charge_amount"
                         android:layout_width="wrap_content"
+                        android:fontFamily="@font/helvetica"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/service_charge"
                         android:layout_alignParentEnd="true"
@@ -454,6 +478,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/service_charge"
                         android:layout_marginStart="20dp"
+                        android:fontFamily="@font/helvetica"
                         android:layout_marginTop="20dp"
                         android:text="@string/additional_charge"
                         android:textSize="16sp" />
@@ -463,6 +488,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/additional_service_charge"
+                        android:fontFamily="@font/helvetica"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="20dp" />
 
@@ -471,6 +497,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/additional_service_charge"
+                        android:fontFamily="@font/helvetica"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:text="@string/sub_total"
@@ -479,6 +506,7 @@
                     <TextView
                         android:id="@+id/sub_total_amount"
                         android:layout_width="wrap_content"
+                        android:fontFamily="@font/helvetica"
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/sub_total"
                         android:layout_alignParentEnd="true"
@@ -495,6 +523,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
+                            android:fontFamily="@font/helvetica"
                             android:layout_marginTop="20dp"
                             android:text="@string/coupon_applied"
                             android:textSize="16sp" />
@@ -506,6 +535,7 @@
                             android:layout_below="@+id/coupon_applied"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="20dp"
+                            android:fontFamily="@font/helvetica"
                             android:text="@string/select_coupon"
                             android:textColor="@color/green"
                             android:textSize="14sp" />
@@ -514,6 +544,7 @@
                             android:id="@+id/coupon_applied_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/helvetica"
                             android:layout_alignTop="@id/coupon_applied"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="20dp" />
@@ -537,6 +568,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_alignParentStart="true"
+                            android:fontFamily="@font/helvetica"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="10dp"
                             android:layout_toLeftOf="@+id/apply_coupon"
@@ -551,6 +583,7 @@
                             android:layout_alignTop="@id/coupon_select"
                             android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
+                            android:fontFamily="@font/helvetica"
                             android:layout_marginEnd="20dp"
                             android:gravity="center_vertical"
                             android:padding="5dp"
@@ -564,6 +597,7 @@
                         android:id="@+id/advance_charge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/helvetica"
                         android:layout_below="@+id/coupon_applied_layoout"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
@@ -574,6 +608,7 @@
                         android:id="@+id/advance_charge_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/helvetica"
                         android:layout_alignTop="@id/advance_charge"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="20dp" />
@@ -584,6 +619,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/advance_charge"
                         android:layout_marginStart="20dp"
+                        android:fontFamily="@font/helvetica"
                         android:layout_marginTop="20dp"
                         android:text="@string/grand_total_pay"
                         android:textSize="16sp" />
@@ -592,6 +628,7 @@
                         android:id="@+id/grand_total_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/helvetica"
                         android:layout_alignTop="@id/grand_total"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="20dp" />
@@ -607,8 +644,10 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/button_round_color"
+                    android:fontFamily="@font/helvetica"
                     android:paddingStart="40dp"
                     android:paddingEnd="40dp"
+                    android:textAllCaps="false"
                     android:text="@string/share_invoice"
                     android:textColor="@color/white"
                     android:visibility="gone" />
@@ -621,6 +660,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/helvetica"
+                    android:textAllCaps="false"
                     android:background="@drawable/button_round_color"
                     android:paddingStart="40dp"
                     android:paddingEnd="40dp"

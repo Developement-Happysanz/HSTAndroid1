@@ -35,6 +35,7 @@
             android:gravity="center_vertical|left"
             android:minHeight="60dp"
             android:padding="5dp"
+            android:fontFamily="@font/helvetica"
             android:text="@string/profile_title"
             android:layout_marginLeft="10dp"
             android:textColor="@color/white"
@@ -65,8 +66,9 @@
             android:layout_alignBottom="@id/user_profile_img"
             android:layout_marginStart="20dp"
             android:layout_toRightOf="@id/user_profile_img"
+            android:fontFamily="@font/helvetica"
             android:gravity="center"
-            android:text="Bala Murali Krishna"
+            android:text="Guest"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -88,6 +90,7 @@
                 android:id="@+id/user_phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/helvetica"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:text="1234567890" />
@@ -114,6 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/helvetica"
                 android:layout_marginStart="10dp"
                 android:text="abc@efgh.xzy" />
 
@@ -156,6 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:fontFamily="@font/helvetica"
                 android:layout_marginStart="10dp"
                 android:text="@string/profile_title"
                 android:textColor="@color/black"
@@ -182,6 +187,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
+                android:fontFamily="@font/helvetica"
                 android:text="@string/about"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -207,6 +213,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
+                android:fontFamily="@font/helvetica"
                 android:text="@string/share"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -228,8 +235,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginStart="20dp"
                     android:src="@drawable/ic_logout" />
 
@@ -237,8 +244,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/helvetica"
                     android:text="@string/logout"
+                    android:layout_marginStart="10dp"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 

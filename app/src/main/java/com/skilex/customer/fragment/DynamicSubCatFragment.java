@@ -48,7 +48,7 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
     Context context;
     View view;
     static ArrayList<SubCategory> subCategoryArrayList;
-    ArrayList<Service> serviceArrayList = new ArrayList<>();
+    ArrayList<Service> serviceArrayList;
     int val;
     MainServiceListAdapter serviceListAdapter;
     private static final String TAG = DynamicSubCatFragment.class.getName();
@@ -60,6 +60,8 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
     ListView loadMoreListView;
     Boolean msgErr = false;
     Boolean noService = false;
+    String res = "";
+    String id = "";
 
     static boolean _hasLoadedOnce = false; // your boolean field
 
@@ -84,12 +86,12 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
 
         if (this.isVisible()) {
             // we check that the fragment is becoming visible
+//            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
             if (isFragmentVisible_ && !_hasLoadedOnce) {
                 loadCat();
-
                 _hasLoadedOnce = true;
 //                if(noService) {
-                    AlertDialogHelper.showSimpleAlertDialog(getActivity(), "No service found");
+                    AlertDialogHelper.showSimpleAlertDialog(view.getContext(), "No service found");
 //                    noService = false;
 //                }
             }
@@ -99,15 +101,15 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        serviceHelper = new ServiceHelper(getActivity());
-        serviceHelper.setServiceListener(this);
-        progressDialogHelper = new ProgressDialogHelper(getActivity());
         view = inflater.inflate(R.layout.fragment_list, container, false);
+        serviceHelper = new ServiceHelper(view.getContext());
+        serviceHelper.setServiceListener(this);
+        progressDialogHelper = new ProgressDialogHelper(view.getContext());
         val = getArguments().getInt("someInt", 0);
 //        categories = subCategoryList.getCategoryArrayList();
 //        categories = subCategoryList.getCategoryArrayList();
         subCatId = subCategoryArrayList.get(val).getSub_cat_id();
-        PreferenceStorage.saveSubCatClick(getActivity(), subCatId);
+//        PreferenceStorage.saveSubCatClick(view.getContext(), subCatId);
 //        rateCount = (TextView) view.findViewById(R.id.service_count);
 //        summary = (TextView) view.findViewById(R.id.view_summary);
 //        summary.setOnClickListener(this);
@@ -115,7 +117,7 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
 //        c.setText("" + subCatId);
         loadMoreListView = view.findViewById(R.id.serviceList);
         loadMoreListView.setOnItemClickListener(this);
-        loadCat();
+        clearCart();
         return view;
     }
 
@@ -124,20 +126,30 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
             try {
-                JSONArray getData = response.getJSONArray("services");
+                if (res.equalsIgnoreCase("services")) {
+                    JSONArray getData = response.getJSONArray("services");
 //                loadMembersList(getData.length());
-                Gson gson = new Gson();
-                ServiceList serviceList = gson.fromJson(response.toString(), ServiceList.class);
-                if (serviceList.getserviceArrayList() != null && serviceList.getserviceArrayList().size() > 0) {
-                    totalCount = serviceList.getCount();
+                    Gson gson = new Gson();
+                    ServiceList serviceList = gson.fromJson(response.toString(), ServiceList.class);
+                    serviceArrayList = new ArrayList<>();
+                    if (serviceList.getserviceArrayList() != null && serviceList.getserviceArrayList().size() > 0) {
+                        totalCount = serviceList.getCount();
 //                    this.categoryArrayList.addAll(subCategoryList.getCategoryArrayList());
-                    isLoadingForFirstTime = false;
-                    updateListAdapter(serviceList.getserviceArrayList());
-                } else {
-                    if (serviceArrayList != null) {
-                        serviceArrayList.clear();
+                        isLoadingForFirstTime = false;
                         updateListAdapter(serviceList.getserviceArrayList());
+                    } else {
+                        if (serviceArrayList != null) {
+                            serviceArrayList.clear();
+                            updateListAdapter(serviceList.getserviceArrayList());
+//                            serviceListAdapter = new MainServiceListAdapter(view.getContext(), this.serviceArrayList);
+//                            loadMoreListView.setAdapter(serviceListAdapter);
+                        }
                     }
+                } else if (res.equalsIgnoreCase("clear")) {
+                    PreferenceStorage.saveServiceCount(view.getContext(), "");
+                    PreferenceStorage.saveRate(view.getContext(), "");
+                    PreferenceStorage.savePurchaseStatus(view.getContext(), false);
+                    loadCat();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -145,6 +157,22 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
         } else {
             Log.d(TAG, "Error while sign In");
         }
+    }
+
+    private void clearCart() {
+        res = "clear";
+        id = PreferenceStorage.getUserId(view.getContext());
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.CLEAR_CART;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     private boolean validateSignInResponse(JSONObject response) {
@@ -160,10 +188,10 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        if (msg.equalsIgnoreCase("Services not found")) {
-                            msgErr = true;
-                        }
-//                        AlertDialogHelper.showSimpleAlertDialog(getActivity(), msg);
+//                        if (msg.equalsIgnoreCase("Services not found")) {
+//                            msgErr = true;
+//                        }
+//                        AlertDialogHelper.showSimpleAlertDialog(view.getContext(), msg);
                         if (msg.equalsIgnoreCase("Service not found")){
                             noService = true;
                         }
@@ -185,15 +213,14 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
     }
 
     private void loadCat() {
+        res = "services";
         JSONObject jsonObject = new JSONObject();
-        String id = "";
-        String id1 = "";
+        String catId = "";
 //        id = category.getCat_id();
-        id = PreferenceStorage.getCatClick(getActivity());
-        id1 = PreferenceStorage.getUserId(getActivity());
+        catId = PreferenceStorage.getCatClick(view.getContext());
         try {
-            jsonObject.put(SkilExConstants.USER_MASTER_ID, id1);
-            jsonObject.put(SkilExConstants.MAIN_CATEGORY_ID, id);
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+            jsonObject.put(SkilExConstants.MAIN_CATEGORY_ID, catId);
             jsonObject.put(SkilExConstants.SUB_CATEGORY_ID, subCatId);
 
         } catch (JSONException e) {
@@ -207,14 +234,14 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
 
     protected void updateListAdapter(ArrayList<Service> serviceArrayList) {
         if (msgErr) {
-            AlertDialogHelper.showSimpleAlertDialog(getActivity(), "No Service found");
+            AlertDialogHelper.showSimpleAlertDialog(view.getContext(), "No Service found");
         } else {
 
         }
         this.serviceArrayList.clear();
         this.serviceArrayList.addAll(serviceArrayList);
         if (serviceListAdapter == null) {
-            serviceListAdapter = new MainServiceListAdapter(getActivity(), this.serviceArrayList);
+            serviceListAdapter = new MainServiceListAdapter(view.getContext(), this.serviceArrayList);
             loadMoreListView.setAdapter(serviceListAdapter);
         } else {
             serviceListAdapter.notifyDataSetChanged();
@@ -234,7 +261,7 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
             service = serviceArrayList.get(position);
         }
 
-        Intent intent = new Intent(getActivity(), ServiceDetailActivity.class);
+        Intent intent = new Intent(view.getContext(), ServiceDetailActivity.class);
         intent.putExtra("serviceObj", service);
         startActivity(intent);
     }

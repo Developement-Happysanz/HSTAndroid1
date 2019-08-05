@@ -2,6 +2,7 @@ package com.skilex.customer.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -42,7 +44,7 @@ public class ServiceHistoryListAdapter extends BaseAdapter {
     public ServiceHistoryListAdapter(Context context, ArrayList<ServiceHistory> services) {
         this.context = context;
         this.services = services;
-        Collections.reverse(services);
+//        Collections.reverse(services);
 //        transformation = new RoundedTransformationBuilder()
 //                .cornerRadiusDp(0)
 //                .oval(false)
@@ -86,6 +88,7 @@ public class ServiceHistoryListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             holder.txtCatName = (TextView) convertView.findViewById(R.id.service_category);
             holder.txtSubCatName = (TextView) convertView.findViewById(R.id.service_name);
+            holder.rtbRating = convertView.findViewById(R.id.ratingBar);
             if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
                 holder.txtCatName.setText(services.get(position).getmain_category_ta());
                 holder.txtSubCatName.setText(services.get(position).getservice_ta_name());
@@ -105,6 +108,8 @@ public class ServiceHistoryListAdapter extends BaseAdapter {
                 holder.txtStatus.setText(services.get(position).getorder_status());
                 holder.imgStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.button_circle_completed));
                 holder.imgStatus.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
+                holder.rtbRating.setVisibility(View.VISIBLE);
+                holder.rtbRating.setRating(Integer.parseInt(services.get(position).getRating()));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     holder.relativeLayout.setForeground(ContextCompat.getDrawable(context, R.drawable.transparent_round));
                 }
@@ -148,6 +153,8 @@ public class ServiceHistoryListAdapter extends BaseAdapter {
                 holder.txtStatus.setText(services.get(position).getorder_status());
                 holder.imgStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.button_circle_completed));
                 holder.imgStatus.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
+                holder.rtbRating.setVisibility(View.VISIBLE);
+                holder.rtbRating.setRating(Integer.parseInt(services.get(position).getRating()));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     holder.relativeLayout.setForeground(ContextCompat.getDrawable(context, R.drawable.transparent_round));
                 }
@@ -208,6 +215,7 @@ public class ServiceHistoryListAdapter extends BaseAdapter {
         private TextView txtCatName, txtSubCatName, txtDate, txtTime, txtStatus;
         private ImageView imgStatus, serviceImage;
         private RelativeLayout relativeLayout;
+        public RatingBar rtbRating;
     }
 
     public boolean ismSearching() {
