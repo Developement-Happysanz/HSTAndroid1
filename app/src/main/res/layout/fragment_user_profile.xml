@@ -54,7 +54,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="40dp"
             android:src="@drawable/ic_user_profile_image" />
 
@@ -68,6 +68,7 @@
             android:layout_toRightOf="@id/user_profile_img"
             android:fontFamily="@font/helvetica"
             android:gravity="center"
+            android:textStyle="bold"
             android:text="Guest"
             android:textColor="@color/black"
             android:textSize="18sp" />
@@ -81,8 +82,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_phone" />
 
@@ -107,8 +108,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_email" />
 
@@ -152,8 +153,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/ic_profile_default_blue" />
 
             <TextView
@@ -164,7 +165,7 @@
                 android:layout_marginStart="10dp"
                 android:text="@string/profile_title"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -178,8 +179,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/ic_logo_blue" />
 
             <TextView
@@ -190,7 +191,7 @@
                 android:fontFamily="@font/helvetica"
                 android:text="@string/about"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -204,8 +205,8 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:src="@drawable/ic_share_app" />
 
             <TextView
@@ -216,7 +217,7 @@
                 android:fontFamily="@font/helvetica"
                 android:text="@string/share"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -247,7 +248,7 @@
                     android:fontFamily="@font/helvetica"
                     android:text="@string/logout"
                     android:layout_marginStart="10dp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/Logout"
                     android:textSize="18sp" />
 
             </LinearLayout>

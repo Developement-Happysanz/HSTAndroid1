@@ -79,8 +79,7 @@
                     android:textColor="@color/black"
                     android:layout_centerHorizontal="true"
                     android:fontFamily="@font/helvetica"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/service_cost"/>
+                    android:layout_marginTop="10dp"/>
 
                 <TextView
                     android:id="@+id/cost"
@@ -92,6 +91,7 @@
                     android:layout_below="@+id/cost_text"
                     android:fontFamily="@font/helvetica"
                     android:text="200"
+                    android:textStyle="bold"
                     android:layout_centerInParent="true"
                     android:textSize="26sp"/>
 
@@ -207,6 +207,37 @@
                         android:layout_marginBottom="10dp"/>
 
                 </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/others_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shadow_round"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_below="@id/procedure_layout"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/others"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"/>
+
+                    <TextView
+                        android:id="@+id/others_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"/>
+
+                </LinearLayout>
+
 
             </RelativeLayout>
 

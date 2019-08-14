@@ -41,19 +41,6 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/clear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/clear"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/white"
-            android:fontFamily="@font/helvetica"
-            android:padding="10dp"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -64,6 +51,7 @@
             android:id="@+id/listSumService"
             android:layout_width="match_parent"
             android:layout_height="250dp"
+            android:background="@color/white"
             android:layout_alignParentTop="true" />
 
         <!--<ListView-->
@@ -72,10 +60,24 @@
             <!--android:layout_height="250dp"-->
             <!--android:layout_alignParentTop="true" />-->
 
+
+        <TextView
+            android:id="@+id/clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/clear"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/black"
+            android:fontFamily="@font/helvetica"
+            android:layout_below="@id/listSumService"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@id/listSumService"
+            android:layout_below="@id/clear"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
@@ -85,7 +87,7 @@
             android:id="@+id/total_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/listSumService"
+            android:layout_below="@id/clear"
             android:layout_marginTop="20dp"
             android:orientation="vertical">
 
@@ -97,23 +99,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="0.5"
                     android:fontFamily="@font/helvetica"
                     android:text="@string/grand_total"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/total_cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="20dp"
                     android:layout_weight="0.5"
                     android:gravity="right"
                     android:fontFamily="@font/helvetica"
                     android:text="Rs.0"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -124,23 +126,23 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="0.5"
                     android:fontFamily="@font/helvetica"
                     android:text="@string/additional_charge"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/additional_cost"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right"
-                    android:layout_marginRight="10dp"
+                    android:layout_marginRight="20dp"
                     android:layout_weight="0.5"
                     android:fontFamily="@font/helvetica"
                     android:gravity="right"
                     android:text="Rs.0"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
             </LinearLayout>
 
@@ -151,12 +153,15 @@
         <Button
             android:id="@+id/confirm"
             android:layout_below="@id/total_layout"
-            android:layout_width="120dp"
+            android:layout_width="wrap_content"
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_round_color"
             android:textColor="@color/white"
             android:fontFamily="@font/helvetica"
+            android:textStyle="bold"
             android:layout_centerHorizontal="true"
             android:textAllCaps="false"
             android:text="@string/confirm"/>

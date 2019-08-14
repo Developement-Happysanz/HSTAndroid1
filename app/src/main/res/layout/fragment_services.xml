@@ -106,12 +106,14 @@
                     android:src="@drawable/ic_requested_service" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="left"
+                    android:layout_marginStart="40dp"
+                    android:textColor="@color/black"
                     android:fontFamily="@font/helvetica"
                     android:text="@string/req_services"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -136,12 +138,14 @@
                     android:src="@drawable/ic_ongoing_service" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_marginStart="40dp"
+                    android:gravity="left"
+                    android:textColor="@color/black"
                     android:fontFamily="@font/helvetica"
                     android:text="@string/ong_services"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
@@ -166,12 +170,14 @@
                     android:src="@drawable/ic_service_history" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="left"
                     android:fontFamily="@font/helvetica"
+                    android:layout_marginStart="40dp"
+                    android:textColor="@color/black"
                     android:text="@string/service_history"
-                    android:textSize="20sp" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 

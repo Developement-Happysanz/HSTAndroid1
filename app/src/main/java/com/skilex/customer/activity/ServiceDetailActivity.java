@@ -38,7 +38,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     private ImageView serviceImage;
-    private TextView serviceCost, serviceIncludes, serviceExcludes, serviceProcedure;
+    private TextView serviceCost, costText, serviceIncludes, serviceExcludes, serviceProcedure, serviceOthers;
     private ScrollView scrollView;
     Service service;
     Button bookNow;
@@ -61,9 +61,11 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         });
 
         serviceCost = (TextView) findViewById(R.id.cost);
+        costText = (TextView) findViewById(R.id.cost_text);
         serviceIncludes = (TextView) findViewById(R.id.include_text);
         serviceExcludes = (TextView) findViewById(R.id.exclude_text);
         serviceProcedure = (TextView) findViewById(R.id.procedure_text);
+        serviceOthers = (TextView) findViewById(R.id.others_text);
         scrollView = (ScrollView) findViewById(R.id.extras);
         serviceImage = (ImageView) findViewById(R.id.service_image);
         bookNow = (Button) findViewById(R.id.book_now);
@@ -163,18 +165,27 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                 if (res.equalsIgnoreCase("detail")) {
                     JSONObject data = response.getJSONObject("service_details");
                     serviceCost.setText("₹" + data.getString("rate_card"));
+                    if (PreferenceStorage.getLang(this).equalsIgnoreCase("tam")) {
+                        costText.setText(data.getString("rate_card_details"));
+                    } else {
+                        costText.setText(data.getString("rate_card_details_ta"));
+                    }
                     if (!data.getString("inclusions").isEmpty() ||
-                            !data.getString("exclusions").isEmpty() || !data.getString("service_procedure").isEmpty()) {
+                            !data.getString("exclusions").isEmpty() ||
+                            !data.getString("service_procedure").isEmpty() ||
+                            !data.getString("others").isEmpty()) {
                         if (PreferenceStorage.getLang(this).equalsIgnoreCase("tam")) {
                             serviceIncludes.setText(data.getString("inclusions_ta"));
                             serviceExcludes.setText(data.getString("exclusions_ta"));
                             serviceProcedure.setText(data.getString("service_procedure_ta"));
+                            serviceOthers.setText(data.getString("others_ta"));
                         } else {
                             serviceIncludes.setText(data.getString("inclusions"));
                             serviceExcludes.setText(data.getString("exclusions"));
                             serviceProcedure.setText(data.getString("service_procedure"));
-                            scrollView.setVisibility(View.VISIBLE);
+                            serviceOthers.setText(data.getString("others"));
                         }
+                        scrollView.setVisibility(View.VISIBLE);
                     }
                     String url = "";
                     url = data.getString("service_pic_url");

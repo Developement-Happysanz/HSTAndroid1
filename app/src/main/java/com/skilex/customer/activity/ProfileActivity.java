@@ -278,11 +278,13 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             edtMail.setError(getString(R.string.error_entry));
             requestFocus(edtMail);
             return false;
-        } else if (!SkilExValidator.checkNullString(this.edtAddress.getText().toString().trim())) {
-            edtAddress.setError(getString(R.string.error_entry));
-            requestFocus(edtAddress);
-            return false;
-        } else {
+        }
+//        else if (!SkilExValidator.checkNullString(this.edtAddress.getText().toString().trim())) {
+//            edtAddress.setError(getString(R.string.error_entry));
+//            requestFocus(edtAddress);
+//            return false;
+//        }
+        else {
             return true;
         }
     }

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/grey"
     android:orientation="vertical">
 
     <FrameLayout
@@ -23,10 +22,13 @@
                 android:id="@+id/sub_category_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
                 android:fontFamily="@font/helvetica"
-                android:layout_marginLeft="180dp"
-                android:text="samplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesample" />
+                android:layout_marginLeft="100dp"
+                android:textColor="@color/black"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/add_to_list"
+                android:text="samplesa dsfasdf asdfasdf sadfadsf fadfadfa adf sdfa asdfasdf asdf dsfasd sdfasdf " />
 
             <ImageView
                 android:id="@+id/add_to_list"

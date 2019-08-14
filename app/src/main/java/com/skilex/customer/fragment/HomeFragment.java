@@ -135,7 +135,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                 searchView.setIconified(false);
             }
         });
-
+        searchView.setQueryHint("Search for services");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

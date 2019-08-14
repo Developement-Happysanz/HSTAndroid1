@@ -174,13 +174,13 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 
             }
 
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
         DatePicker dP = fromDatePickerDialog.getDatePicker();
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DAY_OF_MONTH, 2);
         Date result = cal.getTime();
-        dP.setMinDate(System.currentTimeMillis()-1000);
+        dP.setMinDate(System.currentTimeMillis() - 1000);
         dP.setMaxDate(result.getTime());
 
         serviceTimeSlot = (EditText) findViewById(R.id.time_slot);
@@ -276,8 +276,6 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 //        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 //
 //    }
-
-
 
 
     private void updateLabel() {
@@ -524,64 +522,74 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     }
 
     private void setVals() {
+        if (validateFields()) {
 
-        String id = "";
-        id = PreferenceStorage.getUserId(this);
+            String id = "";
+            id = PreferenceStorage.getUserId(this);
 
-        String oldDate = "";
-        Date date = null;
-        String newDate = "";
-        oldDate = serviceDate.getText().toString();
-        String myFormat = "yyyy-MM-dd"; //In which you need put here
-        String format = "dd-MM-yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-        SimpleDateFormat formatter = new SimpleDateFormat(format);
-        try {
-            date = formatter.parse(oldDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
+            String oldDate = "";
+            Date date = null;
+            String newDate = "";
+            oldDate = serviceDate.getText().toString();
+            String myFormat = "yyyy-MM-dd"; //In which you need put here
+            String format = "dd-MM-yyyy"; //In which you need put here
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
+            SimpleDateFormat formatter = new SimpleDateFormat(format);
+            try {
+                date = formatter.parse(oldDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            newDate = sdf.format(date);
+
+            String latlng = "";
+            if (position != null) {
+                latlng = position.latitude + "," + position.longitude;
+            } else {
+                latlng = "";
+            }
+            if (latlng.isEmpty() || latlng.equalsIgnoreCase(",")) {
+                if (customerAddress.getText().toString().isEmpty()) {
+                    AlertDialogHelper.showSimpleAlertDialog(this, "Please pick your location in map or enter address.");
+                } else {
+                    position = getLocationFromAddress(customerAddress.getText().toString());
+                    if (position != null) {
+                        latlng = position.latitude + "," + position.longitude;
+                    } else {
+                        latlng = "";
+                    }
+                    sendVals(id, latlng, newDate);
+                }
+            } else {
+                sendVals(id, latlng, newDate);
+            }
         }
-        newDate = sdf.format(date);
-
-        String latlng = "";
-        if (position != null) {
-            latlng = position.latitude + "," + position.longitude;
-        } else {
-            latlng = "";
-        }
-        if (latlng.isEmpty() || latlng.equalsIgnoreCase(",")) {
-            AlertDialogHelper.showSimpleAlertDialog(this, "Please pick your location in map.");
-        } else {
-            sendVals(id, latlng, newDate);
-        }
-
     }
 
     private void sendVals(String id, String latLng, String newDate) {
-        if (validateFields()) {
-            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            res = "send";
-            JSONObject jsonObject = new JSONObject();
-            try {
-                jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
-                jsonObject.put(SkilExConstants.CONTACT_PERSON, customerName.getText().toString());
-                jsonObject.put(SkilExConstants.CONTACT_PERSON_NUMBER, customerNumber.getText().toString());
-                jsonObject.put(SkilExConstants.SERVICE_LATLNG, latLng);
-                if (addresses.isEmpty()){
-                    jsonObject.put(SkilExConstants.SERVICE_LOCATION, "");
-                } else {
-                    jsonObject.put(SkilExConstants.SERVICE_LOCATION, addresses.get(0).getSubLocality());
-                }
-                jsonObject.put(SkilExConstants.SERVICE_ADDRESS, customerAddress.getText().toString());
-                jsonObject.put(SkilExConstants.ORDER_DATE, newDate);
-                jsonObject.put(SkilExConstants.ORDER_TIMESLOT, timeSlotId);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        res = "send";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+            jsonObject.put(SkilExConstants.CONTACT_PERSON, customerName.getText().toString());
+            jsonObject.put(SkilExConstants.CONTACT_PERSON_NUMBER, customerNumber.getText().toString());
+            jsonObject.put(SkilExConstants.SERVICE_LATLNG, latLng);
+            if (addresses.isEmpty()) {
+                jsonObject.put(SkilExConstants.SERVICE_LOCATION, "");
+            } else {
+                jsonObject.put(SkilExConstants.SERVICE_LOCATION, addresses.get(0).getSubLocality());
             }
-            String url = SkilExConstants.BUILD_URL + SkilExConstants.PROCEED_TO_BOOK;
-            serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+            jsonObject.put(SkilExConstants.SERVICE_ADDRESS, customerAddress.getText().toString());
+            jsonObject.put(SkilExConstants.ORDER_DATE, newDate);
+            jsonObject.put(SkilExConstants.ORDER_TIMESLOT, timeSlotId);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.PROCEED_TO_BOOK;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
     }
 
     private boolean validateFields() {
@@ -629,7 +637,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.header_layout, null);
         TextView header = (TextView) view.findViewById(R.id.header);
-        header.setText("Select City");
+        header.setText("Select Time Slot");
         builderSingle.setCustomTitle(view);
 
         builderSingle.setAdapter(timeSlotAdapter,
@@ -695,6 +703,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                 Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+        startLocationUpdates();
 
         // Permissions ok, we get last location
 //        location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
@@ -728,7 +737,31 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                 });
 
 
-        startLocationUpdates();
+//        startLocationUpdates();
+    }
+
+    public LatLng getLocationFromAddress(String strAddress) {
+
+        Geocoder coder = new Geocoder(this);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            addresses = address;
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng((location.getLatitude()), (location.getLongitude()));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return p1;
     }
 
     private void startLocationUpdates() {
@@ -821,7 +854,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 
     @Override
     public void onClick(View v) {
-        if(v == serviceDate) {
+        if (v == serviceDate) {
             fromDatePickerDialog.show();
         }
     }

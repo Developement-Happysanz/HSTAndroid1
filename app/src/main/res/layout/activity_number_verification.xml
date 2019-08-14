@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/img_verification"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:src="@drawable/ic_otp" />
 
         <RelativeLayout
@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
+                android:textColor="@color/black"
                 android:fontFamily="@font/helvetica"
                 android:text="@string/verificationcode"
                 android:textSize="16sp"
@@ -82,6 +83,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/blue"
                     android:layout_marginTop="10dp"
+                    android:textStyle="bold"
                     android:layout_centerHorizontal="true"
                     android:fontFamily="@font/helvetica"
                     android:layout_below="@+id/contentresend"

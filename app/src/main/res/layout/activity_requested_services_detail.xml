@@ -58,18 +58,19 @@
                 android:id="@+id/category_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:text="@string/category"
                 android:fontFamily="@font/helvetica"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/blue"
-                android:textSize="20sp"
+                android:layout_marginStart="10dp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/sub_category_name"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:fontFamily="@font/helvetica"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/category_name"
                 android:layout_marginStart="10dp"
                 android:text="@string/subcategory"
@@ -81,53 +82,57 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/helvetica"
                 android:layout_below="@id/sub_category_name"
-                android:layout_marginTop="5dp"
                 android:layout_toEndOf="@id/img_date"
+                android:layout_marginTop="5dp"
                 android:text="@string/date"
+                android:layout_marginStart="10dp"
                 android:textSize="16sp" />
 
             <ImageView
                 android:id="@+id/img_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignStart="@+id/sub_category_name"
+                android:padding="3dp"
                 android:layout_alignTop="@id/service_date"
                 android:layout_alignBottom="@id/service_date"
-                android:layout_alignParentStart="true"
                 android:src="@drawable/ic_date_blue" />
 
             <TextView
                 android:id="@+id/service_time_slot"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/service_date"
                 android:fontFamily="@font/helvetica"
+                android:layout_below="@id/service_date"
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@id/img_time"
-                android:paddingBottom="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/time"
                 android:textSize="16sp" />
 
 
             <ImageView
                 android:id="@+id/img_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_alignTop="@id/service_time_slot"
                 android:layout_alignBottom="@id/service_time_slot"
-                android:layout_alignParentStart="true"
-                android:paddingBottom="5dp"
+                android:padding="3dp"
+                android:layout_alignStart="@+id/sub_category_name"
                 android:src="@drawable/ic_time_blue" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/img_time"
-                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
-                android:background="@color/request"
+                android:src="@drawable/ic_requested_service"
+                android:layout_alignParentTop="true"
+                android:layout_alignBottom="@id/img_time"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
-                android:src="@drawable/ic_requested_service" />
+                android:background="@color/request"/>
 
         </RelativeLayout>
 
@@ -256,7 +261,7 @@
                 android:fontFamily="@font/helvetica"
                 android:text="@string/customer_name"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -343,7 +348,7 @@
                 android:text="@string/service_approximate"
                 android:fontFamily="@font/helvetica"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -370,6 +375,7 @@
             android:fontFamily="@font/helvetica"
             android:textAllCaps="false"
             android:text="@string/cancel_service"
+            android:textStyle="bold"
             android:textColor="@color/white" />
 
     </LinearLayout>

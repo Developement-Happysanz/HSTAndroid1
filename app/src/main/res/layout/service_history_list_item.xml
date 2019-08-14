@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -21,7 +22,7 @@
             android:fontFamily="@font/helvetica"
             android:text="ABBBBVVCCA"
             android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/service_name"
@@ -40,6 +41,7 @@
             android:layout_below="@id/service_name"
             android:fontFamily="@font/helvetica"
             android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
             android:paddingBottom="2dp"
             android:layout_toEndOf="@id/img_date"
             android:text="@string/date"
@@ -47,11 +49,11 @@
 
         <ImageView
             android:id="@+id/img_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignTop="@id/service_date"
-            android:paddingBottom="2dp"
             android:layout_alignBottom="@id/service_date"
+            android:layout_alignStart="@id/service_name"
             android:src="@drawable/ic_date_blue" />
 
         <TextView
@@ -62,18 +64,20 @@
             android:fontFamily="@font/helvetica"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/img_time"
-            android:paddingBottom="10dp"
+            android:layout_marginStart="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:text="@string/time"
             android:textSize="16sp" />
 
 
         <ImageView
             android:id="@+id/img_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_alignTop="@id/service_time_slot"
             android:layout_alignBottom="@id/service_time_slot"
-            android:paddingBottom="5dp"
+            android:layout_alignStart="@id/service_name"
             android:src="@drawable/ic_time_blue" />
 
 
