@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -100,6 +101,7 @@
                     android:background="@drawable/shadow_round"
                     android:layout_gravity="bottom"
                     android:queryHint="@string/search"
+                    app:defaultQueryHint="@string/search"
                     android:clickable="true"
                     android:elevation="6dp"
                     android:focusable="true"

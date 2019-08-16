@@ -114,7 +114,6 @@ public class SearchResultActivity extends AppCompatActivity implements IServiceL
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
                         AlertDialogHelper.showSimpleAlertDialog(this, msg);
-                        finish();
 
                     } else {
                         signInSuccess = true;

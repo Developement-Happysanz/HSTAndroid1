@@ -173,6 +173,7 @@
                 android:fontFamily="@font/helvetica"
                 android:layout_marginRight="10dp"
                 android:textAllCaps="false"
+                android:textStyle="bold"
                 android:textColor="@color/white"
                 android:background="@drawable/button_round_color"
                 android:text="@string/book_now"/>

@@ -32,7 +32,7 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     OngoingService ongoingService;
-    private TextView catName, subCatName, custName, servicedate, orderID, custNumber, custAddress, estimatedCost;
+    private TextView catName, subCatName, custName, servicedate, serviceTimeSlot, orderID, custNumber, custAddress, estimatedCost;
     Button cancel;
     String res = "";
 
@@ -134,6 +134,7 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
         subCatName = (TextView) findViewById(R.id.sub_category_name);
         custName = (TextView) findViewById(R.id.contact_name_text);
         servicedate = (TextView) findViewById(R.id.service_date);
+        serviceTimeSlot = (TextView) findViewById(R.id.service_time_slot);
         orderID = (TextView) findViewById(R.id.order_id);
 
         estimatedCost = (TextView) findViewById(R.id.service_estimate_text);
@@ -216,11 +217,11 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
                     custNumber.setText(getData.getString("contact_person_number"));
                     custAddress.setText(getData.getString("service_address"));
                     servicedate.setText(getData.getString("order_date"));
-                    orderID.setText("Order id : " + getData.getString("service_order_id"));
+                    orderID.setText(getData.getString("service_order_id"));
 //                serviceProvider.setText(getData.getString("provider_name"));
 //                servicePerson.setText(getData.getString("person_name"));
 //                servicePersonPhone.setText(getData.getString("person_number"));
-//                serviceStartTime.setText(getData.getString("time_slot"));
+                    serviceTimeSlot.setText(getData.getString("time_slot"));
                     estimatedCost.setText("Rs." + getData.getInt("estimated_cost"));
                 }
             } catch (JSONException e) {

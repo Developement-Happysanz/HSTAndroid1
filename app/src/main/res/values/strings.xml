@@ -65,9 +65,9 @@
 
     <!--OTP Page-->
 
-    <string name="verificationcode">Verification Code</string>
+    <string name="verificationcode">Enter Verification Code</string>
     <string name="didntrecievecode">Didn\'t receive the code?\t</string>
-    <string name="entercodetxt">Enter the verification code \nsent to your mobile</string>
+    <string name="entercodetxt">We have sent a 4 digit verification code \n to your mobile number</string>
     <string name="resend">Resend now</string>
     <string name="resend_otp">Resend OTP?</string>
     <string name="changenumber">Change number</string>
@@ -77,6 +77,7 @@
     <string name="home">Home</string>
     <string name="services">Services</string>
     <string name="category">Category</string>
+    <string name="category_title">SkilEx Services</string>
     <string name="subcategory">Sub Category</string>
     <string name="search_result">Search Result</string>
     <string name="search">Search</string>
@@ -92,6 +93,7 @@
     <string name="inclusion">Inclusions</string>
     <string name="exclusion">Exclusion</string>
     <string name="procedure">Procedure</string>
+    <string name="others">Others</string>
 
     <!--Ongoing Page-->
     <string name="about_service_person">About Service Person</string>
@@ -132,11 +134,11 @@
     <string name="status">Payment Status</string>
     <string name="booking_success">Success!</string>
     <string name="booking_failed">Sorry!</string>
-    <string name="booking_success_comment">Your booking completed successfully</string>
+    <string name="booking_success_comment">Your booking completed \n successfully</string>
     <string name="booking_failed_comment">Your booking failed</string>
     <string name="payment_success">Awesome!</string>
     <string name="payment_failed">Something\'s wrong!</string>
-    <string name="payment_success_comment">Your service order completed successfully</string>
+    <string name="payment_success_comment">Your service order completed \n successfully</string>
     <string name="payment_failed_comment">Your service order failed</string>
     <string name="go_home">Back to Home </string>
     <string name="try_again">Try Again</string>

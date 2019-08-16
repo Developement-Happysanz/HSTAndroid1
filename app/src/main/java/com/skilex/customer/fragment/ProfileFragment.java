@@ -1,5 +1,6 @@
 package com.skilex.customer.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -103,20 +104,54 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
     @Override
     public void onClick(View v) {
         if (v == profile) {
-            Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
-            startActivity(homeIntent);
+            if (checkLogin()) {
+                Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(homeIntent);
+            }
         }
         if (v == about) {
-            Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
-            startActivity(homeIntent);
+            if (checkLogin()) {
+                Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
+                startActivity(homeIntent);
+            }
         }
         if (v == share) {
-            Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
-            startActivity(homeIntent);
+            Intent i = new Intent(android.content.Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share");
+            i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey! Get Heyla app and win some exciting rewards. https://goo.gl/JTmdEX");
+            startActivity(Intent.createChooser(i, "Share via"));
+
         }
         if (v == logout) {
             doLogout();
         }
+    }
+
+    private boolean checkLogin() {
+        String id = PreferenceStorage.getUserId(rootView.getContext());
+        boolean a = false;
+        if (!id.isEmpty()) {
+            a = true;
+        } else {
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(rootView.getContext());
+            alertDialogBuilder.setTitle("Login");
+            alertDialogBuilder.setMessage("Log in to continue");
+            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    doLogout();
+                }
+            });
+            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            alertDialogBuilder.show();
+        }
+        return a;
     }
 
     @Override

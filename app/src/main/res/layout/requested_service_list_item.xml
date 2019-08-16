@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -14,20 +15,21 @@
             android:id="@+id/category_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/category"
-            android:fontFamily="@font/helvetica"
-            android:textColor="@color/blue"
             android:layout_marginStart="10dp"
-            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/helvetica"
+            android:text="@string/category"
+            android:textColor="@color/blue"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/sub_category_name"
             android:layout_width="wrap_content"
-            android:fontFamily="@font/helvetica"
             android:layout_height="wrap_content"
             android:layout_below="@id/category_name"
             android:layout_marginStart="10dp"
+            android:fontFamily="@font/helvetica"
             android:text="@string/subcategory"
             android:textSize="16sp" />
 
@@ -35,55 +37,59 @@
             android:id="@+id/service_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/helvetica"
             android:layout_below="@id/sub_category_name"
-            android:layout_toEndOf="@id/img_date"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
+            android:layout_toEndOf="@id/img_date"
+            android:fontFamily="@font/helvetica"
             android:text="@string/date"
             android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/img_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignStart="@+id/sub_category_name"
             android:layout_alignTop="@id/service_date"
             android:layout_alignBottom="@id/service_date"
-            android:layout_alignParentStart ="true"
+            android:padding="3dp"
             android:src="@drawable/ic_date_blue" />
 
         <TextView
             android:id="@+id/service_time_slot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/helvetica"
             android:layout_below="@id/service_date"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@id/img_time"
-            android:paddingBottom="10dp"
+            android:fontFamily="@font/helvetica"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:text="@string/time"
             android:textSize="16sp" />
 
 
         <ImageView
             android:id="@+id/img_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:padding="3dp"
+            android:layout_alignStart="@+id/sub_category_name"
             android:layout_alignTop="@id/service_time_slot"
             android:layout_alignBottom="@id/service_time_slot"
-            android:paddingBottom="5dp"
-            android:layout_alignParentStart ="true"
             android:src="@drawable/ic_time_blue" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_requested_service"
-            android:layout_alignParentTop="true"
             android:layout_alignBottom="@id/img_time"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:background="@color/request"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:background="@color/request"/>
+            android:src="@drawable/ic_requested_service" />
 
     </RelativeLayout>
 

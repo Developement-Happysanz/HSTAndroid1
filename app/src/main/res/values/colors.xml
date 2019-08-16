@@ -7,6 +7,7 @@
     <color name="blue">#135aa0</color>
     <color name="black">#000000</color>
     <color name="grey">#EDEEEF</color>
+    <color name="grey_history">#33EDEDED</color>
     <color name="dary_grey">#939394</color>
     <color name="transparent">#33BDBDBD</color>
 
@@ -14,7 +15,7 @@
     <color name="ongoing">#ae84bb</color>
     <color name="history">#f0515d</color>
     <color name="completed">#8dc63f</color>
-    <color name="Logout">#d91f26</color>
+    <color name="Logout">#ED1C24</color>
     <color name="payment_success_bg">#E2F2F0</color>
     <color name="payment_success_font">#3FAA84</color>
     <color name="payment_failed_bg">#FBF2EC</color>

@@ -31,8 +31,9 @@ import com.skilex.customer.R;
 import com.skilex.customer.fragment.HomeFragment;
 import com.skilex.customer.fragment.ProfileFragment;
 import com.skilex.customer.fragment.ServicesFragment;
+import com.skilex.customer.interfaces.DialogClickListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DialogClickListener {
 
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
@@ -135,4 +136,13 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
+
+    }
 }

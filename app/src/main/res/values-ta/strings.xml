@@ -141,6 +141,7 @@
     <string name="home">முகப்பு பக்கம்</string>
     <string name="services">சேவைகள்</string>
     <string name="category">பிரிவுகள்</string>
+    <string name="category_title">ஸ்கில்எக்ஸ் சேவைகள்</string>
     <string name="subcategory">துணைப்பிரிவுகள்</string>
     <string name="search_result">தேடல் முடிவுகள்</string>
     <string name="search">தேடல்</string>
@@ -157,6 +158,7 @@
     <string name="inclusion">உள்ளடக்கம்</string>
     <string name="exclusion">விலக்குகள்</string>
     <string name="procedure">செயல்முறை</string>
+    <string name="others">வேறு</string>
 
     <!--Ongoing Page-->
 
