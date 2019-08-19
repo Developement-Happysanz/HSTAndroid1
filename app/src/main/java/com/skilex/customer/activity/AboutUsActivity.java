@@ -23,18 +23,19 @@ public class AboutUsActivity extends AppCompatActivity {
                 finish();
             }
         });
-        WebView wb = (WebView) findViewById(R.id.webView1);
 
-
-            wb.loadUrl("https://www.skilex.in");
-            wb.setWebViewClient(new WebViewClient(){
-
-                @Override
-                public boolean shouldOverrideUrlLoading(WebView view, String url){
-                    view.loadUrl(url);
-                    return true;
-                }
-            });
+//        WebView wb = (WebView) findViewById(R.id.webView1);
+//
+//
+//            wb.loadUrl("https://www.skilex.in");
+//            wb.setWebViewClient(new WebViewClient(){
+//
+//                @Override
+//                public boolean shouldOverrideUrlLoading(WebView view, String url){
+//                    view.loadUrl(url);
+//                    return true;
+//                }
+//            });
     }
 
 }

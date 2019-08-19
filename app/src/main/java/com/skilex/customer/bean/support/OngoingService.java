@@ -47,6 +47,14 @@ public class OngoingService implements Serializable {
     @Expose
     private String time_slot;
 
+    @SerializedName("advance_payment_status")
+    @Expose
+    private String advance_payment_status;
+
+    @SerializedName("advance_amount_paid")
+    @Expose
+    private String advance_amount_paid;
+
     /**
      * @return The service_order_id
      */
@@ -187,6 +195,34 @@ public class OngoingService implements Serializable {
      */
     public void setTime_slot(String time_slot) {
         this.time_slot = time_slot;
+    }
+
+    /**
+     * @return The advance_payment_status
+     */
+    public String getAdvance_payment_status() {
+        return advance_payment_status;
+    }
+
+    /**
+     * @param advance_payment_status The advance_payment_status
+     */
+    public void setAdvance_payment_status(String advance_payment_status) {
+        this.advance_payment_status = advance_payment_status;
+    }
+
+    /**
+     * @return The advance_amount_paid
+     */
+    public String getAdvance_amount_paid() {
+        return advance_amount_paid;
+    }
+
+    /**
+     * @param advance_amount_paid The advance_amount_paid
+     */
+    public void setAdvance_amount_paid(String advance_amount_paid) {
+        this.advance_amount_paid = advance_amount_paid;
     }
 
 }

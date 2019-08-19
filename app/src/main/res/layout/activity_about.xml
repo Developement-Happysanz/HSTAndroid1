@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/grey"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -44,11 +44,35 @@
 
     </RelativeLayout>
 
-    <WebView
-        android:id="@+id/webView1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".activity.AboutUsActivity">
+    <!--<WebView-->
+        <!--android:id="@+id/webView1"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--tools:context=".activity.AboutUsActivity">-->
 
-    </WebView>
+    <!--</WebView>-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:fontFamily="@font/helvetica"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/about"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:lineSpacingExtra="5dp"
+        android:textSize="16sp"
+        android:layout_marginTop="10dp"
+        android:gravity="left"
+        android:justificationMode="inter_word"
+        android:fontFamily="@font/helvetica"
+        android:text="@string/about_content"/>
+
 </LinearLayout>

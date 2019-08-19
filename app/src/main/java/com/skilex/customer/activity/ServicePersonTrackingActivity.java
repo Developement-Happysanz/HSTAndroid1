@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.JsonObject;
 import com.skilex.customer.R;
+import com.skilex.customer.bean.support.OngoingService;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
 import com.skilex.customer.servicehelpers.ServiceHelper;
@@ -55,6 +57,9 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
     LatLng livLoc;
     Marker currentLocationMarker;
     private Handler handler = new Handler();
+    OngoingService ongoingService;
+    private TextView catName, subCatName, custName, servicedate, orderID, serviceProvider, servicePerson, servicePersonPhone,
+            serviceStartTime, estimatedCost;
 
     public void startTimer() {
         handler.postDelayed(new Runnable() {
@@ -65,6 +70,7 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
         }, 5000);
     }
 
+    private String res = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +83,19 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
             }
         });
 
+        ongoingService = (OngoingService) getIntent().getSerializableExtra("serviceObj");
+
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
-        startTimer();
+
+        servicePerson = (TextView) findViewById(R.id.service_person_name);
+//        servicePersonPhone = (TextView) findViewById(R.id.service_person_experience);
+//        servicePersonPhone = (TextView) findViewById(R.id.service_person_number);
+        serviceStartTime = (TextView) findViewById(R.id.date);
+
+//        startTimer();
+        loadOnGoService();
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,8 +114,25 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
         mapView = findViewById(R.id.map);
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
-        checkProviderAssign();
+//        checkProviderAssign();
 
+    }
+
+    private void loadOnGoService() {
+        res = "ong";
+        JSONObject jsonObject = new JSONObject();
+        String id = "";
+        id = ongoingService.getservice_order_id();
+        try {
+            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.ONGOING_SERVICE_DETAILS;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     @Override
@@ -180,19 +212,34 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
     @Override
     public void onResponse(JSONObject response) {
         try {
-            if (response.getString("status").equalsIgnoreCase("Success")) {
-                JSONObject data = response.getJSONObject("track_info");
-                String lat = data.getString("lat");
-                String lon = data.getString("lon");
-                if (!lat.equalsIgnoreCase("") && !lon.equalsIgnoreCase("")) {
-                    livLoc = new LatLng(Double.valueOf(lat), Double.valueOf(lon));
+            if (response.getString("status").equalsIgnoreCase("Success")|| response.getString("status").equalsIgnoreCase("success") ) {
+                if (res.equalsIgnoreCase(        "ong")) {
+                    JSONObject getData = response.getJSONObject("service_list");
+
+//                    custName.setText(getData.getString("contact_person_name"));
+//                    servicedate.setText(getData.getString("order_date"));
+//                    orderID.setText(getData.getString("service_order_id"));
+//                    serviceProvider.setText(getData.getString("provider_name"));
+                    servicePerson.setText(getData.getString("person_name"));
+//                    servicePersonPhone.setText(getData.getString("person_number"));
+                    serviceStartTime.setText(getData.getString("time_slot"));
+                    startTimer();
+                    checkProviderAssign();
+                } else {
+                    JSONObject data = response.getJSONObject("track_info");
+                    String lat = data.getString("lat");
+                    String lon = data.getString("lon");
+                    if (!lat.equalsIgnoreCase("") && !lon.equalsIgnoreCase("")) {
+                        livLoc = new LatLng(Double.valueOf(lat), Double.valueOf(lon));
 //                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(livLoc, 17));
 //                    mMap.addMarker(new MarkerOptions()
 //                            .position(livLoc)
 //                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 //                    mapView.onResume();
-                    showMarker(livLoc);
+                        showMarker(livLoc);
+                    }
                 }
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -221,6 +268,7 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
     }
 
     private void checkProviderAssign() {
+        res = "loc";
         JSONObject jsonObject = new JSONObject();
 
         String id = "";

@@ -102,10 +102,37 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
 ////        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
 //        String url = SkilExConstants.BUILD_URL + SkilExConstants.CANCEL_SERVICE;
 //        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-        Intent intent = new Intent(this, CancelRequestedServiceActivity.class);
-        intent.putExtra("serviceObj", ongoingService);
-        startActivity(intent);
-        finish();
+        if (ongoingService.getAdvance_payment_status().equalsIgnoreCase("NA")) {
+            Intent intent = new Intent(this, CancelRequestedServiceActivity.class);
+            intent.putExtra("serviceObj", ongoingService);
+            startActivity(intent);
+            finish();
+        } else {
+            showCancelAlert();
+        }
+
+    }
+
+    private void showCancelAlert() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(RequestedServicesDetailActivity.this);
+        alertDialogBuilder.setTitle("Cancel");
+        alertDialogBuilder.setMessage("If you cancel you will not be refunded the advance amount paid. Are you sure you want to cancel?");
+        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                Intent intent = new Intent(getApplicationContext(), CancelRequestedServiceActivity.class);
+                intent.putExtra("serviceObj", ongoingService);
+                startActivity(intent);
+                finish();
+            }
+        });
+        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialogBuilder.show();
     }
 
     @Override
