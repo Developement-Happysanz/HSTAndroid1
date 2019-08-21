@@ -96,8 +96,8 @@
     <string name="others">Others</string>
 
     <!--Ongoing Page-->
-    <string name="about_service_person">About Service Person</string>
-    <string name="service_provider">Service Provider</string>
+    <string name="about_service_person">About Service Expert</string>
+    <string name="service_provider">Service Associate</string>
     <string name="service_starting_time">Service starting time</string>
     <string name="service_approximate">Estimated cost</string>
     <string name="cancel_service">Cancel Service</string>
@@ -167,9 +167,12 @@
     <string name="select_coupon">Select Coupon</string>
     <string name="apply_coupon">Apply</string>
     <string name="grand_total_pay">Grand Total</string>
-    <string name="service_person">Service Person</string>
+    <string name="service_person">Service Expert</string>
     <string name="share_invoice">Share Invoice</string>
 
-
+    <!--About Us Page-->
+    <string name="about_content">SkilEx is an emerging Indian start up that aims to build a scalable business model which serves as a platform connecting people, who are in need of local and personal services, with service associates. When there is need of service there is always a void in reaching to service experts at any given time. SkilEx comes into this scene of desperation to help consumers get the required service done at the right time. One can access a range of local services like refurbishment, renovation, restoration etc.; and personal services like fitness training, massages, physiotherapy, counselling, etc., via SkilEx and get things done in a convenient and affordable way.
+\n\nInitially aimed at launching in major cities of South India, SkilEx’s vision is to expand its base across the country including all the cities, building a bond between the service associates and their customers.
+</string>
 
 </resources>

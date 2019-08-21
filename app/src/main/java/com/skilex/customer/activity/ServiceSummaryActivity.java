@@ -360,6 +360,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                             couponContent.setText(PreferenceStorage.getCoupon(this));
                         }
                         payBill.setVisibility(View.VISIBLE);
+                        proceedPay();
                     } else if (status.equalsIgnoreCase("Paid")) {
 //                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 //                        params.addRule(RelativeLayout.BELOW, R.id.coupon_applied_layoout);
@@ -372,10 +373,11 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                             couponContent.setVisibility(View.GONE);
                         }
                         applyCouponLayout.setVisibility(View.GONE);
-                        shareInvoice.setVisibility(View.VISIBLE);
+//                        shareInvoice.setVisibility(View.VISIBLE);
+                        shareInvoice.setVisibility(View.GONE);
 
+                        proceedPay();
                     }
-                    proceedPay();
                 }
                 if (res.equalsIgnoreCase("coupon")) {
                     JSONArray getData = response.getJSONArray("offer_details");
@@ -413,10 +415,16 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     finish();
                 }
                 if (res.equalsIgnoreCase("proceed_pay")) {
-                    JSONObject getData = response.getJSONObject("payment_details");
-                    total.setText(String.valueOf(Float.valueOf(getData.getString("payable_amount"))));
-                    PreferenceStorage.saveOrderId(this, getData.getString("order_id"));
-                    getCouponList();
+                    if (response.getString("msg").equalsIgnoreCase("Service status") &&
+                            response.getString("order_status").equalsIgnoreCase("Cancelled")) {
+
+                    } else {
+                        JSONObject getData = response.getJSONObject("payment_details");
+                        total.setText(String.valueOf(Float.valueOf(getData.getString("payable_amount"))));
+                        PreferenceStorage.saveOrderId(this, getData.getString("order_id"));
+                        getCouponList();
+                    }
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -451,7 +459,9 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
     @Override
     public void onClick(View v) {
         if (v == viewBill) {
-
+            Intent i = new Intent(this, ViewBillActivity.class);
+            i.putExtra("serv", serviceOrder);
+            startActivity(i);
         }
         if (v == payBill) {
             Intent i = new Intent(this, InitialScreenActivity.class);
@@ -481,6 +491,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         }
         if (v == go) {
             Intent i = new Intent(this, AdditionalServiceListActivity.class);
+            i.putExtra("serv", serviceOrder);
             startActivity(i);
         }
     }

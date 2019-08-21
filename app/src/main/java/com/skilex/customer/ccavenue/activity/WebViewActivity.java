@@ -146,7 +146,7 @@ public class WebViewActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //Toast.makeText(WebViewActivity.this,response,Toast.LENGTH_LONG).show();
+                        //Toast.makeText(AboutUsActivity.this,response,Toast.LENGTH_LONG).show();
                         LoadingDialog.cancelLoading();
 
                         if (response != null && !response.equals("")) {
@@ -167,7 +167,7 @@ public class WebViewActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         LoadingDialog.cancelLoading();
-                        //Toast.makeText(WebViewActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(AboutUsActivity.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override

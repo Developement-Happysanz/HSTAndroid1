@@ -9,9 +9,10 @@ public class SkilExConstants {
     //URL'S
     //BASE URL
     private static final String BASE_URL = "https://skilex.in/";
-
-    //BUILD URL
+//
+//    //BUILD URL
     public static final String BUILD_URL = BASE_URL + "development/apicustomer/";
+//    public static final String BUILD_URL = BASE_URL + "uat/apicustomer/";
 
     //LOGIN URL
     public static final String USER_LOGIN = "login/";
@@ -103,6 +104,9 @@ public class SkilExConstants {
 
     //ADDITIONAL SERVICE URL
     public static final String ADDITIONAL_SERVICE = "view_addtional_service/";
+
+    //VIEW BILLS URL
+    public static final String VIEW_BILLS = "service_order_bills/";
 
     //SERVICE ORDER STATUS URL
     public static final String SERVICE_ORDER_STATUS = "service_order_status/";

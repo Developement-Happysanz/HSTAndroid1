@@ -42,6 +42,16 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/langues"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_language"
+            android:padding="10dp"
+            android:onClick="showLangsAlert"
+            android:layout_centerVertical="true"/>
+
     </RelativeLayout>
 
     <RelativeLayout

@@ -10,11 +10,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.skilex.customer.R;
-import com.skilex.customer.activity.LoginActivity;
+import com.skilex.customer.activity.AboutUsActivity;
+import com.skilex.customer.activity.MainActivity;
 import com.skilex.customer.activity.ProfileActivity;
 import com.skilex.customer.activity.SplashScreenActivity;
 import com.skilex.customer.customview.CircleImageView;
@@ -23,6 +26,7 @@ import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
 import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
+import com.skilex.customer.utils.LocaleHelper;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
 import com.squareup.picasso.Picasso;
@@ -41,6 +45,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
     private CircleImageView profileImage;
     private LinearLayout profile, about, share, logout;
     TextView userNmae,number, mail;
+    ImageView lan;
 
     public static ProfileFragment newInstance(int position) {
         ProfileFragment frag = new ProfileFragment();
@@ -78,6 +83,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
         userNmae = rootView.findViewById(R.id.user_name);
         number = rootView.findViewById(R.id.user_phone_number);
         mail = rootView.findViewById(R.id.user_mail);
+        lan = rootView.findViewById(R.id.langues);
+        lan.setOnClickListener(this);
 
         getUserInfo();
 
@@ -110,10 +117,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
             }
         }
         if (v == about) {
-            if (checkLogin()) {
-                Intent homeIntent = new Intent(getActivity(), ProfileActivity.class);
+                Intent homeIntent = new Intent(getActivity(), AboutUsActivity.class);
                 startActivity(homeIntent);
-            }
         }
         if (v == share) {
             Intent i = new Intent(android.content.Intent.ACTION_SEND);
@@ -126,6 +131,37 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
         if (v == logout) {
             doLogout();
         }
+        if (v == lan) {
+            showLangsAlert();
+        }
+    }
+
+    private void showLangsAlert() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(rootView.getContext());
+        alertDialogBuilder.setTitle("Language");
+        alertDialogBuilder.setMessage("Choose your prefered language");
+        alertDialogBuilder.setPositiveButton("English", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                PreferenceStorage.saveLang(rootView.getContext(), "eng");
+                Toast.makeText(rootView.getContext(), "App language is set to English", Toast.LENGTH_SHORT).show();
+                LocaleHelper.setLocale(rootView.getContext(), "en");
+                Intent i = new Intent(rootView.getContext(), MainActivity.class);
+                startActivity(i);
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Tamil", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                PreferenceStorage.saveLang(rootView.getContext(), "tamil");
+                Toast.makeText(rootView.getContext(), "App language is set to Tamil", Toast.LENGTH_SHORT).show();
+                LocaleHelper.setLocale(rootView.getContext(), "ta");
+                Intent i = new Intent(rootView.getContext(), MainActivity.class);
+                startActivity(i);
+//                rootView.finish();
+            }
+        });
+        alertDialogBuilder.show();
     }
 
     private boolean checkLogin() {

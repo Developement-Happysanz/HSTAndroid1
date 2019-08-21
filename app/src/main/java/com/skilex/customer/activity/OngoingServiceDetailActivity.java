@@ -205,6 +205,7 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
     public void onClick(View v) {
         if (v == track) {
             Intent i = new Intent(getApplicationContext(), ServicePersonTrackingActivity.class);
+            i.putExtra("serviceObj", ongoingService);
             startActivity(i);
             finish();
         }
