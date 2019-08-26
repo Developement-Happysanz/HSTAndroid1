@@ -107,7 +107,7 @@ public class ViewBillActivity extends AppCompatActivity implements IServiceListe
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             getServiceSummary();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
         }
     }
 

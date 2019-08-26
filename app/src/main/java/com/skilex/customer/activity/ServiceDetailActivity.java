@@ -82,7 +82,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             getServiceDetail();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
         }
     }
 
@@ -137,6 +137,8 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -144,7 +146,12 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;
@@ -223,15 +230,15 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         if (v == bookNow) {
             if (PreferenceStorage.getUserId(this).equalsIgnoreCase("")) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("Login");
-                alertDialogBuilder.setMessage("Log in to continue");
-                alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setTitle(R.string.login);
+                alertDialogBuilder.setMessage(R.string.login_to_continue);
+                alertDialogBuilder.setPositiveButton(R.string.alert_button_ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         doLogout();
                     }
                 });
-                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton(R.string.alert_button_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();

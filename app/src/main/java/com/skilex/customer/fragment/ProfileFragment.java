@@ -121,11 +121,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
                 startActivity(homeIntent);
         }
         if (v == share) {
-            Intent i = new Intent(android.content.Intent.ACTION_SEND);
-            i.setType("text/plain");
-            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share");
-            i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey! Get Heyla app and win some exciting rewards. https://goo.gl/JTmdEX");
-            startActivity(Intent.createChooser(i, "Share via"));
+//            Intent i = new Intent(android.content.Intent.ACTION_SEND);
+//            i.setType("text/plain");
+//            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share");
+//            i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey! Get Heyla app and win some exciting rewards. https://goo.gl/JTmdEX");
+//            startActivity(Intent.createChooser(i, "Share via"));
 
         }
         if (v == logout) {
@@ -138,8 +138,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
 
     private void showLangsAlert() {
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(rootView.getContext());
-        alertDialogBuilder.setTitle("Language");
-        alertDialogBuilder.setMessage("Choose your prefered language");
+        alertDialogBuilder.setTitle(R.string.language);
+        alertDialogBuilder.setMessage(R.string.choose_language);
         alertDialogBuilder.setPositiveButton("English", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
@@ -150,11 +150,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
                 startActivity(i);
             }
         });
-        alertDialogBuilder.setNegativeButton("Tamil", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton("தமிழ்", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 PreferenceStorage.saveLang(rootView.getContext(), "tamil");
-                Toast.makeText(rootView.getContext(), "App language is set to Tamil", Toast.LENGTH_SHORT).show();
+                Toast.makeText(rootView.getContext(), "மொழி தமிழுக்கு அமைக்கப்பட்டுள்ளது", Toast.LENGTH_SHORT).show();
                 LocaleHelper.setLocale(rootView.getContext(), "ta");
                 Intent i = new Intent(rootView.getContext(), MainActivity.class);
                 startActivity(i);
@@ -171,15 +171,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
             a = true;
         } else {
             android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(rootView.getContext());
-            alertDialogBuilder.setTitle("Login");
-            alertDialogBuilder.setMessage("Log in to continue");
-            alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setTitle(R.string.login);
+            alertDialogBuilder.setMessage(R.string.login_to_continue);
+            alertDialogBuilder.setPositiveButton(R.string.alert_button_ok, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface arg0, int arg1) {
                     doLogout();
                 }
             });
-            alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            alertDialogBuilder.setNegativeButton(R.string.alert_button_cancel, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     dialog.dismiss();
@@ -216,6 +216,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -223,7 +225,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(rootView.getContext(), msg);
+
+                        if (PreferenceStorage.getLang(rootView.getContext()).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(rootView.getContext(), msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(rootView.getContext(), msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;

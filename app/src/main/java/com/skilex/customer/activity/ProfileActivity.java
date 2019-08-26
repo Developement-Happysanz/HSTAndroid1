@@ -163,11 +163,19 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 showGenderList();
             }
         });
+        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
 
-        mGenderList.add("Male");
-        mGenderList.add("Female");
-        mGenderList.add("Other");
-        mGenderList.add("Rather not say");
+            mGenderList.add("ஆண்");
+            mGenderList.add("பெண்");
+            mGenderList.add("வேறு");
+            mGenderList.add("சொல்ல விருப்பமில்லை");
+        } else {
+            mGenderList.add("Male");
+            mGenderList.add("Female");
+            mGenderList.add("Other");
+            mGenderList.add("Rather not say");
+        }
+
 
         mGenderAdapter = new ArrayAdapter<String>(this, R.layout.time_slot_layout, R.id.time_slot_range, mGenderList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
             @Override
@@ -187,10 +195,10 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     private void showGenderList() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
 
-        builderSingle.setTitle("Select Gender");
+        builderSingle.setTitle(R.string.user_gender);
         View view = getLayoutInflater().inflate(R.layout.header_layout, null);
         TextView header = (TextView) view.findViewById(R.id.header);
-        header.setText("Select Gender");
+        header.setText(R.string.select_user_gender);
         builderSingle.setCustomTitle(view);
 
         builderSingle.setAdapter(mGenderAdapter
@@ -265,7 +273,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection available");
+            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
         }
     }
 
@@ -311,6 +319,8 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -318,7 +328,12 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;

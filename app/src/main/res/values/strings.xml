@@ -25,6 +25,8 @@
 
     <string name="alert_button_ok">OK</string>
     <string name="alert_button_cancel">Cancel</string>
+    <string name="alert_button_yes">Yes</string>
+    <string name="alert_button_no">No</string>
 
     <!--User Data-->
 
@@ -33,6 +35,7 @@
     <string name="user_address">Address</string>
     <string name="user_mail">E-Mail</string>
     <string name="user_gender">Gender</string>
+    <string name="select_user_gender">Select Gender</string>
 
     <!--Google API key-->
 
@@ -45,6 +48,7 @@
     <string name="skip">Skip</string>
     <string name="welcome">Welcome!</string>
     <string name="enter_text">Enter Mobile Number</string>
+    <string name="login_to_continue">Log in to continue</string>
 
     <!--General-->
 
@@ -56,12 +60,15 @@
     <string name="empty_entry">Field cannot be empty</string>
     <string name="title_location_permission">Location Permission</string>
     <string name="text_location_permission">Allow app to access your location?</string>
-    <string name="ok">OK</string>
     <string name="time">Select Time Slot</string>
     <string name="date">Select Date</string>
     <string name="time_selected">Requested Time Slot</string>
     <string name="date_selected">Selected Date</string>
     <string name="customer_name">Customer Name</string>
+    <string name="cart">Cart</string>
+    <string name="cart_clear">Items in cart will be cleared. Do you wish to continue?</string>
+    <string name="language">Language</string>
+    <string name="choose_language">Choose your prefered language</string>
 
     <!--OTP Page-->
 
@@ -93,7 +100,12 @@
     <string name="inclusion">Inclusions</string>
     <string name="exclusion">Exclusion</string>
     <string name="procedure">Procedure</string>
+    <string name="remove_service">Service Removed</string>
     <string name="others">Others</string>
+    <string name="reason">Reason</string>
+    <string name="comment">Comment</string>
+    <string name="cancel_service_alert">If you cancel you will not be refunded the advance amount paid. Are you sure you want to cancel?</string>
+    <string name="cancel_service_noadvance_alert1">Are you sure you want to cancel your service?</string>
 
     <!--Ongoing Page-->
     <string name="about_service_person">About Service Expert</string>
@@ -164,6 +176,7 @@
     <!--<string name="service_charge">Service Charge</string>-->
     <string name="sub_total">Sub Total</string>
     <string name="coupon_applied">Coupon Applied</string>
+    <string name="coupon">Coupon</string>
     <string name="select_coupon">Select Coupon</string>
     <string name="apply_coupon">Apply</string>
     <string name="grand_total_pay">Grand Total</string>

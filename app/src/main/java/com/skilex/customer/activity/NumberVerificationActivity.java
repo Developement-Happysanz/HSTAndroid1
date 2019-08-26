@@ -38,6 +38,8 @@ import org.json.JSONObject;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static android.util.Log.d;
+
 /**
  * Created by Narendar on 16/10/17.
  */
@@ -148,9 +150,9 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 
             if (v == tvResendOTP) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-                alertDialogBuilder.setTitle("Do you want to resend OTP ?");
-                alertDialogBuilder.setMessage("Confirm your mobile number : " + PreferenceStorage.getMobileNo(getApplicationContext()));
-                alertDialogBuilder.setPositiveButton("Proceed",
+                alertDialogBuilder.setTitle(R.string.resend_otp);
+                alertDialogBuilder.setMessage(R.string.mobile_number + PreferenceStorage.getMobileNo(getApplicationContext()));
+                alertDialogBuilder.setPositiveButton(R.string.alert_button_ok,
                         new DialogInterface.OnClickListener() {
 
                             @Override
@@ -171,7 +173,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 
                             }
                         });
-                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton(R.string.alert_button_cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
@@ -201,12 +203,16 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
                     String url = SkilExConstants.BUILD_URL + SkilExConstants.USER_LOGIN;
                     serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
                 } else {
-                    AlertDialogHelper.showSimpleAlertDialog(this, "Invalid OTP");
+                    if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                        AlertDialogHelper.showSimpleAlertDialog(this, "தவறான கடவுச்சொல்!");
+                    } else {
+                        AlertDialogHelper.showSimpleAlertDialog(this, "Invalid OTP");
+                    }
                 }
 
             }
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection available");
+            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
         }
     }
 
@@ -226,14 +232,21 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
-                Log.d(TAG, "status val" + status + "msg" + msg);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
+                d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
                     if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
-                        Log.d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        d(TAG, "Show error dialog");
+
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;

@@ -381,7 +381,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadSlot();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
         }
     }
 
@@ -389,7 +389,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         new AlertDialog.Builder(this)
                 .setTitle(R.string.title_location_permission)
                 .setMessage(R.string.text_location_permission)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.alert_button_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Prompt the user once explanation has been shown
@@ -437,6 +437,8 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -444,7 +446,11 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;
@@ -550,7 +556,11 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             }
             if (latlng.isEmpty() || latlng.equalsIgnoreCase(",")) {
                 if (customerAddress.getText().toString().isEmpty()) {
-                    AlertDialogHelper.showSimpleAlertDialog(this, "Please pick your location in map or enter address.");
+                    if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                        AlertDialogHelper.showSimpleAlertDialog(this, "வரைபடத்தில் உங்கள் இருப்பிடத்தைத் தேர்வுசெய்யவும் அல்லது முகவரியை உள்ளிடவும்.");
+                    } else {
+                        AlertDialogHelper.showSimpleAlertDialog(this, "Please pick your location in map or enter address.");
+                    }
                 } else {
                     position = getLocationFromAddress(customerAddress.getText().toString());
                     if (position != null) {
@@ -637,7 +647,11 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.header_layout, null);
         TextView header = (TextView) view.findViewById(R.id.header);
-        header.setText("Select Time Slot");
+        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+            header.setText("நேரத்தைத் தேர்ந்தெடுக்கவும்");
+        } else {
+            header.setText("Select Time Slot");
+        }
         builderSingle.setCustomTitle(view);
 
         builderSingle.setAdapter(timeSlotAdapter,

@@ -47,7 +47,7 @@ public class CartServiceDeleteListAdapter extends RecyclerView.Adapter<CartServi
         try {
             String status = response.getString("status");
             if (status.equalsIgnoreCase("success")) {
-                Toast.makeText(context, "Service Removed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.remove_service, Toast.LENGTH_SHORT).show();
                 categoryArrayList.remove(mRecentlyDeletedItemPosition);
                 notifyItemRemoved(mRecentlyDeletedItemPosition);
                 if (categoryArrayList.size() == 0) {

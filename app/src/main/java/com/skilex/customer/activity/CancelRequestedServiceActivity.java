@@ -132,6 +132,8 @@ public class CancelRequestedServiceActivity extends AppCompatActivity implements
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -139,7 +141,12 @@ public class CancelRequestedServiceActivity extends AppCompatActivity implements
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;
@@ -200,7 +207,11 @@ public class CancelRequestedServiceActivity extends AppCompatActivity implements
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.header_layout, null);
         TextView header = (TextView) view.findViewById(R.id.header);
-        header.setText("Select Reason");
+        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+            header.setText("காரணத்தைத் தேர்ந்தெடுக்கவும்");
+        } else {
+            header.setText("Select Reason");
+        }
         builderSingle.setCustomTitle(view);
 
         builderSingle.setAdapter(timeSlotAdapter,

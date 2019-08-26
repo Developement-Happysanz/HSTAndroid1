@@ -28,7 +28,7 @@ public class SkilExConstants {
     public static final String VERIFY_EMAIL = "email_verification/";
 
     //PROFILE UPDATE URL
-    public static final String UPDATE_PROFILE = "profile_update/";
+    public static final String UPDATE_PROFILE = "";
 
     //PROFILE UPDATE URL
     public static final String PROFILE_INFO = "user_info/";
@@ -139,6 +139,8 @@ public class SkilExConstants {
 
 
     public static String PARAM_MESSAGE = "msg";
+    public static String PARAM_MESSAGE_ENG = "msg_en";
+    public static String PARAM_MESSAGE_TAMIL = "msg_ta";
 
     //     Shared preferences file name
     public static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";

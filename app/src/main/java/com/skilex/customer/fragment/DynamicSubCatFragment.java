@@ -90,10 +90,10 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
             if (isFragmentVisible_ && !_hasLoadedOnce) {
                 loadCat();
                 _hasLoadedOnce = true;
-//                if(noService) {
+                if(noService) {
                     AlertDialogHelper.showSimpleAlertDialog(view.getContext(), "No service found");
-//                    noService = false;
-//                }
+                    noService = false;
+                }
             }
         }
     }
@@ -179,8 +179,31 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
         boolean signInSuccess = false;
         if ((response != null)) {
             try {
+//                String status = response.getString("status");
+//                String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+//                d(TAG, "status val" + status + "msg" + msg);
+//
+//                if ((status != null)) {
+//                    if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
+//                            (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
+//                        signInSuccess = false;
+//                        d(TAG, "Show error dialog");
+////                        if (msg.equalsIgnoreCase("Services not found")) {
+////                            msgErr = true;
+////                        }
+////                        AlertDialogHelper.showSimpleAlertDialog(view.getContext(), msg);
+//                        if (msg.equalsIgnoreCase("Service not found")){
+//                            noService = true;
+//                        }
+//
+//                    } else {
+//                        signInSuccess = true;
+//                    }
+//                }
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -188,13 +211,15 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-//                        if (msg.equalsIgnoreCase("Services not found")) {
-//                            msgErr = true;
-//                        }
-//                        AlertDialogHelper.showSimpleAlertDialog(view.getContext(), msg);
-                        if (msg.equalsIgnoreCase("Service not found")){
+                        if (msg.equalsIgnoreCase("Services not found")){
+                            msgErr = true;
                             noService = true;
                         }
+//                        if (PreferenceStorage.getLang(view.getContext()).equalsIgnoreCase("tamil")) {
+//                            AlertDialogHelper.showSimpleAlertDialog(view.getContext(), msg_ta);
+//                        } else {
+//                            AlertDialogHelper.showSimpleAlertDialog(view.getContext(), msg_en);
+//                        }
 
                     } else {
                         signInSuccess = true;
@@ -234,18 +259,19 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
 
     protected void updateListAdapter(ArrayList<Service> serviceArrayList) {
         if (msgErr) {
-            AlertDialogHelper.showSimpleAlertDialog(view.getContext(), "No Service found");
+//            AlertDialogHelper.showSimpleAlertDialog(view.getContext(), "No Services found");
         } else {
+            msgErr = false;
+            this.serviceArrayList.clear();
+            this.serviceArrayList.addAll(serviceArrayList);
+            if (serviceListAdapter == null) {
+                serviceListAdapter = new MainServiceListAdapter(view.getContext(), this.serviceArrayList);
+                loadMoreListView.setAdapter(serviceListAdapter);
+            } else {
+                serviceListAdapter.notifyDataSetChanged();
+            }
+        }
 
-        }
-        this.serviceArrayList.clear();
-        this.serviceArrayList.addAll(serviceArrayList);
-        if (serviceListAdapter == null) {
-            serviceListAdapter = new MainServiceListAdapter(view.getContext(), this.serviceArrayList);
-            loadMoreListView.setAdapter(serviceListAdapter);
-        } else {
-            serviceListAdapter.notifyDataSetChanged();
-        }
     }
 
     @Override
