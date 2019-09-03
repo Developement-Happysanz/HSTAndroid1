@@ -135,7 +135,11 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                 searchView.setIconified(false);
             }
         });
-        searchView.setQueryHint("Search for services");
+        if (PreferenceStorage.getLang(rootView.getContext()).equalsIgnoreCase("tamil")) {
+            searchView.setQueryHint("சேவை தேடல்");
+        } else {
+            searchView.setQueryHint("Search for services");
+        }
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -235,6 +239,8 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -242,7 +248,12 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(getActivity(), msg);
+
+                        if (PreferenceStorage.getLang(rootView.getContext()).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(rootView.getContext(), msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(rootView.getContext(), msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;

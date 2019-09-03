@@ -75,7 +75,7 @@
                 android:id="@+id/edt_user_reason"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:hint="Reason"
+                android:hint="@string/reason"
                 android:inputType="text"
                 android:fontFamily="@font/helvetica"
                 android:clickable="false"
@@ -96,7 +96,7 @@
                 android:id="@+id/edt_user_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Comment"
+                android:hint="@string/comment"
                 android:inputType="text"
                 android:minHeight="50dp"
                 android:fontFamily="@font/helvetica"
@@ -119,7 +119,7 @@
             android:layout_gravity="center_horizontal"
             android:textAllCaps="false"
             android:textStyle="bold"
-            android:text="Submit"/>
+            android:text="@string/alert_button_ok"/>
 
 
 

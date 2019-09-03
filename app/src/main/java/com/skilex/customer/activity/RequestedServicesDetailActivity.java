@@ -65,7 +65,7 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadOnGoService();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
         }
     }
 
@@ -115,9 +115,9 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
 
     private void showCancelAlert() {
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(RequestedServicesDetailActivity.this);
-        alertDialogBuilder.setTitle("Cancel");
-        alertDialogBuilder.setMessage("If you cancel you will not be refunded the advance amount paid. Are you sure you want to cancel?");
-        alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setTitle(R.string.alert_button_cancel);
+        alertDialogBuilder.setMessage(R.string.cancel_service_alert);
+        alertDialogBuilder.setPositiveButton(R.string.alert_button_yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 Intent intent = new Intent(getApplicationContext(), CancelRequestedServiceActivity.class);
@@ -126,7 +126,7 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
                 finish();
             }
         });
-        alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton(R.string.alert_button_no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -171,15 +171,15 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
             @Override
             public void onClick(View v) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(RequestedServicesDetailActivity.this);
-                alertDialogBuilder.setTitle("Cancel Order");
-                alertDialogBuilder.setMessage("Are you sure you want to cancel your service?");
-                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setTitle(R.string.cancel_service);
+                alertDialogBuilder.setMessage(R.string.cancel_service_noadvance_alert1);
+                alertDialogBuilder.setPositiveButton(R.string.alert_button_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         cencelOrder();
                     }
                 });
-                alertDialogBuilder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton(R.string.alert_button_no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -196,6 +196,8 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -203,7 +205,12 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;

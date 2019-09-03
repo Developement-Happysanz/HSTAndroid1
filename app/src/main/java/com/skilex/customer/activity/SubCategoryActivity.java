@@ -175,7 +175,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadCat();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
         }
     }
 
@@ -208,6 +208,8 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -215,7 +217,12 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;
@@ -370,7 +377,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
         SubCategoryTabAdapter adapter = new SubCategoryTabAdapter
                 (getSupportFragmentManager(), tab.getTabCount(), categoryArrayList);
         viewPager.setAdapter(adapter);
-//        viewPager.setOffscreenPageLimit(0);
+        viewPager.setOffscreenPageLimit(1);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab));
         tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -384,9 +391,9 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
                 } else {
                     tabPosition = tab.getPosition();
                     android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(SubCategoryActivity.this);
-                    alertDialogBuilder.setTitle("Cart");
-                    alertDialogBuilder.setMessage("You need to clear the services in your cart before you continue.");
-                    alertDialogBuilder.setPositiveButton("Clear", new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setTitle(R.string.cart);
+                    alertDialogBuilder.setMessage(R.string.cart_clear);
+                    alertDialogBuilder.setPositiveButton(R.string.alert_button_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
                             clearCart();
@@ -396,7 +403,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
                              recreate();
                         }
                     });
-                    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setNegativeButton(R.string.alert_button_cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -423,9 +430,9 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
                 } else {
                     tabPosition = tab.getPosition();
                     android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(SubCategoryActivity.this);
-                    alertDialogBuilder.setTitle("Cart");
-                    alertDialogBuilder.setMessage("You need to clear current items in your cart to continue.");
-                    alertDialogBuilder.setPositiveButton("Clear", new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setTitle(R.string.cart);
+                    alertDialogBuilder.setMessage(R.string.cart_clear);
+                    alertDialogBuilder.setPositiveButton(R.string.alert_button_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
                             clearCart();
@@ -435,7 +442,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
                             recreate();
                         }
                     });
-                    alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setNegativeButton(R.string.alert_button_cancel, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();

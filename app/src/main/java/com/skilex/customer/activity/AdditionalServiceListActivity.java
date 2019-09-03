@@ -70,7 +70,7 @@ public class AdditionalServiceListActivity extends AppCompatActivity implements 
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadCart();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
         }
     }
 
@@ -134,6 +134,8 @@ public class AdditionalServiceListActivity extends AppCompatActivity implements 
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -144,7 +146,11 @@ public class AdditionalServiceListActivity extends AppCompatActivity implements 
 //                        if (msg.equalsIgnoreCase("Services not found")) {
 //                            msgErr = true;
 //                        }
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        }
 //                        if (msg.equalsIgnoreCase("Service not found")){
 //                            noService = true;
 //                        }

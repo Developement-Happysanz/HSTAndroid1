@@ -24,6 +24,8 @@ import com.skilex.customer.utils.SkilExConstants;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static android.util.Log.d;
+
 public class RateServiceActivity  extends AppCompatActivity implements DialogClickListener, IServiceListener, View.OnClickListener {
 
     private static final String TAG = RateServiceActivity.class.getName();
@@ -117,14 +119,21 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
-                Log.d(TAG, "status val" + status + "msg" + msg);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
+                d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
                     if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
-                        Log.d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                        d(TAG, "Show error dialog");
+
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;

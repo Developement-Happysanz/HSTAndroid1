@@ -177,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 callGetSubCategoryService();
             }
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection available");
+            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
         }
     }
 
@@ -218,6 +218,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -225,7 +227,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;
@@ -269,8 +276,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void showLangAlert() {
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Language");
-        alertDialogBuilder.setMessage("Choose your prefered language");
+        alertDialogBuilder.setTitle(R.string.language);
+        alertDialogBuilder.setMessage(R.string.choose_language);
         alertDialogBuilder.setPositiveButton("English", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
@@ -287,11 +294,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 finish();
             }
         });
-        alertDialogBuilder.setNegativeButton("Tamil", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton("தமிழ்", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 PreferenceStorage.saveLang(getApplicationContext(), "tamil");
-                Toast.makeText(getApplicationContext(), "App language is set to Tamil", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "மொழி தமிழுக்கு அமைக்கப்பட்டுள்ளது", Toast.LENGTH_SHORT).show();
                 LocaleHelper.setLocale(LoginActivity.this, "ta");
 
                 //It is required to recreate the activity to reflect the change in UI.
@@ -313,7 +320,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadCat();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
         }
     }
 

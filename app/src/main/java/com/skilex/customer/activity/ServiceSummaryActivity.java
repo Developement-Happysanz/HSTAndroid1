@@ -274,6 +274,8 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -281,7 +283,12 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
+
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        }
 
                     } else {
                         signInSuccess = true;
@@ -441,7 +448,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.header_layout, null);
         TextView header = (TextView) view.findViewById(R.id.header);
-        header.setText("Coupon");
+        header.setText(R.string.coupon_applied);
         builderSingle.setCustomTitle(view);
 
         builderSingle.setAdapter(timeSlotAdapter,
@@ -479,7 +486,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         }
         if (v == applyCoupon) {
             if (timeSlotId.isEmpty()) {
-                AlertDialogHelper.showSimpleAlertDialog(this, "Please choose coupon to apply");
+                AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.select_coupon));
             } else {
                 applyCoupon();
             }

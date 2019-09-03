@@ -98,15 +98,15 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
             @Override
             public void onClick(View v) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(BookingSummaryAcivity.this);
-                alertDialogBuilder.setTitle("Cart");
-                alertDialogBuilder.setMessage("Items in cart will be cleared. Do you wish to continue?");
-                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setTitle(R.string.cart);
+                alertDialogBuilder.setMessage(R.string.cart_clear);
+                alertDialogBuilder.setPositiveButton(R.string.alert_button_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         clearCart();
                     }
                 });
-                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton(R.string.alert_button_no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -121,15 +121,15 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
             @Override
             public void onClick(View v) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(BookingSummaryAcivity.this);
-                alertDialogBuilder.setTitle("Cart");
-                alertDialogBuilder.setMessage("Items in cart will be cleared. Do you wish to continue?");
-                alertDialogBuilder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setTitle(R.string.cart);
+                alertDialogBuilder.setMessage(R.string.cart_clear);
+                alertDialogBuilder.setPositiveButton(R.string.alert_button_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
                         clearCart();
                     }
                 });
-                alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                alertDialogBuilder.setNegativeButton(R.string.alert_button_no, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -166,16 +166,16 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
 
     private void showExit() {
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(BookingSummaryAcivity.this);
-        alertDialogBuilder.setTitle("Cart");
+        alertDialogBuilder.setTitle(R.string.cart);
         alertDialogBuilder.setMessage("All orders cancelled");
-        alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setPositiveButton(R.string.alert_button_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 finish();
                 handler.removeCallbacksAndMessages(null);
             }
         });
-        alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialogBuilder.setNegativeButton(R.string.alert_button_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -191,6 +191,8 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -198,10 +200,12 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        if (msg.equalsIgnoreCase("Cart is Empty")) {
-                            finish();
+
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
                         }
-                        AlertDialogHelper.showSimpleAlertDialog(this, msg);
 
                     } else {
                         signInSuccess = true;
@@ -291,7 +295,7 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadCart();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
+            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
         }
     }
 

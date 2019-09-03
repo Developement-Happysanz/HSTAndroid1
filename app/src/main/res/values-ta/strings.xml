@@ -84,6 +84,8 @@
 
     <!--Dialog Fragment-->
     <string name="alert_button_ok">சரி</string>
+    <string name="alert_button_yes">ஆம்</string>
+    <string name="alert_button_no">இல்லை</string>
     <string name="alert_button_cancel">ரத்து செய்</string>
 
 
@@ -94,6 +96,7 @@
     <string name="user_address">முகவரி</string>
     <string name="user_mail">மின்னஞ்சல் முகவரி</string>
     <string name="user_gender">பாலினம்</string>
+    <string name="select_user_gender">தேர்ந்தெடுக்கவும்</string>
 
     <!--Google API key-->
 
@@ -106,24 +109,28 @@
     <string name="skip_login">இப்போதைக்கு தவிர்</string>
     <string name="welcome">நல்வரவு</string>
     <string name="enter_text">உங்கள் மொபைல் நம்பரை என்டர் செய்யவும்</string>
+    <string name="login_to_continue">தொடர உள்நுழைக</string>
 
 
     <!--General-->
 
     <string name="confirm">உறுதி செய்க</string>
-    <string name="progress_loading">Loading&#8230;</string>
+    <string name="progress_loading">உருவாக்கப்படுகிறது&#8230;</string>
     <string name="error_entry">அளித்த தகவல் தவறாக உள்ளது.</string>
     <string name="error_mail">சரியான மின்னஞ்சல் முகவரியை என்டர் செய்யவும்.</string>
     <string name="error_number">சரியான தொலைபேசி எண்ணை என்டர் செய்யவும்.</string>
     <string name="empty_entry">கட்டாயமாக நிரப்பப்பட வேண்டிய இடம்.</string>
     <string name="title_location_permission">இருப்பிடத்தை அறிவதற்கான அனுமதி</string>
     <string name="text_location_permission">ஸ்கில்எக்ஸ் உங்கள் இருப்பிடத்தை அறிவதற்கு அனுமதி அளிக்க விரும்புகிறீர்களா?</string>
-    <string name="ok">சரி</string>
-    <string name="time">ஒதுக்கப்பட்ட நேரத்தை தேர்வு செய்யவும்</string>
-    <string name="date">தேதியை தேர்வு செய்யவும்</string>
+    <string name="time">நேரம்</string>
+    <string name="date">தேதி</string>
     <string name="time_selected">கோரப்பட்ட சேவை நேரம்</string>
     <string name="date_selected">தேர்வு செய்யப்பட்ட தேதி</string>
     <string name="customer_name">வாடிக்கையாளர் பெயர்</string>
+    <string name="cart">பெட்டகம்</string>
+    <string name="cart_clear">பெட்டகத்தில் உள்ள உருப்படிகள் அழிக்கப்படும். தொடர விரும்புகிறீர்களா?</string>
+    <string name="language">மொழி</string>
+    <string name="choose_language">உங்கள் விருப்பமான மொழியைத் தேர்வுசெய்க</string>
 
 
     <!--OTP Page-->
@@ -158,7 +165,12 @@
     <string name="inclusion">உள்ளடக்கம்</string>
     <string name="exclusion">விலக்குகள்</string>
     <string name="procedure">செயல்முறை</string>
+    <string name="remove_service">சேவை நீக்கப்பட்டது</string>
+    <string name="reason">காரணம்</string>
+    <string name="comment">கருத்துக்கள்</string>
     <string name="others">வேறு</string>
+    <string name="cancel_service_alert">நீங்கள் ரத்துசெய்தால், செலுத்தப்பட்ட முன்கூட்டியே தொகை உங்களுக்கு திருப்பித் தரப்படாது. நீங்கள் நிச்சயமாக ரத்து செய்ய விரும்புகிறீர்களா?</string>
+    <string name="cancel_service_noadvance_alert1">Are you sure you want to cancel your service?</string>
 
     <!--Ongoing Page-->
 
@@ -174,12 +186,12 @@
     <string name="track">ட்ராக்கிங்</string>
     <string name="booking">சேவை பதிவு நிறைவுச்சுருக்கம்</string><string name="booking_status">முன்பதிவு நிலவரம்</string>
     <string name="service_charge">சேவை கட்டணம்</string>
-    <string name="additional_charge">கூடுதல் கட்டணம்</string>
+    <string name="additional_charge">அட்வான்ஸ் தொகை</string>
     <string name="additional_services">கூடுதல் சேவைகள்</string>
     <string name="grand_total">மொத்த சேவைக்கான கட்டணம்</string>
     <string name="view_summary">நிறைவுச்சுருக்கம்</string>
     <string name="service_summary" />சேவை நிறைவுச்சுருக்கம்
-    <string name="clear">Clear All</string>
+    <string name="clear">அழி</string>
 
 
     <!--Payment Page-->
@@ -231,6 +243,7 @@
     <!--<string name="service_charge">Service Charge</string>-->
     <string name="sub_total">கூட்டுத்தொகை</string>
     <string name="coupon_applied">கூப்பன் பயன்படுத்தப்பட்டது</string>
+    <string name="coupon">கூப்பன்</string>
     <string name="select_coupon">கூப்பனை தேர்வு செய்யவும்</string>
     <string name="apply_coupon">உபயோகி</string>
     <string name="grand_total_pay">மொத்த தொகை</string>

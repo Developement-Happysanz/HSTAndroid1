@@ -136,6 +136,8 @@ public class AssignProviderActivity extends AppCompatActivity implements IServic
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -143,11 +145,11 @@ public class AssignProviderActivity extends AppCompatActivity implements IServic
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        if (msg.equalsIgnoreCase("No Service Provider found")){
-                            handler.removeCallbacksAndMessages(null);
-                            finish();
+
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
                         } else {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
                         }
 
                     } else {
@@ -175,7 +177,7 @@ public class AssignProviderActivity extends AppCompatActivity implements IServic
                 public void run() {
                     doubleBackToExitPressedOnce = false;
                 }
-            }, 2000);
+            }, 2000);;
         } else {
             super.onBackPressed();
             return;
