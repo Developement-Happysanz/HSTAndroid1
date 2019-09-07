@@ -17,18 +17,28 @@ import com.skilex.customer.activity.AddressActivity;
 import com.skilex.customer.activity.MainActivity;
 import com.skilex.customer.ccavenue.utility.AvenuesParams;
 import com.skilex.customer.ccavenue.utility.ServiceUtility;
+import com.skilex.customer.helper.ProgressDialogHelper;
+import com.skilex.customer.interfaces.DialogClickListener;
+import com.skilex.customer.servicehelpers.ServiceHelper;
+import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.PreferenceStorage;
+import com.skilex.customer.utils.SkilExConstants;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Random;
 
 
-public class InitialScreenActivity extends AppCompatActivity {
+public class InitialScreenActivity extends AppCompatActivity implements IServiceListener, DialogClickListener {
 
     private EditText accessCode, merchantId, currency, amount, orderId, rsaKeyUrl, redirectUrl, cancelUrl;
     private TextView amountDisplay, amtP;
     String page;
     RelativeLayout advPay;
     LinearLayout servPay;
+    private ServiceHelper serviceHelper;
+    private ProgressDialogHelper progressDialogHelper;
 
     private void init() {
         accessCode = (EditText) findViewById(R.id.accessCode);
@@ -94,6 +104,9 @@ public class InitialScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_screen);
         init();
+        serviceHelper = new ServiceHelper(this);
+        serviceHelper.setServiceListener(this);
+        progressDialogHelper = new ProgressDialogHelper(this);
     }
 
     public void onClick(View view) {
@@ -125,6 +138,7 @@ public class InitialScreenActivity extends AppCompatActivity {
 
     public void onCashClick(View view) {
         //Mandatory parameters. Other parameters can be added if required.
+        payChas();
         String status = null;
         status = "Transaction Successful!";
         Intent intent = new Intent(this, StatusActivity.class);
@@ -150,4 +164,47 @@ public class InitialScreenActivity extends AppCompatActivity {
 //        orderId.setText(randomNum.toString());
     }
 
+    @Override
+    public void onAlertPositiveClicked(int tag) {
+
+    }
+
+    @Override
+    public void onAlertNegativeClicked(int tag) {
+
+    }
+
+    private void payChas() {
+        JSONObject jsonObject = new JSONObject();
+
+        String id = "";
+        id = PreferenceStorage.getUserId(this);
+
+        String orderId = "";
+        orderId = PreferenceStorage.getOrderId(this);
+
+
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+            jsonObject.put(SkilExConstants.ORDER_ID, orderId);
+            jsonObject.put(SkilExConstants.TIME_INTERVAL, amount.getText().toString().trim());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.PAY_BY_CASH;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+    }
+
+    @Override
+    public void onError(String error) {
+
+    }
 }

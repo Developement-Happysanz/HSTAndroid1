@@ -11,8 +11,8 @@ public class SkilExConstants {
     private static final String BASE_URL = "https://skilex.in/";
 //
 //    //BUILD URL
-    public static final String BUILD_URL = BASE_URL + "development/apicustomer/";
-//    public static final String BUILD_URL = BASE_URL + "uat/apicustomer/";
+//    public static final String BUILD_URL = BASE_URL + "development/apicustomer/";
+    public static final String BUILD_URL = BASE_URL + "uat/apicustomer/";
 
     //LOGIN URL
     public static final String USER_LOGIN = "login/";
@@ -127,9 +127,8 @@ public class SkilExConstants {
     //APPLY COUPON URL
     public static final String REVIEW = "service_reviews_add/";
 
-//
-//    //APPLY COUPON URL
-//    public static final String PROCEED_TO_PAY = "proceed_for_payment/";
+    //APPLY COUPON URL
+    public static final String PAY_BY_CASH = "pay_by_cash/";
 
 
 

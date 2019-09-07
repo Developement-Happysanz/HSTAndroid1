@@ -116,7 +116,7 @@
         <LinearLayout
             android:id="@+id/serv_pay_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
             android:visibility="gone"
             android:layout_margin="20dp"
@@ -131,7 +131,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:textSize="22sp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:textColor="@color/black"/>
 
@@ -143,8 +143,8 @@
 
                 <ImageView
                     android:id="@+id/online_payment_icon"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:src="@drawable/ic_pay_online" />
 
             </RelativeLayout>
@@ -172,8 +172,8 @@
 
                 <ImageView
                     android:id="@+id/cash_payment_icon"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:src="@drawable/ic_pay_cash" />
 
             </RelativeLayout>
@@ -185,6 +185,7 @@
                 android:layout_marginTop="20dp"
                 android:paddingStart="40dp"
                 android:paddingEnd="40dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/button_round_color"
                 android:onClick="onCashClick"
                 android:text="@string/pay_button_cash"
