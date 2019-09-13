@@ -65,7 +65,7 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadOnGoService();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
+            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
         }
     }
 

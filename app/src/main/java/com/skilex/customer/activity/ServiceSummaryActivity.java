@@ -486,7 +486,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         }
         if (v == applyCoupon) {
             if (timeSlotId.isEmpty()) {
-                AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.select_coupon));
+                AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.select_coupon));
             } else {
                 applyCoupon();
             }

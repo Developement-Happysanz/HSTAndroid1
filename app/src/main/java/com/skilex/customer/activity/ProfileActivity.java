@@ -273,7 +273,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
+            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
         }
     }
 

@@ -70,7 +70,7 @@ public class RequestedServicesActivity extends AppCompatActivity implements ISer
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadReqService();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
+            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
         }
     }
 

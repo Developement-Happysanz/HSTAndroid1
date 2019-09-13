@@ -212,7 +212,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 
             }
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
+            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
         }
     }
 

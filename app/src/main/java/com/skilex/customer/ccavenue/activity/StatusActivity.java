@@ -2,6 +2,8 @@ package com.skilex.customer.ccavenue.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -42,6 +44,43 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 	private ServiceHelper serviceHelper;
 	private ProgressDialogHelper progressDialogHelper;
 
+	private int a = 1;
+	private Handler handler = new Handler();
+	public void startTimer() {
+		handler.postDelayed(new Runnable() {
+			public void run() {
+				checkProviderAssign();
+				handler.postDelayed(this, 60000);
+			}
+		}, 60000);
+	}
+
+	private void checkProviderAssign() {
+		JSONObject jsonObject = new JSONObject();
+
+		String id = "";
+		id = PreferenceStorage.getUserId(this);
+
+		String orderId = "";
+		orderId = PreferenceStorage.getOrderId(this);
+
+		String aa = String.valueOf(a);
+		a++;
+
+		try {
+			jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+			jsonObject.put(SkilExConstants.ORDER_ID, orderId);
+			jsonObject.put(SkilExConstants.TIME_INTERVAL, aa);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+		String url = SkilExConstants.BUILD_URL + SkilExConstants.SERVICE_ALLOCATION;
+		serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+	}
+
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
@@ -59,8 +98,32 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 
 		setPageVal();
 
-		if (page.equalsIgnoreCase("advance_payment")) {
-			sendAdvanceStatus();
+		if (page.equalsIgnoreCase("advance_pay") && !(status.equalsIgnoreCase("Transaction Declined!")||status.equalsIgnoreCase("Transaction Cancelled!"))){
+//			sendAdvanceStatus();
+			final int oneMin = 3 * 60 * 1000; // 1 minute in milli seconds
+
+			/** CountDownTimer starts with 1 minutes and every onTick is 1 second */
+			new CountDownTimer(oneMin, 1000) {
+				public void onTick(long millisUntilFinished) {
+
+					//forward progress
+					long finishedSeconds = oneMin - millisUntilFinished;
+					int total = (int) (((float)finishedSeconds / (float)oneMin) * 100.0);
+
+//                //backward progress
+//                int total = (int) (((float) millisUntilFinished / (float) oneMin) * 100.0);
+//                progressBar.setProgress(total);
+
+				}
+
+				public void onFinish() {
+					// DO something when 1 minute is up
+					handler.removeCallbacksAndMessages(null);
+
+				}
+			}.start();
+			checkProviderAssign();
+			startTimer();
 		} else {
 
 		}
@@ -170,28 +233,6 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 		Toast.makeText(this, "Toast: " + msg, Toast.LENGTH_LONG).show();
 	}
 
-	private void sendAdvanceStatus() {
-		JSONObject jsonObject = new JSONObject();
-
-		String id = "";
-		id = PreferenceStorage.getAdvanceAmt(this);
-
-		String orderId = "";
-		orderId = PreferenceStorage.getOrderId(this);
-		try {
-			jsonObject.put(SkilExConstants.ADVANCE_AMOUNT, id);
-			jsonObject.put(SkilExConstants.ORDER_ID, orderId);
-			jsonObject.put(SkilExConstants.ADVANCE_STATUS, "N");
-
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-
-//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-		String url = SkilExConstants.BUILD_URL + SkilExConstants.ADVANCE_PAYMENT;
-		serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-	}
-
 	@Override
 	public void onAlertPositiveClicked(int tag) {
 
@@ -204,15 +245,15 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 
 	@Override
 	public void onResponse(JSONObject response) {
-		try {
-			if (response.getString("msg").equalsIgnoreCase("Advance paid Successfully")) {
-				Intent intent = new Intent(this, AdvancePaymentActivity.class);
-				startActivity(intent);
-				finish();
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			if (response.getString("msg").equalsIgnoreCase("Advance paid Successfully")) {
+//				Intent intent = new Intent(this, AdvancePaymentActivity.class);
+//				startActivity(intent);
+//				finish();
+//			}
+//		} catch (JSONException e) {
+//			e.printStackTrace();
+//		}
 	}
 
 	@Override
