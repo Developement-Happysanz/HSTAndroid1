@@ -129,7 +129,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_weight="0.5"
                     android:fontFamily="@font/helvetica"
-                    android:text="@string/additional_charge"
+                    android:text="@string/advance_amount"
                     android:textSize="16sp" />
 
                 <TextView

@@ -89,7 +89,7 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
         JSONObject jsonObject = new JSONObject();
         try {
 
-            jsonObject.put(SkilExConstants.ORDER_ID, PreferenceStorage.getOrderId(this));
+            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, PreferenceStorage.getRateOrderId(this));
             jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(getApplicationContext()));
             jsonObject.put(SkilExConstants.KEY_RATINGS, "" + rtbComments.getRating());
             jsonObject.put(SkilExConstants.KEY_COMMENTS, edtComments.getText().toString());

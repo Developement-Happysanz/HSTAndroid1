@@ -114,8 +114,6 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             @Override
             public void onClick(View v) {
                 cancelCoupon();
-                PreferenceStorage.saveCoupon(getApplicationContext(), "");
-                finish();
             }
         });
 
@@ -240,6 +238,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         JSONObject jsonObject = new JSONObject();
         String id = "";
         id = PreferenceStorage.getUserId(this);
+        PreferenceStorage.saveRateOrderId(this, serviceHistory.getservice_order_id());
         try {
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
             jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
@@ -419,6 +418,10 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     Intent i = new Intent(this, ServiceSummaryActivity.class);
                     i.putExtra("serviceObj", serviceHistory);
                     startActivity(i);
+                    finish();
+                }if (res.equalsIgnoreCase("remove_coupon")) {
+
+                    PreferenceStorage.saveCoupon(getApplicationContext(), "");
                     finish();
                 }
                 if (res.equalsIgnoreCase("proceed_pay")) {
