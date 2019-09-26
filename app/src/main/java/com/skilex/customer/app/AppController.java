@@ -19,11 +19,11 @@ import java.security.NoSuchAlgorithmException;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-
+import androidx.multidex.MultiDexApplication;
 //import com.facebook.FacebookSdk;
 
 
-public class AppController extends android.support.multidex.MultiDexApplication  {
+public class AppController extends MultiDexApplication  {
 
     public static final String TAG = AppController.class
             .getSimpleName();

@@ -14,7 +14,6 @@
         android:layout_alignParentEnd="true"
         android:src="@drawable/ic_language_blue"
         android:padding="10dp"
-        android:onClick="showLangAlert"
         android:layout_alignParentTop="true"/>
 
     <RelativeLayout
@@ -136,7 +135,7 @@
         android:id="@+id/login_bg"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:src="@drawable/ic_login_bg"
+        android:background="@drawable/ic_login_bg"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

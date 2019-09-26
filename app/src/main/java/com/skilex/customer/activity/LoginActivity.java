@@ -1,16 +1,16 @@
 package com.skilex.customer.activity;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -19,9 +19,20 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+
+import com.google.android.gms.auth.api.phone.SmsRetriever;
+import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.skilex.customer.R;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
@@ -31,6 +42,8 @@ import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
 import com.skilex.customer.utils.FirstTimePreference;
 import com.skilex.customer.utils.LocaleHelper;
+//import com.skilex.customer.utils.MySMSBroadcastReceiver;
+import com.skilex.customer.utils.MySMSBroadcastReceiver;
 import com.skilex.customer.utils.PermissionUtil;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
@@ -51,10 +64,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText edtNumber;
     private Button signIn;
     private TextView skip;
-    String IMEINo = "", res = "";
+    private ImageView laang;
+    String IMEINo = "", resString = "";
     private static final int PERMISSION_REQUEST_CODE = 1;
 
-    private static String[] PERMISSIONS_ALL = { Manifest.permission.READ_CALENDAR,
+//        private MySMSBroadcastReceiver mySMSBroadcastReceiver = new MySMSBroadcastReceiver();
+    private SmsBrReceiver smsReceiver;
+//    public static final int MAX_TIMEOUT = 1800000;
+
+    private static String[] PERMISSIONS_ALL = {Manifest.permission.READ_CALENDAR,
             Manifest.permission.WRITE_CALENDAR, Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -75,7 +93,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         signIn.setOnClickListener(this);
         skip = findViewById(R.id.skip);
         skip.setOnClickListener(this);
-
+        laang = findViewById(R.id.langues);
+        laang.setOnClickListener(this);
         FirstTimePreference prefFirstTime = new FirstTimePreference(getApplicationContext());
 
         if (prefFirstTime.runTheFirstTime("FirstTimePermit")) {
@@ -109,10 +128,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             PreferenceStorage.saveIMEI(this, IMEINo);
         }
 
-        if (PreferenceStorage.getLang(this).isEmpty()){
+        if (PreferenceStorage.getLang(this).isEmpty()) {
             showLangAlert();
         }
+
+        // Start listening for SMS User Consent broadcasts from senderPhoneNumber
+        // The Task<Void> will be successful if SmsRetriever was able to start
+        // SMS User Consent, and will error if there was an error starting.
+        String senderPhoneNumber = PreferenceStorage.getMobileNo(this);
+        Task<Void> task = SmsRetriever.getClient(this).startSmsUserConsent(senderPhoneNumber /* or null */);
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // Successfully started retriever, expect broadcast intent
+                // ...
+                Toast.makeText(LoginActivity.this, "Listening for otp...", Toast.LENGTH_SHORT).show();
+                IntentFilter filter = new IntentFilter();
+                filter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION);
+                if (smsReceiver == null) {
+                    smsReceiver = new SmsBrReceiver();
+                }
+                getApplicationContext().registerReceiver(smsReceiver, filter);
+//                            startActivity(homeIntent);
+//                            finish();
+            }
+        });
+
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Failed to start retriever, inspect Exception for more details
+                // ...
+                Toast.makeText(LoginActivity.this, "Failed listening for otp...", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
     public static long generateRandom(int length) {
         Random random = new Random();
         char[] digits = new char[length];
@@ -156,7 +208,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (CommonUtils.haveNetworkConnection(getApplicationContext())) {
             if (v == signIn) {
                 if (validateFields()) {
-                    res = "mob_verify";
+                    resString = "mob_verify";
                     String number = edtNumber.getText().toString();
                     PreferenceStorage.saveMobileNo(this, number);
                     String GCMKey = PreferenceStorage.getGCM(getApplicationContext());
@@ -175,6 +227,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             if (v == skip) {
                 callGetSubCategoryService();
+            }
+            if (v == laang) {
+                showLangAlert();
             }
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
@@ -251,16 +306,49 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (validateSignInResponse(response)) {
             try {
-                if (res.equalsIgnoreCase("guest_user")){
+                if (resString.equalsIgnoreCase("guest_user")) {
                     Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(homeIntent);
                     finish();
+                } else if (resString.equalsIgnoreCase("Confirm")) {
+                    PreferenceStorage.setFirstTimeLaunch(getApplicationContext(), false);
+//                    database.app_info_check_insert("Y");
+//                    Toast.makeText(getApplicationContext(), "Login successfully", Toast.LENGTH_SHORT).show();
+                    JSONObject data = response.getJSONObject("userData");
+
+                    String userId = data.getString("user_master_id");
+                    String fullName = data.getString("full_name");
+                    String gender = data.getString("gender");
+                    String mobileVerify = data.getString("mobile_verify");
+                    String phoneNo = data.getString("phone_no");
+                    String profilePic = data.getString("profile_pic");
+                    String email = data.getString("email");
+                    String emailVerifyStatus = data.getString("email_verify");
+                    String userType = data.getString("user_type");
+
+                    PreferenceStorage.saveUserId(getApplicationContext(), userId);
+                    PreferenceStorage.saveName(getApplicationContext(), fullName);
+                    PreferenceStorage.saveGender(getApplicationContext(), gender);
+//                    PreferenceStorage.saveAddress(getApplicationContext(), address);
+                    PreferenceStorage.saveProfilePic(getApplicationContext(), profilePic);
+                    PreferenceStorage.saveEmail(getApplicationContext(), email);
+                    PreferenceStorage.saveEmailVerify(getApplicationContext(), emailVerifyStatus);
+                    PreferenceStorage.saveUserType(getApplicationContext(), userType);
+
+//                    PreferenceStorage.saveUserId(getApplicationContext(), userId);
+//                    PreferenceStorage.saveCheckFirstTimeProfile(getApplicationContext(), "new");
+                    Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
+//                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+////                    homeIntent.putExtra("profile_state", "new");
+                    startActivity(homeIntent);
+//                    this.finish();
+                    finish();
+
                 } else {
                     String userId = response.getString("user_master_id");
                     PreferenceStorage.saveUserId(this, userId);
                     Intent homeIntent = new Intent(getApplicationContext(), NumberVerificationActivity.class);
-                    startActivity(homeIntent);
-                    finish();
+
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -318,14 +406,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (CommonUtils.isNetworkAvailable(this)) {
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            loadCat();
+            guestLogin();
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
         }
     }
 
-    private void loadCat(){
-        res = "guest_user";
+    private void guestLogin() {
+        resString = "guest_user";
         String GCMKey = PreferenceStorage.getGCM(getApplicationContext());
 
         JSONObject jsonObject = new JSONObject();
@@ -343,4 +431,89 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
+    class SmsBrReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (SmsRetriever.SMS_RETRIEVED_ACTION.equals(intent.getAction())) {
+                Bundle extras = intent.getExtras();
+                Status status = (Status) extras.get(SmsRetriever.EXTRA_STATUS);
+
+                switch(status.getStatusCode()) {
+                    case CommonStatusCodes.SUCCESS:
+                        // Get SMS message contents
+                        String smsMessage = (String) extras.get(SmsRetriever.EXTRA_SMS_MESSAGE);
+                        // Extract one-time code from the message and complete verification
+                        // by sending the code back to your server.
+                        Log.d(TAG, "Retrieved sms code: " + smsMessage);
+                        if (smsMessage != null) {
+                            verifyMessage(smsMessage);
+                        }
+                        break;
+                    case CommonStatusCodes.TIMEOUT:
+                        // Waiting for SMS timed out (5 minutes)
+                        // Handle the error ...
+                        break;
+                }
+            }
+        }
+//        @Override
+//            public void onReceive(Context context, Intent intent) {
+//                if (intent == null) {
+//                    return;
+//                }
+//
+//                String action = intent.getAction();
+//                if (SmsRetriever.SMS_RETRIEVED_ACTION.equals(action)) {
+////                notifyStatus(STATUS_RESPONSE_RECEIVED, null);
+//                    Bundle extras = intent.getExtras();
+//                    Status status = (Status) extras.get(SmsRetriever.EXTRA_STATUS);
+//                    switch (status.getStatusCode()) {
+//                        case CommonStatusCodes.SUCCESS:
+//                            String smsMessage = (String) extras.get(SmsRetriever.EXTRA_SMS_MESSAGE);
+////                        Toast.makeText(context, "" + smsMessage, Toast.LENGTH_SHORT).show();
+//                            Log.d(TAG, "Retrieved sms code: " + smsMessage);
+//                            if (smsMessage != null) {
+//                                verifyMessage(smsMessage);
+//                            }
+//                            break;
+//                        case CommonStatusCodes.TIMEOUT:
+//                            doTimeout();
+//                            break;
+//                        default:
+//                            break;
+//                    }
+//                }
+//        }
+
+        private void doTimeout() {
+            Log.d(TAG, "Waiting for sms timed out.");
+            Toast.makeText(LoginActivity.this,
+                    getString(R.string.error_entry), Toast.LENGTH_LONG).show();
+//            stopSelf();
+        }
+    }
+
+    public void verifyMessage(String otp) {
+        resString = "mob_verified";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+            jsonObject.put(SkilExConstants.PHONE_NUMBER, PreferenceStorage.getMobileNo(getApplicationContext()));
+            jsonObject.put(SkilExConstants.OTP, otp);
+            jsonObject.put(SkilExConstants.DEVICE_TOKEN, PreferenceStorage.getGCM(getApplicationContext()));
+            jsonObject.put(SkilExConstants.MOBILE_TYPE, "1");
+            jsonObject.put(SkilExConstants.UNIQUE_NUMBER, PreferenceStorage.getIMEI(getApplicationContext()));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.USER_LOGIN;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
 }
+
+

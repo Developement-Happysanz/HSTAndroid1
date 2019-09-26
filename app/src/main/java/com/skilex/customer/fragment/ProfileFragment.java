@@ -3,10 +3,9 @@ package com.skilex.customer.fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.skilex.customer.R;
 import com.skilex.customer.activity.AboutUsActivity;
@@ -43,7 +45,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
     private ProgressDialogHelper progressDialogHelper;
     private View rootView;
     private CircleImageView profileImage;
-    private LinearLayout profile, about, share, logout;
+    private LinearLayout profile, about, share, logout, rate;
     TextView userNmae,number, mail;
     ImageView lan;
 
@@ -78,6 +80,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
         about.setOnClickListener(this);
         share = rootView.findViewById(R.id.layout_share);
         share.setOnClickListener(this);
+        rate = rootView.findViewById(R.id.layout_rate);
+        rate.setOnClickListener(this);
         logout = rootView.findViewById(R.id.layout_logout);
         logout.setOnClickListener(this);
         userNmae = rootView.findViewById(R.id.user_name);
@@ -121,12 +125,17 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
                 startActivity(homeIntent);
         }
         if (v == share) {
-//            Intent i = new Intent(android.content.Intent.ACTION_SEND);
-//            i.setType("text/plain");
-//            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share");
-//            i.putExtra(android.content.Intent.EXTRA_TEXT, "Hey! Get Heyla app and win some exciting rewards. https://goo.gl/JTmdEX");
-//            startActivity(Intent.createChooser(i, "Share via"));
+            Intent i = new Intent(android.content.Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share");
+            i.putExtra(android.content.Intent.EXTRA_TEXT, "https://bit.ly/2msvgwt");
+            startActivity(Intent.createChooser(i, "Share via"));
 
+        }
+        if (v == rate) {
+            Uri uri = Uri.parse("https://bit.ly/2msvgwt");
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
         }
         if (v == logout) {
             doLogout();

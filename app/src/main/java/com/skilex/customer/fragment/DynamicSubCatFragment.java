@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +11,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.gson.Gson;
 import com.skilex.customer.R;
@@ -40,30 +41,31 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Timer;
+
 import java.util.TimerTask;
 
 import static android.util.Log.d;
 
 public class DynamicSubCatFragment extends Fragment implements IServiceListener, AdapterView.OnItemClickListener, DialogClickListener {
     Context context;
-    View view;
-    static ArrayList<SubCategory> subCategoryArrayList;
-    ArrayList<Service> serviceArrayList;
-    int val;
-    MainServiceListAdapter serviceListAdapter;
+    private View view;
+    private static ArrayList<SubCategory> subCategoryArrayList;
+    private ArrayList<Service> serviceArrayList;
+    private int val;
+    private MainServiceListAdapter serviceListAdapter;
     private static final String TAG = DynamicSubCatFragment.class.getName();
-    String subCatId = "";
+    private String subCatId = "";
     private ServiceHelper serviceHelper;
-    int totalCount = 0, checkrun = 0;
-    protected boolean isLoadingForFirstTime = true;
+    private int totalCount = 0, checkrun = 0;
+    private  boolean isLoadingForFirstTime = true;
     private ProgressDialogHelper progressDialogHelper;
-    ListView loadMoreListView;
-    Boolean msgErr = false;
-    Boolean noService = false;
-    String res = "";
-    String id = "";
+    private ListView loadMoreListView;
+    private Boolean msgErr = false;
+    private Boolean noService = false;
+    private String res = "";
+    private String id = "";
 
-    static boolean _hasLoadedOnce = false; // your boolean field
+    private static boolean _hasLoadedOnce = false; // your boolean field
 
     public static DynamicSubCatFragment newInstance(int val, ArrayList<SubCategory> categoryArrayList) {
         DynamicSubCatFragment fragment = new DynamicSubCatFragment();
