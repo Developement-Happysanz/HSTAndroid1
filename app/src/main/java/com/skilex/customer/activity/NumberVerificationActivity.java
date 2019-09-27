@@ -5,16 +5,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,10 +36,8 @@ import com.skilex.customer.interfaces.DialogClickListener;
 import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
-import com.skilex.customer.utils.MySMSBroadcastReceiver;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
-import com.skilex.customer.utils.SkilExValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,32 +65,8 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
     private ProgressDialogHelper progressDialogHelper;
     private static final int SMS_CONSENT_REQUEST = 2;  // Set to an unused request code
     SQLiteHelper database;
-    private final BroadcastReceiver smsVerificationReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (SmsRetriever.SMS_RETRIEVED_ACTION.equals(intent.getAction())) {
-                Bundle extras = intent.getExtras();
-                Status smsRetrieverStatus = (Status) extras.get(SmsRetriever.EXTRA_STATUS);
+    private SmsBrReceiver smsReceiver;
 
-                switch (smsRetrieverStatus.getStatusCode()) {
-                    case CommonStatusCodes.SUCCESS:
-                        // Get consent intent
-                        Intent consentIntent = extras.getParcelable(SmsRetriever.EXTRA_SMS_MESSAGE);
-                        try {
-                            // Start activity to show consent dialog to user, activity must be started in
-                            // 5 minutes, otherwise you'll receive another TIMEOUT intent
-                            startActivityForResult(consentIntent, SMS_CONSENT_REQUEST);
-                        } catch (ActivityNotFoundException e) {
-                            // Handle the exception ...
-                        }
-                        break;
-                    case CommonStatusCodes.TIMEOUT:
-                        // Time out occurred, handle the error.
-                        break;
-                }
-            }
-        }
-    };
 
 
     @Override
@@ -109,16 +85,39 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
-    }
 
-    private String parseCode(String message) {
-        Pattern p = Pattern.compile("\\b\\d{6}\\b");
-        Matcher m = p.matcher(message);
-        String code = "";
-        while (m.find()) {
-            code = m.group(0);
-        }
-        return code;
+        // Start listening for SMS User Consent broadcasts from senderPhoneNumber
+        // The Task<Void> will be successful if SmsRetriever was able to start
+        // SMS User Consent, and will error if there was an error starting.
+        SmsRetrieverClient client = SmsRetriever.getClient(this);
+        Task<Void> task = client.startSmsRetriever();
+//        Task<Void> task = SmsRetriever.getClient(this).startSmsUserConsent(senderPhoneNumber /* or null */);
+        task.addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // Successfully started retriever, expect broadcast intent
+                // ...
+                Toast.makeText(NumberVerificationActivity.this, "Listening for otp...", Toast.LENGTH_SHORT).show();
+                IntentFilter filter = new IntentFilter();
+                filter.addAction(SmsRetriever.SMS_RETRIEVED_ACTION);
+                if (smsReceiver == null) {
+                    smsReceiver = new NumberVerificationActivity.SmsBrReceiver();
+                }
+                getApplicationContext().registerReceiver(smsReceiver, filter);
+//                            startActivity(homeIntent);
+//                            finish();
+            }
+        });
+
+        task.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                // Failed to start retriever, inspect Exception for more details
+                // ...
+                Toast.makeText(NumberVerificationActivity.this, "Failed listening for otp...", Toast.LENGTH_SHORT).show();
+            }
+        });
+        
     }
 
     @Override
@@ -254,7 +253,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 
                     Toast.makeText(getApplicationContext(), "OTP resent successfully", Toast.LENGTH_SHORT).show();
 
-                } else if (checkVerify.equalsIgnoreCase("Confirm")) {
+                } else if (checkVerify.equalsIgnoreCase("Confirm")|| checkVerify.equalsIgnoreCase("verified")) {
                     PreferenceStorage.setFirstTimeLaunch(getApplicationContext(), false);
                     database.app_info_check_insert("Y");
 //                    Toast.makeText(getApplicationContext(), "Login successfully", Toast.LENGTH_SHORT).show();
@@ -300,4 +299,65 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
         progressDialogHelper.hideProgressDialog();
         AlertDialogHelper.showSimpleAlertDialog(this, error);
     }
+
+    class SmsBrReceiver extends BroadcastReceiver {
+
+        private String parseCode(String message) {
+            Pattern p = Pattern.compile("\\b\\d{4}\\b");
+            Matcher m = p.matcher(message);
+            String code = "";
+            while (m.find()) {
+                code = m.group(0);
+            }
+            return code;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (SmsRetriever.SMS_RETRIEVED_ACTION.equals(intent.getAction())) {
+                Bundle extras = intent.getExtras();
+                Status status = (Status) extras.get(SmsRetriever.EXTRA_STATUS);
+
+                switch (status.getStatusCode()) {
+                    case CommonStatusCodes.SUCCESS:
+                        // Get SMS message contents
+                        String smsMessage = (String) extras.get(SmsRetriever.EXTRA_SMS_MESSAGE);
+                        // Extract one-time code from the message and complete verification
+                        // by sending the code back to your server.
+                        Log.d(TAG, "Retrieved sms code: " + smsMessage);
+                        if (smsMessage != null) {
+                            String sms = parseCode(smsMessage);
+                            verifyMessage(sms);
+                        }
+                        break;
+                    case CommonStatusCodes.TIMEOUT:
+                        // Waiting for SMS timed out (5 minutes)
+                        // Handle the error ...
+                        break;
+                }
+            }
+        }
+
+    }
+
+    public void verifyMessage(String otp) {
+        checkVerify = "verified";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+            jsonObject.put(SkilExConstants.PHONE_NUMBER, PreferenceStorage.getMobileNo(getApplicationContext()));
+            jsonObject.put(SkilExConstants.OTP, otp);
+            jsonObject.put(SkilExConstants.DEVICE_TOKEN, PreferenceStorage.getGCM(getApplicationContext()));
+            jsonObject.put(SkilExConstants.MOBILE_TYPE, "1");
+            jsonObject.put(SkilExConstants.UNIQUE_NUMBER, PreferenceStorage.getIMEI(getApplicationContext()));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.USER_LOGIN;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
 }

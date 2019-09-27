@@ -13,11 +13,8 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.skilex.customer.R;
 import com.skilex.customer.bean.database.SQLiteHelper;
-import com.skilex.customer.helper.AppSignatureHelper;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExValidator;
-
-import java.util.ArrayList;
 
 
 public class SplashScreenActivity extends Activity {
@@ -30,8 +27,6 @@ public class SplashScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         database = new SQLiteHelper(getApplicationContext());
-        ArrayList<String> sigList = (new AppSignatureHelper(this)).getAppSignatures();
-        Log.e("sigList", String.valueOf(sigList));
         final int getStatus = database.appInfoCheck();
         new Handler().postDelayed(new Runnable() {
             @Override
