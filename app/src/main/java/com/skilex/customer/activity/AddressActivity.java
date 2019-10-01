@@ -73,6 +73,7 @@ import static android.util.Log.d;
 
 public class AddressActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback, IServiceListener, DialogClickListener, View.OnClickListener {
+
     private static final String TAG = SubCategoryActivity.class.getName();
 
     LatLng position, myPosition;

@@ -80,7 +80,7 @@ import static android.util.Log.d;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener, IServiceListener, DialogClickListener {
 
-    private static final String TAG = LoginActivity.class.getName();
+    private static final String TAG = ProfileActivity.class.getName();
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     private EditText edtName, edtMail, edtAddress, edtGender;

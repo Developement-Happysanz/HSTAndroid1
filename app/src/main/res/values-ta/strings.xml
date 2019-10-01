@@ -204,8 +204,8 @@
     <string name="merchant_id">வணிகர் அடையாள எண்</string>
     <string name="currency">நாணயம்</string>
     <string name="amount">தொகை</string>
-    <string name="redirect_url_advance">https://www.skilex.in/development/ccavenue_app/customer_advance.php</string>
-    <string name="redirect_url">https://www.skilex.in/development/ccavenue_app/service_net_amount.php</string>
+    <string name="redirect_url_advance">https://www.skilex.in/ccavenue_app/customer_advance.php</string>
+    <string name="redirect_url">https://www.skilex.in/ccavenue_app/service_net_amount.php</string>
     <string name="cancel_url">Cancel Url</string>
     <string name="rsa_url">RSA Key Url</string>
 

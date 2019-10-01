@@ -22,32 +22,32 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:minHeight="60dp"
-            android:paddingEnd="15dp"
             android:paddingStart="10dp"
+            android:paddingEnd="15dp"
             android:src="@drawable/ic_arrow_back_white_24dp" />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/back_btn"
+            android:fontFamily="@font/helvetica"
             android:gravity="center_vertical|left"
             android:minHeight="60dp"
-            android:layout_toRightOf="@+id/back_btn"
             android:padding="5dp"
-            android:fontFamily="@font/helvetica"
             android:text="@string/profile_title"
             android:textColor="@color/white"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/img_save_profile"
             android:layout_width="50dp"
             android:layout_height="60dp"
-            android:padding="10dp"
-            android:visibility="gone"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_completed"/>
+            android:padding="10dp"
+            android:src="@drawable/ic_completed"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
@@ -67,8 +67,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:background="@color/colorPrimary">
+                    android:background="@color/colorPrimary"
+                    android:gravity="center">
 
                     <com.skilex.customer.customview.CircleImageView
                         android:id="@+id/img"
@@ -76,10 +76,9 @@
                         android:layout_height="100dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="30dp"
-                        android:src="@drawable/ic_user_profile_image"/>
+                        android:src="@drawable/ic_user_profile_image" />
 
                 </LinearLayout>
-
 
 
             </FrameLayout>
@@ -96,10 +95,10 @@
                     android:id="@+id/edtUserName"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="@string/user_name"
-                    android:fontFamily="@font/helvetica"
-                    android:inputType="text"
                     android:clickable="false"
+                    android:fontFamily="@font/helvetica"
+                    android:hint="@string/user_name"
+                    android:inputType="text"
                     android:singleLine="true"
                     android:textSize="14sp" />
 
@@ -117,10 +116,10 @@
                     android:id="@+id/edtUserGender"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:clickable="false"
+                    android:fontFamily="@font/helvetica"
                     android:hint="@string/user_gender"
                     android:inputType="text"
-                    android:fontFamily="@font/helvetica"
-                    android:clickable="false"
                     android:singleLine="true"
                     android:textSize="14sp" />
 
@@ -131,9 +130,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:visibility="gone"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/edtUserAddress"
@@ -158,9 +157,9 @@
                     android:id="@+id/edtUserMail"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:hint="@string/user_mail"
                     android:clickable="false"
                     android:fontFamily="@font/helvetica"
+                    android:hint="@string/user_mail"
                     android:inputType="textEmailAddress"
                     android:singleLine="true"
                     android:textSize="14sp" />
@@ -171,23 +170,20 @@
                 android:id="@+id/update"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
+                android:background="@drawable/button_round_color"
+                android:fontFamily="@font/helvetica"
                 android:paddingStart="40dp"
                 android:paddingEnd="40dp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/helvetica"
+                android:text="@string/alert_button_ok"
                 android:textAllCaps="false"
-                android:textStyle="bold"
-                android:background="@drawable/button_round_color"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/alert_button_ok"/>
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
     </ScrollView>
-
-
-
 
 
 </LinearLayout>

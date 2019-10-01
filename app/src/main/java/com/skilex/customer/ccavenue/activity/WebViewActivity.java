@@ -46,8 +46,7 @@ public class WebViewActivity extends AppCompatActivity {
 
         page = (String) mainIntent.getStringExtra("page");
 
-
-//get rsa key method
+        //get rsa key method
         get_RSA_key(mainIntent.getStringExtra(AvenuesParams.ACCESS_CODE), mainIntent.getStringExtra(AvenuesParams.ORDER_ID));
     }
 

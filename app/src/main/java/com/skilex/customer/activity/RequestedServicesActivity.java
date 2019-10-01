@@ -31,7 +31,8 @@ import java.util.ArrayList;
 
 import static android.util.Log.d;
 
-public class RequestedServicesActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, AdapterView.OnItemClickListener {
+public class RequestedServicesActivity extends AppCompatActivity implements IServiceListener, DialogClickListener,
+        AdapterView.OnItemClickListener {
     private static final String TAG = RequestedServicesActivity.class.getName();
 
     private ServiceHelper serviceHelper;

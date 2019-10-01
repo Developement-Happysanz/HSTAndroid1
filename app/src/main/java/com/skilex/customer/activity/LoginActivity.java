@@ -256,7 +256,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     startActivity(homeIntent);
                     finish();
                 } else {
-                    String userId = response.getString("user_master_id");
+                        String userId = response.getString("user_master_id");
                     PreferenceStorage.saveUserId(this, userId);
                     Intent homeIntent = new Intent(getApplicationContext(), NumberVerificationActivity.class);
                     startActivity(homeIntent);

@@ -167,16 +167,16 @@
                 android:id="@+id/book_now"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
                 android:layout_marginLeft="10dp"
-                android:fontFamily="@font/helvetica"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="10dp"
-                android:textAllCaps="false"
-                android:textStyle="bold"
-                android:textColor="@color/white"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/button_round_color"
-                android:text="@string/book_now"/>
+                android:fontFamily="@font/helvetica"
+                android:text="@string/book_now"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
 
         </LinearLayout>
