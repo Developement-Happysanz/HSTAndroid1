@@ -109,7 +109,6 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
             } else {
                 holder.txtCatName.setText(services.get(position).getservice_name());
             }
-            holder.txtCatName.setText(services.get(position).getservice_name());
             holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
             String url = services.get(position).getservice_pic_url();
             if (((url != null) && !(url.isEmpty()))) {
@@ -159,7 +158,6 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
             } else {
                 holder.txtCatName.setText(services.get(position).getservice_name());
             }
-            holder.txtCatName.setText(services.get(position).getservice_name());
             holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
             String url = services.get(position).getservice_pic_url();
             if (((url != null) && !(url.isEmpty()))) {
