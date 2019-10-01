@@ -3,10 +3,11 @@ package com.skilex.customer.activity;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.skilex.customer.R;
 import com.skilex.customer.helper.AlertDialogHelper;

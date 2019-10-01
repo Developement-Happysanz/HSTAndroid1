@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_result"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listSumService"
             android:layout_width="match_parent"
             android:layout_height="250dp"
@@ -129,7 +129,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_weight="0.5"
                     android:fontFamily="@font/helvetica"
-                    android:text="@string/additional_charge"
+                    android:text="@string/advance_amount"
                     android:textSize="16sp" />
 
                 <TextView

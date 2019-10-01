@@ -4,8 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
 import android.util.Log;
+
+import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -27,7 +28,6 @@ public class SplashScreenActivity extends Activity {
         setContentView(R.layout.activity_splash_screen);
         database = new SQLiteHelper(getApplicationContext());
         final int getStatus = database.appInfoCheck();
-
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

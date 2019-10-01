@@ -7,12 +7,22 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <ImageView
+        android:id="@+id/langues"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_language_blue"
+        android:padding="10dp"
+        android:layout_alignParentTop="true"/>
+
     <RelativeLayout
         android:id="@+id/login_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/login_bg"
         android:gravity="center">
+
 
         <ImageView
             android:id="@+id/logo"
@@ -125,7 +135,7 @@
         android:id="@+id/login_bg"
         android:layout_width="match_parent"
         android:layout_height="110dp"
-        android:src="@drawable/ic_login_bg"
+        android:background="@drawable/ic_login_bg"
         android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

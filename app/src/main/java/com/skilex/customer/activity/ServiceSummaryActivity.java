@@ -3,8 +3,6 @@ package com.skilex.customer.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.skilex.customer.R;
 import com.skilex.customer.bean.support.ServiceHistory;
@@ -114,8 +115,6 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             @Override
             public void onClick(View v) {
                 cancelCoupon();
-                PreferenceStorage.saveCoupon(getApplicationContext(), "");
-                finish();
             }
         });
 
@@ -240,6 +239,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         JSONObject jsonObject = new JSONObject();
         String id = "";
         id = PreferenceStorage.getUserId(this);
+        PreferenceStorage.saveRateOrderId(this, serviceHistory.getservice_order_id());
         try {
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
             jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
@@ -420,6 +420,10 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     i.putExtra("serviceObj", serviceHistory);
                     startActivity(i);
                     finish();
+                }if (res.equalsIgnoreCase("remove_coupon")) {
+
+                    PreferenceStorage.saveCoupon(getApplicationContext(), "");
+                    finish();
                 }
                 if (res.equalsIgnoreCase("proceed_pay")) {
                     if (response.getString("msg").equalsIgnoreCase("Service status") &&
@@ -486,7 +490,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         }
         if (v == applyCoupon) {
             if (timeSlotId.isEmpty()) {
-                AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.select_coupon));
+                AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.select_coupon));
             } else {
                 applyCoupon();
             }

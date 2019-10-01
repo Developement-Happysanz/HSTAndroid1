@@ -2,15 +2,15 @@ package com.skilex.customer.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.skilex.customer.R;
 import com.skilex.customer.helper.AlertDialogHelper;
@@ -89,7 +89,7 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
         JSONObject jsonObject = new JSONObject();
         try {
 
-            jsonObject.put(SkilExConstants.ORDER_ID, PreferenceStorage.getOrderId(this));
+            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, PreferenceStorage.getRateOrderId(this));
             jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(getApplicationContext()));
             jsonObject.put(SkilExConstants.KEY_RATINGS, "" + rtbComments.getRating());
             jsonObject.put(SkilExConstants.KEY_COMMENTS, edtComments.getText().toString());

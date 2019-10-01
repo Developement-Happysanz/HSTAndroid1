@@ -401,6 +401,24 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    /*To store order id*/
+    public static void saveRateOrderId(Context context, String orderId) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.SERVICE_ID, orderId);
+        editor.apply();
+    }
+
+    public static String getRateOrderId(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String orderId;
+        orderId = sharedPreferences.getString(SkilExConstants.SERVICE_ID, "");
+        return orderId;
+    }
+    /*End*/
+
     /*To store coupon cooment*/
     public static void saveCoupon(Context context, String orderId) {
         SharedPreferences sharedPreferences = PreferenceManager

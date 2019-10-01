@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,18 +58,19 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="160dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/shadow_round">
 
                 <ImageView
+                    android:id="@+id/money"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_alignTop="@id/cost_text"
-                    android:layout_marginTop="20dp"
+                    android:layout_below="@id/cost_text"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
                     android:src="@drawable/ic_money"/>
 
                 <TextView
@@ -87,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorPrimary"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_below="@+id/cost_text"
                     android:fontFamily="@font/helvetica"
                     android:text="200"
@@ -99,10 +100,11 @@
                     android:id="@+id/book_now"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_alignParentBottom="true"
                     android:text="@string/book_now"
                     android:fontFamily="@font/helvetica"
+                    android:layout_below="@+id/money"
                     android:textAllCaps="false"
+                    android:layout_marginTop="20dp"
                     android:textColor="@color/white"
                     android:background="@color/colorPrimary"/>
 

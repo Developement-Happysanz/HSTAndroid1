@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.skilex.customer.R;
 import com.skilex.customer.activity.SplashScreenActivity;
@@ -108,7 +109,6 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
             } else {
                 holder.txtCatName.setText(services.get(position).getservice_name());
             }
-            holder.txtCatName.setText(services.get(position).getservice_name());
             holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
             String url = services.get(position).getservice_pic_url();
             if (((url != null) && !(url.isEmpty()))) {
@@ -158,7 +158,6 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
             } else {
                 holder.txtCatName.setText(services.get(position).getservice_name());
             }
-            holder.txtCatName.setText(services.get(position).getservice_name());
             holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
             String url = services.get(position).getservice_pic_url();
             if (((url != null) && !(url.isEmpty()))) {

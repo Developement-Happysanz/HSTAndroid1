@@ -1,8 +1,9 @@
 package com.skilex.customer.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ortiz.touchview.TouchImageView;
 import com.skilex.customer.R;

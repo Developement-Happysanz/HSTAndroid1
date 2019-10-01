@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.skilex.customer.R;
 import com.skilex.customer.bean.support.Category;
@@ -82,7 +83,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             getServiceDetail();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
+            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
         }
     }
 
@@ -173,9 +174,9 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                     JSONObject data = response.getJSONObject("service_details");
                     serviceCost.setText("₹" + data.getString("rate_card"));
                     if (PreferenceStorage.getLang(this).equalsIgnoreCase("tam")) {
-                        costText.setText(data.getString("rate_card_details"));
-                    } else {
                         costText.setText(data.getString("rate_card_details_ta"));
+                    } else {
+                        costText.setText(data.getString("rate_card_details"));
                     }
                     if (!data.getString("inclusions").isEmpty() ||
                             !data.getString("exclusions").isEmpty() ||

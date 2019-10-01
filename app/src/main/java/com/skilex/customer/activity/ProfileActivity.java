@@ -21,10 +21,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -37,6 +33,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.skilex.customer.R;
 import com.skilex.customer.customview.CircleImageView;
@@ -273,7 +274,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 }
             }
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
+            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
         }
     }
 
@@ -441,27 +442,28 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
 
             if (requestCode == REQUEST_IMAGE_GET) {
-                Log.d(TAG, "ONActivity Result");
+                d(TAG, "ONActivity Result");
                 final boolean isCamera;
                 if (data == null) {
-                    Log.d(TAG, "camera is true");
+                    d(TAG, "camera is true");
                     isCamera = true;
                 } else {
                     final String action = data.getAction();
-                    Log.d(TAG, "camera action is" + action);
+                    d(TAG, "camera action is" + action);
                     if (action == null) {
                         isCamera = false;
                     } else {
-                        isCamera = action.equals(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                        isCamera = action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
                     }
                 }
 
 
                 if (isCamera) {
-                    Log.d(TAG, "Add to gallery");
+                    d(TAG, "Add to gallery");
                     mSelectedImageUri = outputFileUri;
                     mActualFilePath = outputFileUri.getPath();
                     galleryAddPic(mSelectedImageUri);
@@ -501,9 +503,9 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                     }
 
                 }
-                Log.d(TAG, "image Uri is" + mSelectedImageUri);
+                d(TAG, "image Uri is" + mSelectedImageUri);
                 if (mSelectedImageUri != null) {
-                    Log.d(TAG, "image URI is" + mSelectedImageUri);
+                    d(TAG, "image URI is" + mSelectedImageUri);
 //                    performCrop();
 //                    setPic(mSelectedImageUri);
                     mUpdatedImageUrl = null;

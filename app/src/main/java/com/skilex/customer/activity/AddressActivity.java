@@ -3,9 +3,6 @@ package com.skilex.customer.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
@@ -16,8 +13,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +23,12 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -382,7 +383,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadSlot();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
+            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
         }
     }
 

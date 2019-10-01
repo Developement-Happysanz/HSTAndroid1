@@ -5,11 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +17,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -57,11 +58,11 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     Context context;
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
-    Handler mHandler = new Handler();
+    private Handler mHandler = new Handler();
     int totalCount = 0, checkrun = 0;
     protected boolean isLoadingForFirstTime = true;
-    ArrayList<Category> categoryArrayList;
-    CategoryListAdapter categoryListAdapter;
+    private ArrayList<Category> categoryArrayList;
+    private CategoryListAdapter categoryListAdapter;
     ListView loadMoreListView;
     Category category;
     private PreferenceListAdapter preferenceAdatper;
@@ -73,8 +74,8 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private ViewFlipper viewFlipper;
     private String res = "";
     private ArrayList<String> imgUrl = new ArrayList<>();
-    String id = "";
-    Intent intent;
+    private String id = "";
+    private Intent intent;
 
     public static HomeFragment newInstance(int position) {
         HomeFragment frag = new HomeFragment();

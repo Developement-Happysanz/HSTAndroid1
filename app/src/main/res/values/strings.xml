@@ -132,11 +132,13 @@
     <string name="access_code">Access Code</string>
     <string name="pay_button">Pay</string>
     <string name="pay_button_online">Pay Online</string>
-    <string name="pay_button_cash">Pay Cash</string>
+    <string name="pay_button_cash">Pay by Cash</string>
     <string name="payment">Payment</string>
     <string name="merchant_id">Merchant Id</string>
     <string name="currency">Currency</string>
     <string name="amount">Amount</string>
+<!--    <string name="redirect_url_advance">https://www.skilex.in/development/ccavenue_app/customer_advance.php</string>-->
+<!--    <string name="redirect_url">https://www.skilex.in/development/ccavenue_app/service_net_amount.php</string>-->
     <string name="redirect_url_advance">https://www.skilex.in/ccavenue_app/customer_advance.php</string>
     <string name="redirect_url">https://www.skilex.in/ccavenue_app/service_net_amount.php</string>
     <string name="cancel_url">Cancel Url</string>
@@ -164,6 +166,7 @@
     <string name="profile_title">Profile</string>
     <string name="about">About</string>
     <string name="share">Share app</string>
+    <string name="rate_app">Rate app</string>
     <string name="logout">Logout</string>
 
 

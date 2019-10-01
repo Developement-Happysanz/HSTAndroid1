@@ -2,11 +2,12 @@ package com.skilex.customer.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.skilex.customer.R;
@@ -71,7 +72,7 @@ public class RequestedServicesActivity extends AppCompatActivity implements ISer
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadReqService();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
+            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
         }
     }
 

@@ -2,12 +2,13 @@ package com.skilex.customer.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
 import com.skilex.customer.R;
@@ -72,7 +73,7 @@ public class OngoingServiceActivity extends AppCompatActivity implements IServic
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             loadOnGoService();
         } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, String.valueOf(R.string.error_no_net));
+            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
         }
     }
 
