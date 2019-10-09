@@ -58,7 +58,7 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
     public MainServiceListAdapter(Context context, ArrayList<Service> services) {
         this.context = context;
         this.services = services;
-        Collections.reverse(services);
+//        Collections.reverse(services);
 //        transformation = new RoundedTransformationBuilder()
 //                .cornerRadiusDp(0)
 //                .oval(false)
