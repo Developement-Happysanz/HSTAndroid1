@@ -173,7 +173,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                 if (res.equalsIgnoreCase("detail")) {
                     JSONObject data = response.getJSONObject("service_details");
                     serviceCost.setText("₹" + data.getString("rate_card"));
-                    if (PreferenceStorage.getLang(this).equalsIgnoreCase("tam")) {
+                    if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
                         costText.setText(data.getString("rate_card_details_ta"));
                     } else {
                         costText.setText(data.getString("rate_card_details"));
@@ -182,7 +182,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                             !data.getString("exclusions").isEmpty() ||
                             !data.getString("service_procedure").isEmpty() ||
                             !data.getString("others").isEmpty()) {
-                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tam")) {
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
                             serviceIncludes.setText(data.getString("inclusions_ta"));
                             serviceExcludes.setText(data.getString("exclusions_ta"));
                             serviceProcedure.setText(data.getString("service_procedure_ta"));
