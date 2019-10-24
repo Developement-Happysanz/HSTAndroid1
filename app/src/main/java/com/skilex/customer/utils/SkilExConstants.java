@@ -240,6 +240,7 @@ public class SkilExConstants {
     public static String SERVICE_ADDRESS = "service_address";
     public static String ORDER_DATE = "order_date";
     public static String ORDER_TIMESLOT = "order_timeslot_id";
+    public static final String PARAMS_AMOUNT = "amount";
 
 
     // Advance Payment
