@@ -188,7 +188,7 @@ public class InitialScreenActivity extends AppCompatActivity implements IService
         try {
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
             jsonObject.put(SkilExConstants.ORDER_ID, orderId);
-            jsonObject.put(SkilExConstants.TIME_INTERVAL, amount.getText().toString().trim());
+            jsonObject.put(SkilExConstants.PARAMS_AMOUNT, amount.getText().toString().trim());
 
         } catch (JSONException e) {
             e.printStackTrace();

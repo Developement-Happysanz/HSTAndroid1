@@ -11,9 +11,9 @@ public class SkilExConstants {
     private static final String BASE_URL = "https://skilex.in/";
 //
 //    //BUILD URL
-//    public static final String BUILD_URL = BASE_URL + "development/apicustomer/";
+    public static final String BUILD_URL = BASE_URL + "development/apicustomer/";
 //    public static final String BUILD_URL = BASE_URL + "uat/apicustomer/";
-    public static final String BUILD_URL = BASE_URL + "apicustomer/";
+//    public static final String BUILD_URL = BASE_URL + "apicustomer/";
 
     //LOGIN URL
     public static final String USER_LOGIN = "login/";
@@ -168,6 +168,7 @@ public class SkilExConstants {
     public static final String KEY_USER_MAIL = "email";
     public static final String KEY_USER_MAIL_STATUS = "email_verify_status";
     public static final String KEY_USER_TYPE = "user_type";
+    public static final String PARAMS_AMOUNT = "amount";
 
 
     // Alert Dialog Constants
