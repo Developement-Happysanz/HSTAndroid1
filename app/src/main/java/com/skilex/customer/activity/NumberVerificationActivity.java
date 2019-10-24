@@ -136,7 +136,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
             if (v == tvResendOTP) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle(R.string.resend_otp);
-                alertDialogBuilder.setMessage(R.string.mobile_number + PreferenceStorage.getMobileNo(getApplicationContext()));
+                alertDialogBuilder.setMessage(getString(R.string.mobile_number) + PreferenceStorage.getMobileNo(getApplicationContext()));
                 alertDialogBuilder.setPositiveButton(R.string.alert_button_ok,
                         new DialogInterface.OnClickListener() {
 

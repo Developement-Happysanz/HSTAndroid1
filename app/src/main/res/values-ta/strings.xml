@@ -190,7 +190,7 @@
     <string name="additional_services">கூடுதல் சேவைகள்</string>
     <string name="grand_total">மொத்த சேவைக்கான கட்டணம்</string>
     <string name="view_summary">நிறைவுச்சுருக்கம்</string>
-    <string name="service_summary" />சேவை நிறைவுச்சுருக்கம்
+    <string name="service_summary">சேவை நிறைவுச்சுருக்கம்</string>
     <string name="clear">அழி</string>
 
 

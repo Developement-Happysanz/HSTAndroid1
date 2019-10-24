@@ -13,6 +13,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.skilex.customer.R;
 import com.skilex.customer.bean.database.SQLiteHelper;
+//import com.skilex.customer.utils.AppSignatureHelper;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExValidator;
 
@@ -21,12 +22,15 @@ public class SplashScreenActivity extends Activity {
 
     private static int SPLASH_TIME_OUT = 2000;
     SQLiteHelper database;
+//    AppSignatureHelper appSignatureHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
         database = new SQLiteHelper(getApplicationContext());
+//        appSignatureHelper = new AppSignatureHelper(this);
+//        appSignatureHelper.getAppSignatures();
         final int getStatus = database.appInfoCheck();
         new Handler().postDelayed(new Runnable() {
             @Override

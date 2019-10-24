@@ -30,6 +30,10 @@ import org.json.JSONObject;
 
 import java.util.Random;
 
+import static com.skilex.customer.utils.SkilExConstants.API_ADVANCE_PAYMENT_URL;
+import static com.skilex.customer.utils.SkilExConstants.API_PAYMENT_URL;
+import static com.skilex.customer.utils.SkilExConstants.API_RSA_URL;
+
 
 public class InitialScreenActivity extends AppCompatActivity implements IServiceListener, DialogClickListener {
 
@@ -59,13 +63,15 @@ public class InitialScreenActivity extends AppCompatActivity implements IService
         page = (String) getIntent().getSerializableExtra("page");
 
         if (page.equalsIgnoreCase("advance_pay")) {
-            redirectUrl.setText(R.string.redirect_url_advance);
-            cancelUrl.setText(R.string.redirect_url_advance);
+            redirectUrl.setText(API_ADVANCE_PAYMENT_URL);
+            cancelUrl.setText(API_ADVANCE_PAYMENT_URL);
+            rsaKeyUrl.setText(API_RSA_URL);
             advPay.setVisibility(View.VISIBLE);
             amountDisplay.setText("₹ "+ adv);
         } else {
-            redirectUrl.setText(R.string.redirect_url);
-            cancelUrl.setText(R.string.redirect_url);
+            redirectUrl.setText(API_PAYMENT_URL);
+            cancelUrl.setText(API_PAYMENT_URL);
+            rsaKeyUrl.setText(API_RSA_URL);
             servPay.setVisibility(View.VISIBLE);
             amtP.setText(adv);
         }
@@ -95,7 +101,6 @@ public class InitialScreenActivity extends AppCompatActivity implements IService
                 });
                 alertDialogBuilder.show();
             }
-
         });
 
     }
