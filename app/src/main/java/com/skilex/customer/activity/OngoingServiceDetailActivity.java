@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.skilex.customer.R;
 import com.skilex.customer.bean.support.OngoingService;
@@ -33,8 +35,9 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
     private ProgressDialogHelper progressDialogHelper;
     OngoingService ongoingService;
     private TextView catName, subCatName, custName, servicedate, orderID, serviceProvider, servicePerson, servicePersonPhone,
-            serviceStartTime, estimatedCost;
+            serviceStartTime, estimatedCost, serviceRestartTime, serviceRestartdate, serviceRestartTimeText, serviceRestartdateText;
     Button track;
+    private ImageView onHold;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,9 +117,15 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
 //        servicePersonPhone = (TextView) findViewById(R.id.service_person_experience);
         servicePersonPhone = (TextView) findViewById(R.id.service_person_number);
         serviceStartTime = (TextView) findViewById(R.id.service_statring_time_text);
+        serviceRestartTime = (TextView) findViewById(R.id.service_restarting_time);
+        serviceRestartdate = (TextView) findViewById(R.id.service_restarting_date);
+        serviceRestartTimeText = (TextView) findViewById(R.id.service_restarting_time_text);
+        serviceRestartdateText = (TextView) findViewById(R.id.service_restarting_date_text);
         estimatedCost = (TextView) findViewById(R.id.service_estimate_text);
         track = (Button) findViewById(R.id.track);
         track.setOnClickListener(this);
+        onHold = findViewById(R.id.img_status);
+
     }
 
     private boolean validateResponse(JSONObject response) {
@@ -177,6 +186,10 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
 //    "pic": "",
 //    "estimated_cost": 200,
 //    "order_status": "Initiated"
+//                "order_date": "2019-10-29",
+//                        "resume_date": "2019-10-31",
+//                        "time_slot": "14:00:00-15:00:00",
+//                        "r_time_slot": "09:00:00-10:00:00",
                 JSONObject getData = response.getJSONObject("service_list");
                 if (PreferenceStorage.getLang(this).equalsIgnoreCase("tam")) {
                     catName.setText(getData.getString("main_category_ta"));
@@ -196,6 +209,19 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
                 serviceStartTime.setText(getData.getString("time_slot"));
                 estimatedCost.setText("₹"+getData.getInt("estimated_cost"));
                 PreferenceStorage.savePersonId(this, getData.getString("person_id"));
+                if(getData.getString("order_status").equalsIgnoreCase("Hold")) {
+                    onHold.setBackgroundColor(ContextCompat.getColor(this, R.color.on_hold));
+                    onHold.setImageResource( R.drawable.ic_onhold);
+                    serviceRestartTime.setVisibility(View.VISIBLE);
+                    serviceRestartdate.setVisibility(View.VISIBLE);
+                    serviceRestartTimeText.setVisibility(View.VISIBLE);
+                    serviceRestartdateText.setVisibility(View.VISIBLE);
+                    serviceRestartTimeText.setText(getData.getString("r_time_slot"));
+                    serviceRestartdateText.setText(getData.getString("resume_date"));
+                } else {
+                    onHold.setBackgroundColor(ContextCompat.getColor(this, R.color.ongoing));
+                    onHold.setImageResource( R.drawable.ic_ongoing_service);
+                }
 
 
             } catch (JSONException e) {

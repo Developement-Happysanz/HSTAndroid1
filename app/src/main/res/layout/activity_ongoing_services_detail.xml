@@ -129,6 +129,7 @@
                     android:src="@drawable/ic_date_blue" />
 
                 <ImageView
+                    android:id="@+id/img_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBottom="@id/img_date"
@@ -272,10 +273,38 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/service_restarting_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_below="@+id/service_statring_time"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/service_restarting_date"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/service_restarting_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_below="@+id/service_restarting_date"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:layout_marginStart="20dp"
+                    android:text="@string/service_restarting_time"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
                     android:id="@+id/service_estimate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/service_statring_time"
+                    android:layout_below="@+id/service_restarting_time"
                     android:layout_gravity="center"
                     android:fontFamily="@font/helvetica"
                     android:layout_marginTop="10dp"
@@ -323,6 +352,36 @@
                     android:layout_alignTop="@id/service_estimate"
                     android:text="sadfasdfsdf"
                     android:layout_toRightOf="@id/service_estimate"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/service_restarting_date_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/service_statring_time_text"
+                    android:layout_alignLeft="@id/service_statring_time_text"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/helvetica"
+                    android:visibility="gone"
+                    android:layout_alignTop="@id/service_restarting_date"
+                    android:text="sadfasdfsdf"
+                    android:layout_toRightOf="@id/service_restarting_date"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/service_restarting_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/service_statring_time_text"
+                    android:layout_alignLeft="@id/service_statring_time_text"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/helvetica"
+                    android:layout_alignTop="@id/service_restarting_time"
+                    android:visibility="gone"
+                    android:text="sadfasdfsdf"
+                    android:layout_toRightOf="@id/service_restarting_time"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </RelativeLayout>

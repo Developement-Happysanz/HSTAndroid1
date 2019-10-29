@@ -82,6 +82,7 @@
             android:src="@drawable/ic_date_blue" />
 
         <ImageView
+            android:id="@+id/img_hol"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/img_date"
