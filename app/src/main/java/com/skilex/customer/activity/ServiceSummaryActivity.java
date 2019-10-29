@@ -248,7 +248,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             e.printStackTrace();
         }
 
-//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.PROCEED_TO_PAY;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }

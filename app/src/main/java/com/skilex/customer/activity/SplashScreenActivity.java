@@ -14,6 +14,7 @@ import com.google.firebase.iid.InstanceIdResult;
 import com.skilex.customer.R;
 import com.skilex.customer.bean.database.SQLiteHelper;
 //import com.skilex.customer.utils.AppSignatureHelper;
+//import com.skilex.customer.utils.AppSignatureHelper;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExValidator;
 

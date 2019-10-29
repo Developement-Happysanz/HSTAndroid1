@@ -76,7 +76,7 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         handler.postDelayed(new Runnable() {
             public void run() {
                 if (PreferenceStorage.getCartStatus(getApplicationContext())) {
-                    PreferenceStorage.saveCartStatus(getApplicationContext(),false);
+                    PreferenceStorage.saveCartStatus(getApplicationContext(), false);
                     loadCart();
                 }
                 handler.postDelayed(this, 1000);
@@ -101,7 +101,7 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
             public void onClick(View v) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(BookingSummaryAcivity.this);
                 alertDialogBuilder.setTitle(R.string.cart);
-                alertDialogBuilder.setMessage(R.string.cart_clear);
+                alertDialogBuilder.setMessage(getString(R.string.cart_clear));
                 alertDialogBuilder.setPositiveButton(R.string.alert_button_yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
@@ -115,7 +115,6 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
                     }
                 });
                 alertDialogBuilder.show();
-
             }
         });
 
@@ -144,7 +143,7 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
+                if (PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
                     handler.removeCallbacksAndMessages(null);
                     Intent i = new Intent(getApplicationContext(), AddressActivity.class);
                     startActivity(i);
@@ -350,7 +349,7 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
         ItemTouchHelper itemTouchHelper = new
                 ItemTouchHelper(new SwipeToDeleteCallback(serviceListAdapter));
         itemTouchHelper.attachToRecyclerView(mRecyclerView);
-        if(serviceArrayList.get(0).getAdvance_amount().isEmpty()){
+        if (serviceArrayList.get(0).getAdvance_amount().isEmpty()) {
             advanceAmount.setText("₹ 0");
         } else {
             advanceAmount.setText("₹ " + serviceArrayList.get(0).getAdvance_amount());
