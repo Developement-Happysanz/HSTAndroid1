@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.skilex.customer.R;
 import com.skilex.customer.bean.support.OngoingService;
 import com.skilex.customer.bean.support.Service;
@@ -83,6 +85,7 @@ public class OngoingServiceListAdapter extends BaseAdapter {
             holder = new OngoingServiceListAdapter.ViewHolder();
             holder.txtCatName = (TextView) convertView.findViewById(R.id.category_name);
             holder.txtSubCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
+            holder.onHold = (ImageView) convertView.findViewById(R.id.img_hol);
             if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
                 holder.txtCatName.setText(services.get(position).getmain_category_ta());
                 holder.txtSubCatName.setText(services.get(position).getservice_ta_name());
@@ -94,6 +97,13 @@ public class OngoingServiceListAdapter extends BaseAdapter {
             holder.txtDate.setText(services.get(position).getContact_person_name());
             holder.txtTime = (TextView) convertView.findViewById(R.id.service_date);
             holder.txtTime.setText(services.get(position).getOrder_date());
+            if(services.get(position).getorder_status().equalsIgnoreCase("Hold")){
+                holder.onHold.setImageResource(R.drawable.ic_onhold);
+                holder.onHold.setBackgroundColor(ContextCompat.getColor(context, R.color.on_hold));
+            } else {
+                holder.onHold.setImageResource(R.drawable.ic_ongoing_service);
+                holder.onHold.setBackgroundColor(ContextCompat.getColor(context, R.color.ongoing));
+            }
             convertView.setTag(holder);
         } else {
             holder = (OngoingServiceListAdapter.ViewHolder) convertView.getTag();
@@ -110,6 +120,13 @@ public class OngoingServiceListAdapter extends BaseAdapter {
             holder.txtDate.setText(services.get(position).getContact_person_name());
             holder.txtTime = (TextView) convertView.findViewById(R.id.service_date);
             holder.txtTime.setText(services.get(position).getOrder_date());
+            if(services.get(position).getorder_status().equalsIgnoreCase("Hold")){
+                holder.onHold.setImageResource(R.drawable.ic_onhold);
+                holder.onHold.setBackgroundColor(ContextCompat.getColor(context, R.color.on_hold));
+            } else {
+                holder.onHold.setImageResource(R.drawable.ic_ongoing_service);
+                holder.onHold.setBackgroundColor(ContextCompat.getColor(context, R.color.ongoing));
+            }
         }
 
         if (mSearching) {
@@ -150,6 +167,7 @@ public class OngoingServiceListAdapter extends BaseAdapter {
 
     public class ViewHolder {
         public TextView txtCatName, txtSubCatName, txtDate, txtTime;
+        private ImageView onHold;
     }
 
     public boolean ismSearching() {

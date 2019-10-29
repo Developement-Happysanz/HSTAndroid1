@@ -43,6 +43,10 @@ public class OngoingService implements Serializable {
     @Expose
     private String order_date;
 
+    @SerializedName("order_status")
+    @Expose
+    private String order_status;
+
     @SerializedName("time_slot")
     @Expose
     private String time_slot;
@@ -54,6 +58,21 @@ public class OngoingService implements Serializable {
     @SerializedName("advance_amount_paid")
     @Expose
     private String advance_amount_paid;
+
+    /**
+     * @return The order_status
+     */
+    public String getorder_status() {
+        return order_status;
+    }
+
+    /**
+     * @param order_status The order_status
+     */
+    public void setorder_status(String order_status) {
+        this.order_status = order_status;
+    }
+
 
     /**
      * @return The service_order_id

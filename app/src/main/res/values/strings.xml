@@ -111,6 +111,8 @@
     <string name="about_service_person">About Service Expert</string>
     <string name="service_provider">Service Associate</string>
     <string name="service_starting_time">Service starting time</string>
+    <string name="service_restarting_time">Service restarting time</string>
+    <string name="service_restarting_date">Service restarting date</string>
     <string name="service_approximate">Estimated cost</string>
     <string name="cancel_service">Cancel Service</string>
 

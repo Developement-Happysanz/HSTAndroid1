@@ -22,6 +22,7 @@
     <color name="payment_failed_font">#EF4069</color>
 
     <color name="green">#4CB748</color>
+    <color name="on_hold">#ed1c24</color>
 
 
 </resources>
