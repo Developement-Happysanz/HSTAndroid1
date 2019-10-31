@@ -1,70 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><!--<resources>-->
-
-<!--<string name="app_name">ஸ்கில்எக்ஸ்</string>--><!--<string name="empty" />--><!--<string name="error_no_net">இணைய அணுகல் இல்லை. உங்கள் இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.</string>--><!--<string name="error_occurred">சேவையகத்துடன் இணைப்பதில் தோல்வி. தயவுசெய்து மீண்டும் முயற்சி செய்க.</string>--><!--<string name="navigation_drawer_open">வழிசெலுத்தல் அலமாரியைத் திறக்கவும்</string>--><!--<string name="navigation_drawer_close">வழிசெலுத்தல் அலமாரியை மூடு</string>--><!--<string name="nav_header_title">ஸ்டுடியோ</string>--><!--<string name="nav_header_subtitle">android.studio@android.com</string>--><!--<string name="nav_header_desc">வழிசெலுத்தல் தலைப்பு</string>--><!--<string name="action_settings">அமைப்புகள்</string>-->
-
-<!--<string name="menu_home">Home</string>--><!--<string name="menu_gallery">Gallery</string>--><!--<string name="menu_slideshow">Slideshow</string>--><!--<string name="menu_tools">Tools</string>--><!--<string name="menu_share">Share</string>--><!--<string name="menu_send">Send</string>-->
-
-
-<!--&lt;!&ndash;Dialog Fragment&ndash;&gt;-->
-
-<!--<string name="alert_button_ok">சரி</string>--><!--<string name="alert_button_cancel">ரத்து</string>-->
-
-<!--&lt;!&ndash;User Data&ndash;&gt;-->
-
-<!--<string name="mobile_number">மதொலைபேசி எண்</string>--><!--<string name="user_name">பெயர்</string>--><!--<string name="user_address">முகவரி</string>--><!--<string name="user_mail">மின்னஞ்சல்</string>--><!--<string name="user_gender">பாலினம்</string>-->
-
-<!--&lt;!&ndash;Google API key&ndash;&gt;-->
-
-<!--<string name="google_android_map_api_key">AIzaSyD428E0W4-pf4kJuJ3rsqG5vCELRgmR2ok</string>-->
-
-<!--&lt;!&ndash;Login&ndash;&gt;-->
-
-<!--<string name="login">உள் நுழை</string>--><!--<string name="skip_login">இப்போதைக்கு தவிர்</string>--><!--<string name="skip">Skip</string>--><!--<string name="welcome">நல்வரவு!</string>--><!--<string name="enter_text">தொலைபேசி எண்ணை உள்ளிடவும்</string>-->
-
-<!--&lt;!&ndash;General&ndash;&gt;-->
-
-<!--<string name="confirm">உறுதி</string>--><!--<string name="progress_loading">Loading&#8230;</string>--><!--<string name="error_entry">சரிபார்க்கவும்</string>--><!--<string name="error_mail">செல்லுபடியாகும் மின்னஞ்சல் ஐடியை உள்ளிடவும்</string>--><!--<string name="error_number">சரியான தொலைபேசி எண்ணை உள்ளிடவும்</string>--><!--<string name="empty_entry">காலியாக இருக்க முடியாது</string>--><!--<string name="title_location_permission">இருப்பிட அனுமதி</string>--><!--<string name="text_location_permission">உங்கள் இருப்பிடத்தை அணுக பயன்பாட்டை அனுமதிக்கவும்?</string>--><!--<string name="ok">சரி</string>--><!--<string name="time">நேரத்தைத் தேர்ந்தெடுக்கவும்</string>--><!--<string name="date">தேதி தேர்ந்தெடுக்கவும்</string>--><!--<string name="customer_name">வாடிக்கையாளர் பெயர்</string>--><!--<string name="time_selected">தேர்ந்தெடுத நேரம்</string>--><!--<string name="date_selected">தேர்ந்தெடுத தேதி</string>-->
-
-<!--&lt;!&ndash;OTP Page&ndash;&gt;-->
-
-<!--<string name="verificationcode">சரிபார்ப்புக் குறியீடு</string>--><!--<string name="didntrecievecode">குறியீட்டைப் பெறவில்லை?\t</string>--><!--<string name="entercodetxt">உங்கள் மொபைலுக்கு அனுப்பப்பட்டது \n சரிபார்ப்புக் குறியீட்டை உள்ளிடவும்</string>--><!--<string name="resend">மீண்டும் அனுப்பு</string>--><!--<string name="resend_otp">ஒரு முறை தலை மீண்டும் அனுபவ?</string>--><!--<string name="changenumber">எண்ணை மாற்று</string>-->
-
-<!--&lt;!&ndash;Landing Page&ndash;&gt;-->
-
-<!--<string name="home">முகப்பு பக்கம்</string>--><!--<string name="services">சேவைகள்</string>--><!--<string name="category">சேவை வகை</string>--><!--<string name="subcategory">சேவை துணை வகை</string>-->
-
-
-<!--&lt;!&ndash;Services Page&ndash;&gt;-->
-
-<!--<string name="req_services">கோரப்பட்ட சேவைகள்</string>--><!--<string name="ong_services">நடந்துகொண்டிருக்கும் சேவைகள்</string>--><!--<string name="service_history">சேவை வரலாறு</string>--><!--<string name="service_detail">சேவை விவரம்</string>--><!--<string name="service_cost">ஆய்வுக்குப் பிறகு செலவு. குறைந்தபட்ச கட்டணம்</string>--><!--<string name="book_now">பதிவு செய்</string>--><!--<string name="inclusion">இச்சேவையில் உள்ளடங்கியவை</string>--><!--<string name="exclusion">இச்சேவையிலிருந்து விலக்கப்பட்டவை</string>--><!--<string name="procedure">இச்சேவைக்கான செயல்முறை</string>-->
-
-<!--&lt;!&ndash;Ongoing Page&ndash;&gt;--><!--<string name="about_service_person">சேவை நபர் பற்றிய தகவல்</string>--><!--<string name="service_provider">சேவை வழங்குநர்</string>--><!--<string name="service_starting_time">சேவை தொடக்க நேரம்</string>--><!--<string name="service_approximate">மதிப்பிடப்பட்ட செலவு</string>--><!--<string name="cancel_service">சேவையை ரத்துசெய்</string>-->
-
-<!--&lt;!&ndash;Booking Page&ndash;&gt;-->
-
-<!--<string name="track">பின்தொடர்</string>--><!--<string name="booking">சேவைகளின் நிறைவுச்சுருக்கம்</string>--><!--<string name="booking_status">முன்பதிவு நிலை</string>--><!--<string name="service_charge">சேவை கட்டணம்</string>--><!--<string name="additional_charge">முன்கூட்டியே தொகை</string>--><!--<string name="additional_services">கூடுதலான சேவைகள் </string>--><!--<string name="grand_total">மொத்த சேவை செலவு</string>--><!--<string name="view_summary">சுருக்கம் காண்க</string>--><!--<string name="service_summary">சேவை Summary</string>--><!--<string name="clear">அனைத்தையும் அழி</string>--><!--<string name="search_result">தேடல் முடிவு</string>--><!--<string name="search">தேடுதல்</string>-->
-
-<!--&lt;!&ndash;Profile Settings Page&ndash;&gt;-->
-
-<!--<string name="profile_title">சுயவிவரம்</string>--><!--<string name="about">நிறுவனம் பற்றி</string>--><!--<string name="share">பகிரவும்</string>--><!--<string name="logout">வெளியேறு</string>-->
-
-<!--&lt;!&ndash;Payment Page&ndash;&gt;-->
-
-<!--<string name="access_code">Access Code</string>--><!--<string name="pay_button">Pay</string>--><!--<string name="payment">பணம் செலுத்துதல்</string>--><!--<string name="pay_button_online">Pay Online</string>--><!--<string name="pay_button_cash">Pay Cash</string>--><!--<string name="merchant_id">Merchant Id</string>--><!--<string name="currency">Currency</string>--><!--<string name="amount">Amount</string>--><!--<string name="redirect_url_advance">https://www.skilex.in/development/ccavenue_app/customer_advance.php</string>--><!--<string name="redirect_url">https://www.skilex.in/development/ccavenue_app/service_net_amount.php</string>--><!--<string name="cancel_url">Cancel Url</string>--><!--<string name="rsa_url">RSA Key Url</string>--><!--<string name="advance_payment">பணம் செலுத்துதல்</string>--><!--<string name="advance_amount">முன் பணம்</string>--><!--<string name="status">கட்டண நிலை</string>--><!--<string name="booking_success">வெற்றி!</string>--><!--<string name="booking_failed">மன்னிக்கவும்!</string>--><!--<string name="booking_success_comment">உங்கள் முன்பதிவு வெற்றிகரமாக முடிந்தது</string>--><!--<string name="booking_failed_comment">உங்கள் முன்பதிவு தோல்வியடைந்தது</string>--><!--<string name="payment_success">Success!</string>--><!--<string name="payment_failed">Sorry!</string>--><!--<string name="payment_success_comment">Your booking completed successfully</string>--><!--<string name="payment_failed_comment">Your booking failed</string>--><!--<string name="go_home">முகப்பு பக்கத்திற்குத் திரும்பு</string>--><!--<string name="try_again">மீண்டும் முயற்சி செய்</string>--><!--<string name="failed">தோல்வியடைந்தது</string>--><!--<string name="completed">முடிந்தது</string>--><!--<string name="view_bill">பில் காண்க</string>-->
-
-
-<!--&lt;!&ndash;Rating Page&ndash;&gt;--><!--<string name="rating_title">Rate Service</string>--><!--<string name="rating_text">Rate your service</string>--><!--<string name="rate">Rate</string>-->
-
-<!--&lt;!&ndash;History Page&ndash;&gt;--><!--&lt;!&ndash;<string name="service_charge">Service Charge</string>&ndash;&gt;--><!--<string name="sub_total">Sub Total</string>--><!--<string name="coupon_applied">Coupon Applied</string>--><!--<string name="select_coupon">Select Coupon</string>--><!--<string name="apply_coupon">Apply</string>--><!--<string name="grand_total_pay">Grand Total</string>--><!--<string name="service_person">Service Person</string>--><!--<string name="share_invoice">Share Invoice</string>-->
-
-
-<!--</resources>-->
-
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!--English-->
 
-    <string name="app_name">ஸ்கில்எக்ஸ்</string>
+    <string name="app_name">ஸ்கிலெக்ஸ்</string>
     <string name="empty" />
     <string name="error_no_net">இணையத்தை அணுக இயலவில்லை. உங்கள் இணைப்பை சரிப்பார்க்கவும்.</string>
     <string name="error_occurred">இணைய சேவையக சிக்கல் ஏற்பட்டுள்ளது. சிறிது நேரம் கழித்து முயற்சி செய்யவும்.</string>
@@ -73,7 +12,7 @@
     <string name="nav_header_title">ஆண்ட்ராய்டு ஸ்டூடியோ</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">நாவிகேஷன் ஹெடெர்</string>
-    <string name="action_settings">ஸ்கில்எக்ஸ் அமைப்புகள்</string>
+    <string name="action_settings">ஸ்கிலெக்ஸ் அமைப்புகள்</string>
     <string name="menu_home">முகப்பு பக்கம்</string>
     <string name="menu_gallery">கேலரி</string>
     <string name="menu_slideshow">ஸ்லைடு ஷோ</string>
@@ -121,7 +60,7 @@
     <string name="error_number">சரியான தொலைபேசி எண்ணை என்டர் செய்யவும்.</string>
     <string name="empty_entry">கட்டாயமாக நிரப்பப்பட வேண்டிய இடம்.</string>
     <string name="title_location_permission">இருப்பிடத்தை அறிவதற்கான அனுமதி</string>
-    <string name="text_location_permission">ஸ்கில்எக்ஸ் உங்கள் இருப்பிடத்தை அறிவதற்கு அனுமதி அளிக்க விரும்புகிறீர்களா?</string>
+    <string name="text_location_permission">ஸ்கிலெக்ஸ் உங்கள் இருப்பிடத்தை அறிவதற்கு அனுமதி அளிக்க விரும்புகிறீர்களா?</string>
     <string name="time">நேரம்</string>
     <string name="date">தேதி</string>
     <string name="time_selected">கோரப்பட்ட சேவை நேரம்</string>
@@ -148,7 +87,7 @@
     <string name="home">முகப்பு பக்கம்</string>
     <string name="services">சேவைகள்</string>
     <string name="category">பிரிவுகள்</string>
-    <string name="category_title">ஸ்கில்எக்ஸ் சேவைகள்</string>
+    <string name="category_title">ஸ்கிலெக்ஸ் சேவைகள்</string>
     <string name="subcategory">துணைப்பிரிவுகள்</string>
     <string name="search_result">தேடல் முடிவுகள்</string>
     <string name="search">தேடல்</string>
@@ -257,7 +196,7 @@
 
 
     <!--About Us Page-->
-    <string name="about_content">ஸ்கில்எக்ஸ், வீட்டு சேவைகள் (பிளம்பிங், மின்னியல் சேவை, வீட்டு சாதன பராமரிப்பு முதலியன) மற்றும் தனிப்பயனாக்கப்பட்ட சேவைகள் (ஒப்பனை, அழகு பராமரிப்பு மற்றும் உடற்பயிற்சி சேவை முதலியன) ஆகியவற்றை தேவைப்படுவோர் அச்சேவை வழங்குநரை தொடர்பு கொண்டு பயன்பெற இந்தியாவில் உருவாக்கப்பட்ட ஆன்லைன் வாடிக்கையாளர் சேவை தளம் ஆகும். வாடிக்கையாளர்களுக்கு தேவைப்படும் சேவைகளை தரமாகவும், மலிவாகவும், தேவைப்படும் நேரத்திற்கு வழங்கவும் ஸ்கில்எக்ஸ் வழிவகை செய்கிறது.
-\n\nஆரம்ப நிலையில் ஸ்கில்எக்ஸ் தென்னிந்தியாவின் முக்கிய நகரங்களில் துவங்கினாலும் மக்களின் தேவையை கணக்கில் கொண்டு, பின் வரும் நாட்களில் நாடு முழுவதும் தன் சேவையை வழங்க திட்டமிட்டுள்ளது.</string>
+    <string name="about_content">ஸ்கிலெக்ஸ், வீட்டு சேவைகள் (பிளம்பிங், மின்னியல் சேவை, வீட்டு சாதன பராமரிப்பு முதலியன) மற்றும் தனிப்பயனாக்கப்பட்ட சேவைகள் (ஒப்பனை, அழகு பராமரிப்பு மற்றும் உடற்பயிற்சி சேவை முதலியன) ஆகியவற்றை தேவைப்படுவோர் அச்சேவை வழங்குநரை தொடர்பு கொண்டு பயன்பெற இந்தியாவில் உருவாக்கப்பட்ட ஆன்லைன் வாடிக்கையாளர் சேவை தளம் ஆகும். வாடிக்கையாளர்களுக்கு தேவைப்படும் சேவைகளை தரமாகவும், மலிவாகவும், தேவைப்படும் நேரத்திற்கு வழங்கவும் ஸ்கிலெக்ஸ் வழிவகை செய்கிறது.
+\n\nஆரம்ப நிலையில் ஸ்கிலெக்ஸ் தென்னிந்தியாவின் முக்கிய நகரங்களில் துவங்கினாலும் மக்களின் தேவையை கணக்கில் கொண்டு, பின் வரும் நாட்களில் நாடு முழுவதும் தன் சேவையை வழங்க திட்டமிட்டுள்ளது.</string>
 
 </resources>

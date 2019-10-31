@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -16,6 +17,9 @@ import com.skilex.customer.bean.database.SQLiteHelper;
 //import com.skilex.customer.utils.AppSignatureHelper;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExValidator;
+import com.skilex.customer.utils.SmsVerification;
+
+import java.util.ArrayList;
 
 
 public class SplashScreenActivity extends Activity {
@@ -32,6 +36,16 @@ public class SplashScreenActivity extends Activity {
 //        appSignatureHelper = new AppSignatureHelper(this);
 //        appSignatureHelper.getAppSignatures();
         final int getStatus = database.appInfoCheck();
+
+        ArrayList<String> appCodes = new ArrayList<>();
+        SmsVerification hash = new SmsVerification(getBaseContext());
+        appCodes= hash.getAppSignatures();
+        String yourhash = appCodes.get(0);
+        Log.d("Hash Key: ", yourhash);
+
+//        Toast.makeText(SplashScreenActivity.this, "Hash key...  " + yourhash , Toast.LENGTH_SHORT).show();
+
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
