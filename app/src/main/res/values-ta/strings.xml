@@ -39,7 +39,8 @@
 
     <!--Google API key-->
 
-    <string name="google_android_map_api_key">AIzaSyD428E0W4-pf4kJuJ3rsqG5vCELRgmR2ok</string>
+    <string name="google_android_map_api_key">AIzaSyDyXHfwZjnPVy5reE5XPRZfmqMJd254hj4</string>
+    <!--    <string name="google_android_map_api_key">AIzaSyD428E0W4-pf4kJuJ3rsqG5vCELRgmR2ok</string>-->
 
     <!--Login-->
 
@@ -125,7 +126,8 @@
     <!--Booking Page-->
 
     <string name="track">ட்ராக்கிங்</string>
-    <string name="booking">சேவை பதிவு நிறைவுச்சுருக்கம்</string><string name="booking_status">முன்பதிவு நிலவரம்</string>
+    <string name="booking">சேவை பதிவு நிறைவுச்சுருக்கம்</string>
+    <string name="booking_status">முன்பதிவு நிலவரம்</string>
     <string name="service_charge">சேவை கட்டணம்</string>
     <string name="additional_charge">அட்வான்ஸ் தொகை</string>
     <string name="additional_services">கூடுதல் சேவைகள்</string>
@@ -145,10 +147,10 @@
     <string name="merchant_id">வணிகர் அடையாள எண்</string>
     <string name="currency">நாணயம்</string>
     <string name="amount">தொகை</string>
-<!--    <string name="redirect_url_advance">https://www.skilex.in/development/ccavenue_app/customer_advance.php</string>-->
-<!--    <string name="redirect_url">https://www.skilex.in/development/ccavenue_app/service_net_amount.php</string>-->
-        <string name="redirect_url_advance">https://www.skilex.in/ccavenue_app/customer_advance.php</string>
-        <string name="redirect_url">https://www.skilex.in/ccavenue_app/service_net_amount.php</string>
+    <!--    <string name="redirect_url_advance">https://www.skilex.in/development/ccavenue_app/customer_advance.php</string>-->
+    <!--    <string name="redirect_url">https://www.skilex.in/development/ccavenue_app/service_net_amount.php</string>-->
+    <string name="redirect_url_advance">https://www.skilex.in/ccavenue_app/customer_advance.php</string>
+    <string name="redirect_url">https://www.skilex.in/ccavenue_app/service_net_amount.php</string>
     <string name="cancel_url">Cancel Url</string>
     <string name="rsa_url">RSA Key Url</string>
 

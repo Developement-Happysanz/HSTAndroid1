@@ -37,11 +37,11 @@ public class SplashScreenActivity extends Activity {
 //        appSignatureHelper.getAppSignatures();
         final int getStatus = database.appInfoCheck();
 
-        ArrayList<String> appCodes = new ArrayList<>();
+        /*ArrayList<String> appCodes = new ArrayList<>();
         SmsVerification hash = new SmsVerification(getBaseContext());
         appCodes= hash.getAppSignatures();
         String yourhash = appCodes.get(0);
-        Log.d("Hash Key: ", yourhash);
+        Log.d("Hash Key: ", yourhash);*/
 
 //        Toast.makeText(SplashScreenActivity.this, "Hash key...  " + yourhash , Toast.LENGTH_SHORT).show();
 
