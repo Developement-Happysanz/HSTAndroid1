@@ -37,7 +37,7 @@ import java.util.Collections;
 import static android.util.Log.d;
 import static com.android.volley.VolleyLog.TAG;
 
-public class AdditionalServiceListAdapter extends BaseAdapter{
+public class AdditionalServiceListAdapter extends BaseAdapter {
 
     //    private final Transformation transformation;
     private Context context;
@@ -99,7 +99,7 @@ public class AdditionalServiceListAdapter extends BaseAdapter{
 
             holder = new AdditionalServiceListAdapter.ViewHolder();
             holder.txtCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
-            if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+            if (PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
                 holder.txtCatName.setText(services.get(position).getservice_ta_name());
             } else {
                 holder.txtCatName.setText(services.get(position).getservice_name());
@@ -119,7 +119,7 @@ public class AdditionalServiceListAdapter extends BaseAdapter{
         } else {
             holder = (AdditionalServiceListAdapter.ViewHolder) convertView.getTag();
             holder.txtCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
-            if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+            if (PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
                 holder.txtCatName.setText(services.get(position).getservice_ta_name());
             } else {
                 holder.txtCatName.setText(services.get(position).getservice_name());
