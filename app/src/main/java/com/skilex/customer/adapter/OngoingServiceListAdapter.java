@@ -41,7 +41,7 @@ public class OngoingServiceListAdapter extends BaseAdapter {
     public OngoingServiceListAdapter(Context context, ArrayList<OngoingService> services) {
         this.context = context;
         this.services = services;
-        Collections.reverse(services);
+//        Collections.reverse(services);
 //        transformation = new RoundedTransformationBuilder()
 //                .cornerRadiusDp(0)
 //                .oval(false)

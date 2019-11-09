@@ -55,7 +55,7 @@ public class AdditionalServiceListAdapter extends BaseAdapter {
     public AdditionalServiceListAdapter(Context context, ArrayList<AdditionalService> services) {
         this.context = context;
         this.services = services;
-        Collections.reverse(services);
+//        Collections.reverse(services);
 //        transformation = new RoundedTransformationBuilder()
 //                .cornerRadiusDp(0)
 //                .oval(false)

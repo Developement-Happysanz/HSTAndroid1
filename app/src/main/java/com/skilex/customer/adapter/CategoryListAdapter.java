@@ -30,7 +30,7 @@ public class CategoryListAdapter extends BaseAdapter {
     public CategoryListAdapter(Context context, ArrayList<SubCategory> categories) {
         this.context = context;
         this.categories = categories;
-        Collections.reverse(categories);
+//        Collections.reverse(categories);
 //        transformation = new RoundedTransformationBuilder()
 //                .cornerRadiusDp(0)
 //                .oval(false)
