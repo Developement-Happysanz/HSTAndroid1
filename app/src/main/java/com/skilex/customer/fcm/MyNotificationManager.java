@@ -21,6 +21,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.skilex.customer.R;
+import com.skilex.customer.activity.MainActivity;
 import com.skilex.customer.activity.ProfileActivity;
 
 import java.io.IOException;
@@ -47,10 +48,9 @@ public class MyNotificationManager {
     /**
      * Create and push the notification
      */
-    public void createNotification(String title, String message)
-    {
+    public void createNotification(String title, String message) {
         /**Creates an explicit intent for an Activity in your app**/
-        Intent resultIntent = new Intent(mContext , ProfileActivity.class);
+        Intent resultIntent = new Intent(mContext, MainActivity.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext,
@@ -58,19 +58,18 @@ public class MyNotificationManager {
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
-        mBuilder.setSmallIcon(R.mipmap.ic_launcher)
+        mBuilder.setSmallIcon(R.drawable.ic_logo_blue)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_logo_white)
+                .setPriority(Notification.PRIORITY_MAX)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher))
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setContentIntent(resultPendingIntent);
 
         mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
-        {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
             notificationChannel.enableLights(true);
@@ -86,7 +85,7 @@ public class MyNotificationManager {
     }
 
     public void showBigNotification(String title, String message, String url) {
-        Intent resultIntent = new Intent(mContext , ProfileActivity.class);
+        Intent resultIntent = new Intent(mContext, MainActivity.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext,
@@ -98,12 +97,12 @@ public class MyNotificationManager {
         bigPictureStyle.bigPicture(getBitmapFromURL(url));
 
         mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
-        mBuilder.setSmallIcon(R.mipmap.ic_launcher)
+        mBuilder.setSmallIcon(R.drawable.ic_logo_blue)
                 .setContentTitle(title)
+                .setPriority(Notification.PRIORITY_MAX)
                 .setContentText(message)
                 .setColor(ContextCompat.getColor(mContext, R.color.colorPrimary))
                 .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_logo_white)
                 .setStyle(bigPictureStyle)
                 .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher))
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
@@ -111,8 +110,7 @@ public class MyNotificationManager {
 
         mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O)
-        {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "NOTIFICATION_CHANNEL_NAME", importance);
             notificationChannel.enableLights(true);

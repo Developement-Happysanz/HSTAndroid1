@@ -1,5 +1,6 @@
 package com.skilex.customer.fcm;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 
@@ -106,7 +108,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //            MyNotificationManager mNotificationManager = new MyNotificationManager(getApplicationContext());
             MyNotificationManager mNotificationManager = new MyNotificationManager(getApplicationContext());
             //creating an intent for the notification
-            Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
             //if there is no image
             if(imageUrl.equals("null")){
@@ -125,4 +127,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.e(TAG, "Exception: " + e.getMessage());
         }
     }
+
+
+
 }
