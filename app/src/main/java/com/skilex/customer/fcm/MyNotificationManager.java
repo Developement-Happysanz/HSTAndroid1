@@ -58,7 +58,7 @@ public class MyNotificationManager {
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
         mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
-        mBuilder.setSmallIcon(R.drawable.ic_logo_blue)
+        mBuilder.setSmallIcon(R.drawable.ic_logo_white)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
@@ -97,7 +97,7 @@ public class MyNotificationManager {
         bigPictureStyle.bigPicture(getBitmapFromURL(url));
 
         mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
-        mBuilder.setSmallIcon(R.drawable.ic_logo_blue)
+        mBuilder.setSmallIcon(R.drawable.ic_logo_white)
                 .setContentTitle(title)
                 .setPriority(Notification.PRIORITY_MAX)
                 .setContentText(message)
