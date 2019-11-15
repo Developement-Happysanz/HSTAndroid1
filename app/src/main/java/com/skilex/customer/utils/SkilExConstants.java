@@ -85,6 +85,9 @@ public class SkilExConstants {
     public static final String GET_TIME_SLOT = "view_time_slot/";
 
     //PROCEED TO BOOK SERVICE URL
+    public static final String SUCCESSFUL_PAYMENT = "service_payment_success/";
+
+    //PROCEED TO BOOK SERVICE URL
     public static final String PROCEED_TO_BOOK = "proceed_to_book_order/";
 
     //ONGOING SERVICE URL

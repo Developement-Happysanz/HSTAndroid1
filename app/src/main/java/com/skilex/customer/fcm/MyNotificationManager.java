@@ -21,8 +21,8 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.skilex.customer.R;
-import com.skilex.customer.activity.MainActivity;
-import com.skilex.customer.activity.ProfileActivity;
+import com.skilex.customer.activity.SplashScreenActivity;
+import com.skilex.customer.activity.SplashScreenActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -50,7 +50,7 @@ public class MyNotificationManager {
      */
     public void createNotification(String title, String message) {
         /**Creates an explicit intent for an Activity in your app**/
-        Intent resultIntent = new Intent(mContext, MainActivity.class);
+        Intent resultIntent = new Intent(mContext, SplashScreenActivity.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext,
@@ -85,7 +85,7 @@ public class MyNotificationManager {
     }
 
     public void showBigNotification(String title, String message, String url) {
-        Intent resultIntent = new Intent(mContext, MainActivity.class);
+        Intent resultIntent = new Intent(mContext, SplashScreenActivity.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext,

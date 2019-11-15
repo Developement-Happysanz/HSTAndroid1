@@ -82,6 +82,22 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 		serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 	}
 
+	private void suucc() {
+		JSONObject jsonObject = new JSONObject();
+		String orderId = "";
+		orderId = PreferenceStorage.getOrderId(this);
+
+		try {
+			jsonObject.put(SkilExConstants.ORDER_ID, orderId);
+
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		String url = SkilExConstants.BUILD_URL + SkilExConstants.SUCCESSFUL_PAYMENT;
+		serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+	}
+
 	@Override
 	public void onCreate(Bundle bundle) {
 		super.onCreate(bundle);
@@ -210,7 +226,7 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 				});
 
 			} else {
-
+				suucc();
 				payLayout.setBackgroundColor(ContextCompat.getColor(this, R.color.payment_success_bg));
 				paymentIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_payment_success));
 				paymentStatus.setText(R.string.payment_success);
