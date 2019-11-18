@@ -13,6 +13,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.provider.Settings;
 import android.text.Html;
 
@@ -57,14 +59,29 @@ public class MyNotificationManager {
                 0 /* Request code */, resultIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
 
+        Notification notification = new Notification();
+
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+//        builder.setSound(alarmSound);
+
+//        if (sound) {
+            notification.defaults |= Notification.DEFAULT_SOUND;
+//        }
+
+//        if (vibrate) {
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
+//        }
+
         mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
         mBuilder.setSmallIcon(R.drawable.ic_logo_white)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setPriority(Notification.PRIORITY_MAX)
-                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher))
-                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setSmallIcon(R.drawable.ic_logo_blue,1)
+                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_logo_blue))
+                .setSound(alarmSound)
+                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
                 .setContentIntent(resultPendingIntent);
 
         mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -91,10 +108,23 @@ public class MyNotificationManager {
         PendingIntent resultPendingIntent = PendingIntent.getActivity(mContext,
                 0 /* Request code */, resultIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
+        Notification notification = new Notification();
+
         NotificationCompat.BigPictureStyle bigPictureStyle = new NotificationCompat.BigPictureStyle();
         bigPictureStyle.setBigContentTitle(title);
         bigPictureStyle.setSummaryText(Html.fromHtml(message).toString());
         bigPictureStyle.bigPicture(getBitmapFromURL(url));
+
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        //        if (sound) {
+        notification.defaults |= Notification.DEFAULT_SOUND;
+//        }
+
+//        if (vibrate) {
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
+//        }
+
 
         mBuilder = new NotificationCompat.Builder(mContext, NOTIFICATION_CHANNEL_ID);
         mBuilder.setSmallIcon(R.drawable.ic_logo_white)
@@ -104,8 +134,10 @@ public class MyNotificationManager {
                 .setColor(ContextCompat.getColor(mContext, R.color.colorPrimary))
                 .setAutoCancel(true)
                 .setStyle(bigPictureStyle)
-                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher))
-                .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
+                .setSmallIcon(R.drawable.ic_logo_blue,1)
+                .setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_logo_blue))
+                .setSound(alarmSound)
+                .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
                 .setContentIntent(resultPendingIntent);
 
         mNotificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
