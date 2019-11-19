@@ -51,14 +51,14 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
 
     TextView catName, serviceName, custName, serviceDate, timeSlot, providerName, servicePersonName, couponAmt,
             serviceStartTime, serviceEndTime, materials, serviceCharge, additionalCharge, subTotal, advanceAmt, advanceAmtLayout, total, viewBill,
-            chooseCoupon, applyCoupon, couponContent;
+            chooseCoupon, applyCoupon,cancelCoupon, couponContent;
     LinearLayout startEndLayout, additionalServiceLayout;
     RelativeLayout paymentLayout, materialsLayout, applyCouponLayout, couponAppliedLayout;
     Button shareInvoice, payBill;
 
     ArrayAdapter<StoreTimeSlot> timeSlotAdapter = null;
     ArrayList<StoreTimeSlot> timeList;
-    String timeSlotId = "";
+    String couponSlotId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +96,13 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         couponAmt = (TextView) findViewById(R.id.coupon_applied_amount);
         chooseCoupon = (TextView) findViewById(R.id.coupon_select);
         chooseCoupon.setOnClickListener(this);
+        if (!PreferenceStorage.getCouponID(this).isEmpty()) {
+            chooseCoupon.setText(PreferenceStorage.getCouponID(this));
+        }
         applyCoupon = (TextView) findViewById(R.id.apply_coupon);
         applyCoupon.setOnClickListener(this);
+        cancelCoupon = (TextView) findViewById(R.id.cancel_coupon);
+        cancelCoupon.setOnClickListener(this);
         couponContent = (TextView) findViewById(R.id.coupon_content);
         shareInvoice = (Button) findViewById(R.id.invoice);
         shareInvoice.setOnClickListener(this);
@@ -114,7 +119,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelCoupon();
+                cancelCouponAndExit();
             }
         });
 
@@ -214,6 +219,24 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
+    private void cancelCouponAndExit() {
+        res = "remove_coupon_exit";
+        JSONObject jsonObject = new JSONObject();
+        String id = "";
+        id = PreferenceStorage.getUserId(this);
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.REMOVE_COUPON;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
     private void applyCoupon() {
         res = "apply_coupon";
         JSONObject jsonObject = new JSONObject();
@@ -223,7 +246,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         try {
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
             jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
-            jsonObject.put(SkilExConstants.COUPON_ID, timeSlotId);
+            jsonObject.put(SkilExConstants.COUPON_ID, couponSlotId);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -354,17 +377,22 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     } else if (status.equalsIgnoreCase("Completed")) {
 
                         if (PreferenceStorage.getCoupon(this).isEmpty() || PreferenceStorage.getCoupon(this).equalsIgnoreCase("")) {
-                            couponAppliedLayout.setVisibility(View.GONE);
-                            applyCouponLayout.setVisibility(View.VISIBLE);
+//                            couponAppliedLayout.setVisibility(View.GONE);
+//                            applyCouponLayout.setVisibility(View.VISIBLE);
                             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                             params.setMargins(40, 20, 0, 0);
-                            params.addRule(RelativeLayout.BELOW, R.id.choose_coupon_layout);
+                            params.addRule(RelativeLayout.BELOW, R.id.coupon_applied_layoout);
 //                        params.addRule(RelativeLayout.BELOW, applyCouponLayout);
                             advanceAmtLayout.setLayoutParams(params);
+                            couponContent.setVisibility(View.GONE);
+                            applyCoupon.setVisibility(View.VISIBLE);
+                            cancelCoupon.setVisibility(View.GONE);
                         } else {
-                            couponAppliedLayout.setVisibility(View.VISIBLE);
-                            applyCouponLayout.setVisibility(View.GONE);
+//                            couponAppliedLayout.setVisibility(View.VISIBLE);
+//                            applyCouponLayout.setVisibility(View.GONE);
                             couponContent.setText(PreferenceStorage.getCoupon(this));
+                            applyCoupon.setVisibility(View.GONE);
+                            cancelCoupon.setVisibility(View.VISIBLE);
                         }
                         payBill.setVisibility(View.VISIBLE);
                         proceedPay();
@@ -421,8 +449,15 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     startActivity(i);
                     finish();
                 }if (res.equalsIgnoreCase("remove_coupon")) {
-
                     PreferenceStorage.saveCoupon(getApplicationContext(), "");
+                    PreferenceStorage.saveCouponID(getApplicationContext(), "");
+                    Intent i = new Intent(this, ServiceSummaryActivity.class);
+                    i.putExtra("serviceObj", serviceHistory);
+                    startActivity(i);
+                    finish();
+                }if (res.equalsIgnoreCase("remove_coupon_exit")) {
+                    PreferenceStorage.saveCoupon(getApplicationContext(), "");
+                    PreferenceStorage.saveCouponID(getApplicationContext(), "");
                     finish();
                 }
                 if (res.equalsIgnoreCase("proceed_pay")) {
@@ -461,7 +496,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     public void onClick(DialogInterface dialog, int which) {
                         StoreTimeSlot cty = timeList.get(which);
                         chooseCoupon.setText(cty.getTimeName());
-                        timeSlotId = cty.getTimeId();
+                        couponSlotId = cty.getTimeId();
                     }
                 });
         builderSingle.show();
@@ -480,6 +515,8 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             i.putExtra("advpay", total.getText().toString());
             i.putExtra("page", "service_pay");
             startActivity(i);
+            PreferenceStorage.saveCoupon(getApplicationContext(), "");
+            PreferenceStorage.saveCouponID(getApplicationContext(), "");
             finish();
         }
         if (v == shareInvoice) {
@@ -488,10 +525,15 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         if (v == chooseCoupon) {
             showTimeSlotList();
         }
+        if (v == cancelCoupon) {
+            cancelCoupon();
+            chooseCoupon.setText("");
+        }
         if (v == applyCoupon) {
-            if (timeSlotId.isEmpty()) {
+            if (couponSlotId.isEmpty()) {
                 AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.select_coupon));
             } else {
+                PreferenceStorage.saveCouponID(this, chooseCoupon.getText().toString());
                 applyCoupon();
             }
         }

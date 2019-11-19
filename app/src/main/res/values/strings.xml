@@ -185,6 +185,7 @@
     <string name="coupon">Coupon</string>
     <string name="select_coupon">Select Coupon</string>
     <string name="apply_coupon">Apply</string>
+    <string name="cancel_coupon">Cancel</string>
     <string name="grand_total_pay">Grand Total</string>
     <string name="service_person">Service Expert</string>
     <string name="share_invoice">Share Invoice</string>

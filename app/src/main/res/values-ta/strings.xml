@@ -192,6 +192,7 @@
     <string name="coupon">கூப்பன்</string>
     <string name="select_coupon">கூப்பனை தேர்வு செய்யவும்</string>
     <string name="apply_coupon">உபயோகி</string>
+    <string name="cancel_coupon">ரத்து செய்க</string>
     <string name="grand_total_pay">மொத்த தொகை</string>
     <string name="service_person">சேவகர்</string>
     <string name="share_invoice">விலைப்பட்டியலை பகிரவும்</string>

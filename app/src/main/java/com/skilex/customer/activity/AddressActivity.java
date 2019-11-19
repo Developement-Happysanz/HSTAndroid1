@@ -356,6 +356,11 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         Bitmap b = bitmapdraw.getBitmap();
         final Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
         LatLng latLng = new LatLng(11.0168, 76.9558);
+        LatLng latLng1 = new LatLng(11.010273, 76.987062);
+        if (myPosition == null) {
+            myPosition = latLng1;
+        } else {
+        }
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 //        googleMap.addMarker(new MarkerOptions().position(myPosition).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
 

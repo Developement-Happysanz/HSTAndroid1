@@ -533,7 +533,7 @@
                         android:id="@+id/coupon_applied_layoout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/sub_total">
+                        android:layout_below="@+id/choose_coupon_layout">
 
                         <TextView
                             android:id="@+id/coupon_applied"
@@ -564,6 +564,7 @@
                             android:layout_alignTop="@id/coupon_applied"
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="20dp"
+                            android:text="asfdsdf"
                             android:fontFamily="@font/helvetica" />
 
                     </RelativeLayout>
@@ -577,8 +578,7 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="10dp"
                         android:background="@drawable/textview_round"
-                        android:gravity="center_vertical"
-                        android:visibility="gone">
+                        android:gravity="center_vertical">
 
                         <TextView
                             android:id="@+id/coupon_select"
@@ -606,6 +606,22 @@
                             android:padding="5dp"
                             android:text="@string/apply_coupon"
                             android:textAllCaps="true"
+                            android:textColor="@color/blue" />
+
+                        <TextView
+                            android:id="@+id/cancel_coupon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignTop="@id/coupon_select"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="20dp"
+                            android:fontFamily="@font/helvetica"
+                            android:gravity="center_vertical"
+                            android:padding="5dp"
+                            android:text="@string/cancel_coupon"
+                            android:textAllCaps="true"
+                            android:visibility="gone"
                             android:textColor="@color/blue" />
 
                     </RelativeLayout>

@@ -438,6 +438,24 @@ public class PreferenceStorage {
     /*End*/
 
     /*To store coupon cooment*/
+    public static void saveCouponID(Context context, String couponId) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.COUPON_ID, couponId);
+        editor.apply();
+    }
+
+    public static String getCouponID(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String orderId;
+        orderId = sharedPreferences.getString(SkilExConstants.COUPON_ID, "");
+        return orderId;
+    }
+    /*End*/
+
+    /*To store coupon cooment*/
     public static void savePersonId(Context context, String orderId) {
         SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(context);
