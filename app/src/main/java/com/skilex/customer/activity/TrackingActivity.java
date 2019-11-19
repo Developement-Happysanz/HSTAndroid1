@@ -8,8 +8,12 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -24,7 +28,9 @@ import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.servicehelpers.ServiceHelper;
 
 
-public class TrackingActivity extends FragmentActivity implements OnMapReadyCallback {
+public class TrackingActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
+
     private static final String TAG = TrackingActivity.class.getName();
     private MapView mapView;
     private GoogleMap mMap;
@@ -112,7 +118,9 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(livLoc, 17));
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.setMyLocationEnabled(true);
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(livLoc, 17));
         mMap.addMarker(new MarkerOptions()
                 .position(livLoc)
                 .title("Current Location")
@@ -156,4 +164,18 @@ public class TrackingActivity extends FragmentActivity implements OnMapReadyCall
         });
     }
 
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 }
