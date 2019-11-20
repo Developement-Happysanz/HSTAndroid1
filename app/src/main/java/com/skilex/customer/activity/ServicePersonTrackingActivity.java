@@ -1,5 +1,7 @@
 package com.skilex.customer.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
@@ -258,9 +260,14 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
 
     private void showMarker(@NonNull LatLng latLng) {
 //        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+        int height = 60;
+        int width = 30;
+        BitmapDrawable bitmapdraw = (BitmapDrawable) getResources().getDrawable(R.drawable.commando);
+        Bitmap b = bitmapdraw.getBitmap();
+        final Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
         if (currentLocationMarker == null) {
             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-            currentLocationMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.defaultMarker()).position(latLng));
+            currentLocationMarker = mMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(smallMarker)).position(latLng));
             mapView.onResume();
         } else {
             MarkerAnimation.animateMarkerToGB(currentLocationMarker, latLng, new LatLngInterpolator.Spherical());
