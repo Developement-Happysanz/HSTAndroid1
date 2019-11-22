@@ -98,12 +98,6 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
 
 //        startTimer();
         loadOnGoService();
-        findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         Bundle mapViewBundle = null;
         if (savedInstanceState != null) {
