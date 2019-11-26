@@ -50,6 +50,7 @@ import java.util.TimerTask;
 import static android.util.Log.d;
 
 public class SubCategoryActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, AdapterView.OnItemClickListener, View.OnClickListener {
+
     private static final String TAG = SubCategoryActivity.class.getName();
 
     private ServiceHelper serviceHelper;

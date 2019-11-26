@@ -132,7 +132,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
 
     public void callGetServiceSummary() {
         if (CommonUtils.isNetworkAvailable(this)) {
-            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             getServiceSummary();
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
@@ -152,14 +152,14 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             e.printStackTrace();
         }
 
-//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+//        //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.SERVICE_ORDER_SUMMARY;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     public void callGetServiceStatus() {
         if (CommonUtils.isNetworkAvailable(this)) {
-            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
             getServiceStatus();
         } else {
             AlertDialogHelper.showSimpleAlertDialog(this, "No Network connection");
@@ -179,7 +179,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             e.printStackTrace();
         }
 
-//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+//        //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.SERVICE_ORDER_STATUS;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
@@ -196,7 +196,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             e.printStackTrace();
         }
 
-        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.COUPON_LIST;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
@@ -214,7 +214,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             e.printStackTrace();
         }
 
-//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+//        //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.REMOVE_COUPON;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
@@ -232,7 +232,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             e.printStackTrace();
         }
 
-//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+//        //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.REMOVE_COUPON;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
@@ -252,7 +252,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             e.printStackTrace();
         }
 
-//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+//        //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.APPLY_COUPON;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
@@ -271,7 +271,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             e.printStackTrace();
         }
 
-        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.PROCEED_TO_PAY;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
@@ -326,7 +326,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
 
     @Override
     public void onResponse(JSONObject response) {
-        progressDialogHelper.hideProgressDialog();
+//        progressDialogHelper.hideProgressDialog();
         if (validateResponse(response)) {
             try {
                 if (res.equalsIgnoreCase("summary")) {

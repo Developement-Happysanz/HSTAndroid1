@@ -102,7 +102,8 @@ public class ServiceHistoryActivity extends AppCompatActivity implements IServic
         } else {
             service = serviceHistoryArrayList.get(position);
         }
-
+        PreferenceStorage.saveCoupon(getApplicationContext(), "");
+        PreferenceStorage.saveCouponID(getApplicationContext(), "");
         Intent intent = new Intent(this, ServiceSummaryActivity.class);
         intent.putExtra("serviceObj", service);
         startActivity(intent);
