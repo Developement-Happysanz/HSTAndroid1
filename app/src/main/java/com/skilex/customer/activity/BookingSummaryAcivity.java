@@ -52,7 +52,7 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
     //    ListView loadMoreListView;
     private RecyclerView mRecyclerView;
     Category category;
-
+    String page = "";
     TextView advanceAmount, totalCost;
     String res = "";
     Button confrm;
@@ -161,7 +161,7 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
 //        confrm = (Button) findViewById(R.id.confirm);
 //        confrm.setOnClickListener(this);
         category = (Category) getIntent().getSerializableExtra("cat");
-
+        page = getIntent().getStringExtra("page");
         callGetSubCategoryService();
     }
 
@@ -229,10 +229,14 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
                     PreferenceStorage.saveServiceCount(this, "");
                     PreferenceStorage.saveRate(this, "");
                     PreferenceStorage.savePurchaseStatus(this, false);
-                    Intent i = new Intent(this, SubCategoryActivity.class);
-                    i.putExtra("cat", category);
-                    startActivity(i);
-                    finish();
+                    if (page.equalsIgnoreCase("serviceDetail")){
+                        finish();
+                    } else {
+                        Intent i = new Intent(this, SubCategoryActivity.class);
+                        i.putExtra("cat", category);
+                        startActivity(i);
+                        finish();
+                    }
                 } else {
                     JSONArray getData = response.getJSONArray("cart_list");
 //                    loadMembersList(getData.length());

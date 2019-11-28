@@ -212,6 +212,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                     PreferenceStorage.savePurchaseStatus(this, true);
 
                     Intent newIntent = new Intent(this, BookingSummaryAcivity.class);
+                    newIntent.putExtra("page", "serviceDetail");
                     startActivity(newIntent);
                 }
 
