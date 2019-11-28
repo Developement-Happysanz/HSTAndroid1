@@ -112,6 +112,7 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
         custName = (TextView) findViewById(R.id.customer_name);
         servicedate = (TextView) findViewById(R.id.service_date);
         orderID = (TextView) findViewById(R.id.order_id);
+        onHold = findViewById(R.id.img_status);
         serviceProvider = (TextView) findViewById(R.id.service_provider_name_text);
         servicePerson = (TextView) findViewById(R.id.service_person_name);
 //        servicePersonPhone = (TextView) findViewById(R.id.service_person_experience);
@@ -124,8 +125,8 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
         estimatedCost = (TextView) findViewById(R.id.service_estimate_text);
         track = (Button) findViewById(R.id.track);
         track.setOnClickListener(this);
-        if (ongoingService.getorder_status().equalsIgnoreCase(""))
-        onHold = findViewById(R.id.img_status);
+        if (ongoingService.getorder_status().equalsIgnoreCase("")) {
+        }
 
     }
 

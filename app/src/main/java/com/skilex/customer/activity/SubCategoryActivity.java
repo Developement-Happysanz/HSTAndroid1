@@ -499,14 +499,16 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
     public void onClick(View v) {
         if (v == summary) {
             Boolean abc;
-            if (PreferenceStorage.getPurchaseStatus(this)) {
-                Intent i = new Intent(this, BookingSummaryAcivity.class);
-                i.putExtra("cat", category);
-                startActivity(i);
-                finish();
-            }
+            if (!PreferenceStorage.getServiceCount(this).equalsIgnoreCase("0")) {
+                if (PreferenceStorage.getPurchaseStatus(this)) {
+                    Intent i = new Intent(this, BookingSummaryAcivity.class);
+                    i.putExtra("page", "summary");
+                    i.putExtra("cat", category);
+                    startActivity(i);
+                    finish();
+                }
 //            handler.removeCallbacksAndMessages(null);
-
+            }
         }
     }
 
