@@ -124,6 +124,7 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
         estimatedCost = (TextView) findViewById(R.id.service_estimate_text);
         track = (Button) findViewById(R.id.track);
         track.setOnClickListener(this);
+        if (ongoingService.getorder_status().equalsIgnoreCase(""))
         onHold = findViewById(R.id.img_status);
 
     }
