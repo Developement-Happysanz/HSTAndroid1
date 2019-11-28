@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -56,7 +57,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
     private static final String TAG = NumberVerificationActivity.class.getName();
 
     private CustomOtpEditText otpEditText;
-    private TextView tvResendOTP;
+    private TextView tvResendOTP, tvCountDown;
     private ImageView btnConfirm;
     private Button btnChangeNumber;
     private String mobileNo;
@@ -68,17 +69,21 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
     private SmsBrReceiver smsReceiver;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_verification);
         database = new SQLiteHelper(getApplicationContext());
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         mobileNo = PreferenceStorage.getMobileNo(getApplicationContext());
         otpEditText = (CustomOtpEditText) findViewById(R.id.otp_view);
         tvResendOTP = (TextView) findViewById(R.id.resend);
         tvResendOTP.setOnClickListener(this);
+        tvCountDown = findViewById(R.id.contentresend);
         btnConfirm = (ImageView) findViewById(R.id.sendcode);
         btnConfirm.setOnClickListener(this);
 
@@ -117,7 +122,35 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
                 Toast.makeText(NumberVerificationActivity.this, "Failed listening for otp...", Toast.LENGTH_SHORT).show();
             }
         });
-        
+
+        countDownTimers();
+
+    }
+
+    void countDownTimers() {
+        new CountDownTimer(30 * 1000 + 1000, 1000) {
+
+            public void onTick(long millisUntilFinished) {
+                tvResendOTP.setVisibility(View.GONE);
+                int seconds = (int) (millisUntilFinished / 1000);
+                int minutes = seconds / 60;
+                seconds = seconds % 60;
+                tvCountDown.setText("Resend in " + String.format("%02d", minutes)
+                        + ":" + String.format("%02d", seconds) + " seconds");
+            }
+
+            public void onFinish() {
+                tvCountDown.setText("Try again...");
+                tvCountDown.setVisibility(View.GONE);
+                tvResendOTP.setVisibility(View.VISIBLE);
+            }
+        }.start();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 
     @Override
@@ -136,13 +169,15 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
             if (v == tvResendOTP) {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle(R.string.resend_otp);
-                alertDialogBuilder.setMessage(getString(R.string.mobile_number) + PreferenceStorage.getMobileNo(getApplicationContext()));
+                alertDialogBuilder.setMessage(getString(R.string.mobile_number) + getString(R.string.mobile_number_tag) + PreferenceStorage.getMobileNo(getApplicationContext()));
                 alertDialogBuilder.setPositiveButton(R.string.alert_button_ok,
                         new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
                                 checkVerify = "Resend";
+                                countDownTimers();
+                                tvCountDown.setVisibility(View.VISIBLE);
                                 JSONObject jsonObject = new JSONObject();
                                 try {
 
@@ -253,7 +288,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 
                     Toast.makeText(getApplicationContext(), "OTP resent successfully", Toast.LENGTH_SHORT).show();
 
-                } else if (checkVerify.equalsIgnoreCase("Confirm")|| checkVerify.equalsIgnoreCase("verified")) {
+                } else if (checkVerify.equalsIgnoreCase("Confirm") || checkVerify.equalsIgnoreCase("verified")) {
                     PreferenceStorage.setFirstTimeLaunch(getApplicationContext(), false);
                     database.app_info_check_insert("Y");
 //                    Toast.makeText(getApplicationContext(), "Login successfully", Toast.LENGTH_SHORT).show();
