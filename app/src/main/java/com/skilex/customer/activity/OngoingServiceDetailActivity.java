@@ -125,7 +125,11 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
         estimatedCost = (TextView) findViewById(R.id.service_estimate_text);
         track = (Button) findViewById(R.id.track);
         track.setOnClickListener(this);
-        if (ongoingService.getorder_status().equalsIgnoreCase("")) {
+        if (ongoingService.getorder_status().equalsIgnoreCase("Initiated")) {
+            track.setVisibility(View.VISIBLE);
+        } else {
+            track.setVisibility(View.GONE);
+
         }
 
     }
@@ -206,8 +210,21 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
                 servicedate.setText(getData.getString("order_date"));
                 orderID.setText(getData.getString("service_order_id"));
                 serviceProvider.setText(getData.getString("provider_name"));
-                servicePerson.setText(getData.getString("person_name"));
-                servicePersonPhone.setText(getData.getString("person_number"));
+
+                if (getData.getString("person_name").isEmpty()) {
+                    servicePerson.setText("Expert yet to be assigned");
+                    findViewById(R.id.service_person_abt_title).setVisibility(View.GONE);
+                } else {
+                    servicePerson.setText(getData.getString("person_name"));
+                }
+
+                if (getData.getString("person_number").isEmpty()) {
+                    servicePersonPhone.setVisibility(View.GONE);
+                    findViewById(R.id.service_person_abt_title).setVisibility(View.GONE);
+                } else {
+                    servicePersonPhone.setText(getData.getString("person_number"));
+                }
+
                 serviceStartTime.setText(getData.getString("time_slot"));
                 estimatedCost.setText("₹"+getData.getInt("estimated_cost"));
                 PreferenceStorage.savePersonId(this, getData.getString("person_id"));
