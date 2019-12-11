@@ -105,10 +105,16 @@ public class OngoingServiceActivity extends AppCompatActivity implements IServic
         } else {
             service = ongoingServiceArrayList.get(position);
         }
-
-        Intent intent = new Intent(this, OngoingServiceDetailActivity.class);
-        intent.putExtra("serviceObj", service);
-        startActivity(intent);
+        if (service.getorder_status().equalsIgnoreCase("Initiated") || service.getorder_status().equalsIgnoreCase("Hold")) {
+            Intent intent = new Intent(this, OngoingServiceDetailActivity.class);
+            intent.putExtra("serviceObj", service);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(this, ServiceSummaryActivity.class);
+            intent.putExtra("serviceObj", service);
+            intent.putExtra("service_page", "ongoing");
+            startActivity(intent);
+        }
     }
 
     @Override

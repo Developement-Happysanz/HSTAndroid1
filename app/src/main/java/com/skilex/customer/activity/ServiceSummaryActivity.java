@@ -18,6 +18,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.skilex.customer.R;
+import com.skilex.customer.bean.support.OngoingService;
 import com.skilex.customer.bean.support.ServiceHistory;
 import com.skilex.customer.bean.support.StoreTimeSlot;
 import com.skilex.customer.ccavenue.activity.InitialScreenActivity;
@@ -29,6 +30,7 @@ import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
+import com.skilex.customer.utils.SkilExValidator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +46,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     ServiceHistory serviceHistory;
+    OngoingService ongoingService;
     String res = "", serviceOrder = "";
 
     Button additionalService;
@@ -51,7 +54,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
 
     TextView catName, serviceName, custName, serviceDate, timeSlot, providerName, servicePersonName, couponAmt,
             serviceStartTime, serviceEndTime, materials, serviceCharge, additionalCharge, subTotal, advanceAmt, advanceAmtLayout, total, viewBill,
-            chooseCoupon, applyCoupon,cancelCoupon, couponContent;
+            chooseCoupon, applyCoupon, cancelCoupon, couponContent;
     LinearLayout startEndLayout, additionalServiceLayout;
     RelativeLayout paymentLayout, materialsLayout, applyCouponLayout, couponAppliedLayout;
     Button shareInvoice, payBill;
@@ -59,14 +62,21 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
     ArrayAdapter<StoreTimeSlot> timeSlotAdapter = null;
     ArrayList<StoreTimeSlot> timeList;
     String couponSlotId = "";
+    String abc = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_summary);
         initVals();
-        serviceHistory = (ServiceHistory) getIntent().getSerializableExtra("serviceObj");
-
+        abc = getIntent().getStringExtra("service_page");
+        if (SkilExValidator.checkNullString(abc) && abc.equalsIgnoreCase("ongoing")) {
+            TextView a = findViewById(R.id.title);
+            a.setText(getString(R.string.ong_services));
+            ongoingService = (OngoingService) getIntent().getSerializableExtra("serviceObj");
+        } else {
+            serviceHistory = (ServiceHistory) getIntent().getSerializableExtra("serviceObj");
+        }
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
@@ -119,7 +129,11 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cancelCouponAndExit();
+                if (SkilExValidator.checkNullString(abc) && abc.equalsIgnoreCase("ongoing")) {
+                    finish();
+                } else {
+                    cancelCouponAndExit();
+                }
             }
         });
 
@@ -144,9 +158,15 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         JSONObject jsonObject = new JSONObject();
         String id = "";
         id = PreferenceStorage.getUserId(this);
+        String orderId = "";
+        if (SkilExValidator.checkNullString(abc) && abc.equalsIgnoreCase("ongoing")) {
+            orderId = ongoingService.getservice_order_id();
+        } else {
+            orderId = serviceHistory.getservice_order_id();
+        }
         try {
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
-            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
+            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, orderId);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -171,9 +191,15 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         JSONObject jsonObject = new JSONObject();
         String id = "";
         id = PreferenceStorage.getUserId(this);
+        String orderId = "";
+        if (SkilExValidator.checkNullString(abc) && abc.equalsIgnoreCase("ongoing")) {
+            orderId = ongoingService.getservice_order_id();
+        } else {
+            orderId = serviceHistory.getservice_order_id();
+        }
         try {
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
-            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
+            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, orderId);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -353,7 +379,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     additionalService.setText("Additional services - " + getData.getString("additional_service"));
                     if (getData.getString("additional_service").equalsIgnoreCase("0") ||
                             getData.getString("additional_service_amt").isEmpty()) {
-                        additionalServiceLayout.setVisibility(View.GONE);
+//                        additionalServiceLayout.setVisibility(View.GONE);
                     }
                     subTotal.setText(getData.getString("total_service_cost"));
                     advanceAmt.setText(getData.getString("paid_advance_amt"));
@@ -412,6 +438,8 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                         shareInvoice.setVisibility(View.GONE);
 
                         proceedPay();
+                    } else if (status.equalsIgnoreCase("Ongoing")) {
+                        paymentLayout.setVisibility(View.GONE);
                     }
                 }
                 if (res.equalsIgnoreCase("coupon")) {
@@ -448,14 +476,16 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     i.putExtra("serviceObj", serviceHistory);
                     startActivity(i);
                     finish();
-                }if (res.equalsIgnoreCase("remove_coupon")) {
+                }
+                if (res.equalsIgnoreCase("remove_coupon")) {
                     PreferenceStorage.saveCoupon(getApplicationContext(), "");
                     PreferenceStorage.saveCouponID(getApplicationContext(), "");
                     Intent i = new Intent(this, ServiceSummaryActivity.class);
                     i.putExtra("serviceObj", serviceHistory);
                     startActivity(i);
                     finish();
-                }if (res.equalsIgnoreCase("remove_coupon_exit")) {
+                }
+                if (res.equalsIgnoreCase("remove_coupon_exit")) {
                     PreferenceStorage.saveCoupon(getApplicationContext(), "");
                     PreferenceStorage.saveCouponID(getApplicationContext(), "");
                     finish();
