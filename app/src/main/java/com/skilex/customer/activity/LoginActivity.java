@@ -313,7 +313,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     PreferenceStorage.saveUserId(this, userId);
                     Intent homeIntent = new Intent(getApplicationContext(), NumberVerificationActivity.class);
                     startActivity(homeIntent);
-                    finish();
+//                    finish();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

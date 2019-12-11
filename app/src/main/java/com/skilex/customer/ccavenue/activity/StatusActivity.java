@@ -197,6 +197,7 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 					@Override
 					public void onClick(View v) {
 						Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
+						newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(newIntent);
 						finish();
 					}
