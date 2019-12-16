@@ -95,16 +95,18 @@ public class AdditionalServiceListAdapter extends BaseAdapter {
         final AdditionalServiceListAdapter.ViewHolder holder;
         if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            convertView = inflater.inflate(R.layout.category_list_item, parent, false);
+            convertView = inflater.inflate(R.layout.additional_service_list_item, parent, false);
 
             holder = new AdditionalServiceListAdapter.ViewHolder();
             holder.txtCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
+            holder.txtCatRate = (TextView) convertView.findViewById(R.id.sub_category_rate);
             if (PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
                 holder.txtCatName.setText(services.get(position).getservice_ta_name());
             } else {
                 holder.txtCatName.setText(services.get(position).getservice_name());
             }
             holder.txtCatName.setText(services.get(position).getservice_name());
+            holder.txtCatRate.setText(services.get(position).getRate_card());
             holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
             String url = services.get(position).getservice_pic_url();
             if (((url != null) && !(url.isEmpty()))) {
@@ -198,7 +200,7 @@ public class AdditionalServiceListAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
-        public TextView txtCatName;
+        public TextView txtCatName, txtCatRate;
         public ImageView imgCat, addList;
     }
 

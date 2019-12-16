@@ -1,7 +1,12 @@
 package com.skilex.customer.activity;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -63,6 +68,22 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
 
     }
 
+    public void callNumber() {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + servicePersonPhone.getText().toString()));
+        if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    Activity#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for Activity#requestPermissions for more details.
+            return;
+        }
+        startActivity(callIntent);
+    }
+
     public void callGetSubCategoryServiceDetails() {
         if (CommonUtils.isNetworkAvailable(this)) {
             progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
@@ -117,6 +138,7 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
         servicePerson = (TextView) findViewById(R.id.service_person_name);
 //        servicePersonPhone = (TextView) findViewById(R.id.service_person_experience);
         servicePersonPhone = (TextView) findViewById(R.id.service_person_number);
+        servicePersonPhone.setOnClickListener(this);
         serviceStartTime = (TextView) findViewById(R.id.service_statring_time_text);
         serviceRestartTime = (TextView) findViewById(R.id.service_restarting_time);
         serviceRestartdate = (TextView) findViewById(R.id.service_restarting_date);
@@ -261,6 +283,9 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
             i.putExtra("serviceObj", ongoingService);
             startActivity(i);
             finish();
+        }
+        else if (v == servicePersonPhone) {
+            callNumber();
         }
     }
 }

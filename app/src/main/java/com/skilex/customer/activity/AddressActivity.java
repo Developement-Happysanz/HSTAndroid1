@@ -783,13 +783,14 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             address = coder.getFromLocationName(strAddress, 5);
             if (address == null) {
                 return null;
+            } else {
+                Address location = address.get(0);
+                addresses = address;
+                location.getLatitude();
+                location.getLongitude();
+                p1 = new LatLng((location.getLatitude()), (location.getLongitude()));
             }
-            Address location = address.get(0);
-            addresses = address;
-            location.getLatitude();
-            location.getLongitude();
 
-            p1 = new LatLng((location.getLatitude()), (location.getLongitude()));
 
         } catch (IOException e) {
             e.printStackTrace();

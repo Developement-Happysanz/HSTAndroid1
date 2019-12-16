@@ -26,6 +26,10 @@ public class AdditionalService implements Serializable {
     @Expose
     private String selected;
 
+    @SerializedName("rate_card")
+    @Expose
+    private String rate_card;
+
     @SerializedName("size")
     @Expose
     private int size = 3;
@@ -98,6 +102,20 @@ public class AdditionalService implements Serializable {
      */
     public void setSelected(String selected) {
         this.selected = selected;
+    }
+
+    /**
+     * @return The rate_card
+     */
+    public String getRate_card() {
+        return rate_card;
+    }
+
+    /**
+     * @param rate_card The rate_card
+     */
+    public void setRate_card(String rate_card) {
+        this.rate_card = rate_card;
     }
 
     public int getSize() {
