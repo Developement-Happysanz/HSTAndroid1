@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,7 +41,7 @@ import java.util.ArrayList;
 
 import static android.util.Log.d;
 
-public class BookingSummaryAcivity extends AppCompatActivity implements IServiceListener, DialogClickListener, CartServiceDeleteListAdapter.OnItemClickListener {
+public class BookingSummaryAcivity extends AppCompatActivity implements IServiceListener, DialogClickListener, CartServiceDeleteListAdapter.OnItemClickListener, View.OnClickListener {
 
     private static final String TAG = BookingSummaryAcivity.class.getName();
     int totalCount = 0, checkrun = 0;
@@ -57,6 +58,8 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
     String res = "";
     Button confrm;
     private Handler handler = new Handler();
+    CheckBox terms;
+    TextView termsAndCOnditions;
 
     //To start timer
     public void startTimer() {
@@ -140,26 +143,29 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
             }
         });
 
-        findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
-                    handler.removeCallbacksAndMessages(null);
-                    Intent i = new Intent(getApplicationContext(), AddressActivity.class);
-                    startActivity(i);
-                    finish();
-                } else {
-                    showExit();
-                }
-            }
-        });
+//        findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
+//                    handler.removeCallbacksAndMessages(null);
+//                    Intent i = new Intent(getApplicationContext(), AddressActivity.class);
+//                    startActivity(i);
+//                    finish();
+//                } else {
+//                    showExit();
+//                }
+//            }
+//        });
 
 //        loadMoreListView = findViewById(R.id.listSumService);
         mRecyclerView = findViewById(R.id.listSumService);
         advanceAmount = (TextView) findViewById(R.id.additional_cost);
         totalCost = (TextView) findViewById(R.id.total_cost);
-//        confrm = (Button) findViewById(R.id.confirm);
-//        confrm.setOnClickListener(this);
+        confrm = (Button) findViewById(R.id.confirm);
+        confrm.setOnClickListener(this);
+        termsAndCOnditions = findViewById(R.id.terms_and_conditions);
+        termsAndCOnditions.setOnClickListener(this);
+        terms = findViewById(R.id.check_tc);
         category = (Category) getIntent().getSerializableExtra("cat");
         page = getIntent().getStringExtra("page");
         callGetSubCategoryService();
@@ -372,5 +378,27 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
     @Override
     public void onItemClick(View view, int position) {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == confrm) {
+            if(terms.isChecked()) {
+                if (PreferenceStorage.getPurchaseStatus(getApplicationContext())) {
+                    handler.removeCallbacksAndMessages(null);
+                    Intent i = new Intent(getApplicationContext(), AddressActivity.class);
+                    startActivity(i);
+                    finish();
+                } else {
+                    showExit();
+                }
+            } else {
+                AlertDialogHelper.showSimpleAlertDialog(this, "Agree to the terms to continue");
+            }
+        }
+        if (v == termsAndCOnditions) {
+            Intent i = new Intent(getApplicationContext(), TermsActivity.class);
+            startActivity(i);
+        }
     }
 }
