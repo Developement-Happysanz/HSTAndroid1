@@ -123,9 +123,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         profilePic = (CircleImageView) findViewById(R.id.img);
         String url = PreferenceStorage.getProfilePic(this);
         if (((url != null) && !(url.isEmpty()))) {
-            Picasso.get().load(url).into(profilePic);
-        } else {
-            profilePic.setImageResource(R.drawable.ic_profile);
+            Picasso.get().load(url).placeholder(R.drawable.ic_profile).error(R.drawable.ic_profile).into(profilePic);
         }
         edtName = (EditText) findViewById(R.id.edtUserName);
         edtMail = (EditText) findViewById(R.id.edtUserMail);

@@ -105,11 +105,12 @@ public class AdditionalServiceListAdapter extends BaseAdapter {
             } else {
                 holder.txtCatName.setText(services.get(position).getservice_name());
             }
-            holder.txtCatName.setText(services.get(position).getservice_name());
+//            holder.txtCatName.setText(services.get(position).getservice_name());
             holder.txtCatRate.setText(services.get(position).getRate_card());
             holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
             String url = services.get(position).getservice_pic_url();
             if (((url != null) && !(url.isEmpty()))) {
+//                Picasso.get().load(url).placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher).into(holder.imgCat);
                 Picasso.get().load(url).into(holder.imgCat);
             }
             holder.addList = (ImageView) convertView.findViewById(R.id.add_to_list);
@@ -126,7 +127,7 @@ public class AdditionalServiceListAdapter extends BaseAdapter {
             } else {
                 holder.txtCatName.setText(services.get(position).getservice_name());
             }
-            holder.txtCatName.setText(services.get(position).getservice_name());
+//            holder.txtCatName.setText(services.get(position).getservice_name());
             holder.imgCat = (ImageView) convertView.findViewById(R.id.sub_category_image);
             String url = services.get(position).getservice_pic_url();
             if (((url != null) && !(url.isEmpty()))) {

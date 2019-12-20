@@ -3,6 +3,7 @@
     <!--English-->
 
     <string name="app_name">SkilEx</string>
+    <string name="tag_line">THE ULTIMATE SERVICE APP</string>
     <string name="empty" />
     <string name="error_no_net">No internet access. Please check your connection and try again.</string>
     <string name="error_occurred">Failed to connect to the server. Please try again.</string>

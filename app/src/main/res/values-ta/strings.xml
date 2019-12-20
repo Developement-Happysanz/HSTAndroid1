@@ -4,6 +4,7 @@
     <!--English-->
 
     <string name="app_name">ஸ்கிலெக்ஸ்</string>
+    <string name="tag_line">THE ULTIMATE SERVICE APP</string>
     <string name="empty" />
     <string name="error_no_net">இணையத்தை அணுக இயலவில்லை. உங்கள் இணைப்பை சரிப்பார்க்கவும்.</string>
     <string name="error_occurred">இணைய சேவையக சிக்கல் ஏற்பட்டுள்ளது. சிறிது நேரம் கழித்து முயற்சி செய்யவும்.</string>

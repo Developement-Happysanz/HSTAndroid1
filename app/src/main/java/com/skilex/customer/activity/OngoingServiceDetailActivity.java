@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -43,6 +44,7 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
             serviceStartTime, estimatedCost, serviceRestartTime, serviceRestartdate, serviceRestartTimeText, serviceRestartdateText;
     Button track;
     private ImageView onHold;
+    LinearLayout nameLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +64,9 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
 
         ongoingService = (OngoingService) getIntent().getSerializableExtra("serviceObj");
 
-        callGetSubCategoryServiceDetails();
-
         initiateAll();
+
+        callGetSubCategoryServiceDetails();
 
     }
 
@@ -127,7 +129,8 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
             }
         });
 
-
+        nameLay = findViewById(R.id.name_layout);
+        nameLay.setOnClickListener(this);
         catName = (TextView) findViewById(R.id.category_name);
         subCatName = (TextView) findViewById(R.id.sub_category_name);
         custName = (TextView) findViewById(R.id.customer_name);
@@ -283,8 +286,7 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
             i.putExtra("serviceObj", ongoingService);
             startActivity(i);
             finish();
-        }
-        else if (v == servicePersonPhone) {
+        } else if (v == nameLay) {
             callNumber();
         }
     }
