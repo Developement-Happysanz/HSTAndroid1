@@ -133,6 +133,20 @@
                     android:fontFamily="@font/helvetica"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/img_call_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/helvetica"
+                    android:src="@drawable/ic_phone_dial"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
             </RelativeLayout>
 
             <LinearLayout
