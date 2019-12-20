@@ -1,16 +1,23 @@
 package com.skilex.customer.activity;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
@@ -47,7 +54,7 @@ import static java.lang.Math.sqrt;
 import static java.lang.Math.toDegrees;
 import static java.lang.Math.toRadians;
 
-public class ServicePersonTrackingActivity extends FragmentActivity implements OnMapReadyCallback, IServiceListener, DialogClickListener {
+public class ServicePersonTrackingActivity extends FragmentActivity implements OnMapReadyCallback, IServiceListener, DialogClickListener, View.OnClickListener {
 
     private static final String TAG = ServicePersonTrackingActivity.class.getName();
     private MapView mapView;
@@ -73,6 +80,7 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
     }
 
     private String res = "";
+    LinearLayout nameLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +92,8 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
                 finish();
             }
         });
-
+        nameLay = findViewById(R.id.name_layout);
+        nameLay.setOnClickListener(this);
         ongoingService = (OngoingService) getIntent().getSerializableExtra("serviceObj");
 
         serviceHelper = new ServiceHelper(this);
@@ -289,6 +298,32 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
 //        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.SERVICE_PERSON_LOCATION;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == nameLay) {
+            callNumber();
+        }
+    }
+
+    public void callNumber() {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        callIntent.setData(Uri.parse("tel:" + servicePersonPhone.getText().toString()));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    Activity#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for Activity#requestPermissions for more details.
+                Toast.makeText(this, "You need to enable permissions to make call !", Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
+        startActivity(callIntent);
     }
 
     public static class MarkerAnimation {
