@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.skilex.customer.R;
@@ -42,6 +43,8 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     OngoingService ongoingService;
+    private static final int REQUEST_PHONE_CALL = 1;
+    Intent callIntent = new Intent(Intent.ACTION_CALL);
     private TextView catName, subCatName, custName, servicedate, orderID, serviceProvider, servicePerson, servicePersonPhone,
             serviceStartTime, estimatedCost, serviceRestartTime, serviceRestartdate, serviceRestartTimeText, serviceRestartdateText;
     Button track;
@@ -73,22 +76,33 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
     }
 
     public void callNumber() {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
+
         callIntent.setData(Uri.parse("tel:" + servicePersonPhone.getText().toString()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                Toast.makeText(this, "You need to enable permissions to make call !", Toast.LENGTH_SHORT).show();
+            if (ContextCompat.checkSelfPermission(OngoingServiceDetailActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(OngoingServiceDetailActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+            }
+            else
+            {
+                startActivity(callIntent);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PHONE_CALL: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startActivity(callIntent);
+                }
+                else
+                {
+
+                }
                 return;
             }
         }
-        startActivity(callIntent);
     }
 
     public void callGetSubCategoryServiceDetails() {

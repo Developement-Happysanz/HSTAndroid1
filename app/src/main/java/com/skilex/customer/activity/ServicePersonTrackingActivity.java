@@ -16,10 +16,13 @@ import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -57,6 +60,8 @@ import static java.lang.Math.toRadians;
 public class ServicePersonTrackingActivity extends FragmentActivity implements OnMapReadyCallback, IServiceListener, DialogClickListener, View.OnClickListener {
 
     private static final String TAG = ServicePersonTrackingActivity.class.getName();
+    private static final int REQUEST_PHONE_CALL = 1;
+    Intent callIntent = new Intent(Intent.ACTION_CALL);
     private MapView mapView;
     private GoogleMap mMap;
     private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
@@ -80,7 +85,7 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
     }
 
     private String res = "";
-    LinearLayout nameLay;
+    RelativeLayout nameLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +107,7 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
 
         servicePerson = (TextView) findViewById(R.id.service_person_name);
 //        servicePersonPhone = (TextView) findViewById(R.id.service_person_experience);
-//        servicePersonPhone = (TextView) findViewById(R.id.service_person_number);
+        servicePersonPhone = (TextView) findViewById(R.id.service_person_about);
         serviceStartTime = (TextView) findViewById(R.id.date);
 
 //        startTimer();
@@ -226,7 +231,7 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
 //                    orderID.setText(getData.getString("service_order_id"));
 //                    serviceProvider.setText(getData.getString("provider_name"));
                     servicePerson.setText(getData.getString("person_name"));
-//                    servicePersonPhone.setText(getData.getString("person_number"));
+                    servicePersonPhone.setText(getData.getString("person_number"));
                     serviceStartTime.setText(getData.getString("time_slot"));
                     startTimer();
                     checkProviderAssign();
@@ -308,22 +313,33 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
     }
 
     public void callNumber() {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
+
         callIntent.setData(Uri.parse("tel:" + servicePersonPhone.getText().toString()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkSelfPermission(Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    Activity#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for Activity#requestPermissions for more details.
-                Toast.makeText(this, "You need to enable permissions to make call !", Toast.LENGTH_SHORT).show();
+            if (ContextCompat.checkSelfPermission(ServicePersonTrackingActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(ServicePersonTrackingActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+            }
+            else
+            {
+                startActivity(callIntent);
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PHONE_CALL: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startActivity(callIntent);
+                }
+                else
+                {
+
+                }
                 return;
             }
         }
-        startActivity(callIntent);
     }
 
     public static class MarkerAnimation {
