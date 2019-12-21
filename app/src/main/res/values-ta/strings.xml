@@ -21,6 +21,7 @@
     <string name="menu_share">பகிரவும்</string>
     <string name="menu_send">அனுப்பவும்</string>
 
+    <string name="booking_terms"></string>
 
     <!--Dialog Fragment-->
     <string name="alert_button_ok">சரி</string>
