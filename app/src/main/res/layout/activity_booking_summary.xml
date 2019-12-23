@@ -149,38 +149,44 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-                android:orientation="horizontal">
-
-                <CheckBox
-                    android:id="@+id/check_tc"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="I, agree to the "
-                    android:checked="false"
-                    android:textSize="14sp"/>
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/terms_and_conditions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Terms and Conditions "
-                    android:textColor="@color/blue"
-                    android:textSize="16sp"/>
+                    <CheckBox
+                        android:id="@+id/check_tc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:text="I, agree to the "
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/terms_and_conditions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Terms and Conditions "
+                        android:textColor="@color/blue"
+                        android:textSize="16sp" />
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" of SkilEx services."
                     android:textColor="@color/black"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
 
 
             </LinearLayout>
 
         </LinearLayout>
-
 
         <Button
             android:id="@+id/confirm"
