@@ -397,7 +397,7 @@
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/name_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -411,6 +411,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:clickable="false"
+                    android:layout_centerInParent="true"
                     android:focusable="false"
                     android:fontFamily="@font/helvetica"
                     android:gravity="center"
@@ -424,16 +425,15 @@
                     android:layout_height="50dp"
                     android:clickable="false"
                     android:focusable="false"
-                    android:layout_alignParentEnd="true"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/service_person_number"
+                    android:layout_marginStart="40dp"
                     android:fontFamily="@font/helvetica"
                     android:src="@drawable/ic_phone_dial"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
             <Button

@@ -44,6 +44,7 @@ import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
+import com.skilex.customer.utils.SkilExValidator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -198,14 +199,16 @@ public class ServicePersonTrackingActivity extends FragmentActivity implements O
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 //        mMap.setMinZoomPreference(12);
-        LatLng ny = new LatLng(40.7143528, -74.0059731);
-//        String lat = String.valueOf(livLoc.latitude);
-//        String lng = String.valueOf(livLoc.longitude);
-//        if (!lat.isEmpty() && !lng.isEmpty()) {
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ny, 17));
-//        mMap.addMarker(new MarkerOptions()
-//                .position(ny)
-//                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        LatLng ny = new LatLng(11.010082, 76.987636);
+        if(livLoc == null) {
+//            String lat = String.valueOf(livLoc.latitude);
+//            String lng = String.valueOf(livLoc.longitude);
+//            if (!lat.isEmpty() && !lng.isEmpty()) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ny, 17));
+                mMap.addMarker(new MarkerOptions()
+                        .position(ny)
+                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+            }
 //        }
     }
 

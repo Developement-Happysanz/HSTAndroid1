@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +50,7 @@ public class OngoingServiceDetailActivity extends AppCompatActivity implements I
             serviceStartTime, estimatedCost, serviceRestartTime, serviceRestartdate, serviceRestartTimeText, serviceRestartdateText;
     Button track;
     private ImageView onHold;
-    LinearLayout nameLay;
+    RelativeLayout nameLay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
