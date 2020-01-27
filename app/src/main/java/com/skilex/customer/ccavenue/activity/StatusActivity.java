@@ -47,14 +47,14 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 
 	private int a = 1;
 	private Handler handler = new Handler();
-	public void startTimer() {
-		handler.postDelayed(new Runnable() {
-			public void run() {
-				checkProviderAssign();
-				handler.postDelayed(this, 60000);
-			}
-		}, 60000);
-	}
+//	public void startTimer() {
+//		handler.postDelayed(new Runnable() {
+//			public void run() {
+//				checkProviderAssign();
+//				handler.postDelayed(this, 60000);
+//			}
+//		}, 60000);
+//	}
 
 	private void checkProviderAssign() {
 		JSONObject jsonObject = new JSONObject();
@@ -117,30 +117,30 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 
 		if (page.equalsIgnoreCase("advance_pay") && !(status.equalsIgnoreCase("Transaction Declined!")||status.equalsIgnoreCase("Transaction Cancelled!"))){
 //			sendAdvanceStatus();
-			final int oneMin = 3 * 60 * 1000; // 1 minute in milli seconds
-
-			/** CountDownTimer starts with 1 minutes and every onTick is 1 second */
-			new CountDownTimer(oneMin, 1000) {
-				public void onTick(long millisUntilFinished) {
-
-					//forward progress
-					long finishedSeconds = oneMin - millisUntilFinished;
-					int total = (int) (((float)finishedSeconds / (float)oneMin) * 100.0);
-
-//                //backward progress
-//                int total = (int) (((float) millisUntilFinished / (float) oneMin) * 100.0);
-//                progressBar.setProgress(total);
-
-				}
-
-				public void onFinish() {
-					// DO something when 1 minute is up
-					handler.removeCallbacksAndMessages(null);
-
-				}
-			}.start();
+//			final int oneMin = 3 * 60 * 1000; // 1 minute in milli seconds
+//
+//			/** CountDownTimer starts with 1 minutes and every onTick is 1 second */
+//			new CountDownTimer(oneMin, 1000) {
+//				public void onTick(long millisUntilFinished) {
+//
+//					//forward progress
+//					long finishedSeconds = oneMin - millisUntilFinished;
+//					int total = (int) (((float)finishedSeconds / (float)oneMin) * 100.0);
+//
+////                //backward progress
+////                int total = (int) (((float) millisUntilFinished / (float) oneMin) * 100.0);
+////                progressBar.setProgress(total);
+//
+//				}
+//
+//				public void onFinish() {
+//					// DO something when 1 minute is up
+//					handler.removeCallbacksAndMessages(null);
+//
+//				}
+//			}.start();
 			checkProviderAssign();
-			startTimer();
+//			startTimer();
 		} else {
 
 		}
