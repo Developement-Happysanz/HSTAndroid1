@@ -63,6 +63,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
     ArrayList<StoreTimeSlot> timeList;
     String couponSlotId = "";
     String abc = "";
+    String status = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +131,8 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             @Override
             public void onClick(View v) {
                 if (SkilExValidator.checkNullString(abc) && abc.equalsIgnoreCase("ongoing")) {
+                    finish();
+                } else if (status.equalsIgnoreCase("Cancelled")){
                     finish();
                 } else {
                     cancelCouponAndExit();
@@ -395,7 +398,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     callGetServiceStatus();
                 }
                 if (res.equalsIgnoreCase("status")) {
-                    String status = response.getString("order_status");
+                    status = response.getString("order_status");
                     if (status.equalsIgnoreCase("Cancelled")) {
                         paymentLayout.setVisibility(View.GONE);
                         additionalServiceLayout.setVisibility(View.GONE);
