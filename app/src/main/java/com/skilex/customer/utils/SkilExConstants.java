@@ -12,11 +12,11 @@ public class SkilExConstants {
 
     //Development Mode
     //delopment
-//    public static final String JOINT_URL = "development/";
+    public static final String JOINT_URL = "development/";
     //uat
 //    public static final String JOINT_URL = "uat/";
     //live
-    public static final String JOINT_URL = "";
+//    public static final String JOINT_URL = "";
 //
 //    //BUILD URL
     public static final String BUILD_URL = BASE_URL + JOINT_URL + "apicustomer/";
@@ -151,6 +151,9 @@ public class SkilExConstants {
     //APPLY COUPON URL
     public static final String PAY_BY_CASH = "pay_by_cash/";
 
+    //APPLY COUPON URL
+    public static final String CHECK_VERSION = "version_check/";
+
 
 
 
@@ -258,5 +261,6 @@ public class SkilExConstants {
     // Advance Payment
     public static String KEY_RATINGS = "ratings";
     public static String KEY_COMMENTS = "reviews";
+    public static String KEY_APP_VERSION = "version_code";
 
 }

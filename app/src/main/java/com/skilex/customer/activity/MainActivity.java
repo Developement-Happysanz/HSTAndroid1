@@ -3,12 +3,15 @@ package com.skilex.customer.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -26,19 +29,36 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
+import com.google.gson.Gson;
 import com.skilex.customer.R;
+import com.skilex.customer.bean.support.AdditionalServiceList;
 import com.skilex.customer.fragment.HomeFragment;
 import com.skilex.customer.fragment.ProfileFragment;
 import com.skilex.customer.fragment.ServicesFragment;
+import com.skilex.customer.helper.AlertDialogHelper;
+import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
+import com.skilex.customer.servicehelpers.ServiceHelper;
+import com.skilex.customer.serviceinterfaces.IServiceListener;
+import com.skilex.customer.utils.CommonUtils;
+import com.skilex.customer.utils.PreferenceStorage;
+import com.skilex.customer.utils.SkilExConstants;
 
-public class MainActivity extends AppCompatActivity implements DialogClickListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static android.util.Log.d;
+
+public class MainActivity extends AppCompatActivity implements IServiceListener, DialogClickListener {
 
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
     int checkPointSearch = 0;
     boolean doubleBackToExitPressedOnce = false;
 
+    private ServiceHelper serviceHelper;
+    private ProgressDialogHelper progressDialogHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +66,10 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
         setContentView(R.layout.activity_main);
 //        toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
 //        setSupportActionBar(toolbar);
-
+        serviceHelper = new ServiceHelper(this);
+        serviceHelper.setServiceListener(this);
+        progressDialogHelper = new ProgressDialogHelper(this);
+        callGetSubCategoryService();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -142,6 +165,65 @@ public class MainActivity extends AppCompatActivity implements DialogClickListen
 
     @Override
     public void onAlertNegativeClicked(int tag) {
+
+    }
+
+    public void callGetSubCategoryService() {
+        if (CommonUtils.isNetworkAvailable(this)) {
+            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+            loadCart();
+        } else {
+            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
+        }
+    }
+
+    private void loadCart() {
+        JSONObject jsonObject = new JSONObject();
+        String id = "";
+        try {
+            jsonObject.put(SkilExConstants.KEY_APP_VERSION, "1");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.CHECK_VERSION;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        progressDialogHelper.hideProgressDialog();
+        try {
+            String status = response.getString("status");
+            if (!status.equalsIgnoreCase("success")) {
+                android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setTitle("Update");
+                alertDialogBuilder.setMessage("A new version of SkilEx is available!");
+                alertDialogBuilder.setPositiveButton("Get it", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                        try {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                            finish();
+                        }
+                        catch (android.content.ActivityNotFoundException anfe) {
+                            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                        }
+                    }
+                });
+                alertDialogBuilder.setCancelable(false);
+                alertDialogBuilder.show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onError(String error) {
 
     }
 }
