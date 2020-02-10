@@ -224,6 +224,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
 
         try {
             jsonObject.put(SkilExConstants.KEY_USER_MASTER_ID, id);
+            jsonObject.put(SkilExConstants.KEY_APP_VERSION, "1");
 
         } catch (JSONException e) {
             e.printStackTrace();
