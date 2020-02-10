@@ -262,5 +262,6 @@ public class SkilExConstants {
     public static String KEY_RATINGS = "ratings";
     public static String KEY_COMMENTS = "reviews";
     public static String KEY_APP_VERSION = "version_code";
+    public static String KEY_APP_VERSION_VALUE = "1";
 
 }
