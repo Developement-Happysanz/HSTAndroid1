@@ -132,7 +132,13 @@ public class AdvancePaymentActivity extends AppCompatActivity implements IServic
 
     @Override
     public void onResponse(JSONObject response) {
+        try {
+            if (response.getString("status").equalsIgnoreCase("success")) {
 
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

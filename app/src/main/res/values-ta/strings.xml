@@ -43,6 +43,7 @@
     <!--Google API key-->
 
     <string name="google_android_map_api_key">AIzaSyDyXHfwZjnPVy5reE5XPRZfmqMJd254hj4</string>
+    <string name="facebook_app_id">1654012428093090</string>
     <!--    <string name="google_android_map_api_key">AIzaSyD428E0W4-pf4kJuJ3rsqG5vCELRgmR2ok</string>-->
 
     <!--Login-->

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -44,7 +45,7 @@ public class SplashScreenActivity extends Activity {
         Log.d("Hash Key: ", yourhash);*/
 
 //        Toast.makeText(SplashScreenActivity.this, "Hash key...  " + yourhash , Toast.LENGTH_SHORT).show();
-
+//        hashFromSHA1("60:53:85:D2:89:8C:8A:AA:8B:55:D1:DE:73:A9:2D:C1:97:C7:27:A7");
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -70,5 +71,17 @@ public class SplashScreenActivity extends Activity {
             }
         }, SPLASH_TIME_OUT);
     }
+
+    public void hashFromSHA1(String sha1) {
+        String[] arr = sha1.split(":");
+        byte[] byteArr = new  byte[arr.length];
+
+        for (int i = 0; i< arr.length; i++) {
+            byteArr[i] = Integer.decode("0x" + arr[i]).byteValue();
+        }
+
+        Log.e("hashfaka : ", Base64.encodeToString(byteArr, Base64.NO_WRAP));
+    }
+
 }
 
