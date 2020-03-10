@@ -87,7 +87,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     private ProgressDialogHelper progressDialogHelper;
     Geocoder geocoder;
     private List<Address> addresses;
-    EditText customerAddress, customerName, customerNumber, serviceTimeSlot, serviceDate;
+    EditText customerAddress, customerName, customerNumber, serviceTimeSlot, serviceDate, customerNotes;
     Button bookNow;
     final Calendar myCalendar = Calendar.getInstance();
     private String res = "";
@@ -205,6 +205,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                 showTimeSlotList();
             }
         });
+        customerNotes = (EditText) findViewById(R.id.customer_notes);
         bookNow = (Button) findViewById(R.id.book_now);
         bookNow.setOnClickListener(new View.OnClickListener() {
 
@@ -612,6 +613,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             jsonObject.put(SkilExConstants.SERVICE_ADDRESS, customerAddress.getText().toString());
             jsonObject.put(SkilExConstants.ORDER_DATE, newDate);
             jsonObject.put(SkilExConstants.ORDER_TIMESLOT, timeSlotId);
+            jsonObject.put(SkilExConstants.ORDER_NOTES, customerNotes.getText().toString());
 
         } catch (JSONException e) {
             e.printStackTrace();

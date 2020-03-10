@@ -163,6 +163,25 @@
 
             </LinearLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_custcomment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <EditText
+                    android:id="@+id/customer_notes"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/helvetica"
+                    android:hint="@string/note"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:id="@+id/book_now"
                 android:layout_width="match_parent"

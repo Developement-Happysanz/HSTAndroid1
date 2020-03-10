@@ -12,11 +12,11 @@ public class SkilExConstants {
 
     //Development Mode
     //delopment
-//    public static final String JOINT_URL = "development/";
+    public static final String JOINT_URL = "development/";
     //uat
 //    public static final String JOINT_URL = "uat/";
     //live
-    public static final String JOINT_URL = "";
+//    public static final String JOINT_URL = "";
 //
 //    //BUILD URL
     public static final String BUILD_URL = BASE_URL + JOINT_URL + "apicustomer/";
@@ -248,6 +248,7 @@ public class SkilExConstants {
     public static String SERVICE_LOCATION = "service_location";
     public static String SERVICE_ADDRESS = "service_address";
     public static String ORDER_DATE = "order_date";
+    public static String ORDER_NOTES = "order_notes";
     public static String ORDER_TIMESLOT = "order_timeslot_id";
     public static final String PARAMS_AMOUNT = "amount";
 

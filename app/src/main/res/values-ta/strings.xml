@@ -112,6 +112,7 @@
     <string name="remove_service">சேவை நீக்கப்பட்டது</string>
     <string name="reason">காரணம்</string>
     <string name="comment">கருத்துக்கள்</string>
+    <string name="note">கருத்துக்கள்</string>
     <string name="others">வேறு</string>
     <string name="cancel_service_alert">நீங்கள் ரத்துசெய்தால், செலுத்தப்பட்ட முன்கூட்டியே தொகை உங்களுக்கு திருப்பித் தரப்படாது. நீங்கள் நிச்சயமாக ரத்து செய்ய விரும்புகிறீர்களா?</string>
     <string name="cancel_service_noadvance_alert1">Are you sure you want to cancel your service?</string>

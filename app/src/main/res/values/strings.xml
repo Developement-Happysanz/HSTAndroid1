@@ -110,6 +110,7 @@
     <string name="others">Others</string>
     <string name="reason">Reason</string>
     <string name="comment">Comment</string>
+    <string name="note">Notes (Optional)</string>
     <string name="cancel_service_alert">If you cancel you will not be refunded the advance amount paid. Are you sure you want to cancel?</string>
     <string name="cancel_service_noadvance_alert1">Are you sure you want to cancel your service?</string>
 
