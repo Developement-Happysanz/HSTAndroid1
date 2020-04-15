@@ -6,13 +6,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
 import com.skilex.customer.R;
+import com.skilex.customer.adapter.FeebackListAdapter;
+import com.skilex.customer.bean.support.Feedback;
+import com.skilex.customer.bean.support.FeedbackList;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -24,14 +29,16 @@ import com.skilex.customer.utils.SkilExConstants;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import static android.util.Log.d;
 
-public class RateServiceActivity  extends AppCompatActivity implements DialogClickListener, IServiceListener, View.OnClickListener {
+public class RateServiceActivity extends AppCompatActivity implements DialogClickListener, IServiceListener, View.OnClickListener {
 
     private static final String TAG = RateServiceActivity.class.getName();
     private ProgressDialogHelper progressDialogHelper;
     private ServiceHelper serviceHelper;
-//    private Event event;
+    //    private Event event;
     private RatingBar rtbComments;
     private EditText edtComments;
     private Button btnSubmit;
@@ -39,7 +46,9 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
     private String reviewId = "";
     private ImageView ivBack;
     TextView skip;
-
+    private ArrayList<Feedback> feedbackArrayList = new ArrayList<>();
+    private FeebackListAdapter feebackListAdapter;
+    private ListView feedList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +62,7 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
         edtComments = findViewById(R.id.edtComments);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(this);
-
+        feedList = findViewById(R.id.listfedd);
         skip = (TextView) findViewById(R.id.skip);
         skip.setOnClickListener(this);
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
@@ -62,6 +71,7 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
                 finish();
             }
         });
+        getQues();
     }
 
     @Override
@@ -73,7 +83,7 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
 //            }
         }
         if (v == skip) {
-            Intent intent = new Intent (this, MainActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
         }
@@ -103,6 +113,25 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
+
+    private void getQues() {
+
+        checkString = "QUES";
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.FEEDBACK_QUESTION;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
     @Override
     public void onAlertPositiveClicked(int tag) {
 
@@ -119,8 +148,8 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
-                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
-                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
+//                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+//                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -130,9 +159,9 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
                         d(TAG, "Show error dialog");
 
                         if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
                         } else {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
                         }
 
                     } else {
@@ -151,12 +180,28 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
         progressDialogHelper.hideProgressDialog();
         if (validateSignInResponse(response)) {
             try {
-                String status = response.getString("status");
-                if (status.equalsIgnoreCase("Success")){
-                    Intent intent = new Intent (this, MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                    finish();
+                if (checkString.equalsIgnoreCase("QUES")) {
+                    Gson gson = new Gson();
+                    FeedbackList serviceHistoryList = gson.fromJson(response.toString(), FeedbackList.class);
+                    if (serviceHistoryList.getFeedbackArrayList() != null && serviceHistoryList.getFeedbackArrayList().size() > 0) {
+                        int totalCount = serviceHistoryList.getCount();
+//                    this.serviceHistoryArrayList.addAll(ongoingServiceList.getserviceArrayList());
+                        boolean isLoadingForFirstTime = false;
+                        updateListAdapter(serviceHistoryList.getFeedbackArrayList());
+                    } else {
+                        if (feedbackArrayList != null) {
+                            feedbackArrayList.clear();
+                            updateListAdapter(serviceHistoryList.getFeedbackArrayList());
+                        }
+                    }
+                } else {
+                    String status = response.getString("status");
+                    if (status.equalsIgnoreCase("Success")) {
+                        Intent intent = new Intent(this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
 //                if (status.equalsIgnoreCase("new")) {
 //                    checkString = "new";
@@ -174,6 +219,17 @@ public class RateServiceActivity  extends AppCompatActivity implements DialogCli
                 e.printStackTrace();
             }
 
+        }
+    }
+
+    protected void updateListAdapter(ArrayList<Feedback> serviceHistoryArrayLists) {
+        feedbackArrayList.clear();
+        feedbackArrayList.addAll(serviceHistoryArrayLists);
+        if (feebackListAdapter == null) {
+            feebackListAdapter = new FeebackListAdapter(this, feedbackArrayList);
+            feedList.setAdapter(feebackListAdapter);
+        } else {
+            feebackListAdapter.notifyDataSetChanged();
         }
     }
 

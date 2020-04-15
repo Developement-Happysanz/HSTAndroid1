@@ -668,6 +668,15 @@
 
                 </RelativeLayout>
 
+                <CheckBox
+                    android:id="@+id/wallet_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/use_wallet_amt"
+                    android:layout_below="@+id/payment_layout"
+                    android:layout_margin="10dp"
+                    android:visibility="gone"/>
+
                 <Button
                     android:id="@+id/invoice"
                     android:layout_width="wrap_content"
@@ -690,7 +699,7 @@
                     android:id="@+id/pay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/payment_layout"
+                    android:layout_below="@+id/wallet_check"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="20dp"

@@ -33,14 +33,15 @@ import java.util.Random;
 import static com.skilex.customer.utils.SkilExConstants.API_ADVANCE_PAYMENT_URL;
 import static com.skilex.customer.utils.SkilExConstants.API_PAYMENT_URL;
 import static com.skilex.customer.utils.SkilExConstants.API_RSA_URL;
+import static com.skilex.customer.utils.SkilExConstants.API_WALLET_URL;
 
 
 public class InitialScreenActivity extends AppCompatActivity implements IServiceListener, DialogClickListener {
 
     private EditText accessCode, merchantId, currency, amount, orderId, rsaKeyUrl, redirectUrl, cancelUrl;
-    private TextView amountDisplay, amtP;
+    private TextView amountDisplay, amtP, walletAmt;
     String page;
-    RelativeLayout advPay;
+    RelativeLayout advPay, walletPay;
     LinearLayout servPay;
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
@@ -57,6 +58,8 @@ public class InitialScreenActivity extends AppCompatActivity implements IService
         amountDisplay = (TextView) findViewById(R.id.amount_display);
         amtP = (TextView) findViewById(R.id.amt);
         advPay = (RelativeLayout) findViewById(R.id.adv_pay_layout);
+        walletPay = (RelativeLayout) findViewById(R.id.wallet_pay_layout);
+        walletAmt = (TextView) findViewById(R.id.wallet_amount_display);
         servPay = (LinearLayout) findViewById(R.id.serv_pay_layout);
 
         String adv = (String) getIntent().getSerializableExtra("advpay");
@@ -67,13 +70,19 @@ public class InitialScreenActivity extends AppCompatActivity implements IService
             cancelUrl.setText(API_ADVANCE_PAYMENT_URL);
             rsaKeyUrl.setText(API_RSA_URL);
             advPay.setVisibility(View.VISIBLE);
-            amountDisplay.setText("₹ "+ adv);
+            amountDisplay.setText("₹" + adv);
+        } else if (page.equalsIgnoreCase("wallet")) {
+            redirectUrl.setText(API_WALLET_URL);
+            cancelUrl.setText(API_WALLET_URL);
+            rsaKeyUrl.setText(API_RSA_URL);
+            walletPay.setVisibility(View.VISIBLE);
+            walletAmt.setText("₹" + adv);
         } else {
             redirectUrl.setText(API_PAYMENT_URL);
             cancelUrl.setText(API_PAYMENT_URL);
             rsaKeyUrl.setText(API_RSA_URL);
             servPay.setVisibility(View.VISIBLE);
-            amtP.setText(adv);
+            amtP.setText("₹" + adv);
         }
         amount.setText(adv);
         orderId.setText(PreferenceStorage.getOrderId(this));
@@ -149,11 +158,11 @@ public class InitialScreenActivity extends AppCompatActivity implements IService
         status = "Transaction Successful!";
         Intent intent = new Intent(this, StatusActivity.class);
 
-            intent.putExtra("transStatus", status);
-            intent.putExtra("page", page);
+        intent.putExtra("transStatus", status);
+        intent.putExtra("page", page);
 
-            startActivity(intent);
-            finish();
+        startActivity(intent);
+        finish();
 
     }
 

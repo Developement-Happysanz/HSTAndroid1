@@ -1,6 +1,5 @@
 package com.skilex.customer.activity;
 
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,13 +10,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.skilex.customer.R;
-import com.skilex.customer.bean.support.Category;
 import com.skilex.customer.bean.support.Service;
-import com.skilex.customer.bean.support.TrendingServices;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -28,40 +26,32 @@ import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import static android.util.Log.d;
 
-public class ServiceDetailActivity extends AppCompatActivity implements IServiceListener, View.OnClickListener, DialogClickListener {
-    private static final String TAG = ServiceDetailActivity.class.getName();
+public class ReferAndEarnActivity extends AppCompatActivity implements IServiceListener, View.OnClickListener, DialogClickListener {
+    private static final String TAG = ReferAndEarnActivity.class.getName();
 
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     private ImageView serviceImage;
-    private TextView serviceCost, costText, serviceIncludes, serviceExcludes, serviceProcedure, serviceOthers;
+    private TextView pointsEarned, referralCode, referFriend;
     private ScrollView scrollView;
     Service service;
-    TrendingServices trendingServices;
-    Button bookNow;
+    Button claimReward;
     String res = "";
-    String page = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_service_detail);
+        setContentView(R.layout.activity_refer_and_earn);
 
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
-        page = getIntent().getStringExtra("page");
-        if (page.equalsIgnoreCase("category")) {
-            trendingServices= (TrendingServices) getIntent().getSerializableExtra("cat");
-        } else {
-            service = (Service) getIntent().getSerializableExtra("serviceObj");
-        }
+        service = (Service) getIntent().getSerializableExtra("serviceObj");
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,16 +59,13 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
             }
         });
 
-        serviceCost = (TextView) findViewById(R.id.cost);
-        costText = (TextView) findViewById(R.id.cost_text);
-        serviceIncludes = (TextView) findViewById(R.id.include_text);
-        serviceExcludes = (TextView) findViewById(R.id.exclude_text);
-        serviceProcedure = (TextView) findViewById(R.id.procedure_text);
-        serviceOthers = (TextView) findViewById(R.id.others_text);
-        scrollView = (ScrollView) findViewById(R.id.extras);
-        serviceImage = (ImageView) findViewById(R.id.service_image);
-        bookNow = (Button) findViewById(R.id.book_now);
-        bookNow.setOnClickListener(this);
+        pointsEarned = (TextView) findViewById(R.id.points);
+        referralCode = (TextView) findViewById(R.id.referral_code);
+
+        claimReward = (Button) findViewById(R.id.claim);
+        referFriend = (TextView) findViewById(R.id.btn_refer);
+        claimReward.setOnClickListener(this);
+        referFriend.setOnClickListener(this);
 
         callGetSubCategoryService();
     }
@@ -99,20 +86,16 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         res = "detail";
         JSONObject jsonObject = new JSONObject();
         String id = "";
-        if (page.equalsIgnoreCase("category")) {
-            id = trendingServices.getservice_id();
-        } else {
-            id = service.getservice_id();
-        }
+        id = PreferenceStorage.getUserId(this);
         try {
-            jsonObject.put(SkilExConstants.SERVICE_ID, id);
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 //        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-        String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_SERVICE_DETAIL;
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_REFERRAL_DETAIL;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
@@ -121,34 +104,17 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         res = "cart";
         JSONObject jsonObject = new JSONObject();
 
-        String idService = "";
-
-        String idCat = "";
-        String idSub = "";
         String id = "";
-        if (page.equalsIgnoreCase("category")) {
-            id = PreferenceStorage.getUserId(this);
-            idService = trendingServices.getservice_id();
-            idCat = trendingServices.getmain_cat_id();
-            idSub = trendingServices.getsub_cat_id();
-        } else {
-            idService = service.getservice_id();
-            idCat = PreferenceStorage.getCatClick(this);
-            idSub = PreferenceStorage.getSubCatClick(this);
-            id = PreferenceStorage.getUserId(this);
-        }
+        id = PreferenceStorage.getUserId(this);
         try {
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
-            jsonObject.put(SkilExConstants.SERVICE_ID, idService);
-            jsonObject.put(SkilExConstants.CATEGORY_ID, idCat);
-            jsonObject.put(SkilExConstants.SUB_CAT_ID, idSub);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-        String url = SkilExConstants.BUILD_URL + SkilExConstants.ADD_TO_CART;
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_CLAIM;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
@@ -171,7 +137,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                         if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
                             AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
                         } else {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
                         }
 
                     } else {
@@ -191,49 +157,12 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         if (validateResponse(response)) {
             try {
                 if (res.equalsIgnoreCase("detail")) {
-                    JSONObject data = response.getJSONObject("service_details");
-                    serviceCost.setText("₹" + data.getString("rate_card"));
-                    if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
-                        costText.setText(data.getString("rate_card_details_ta"));
-                    } else {
-                        costText.setText(data.getString("rate_card_details"));
-                    }
-                    if (!data.getString("inclusions").isEmpty() ||
-                            !data.getString("exclusions").isEmpty() ||
-                            !data.getString("service_procedure").isEmpty() ||
-                            !data.getString("others").isEmpty()) {
-                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
-                            serviceIncludes.setText(data.getString("inclusions_ta"));
-                            serviceExcludes.setText(data.getString("exclusions_ta"));
-                            serviceProcedure.setText(data.getString("service_procedure_ta"));
-                            serviceOthers.setText(data.getString("others_ta"));
-                        } else {
-                            serviceIncludes.setText(data.getString("inclusions"));
-                            serviceExcludes.setText(data.getString("exclusions"));
-                            serviceProcedure.setText(data.getString("service_procedure"));
-                            serviceOthers.setText(data.getString("others"));
-                        }
-                        scrollView.setVisibility(View.VISIBLE);
-                    }
-                    String url = "";
-                    url = data.getString("service_pic_url");
-                    if (!url.isEmpty()) {
-                        Picasso.get().load(url).into(serviceImage);
-                    }
+                    JSONObject data = response.getJSONObject("points_code");
+                    referralCode.setText(data.getString("referral_code"));
+                    pointsEarned.setText(data.getString("points_to_claim"));
+
                 } else if (res.equalsIgnoreCase("cart")) {
-
-                    JSONObject data = response.getJSONObject("cart_total");
-
-                    String rate = data.getString("total_amt");
-                    String count = data.getString("service_count");
-
-                    PreferenceStorage.saveRate(this, rate);
-                    PreferenceStorage.saveServiceCount(this, count);
-                    PreferenceStorage.savePurchaseStatus(this, true);
-
-                    Intent newIntent = new Intent(this, BookingSummaryAcivity.class);
-                    newIntent.putExtra("page", "serviceDetail");
-                    startActivity(newIntent);
+                    Toast.makeText(this, response.getString("msg"), Toast.LENGTH_SHORT).show();
                 }
 
             } catch (JSONException e) {
@@ -249,7 +178,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
 
     @Override
     public void onClick(View v) {
-        if (v == bookNow) {
+        if (v == claimReward) {
             if (PreferenceStorage.getUserId(this).equalsIgnoreCase("")) {
                 android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
                 alertDialogBuilder.setTitle(R.string.login);
@@ -271,6 +200,12 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                 bookService();
             }
 
+        } if (v == referFriend) {
+            Intent i = new Intent(android.content.Intent.ACTION_SEND);
+            i.setType("text/plain");
+            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Refer");
+            i.putExtra(android.content.Intent.EXTRA_TEXT, referralCode.getText());
+            startActivity(Intent.createChooser(i, "Share via"));
         }
     }
 

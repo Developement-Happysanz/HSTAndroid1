@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = LoginActivity.class.getName();
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
-    private EditText edtNumber;
+    private EditText edtNumber, edtReferral;
     private Button signIn;
     private TextView skip;
     private ImageView laang;
@@ -84,12 +84,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         progressDialogHelper = new ProgressDialogHelper(this);
 
         edtNumber = (EditText) findViewById(R.id.edtMobileNumber);
+        edtReferral = (EditText) findViewById(R.id.edtReferralCode);
         signIn = findViewById(R.id.sendcode);
         signIn.setOnClickListener(this);
         skip = findViewById(R.id.skip);
         skip.setOnClickListener(this);
         laang = findViewById(R.id.langues);
         laang.setOnClickListener(this);
+        PreferenceStorage.saveLang(getApplicationContext(), "eng");
         FirstTimePreference prefFirstTime = new FirstTimePreference(getApplicationContext());
 
         if (prefFirstTime.runTheFirstTime("FirstTimePermit")) {
@@ -174,12 +176,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (validateFields()) {
                     resString = "mob_verify";
                     String number = edtNumber.getText().toString();
+                    String referral = edtReferral.getText().toString();
                     PreferenceStorage.saveMobileNo(this, number);
+                    PreferenceStorage.saveReferralNo(this, referral);
                     String GCMKey = PreferenceStorage.getGCM(getApplicationContext());
 
                     JSONObject jsonObject = new JSONObject();
                     try {
                         jsonObject.put(SkilExConstants.PHONE_NUMBER, number);
+//                        jsonObject.put(SkilExConstants.REFERRAL_CODE, referral);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

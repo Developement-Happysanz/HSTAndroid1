@@ -34,6 +34,7 @@
     <!--User Data-->
 
     <string name="mobile_number">Mobile Number</string>
+    <string name="referral">Referral Code</string>
     <string name="mobile_number_tag">: \n</string>
     <string name="user_name">Name</string>
     <string name="user_address">Address</string>
@@ -99,6 +100,9 @@
 
     <string name="req_services">Requested Services</string>
     <string name="ong_services">Ongoing Services</string>
+    <string name="refer_and_earn">Refer and Earn</string>
+    <string name="wallet_title">Wallet</string>
+    <string name="use_wallet_amt">Use Wallet Amount</string>
     <string name="service_history">Service History</string>
     <string name="service_detail">Service Detail</string>
     <string name="service_cost">Cost after inspection. Minimum charge is</string>
@@ -159,6 +163,8 @@
     <string name="booking_failed">Sorry!</string>
     <string name="booking_success_comment">Your booking completed \n successfully</string>
     <string name="booking_failed_comment">Your booking failed</string>
+    <string name="wallet_success_comment">Money added to wallet \n successfully</string>
+    <string name="wallet_failed_comment">Your transaction failed</string>
     <string name="payment_success">Awesome!</string>
     <string name="payment_failed">Something\'s wrong!</string>
     <string name="payment_success_comment">Your service order completed \n successfully</string>

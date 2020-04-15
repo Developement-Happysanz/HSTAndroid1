@@ -220,6 +220,24 @@ public class PreferenceStorage {
     }
     /*End*/
 
+    /*To store mobile number*/
+    public static void saveReferralNo(Context context, String type) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(SkilExConstants.REFERRAL_CODE, type);
+        editor.apply();
+    }
+
+    public static String getReferralNo(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        String mobileNo;
+        mobileNo = sharedPreferences.getString(SkilExConstants.REFERRAL_CODE, "");
+        return mobileNo;
+    }
+    /*End*/
+
     /*To store language*/
     public static void saveLang(Context context, String lang) {
         SharedPreferences sharedPreferences = PreferenceManager
@@ -434,6 +452,24 @@ public class PreferenceStorage {
         String orderId;
         orderId = sharedPreferences.getString(SkilExConstants.COUPON_TEXT, "");
         return orderId;
+    }
+    /*End*/
+
+    /*To store category click*/
+    public static void saveWalletStatus(Context context, boolean cat) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(SkilExConstants.WALLET_STATUS, cat);
+        editor.apply();
+    }
+
+    public static boolean getWalletStatus(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(context);
+        boolean catClick;
+        catClick = sharedPreferences.getBoolean(SkilExConstants.WALLET_STATUS, false);
+        return catClick;
     }
     /*End*/
 

@@ -118,6 +118,8 @@ public class WebViewActivity extends AppCompatActivity {
                         webview.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
                     } else if (url.contains("/service_net_amount.php")) {
                         webview.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
+                    } else if (url.contains("/adding_money_to_wallet.php")) {
+                        webview.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
                     }
                 }
 

@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
@@ -29,10 +30,13 @@ import com.google.gson.reflect.TypeToken;
 import com.skilex.customer.R;
 import com.skilex.customer.activity.MainActivity;
 import com.skilex.customer.activity.SearchResultActivity;
+import com.skilex.customer.activity.ServiceDetailActivity;
 import com.skilex.customer.activity.SubCategoryActivity;
 import com.skilex.customer.adapter.CategoryListAdapter;
 import com.skilex.customer.adapter.PreferenceListAdapter;
+import com.skilex.customer.adapter.TrendingServiceListAdapter;
 import com.skilex.customer.bean.support.Category;
+import com.skilex.customer.bean.support.TrendingServices;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -52,7 +56,7 @@ import java.util.ArrayList;
 
 import static android.util.Log.d;
 
-public class HomeFragment extends Fragment implements IServiceListener, DialogClickListener, PreferenceListAdapter.OnItemClickListener {
+public class HomeFragment extends Fragment implements IServiceListener, DialogClickListener, PreferenceListAdapter.OnItemClickListener , TrendingServiceListAdapter.OnItemClickListener {
 
     private static final String TAG = HomeFragment.class.getName();
     Context context;
@@ -63,11 +67,13 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     protected boolean isLoadingForFirstTime = true;
     private ArrayList<Category> categoryArrayList;
     private CategoryListAdapter categoryListAdapter;
+    private ArrayList<TrendingServices> trendingServicesArrayList;
+    private TrendingServiceListAdapter trendingServiceListAdapter;
     ListView loadMoreListView;
     Category category;
     private PreferenceListAdapter preferenceAdatper;
     private GridLayoutManager mLayoutManager;
-    private RecyclerView mRecyclerView;
+    private RecyclerView mRecyclerView, mRecyclerView1;
     private SearchView searchView;
     private Animation slide_in_left, slide_in_right, slide_out_left, slide_out_right;
     private View rootView;
@@ -99,6 +105,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
 
         categoryArrayList = new ArrayList<>();
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.listView_categories);
+        mRecyclerView1 = (RecyclerView) rootView.findViewById(R.id.listView_trends);
 
 //      create animations
         slide_in_left = AnimationUtils.loadAnimation(getActivity(), R.anim.in_from_left);
@@ -128,6 +135,10 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
             }
         });
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        LinearLayoutManager layoutManager= new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+
+        mRecyclerView1.setLayoutManager(layoutManager);
 
         searchView = rootView.findViewById(R.id.search_cat_list);
         searchView.setOnClickListener(new View.OnClickListener() {
@@ -282,7 +293,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                         // create dynamic image view and add them to ViewFlipper
                         setImageInFlipr(imgUrl.get(i));
                     }
-
+                    getTrendSerives();
                 } else if (res.equalsIgnoreCase("category")) {
                     JSONArray getData = response.getJSONArray("categories");
                     Gson gson = new Gson();
@@ -298,6 +309,15 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                     PreferenceStorage.saveRate(rootView.getContext(), "");
                     PreferenceStorage.savePurchaseStatus(rootView.getContext(), false);
                     getBannerImg();
+
+                }else if (res.equalsIgnoreCase("trend")) {
+                    JSONArray getData = response.getJSONArray("services");
+                    Gson gson = new Gson();
+                    Type listType = new TypeToken<ArrayList<TrendingServices>>() {
+                    }.getType();
+                    trendingServicesArrayList = (ArrayList<TrendingServices>) gson.fromJson(getData.toString(), listType);
+                    trendingServiceListAdapter = new TrendingServiceListAdapter(getActivity(), trendingServicesArrayList, HomeFragment.this);
+                    mRecyclerView1.setAdapter(trendingServiceListAdapter);
 
                 }
             } catch (JSONException e) {
@@ -363,6 +383,25 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
 
     }
 
+    @Override
+    public void onItemCslick(View view, int position) {
+        d(TAG, "onEvent list item click" + position);
+        TrendingServices category = null;
+//        if ((trendingServiceListAdapter != null) && (trendingServiceListAdapter.ismSearching())) {
+//            d(TAG, "while searching");
+//            int actualindex = trendingServiceListAdapter.getActualEventPos(position);
+//            d(TAG, "actual index" + actualindex);
+//            category = trendingServicesArrayList.get(actualindex);
+//        } else {
+//        }
+        category = trendingServicesArrayList.get(position);
+        intent = new Intent(getActivity(), ServiceDetailActivity.class);
+        intent.putExtra("cat", category);
+        intent.putExtra("page", "category");
+        startActivity(intent);
+
+    }
+
     private void setImageInFlipr(String imgUrl) {
         ImageView image = new ImageView(rootView.getContext());
         Picasso.get().load(imgUrl).into(image);
@@ -381,6 +420,21 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
 
 //        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.CLEAR_CART;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void getTrendSerives() {
+        res = "trend";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_TREND_SERIVES;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 

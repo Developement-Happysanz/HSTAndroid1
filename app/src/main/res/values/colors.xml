@@ -24,5 +24,8 @@
     <color name="green">#4CB748</color>
     <color name="on_hold">#ed1c24</color>
 
+    <color name="add_money_green">#00A14B</color>
+    <color name="add_money_red">#ED1C24</color>
+
 
 </resources>

@@ -94,12 +94,31 @@
             android:singleLine="true"
             android:textSize="14sp" />
 
+        <EditText
+            android:id="@+id/edtReferralCode"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="10dp"
+            android:drawablePadding="10dp"
+            android:layout_below="@+id/edtMobileNumber"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/helvetica"
+            android:paddingBottom="20dp"
+            android:paddingStart="10dp"
+            android:layout_marginEnd="40dp"
+            android:digits="0123456789"
+            android:hint="@string/referral"
+            android:maxLength="10"
+            android:singleLine="true"
+            android:textSize="14sp" />
+
         <Button
             android:id="@+id/sendcode"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_below="@+id/edtMobileNumber"
+            android:layout_below="@+id/edtReferralCode"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_round_color"

@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,6 +24,7 @@ import com.skilex.customer.bean.support.OngoingService;
 import com.skilex.customer.bean.support.ServiceHistory;
 import com.skilex.customer.bean.support.StoreTimeSlot;
 import com.skilex.customer.ccavenue.activity.InitialScreenActivity;
+import com.skilex.customer.ccavenue.activity.StatusActivity;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -64,12 +67,12 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
     String couponSlotId = "";
     String abc = "";
     String status = "";
+    private CheckBox useWallet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service_summary);
-        initVals();
         abc = getIntent().getStringExtra("service_page");
         if (SkilExValidator.checkNullString(abc) && abc.equalsIgnoreCase("ongoing")) {
             TextView a = findViewById(R.id.title);
@@ -82,6 +85,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
 
+        initVals();
         callGetServiceSummary();
     }
 
@@ -119,6 +123,19 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         shareInvoice.setOnClickListener(this);
         payBill = (Button) findViewById(R.id.pay);
         payBill.setOnClickListener(this);
+        useWallet = (CheckBox) findViewById(R.id.wallet_check);
+        useWallet.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                                 @Override
+                                                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                                                     if (isChecked) {
+                                                         payWithWallet();
+                                                     } else {
+                                                         unCheckWallet();
+                                                     }
+                                                 }
+                                             }
+        );
+        useWallet.setChecked(PreferenceStorage.getWalletStatus(this));
 
         startEndLayout = (LinearLayout) findViewById(R.id.start_end_layout);
         additionalServiceLayout = (LinearLayout) findViewById(R.id.additional_layout);
@@ -132,7 +149,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             public void onClick(View v) {
                 if (SkilExValidator.checkNullString(abc) && abc.equalsIgnoreCase("ongoing")) {
                     finish();
-                } else if (status.equalsIgnoreCase("Cancelled")){
+                } else if (status.equalsIgnoreCase("Cancelled")) {
                     finish();
                 } else {
                     cancelCouponAndExit();
@@ -247,6 +264,62 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         String url = SkilExConstants.BUILD_URL + SkilExConstants.REMOVE_COUPON;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
+
+
+    private void payWithWallet() {
+        res = "pay_with_wallet";
+        JSONObject jsonObject = new JSONObject();
+        String id = "";
+        id = PreferenceStorage.getUserId(this);
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.PAY_WALLET;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void paidUsingWallet() {
+        res = "paid_using_wallet";
+        JSONObject jsonObject = new JSONObject();
+        String id = "";
+        id = PreferenceStorage.getUserId(this);
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.PAID_USING_WALLET;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void unCheckWallet() {
+        res = "uncheck_wallet";
+        JSONObject jsonObject = new JSONObject();
+        String id = "";
+        id = PreferenceStorage.getUserId(this);
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+            jsonObject.put(SkilExConstants.SERVICE_ORDER_ID, serviceHistory.getservice_order_id());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.UNCHECK_WALLET;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
 
     private void cancelCouponAndExit() {
         res = "remove_coupon_exit";
@@ -424,6 +497,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                             cancelCoupon.setVisibility(View.VISIBLE);
                         }
                         payBill.setVisibility(View.VISIBLE);
+                        useWallet.setVisibility(View.VISIBLE);
                         proceedPay();
                     } else if (status.equalsIgnoreCase("Paid")) {
 //                        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -499,11 +573,46 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
 
                     } else {
                         JSONObject getData = response.getJSONObject("payment_details");
-                        total.setText(String.valueOf(Float.valueOf(getData.getString("payable_amount"))));
+                        Float a, b;
+                        a = Float.valueOf(getData.getInt("payable_amount"));
+                        b = Float.valueOf(getData.getInt("wallet_amount"));
+                        if (status.equalsIgnoreCase("Paid")) {
+                            total.setText(String.valueOf(a));
+                        } else {
+                            total.setText(String.valueOf(a - b));
+                        }
                         PreferenceStorage.saveOrderId(this, getData.getString("order_id"));
                         getCouponList();
                     }
 
+                }
+                if (res.equalsIgnoreCase("paid_using_wallet")) {
+                    PreferenceStorage.saveCoupon(getApplicationContext(), "");
+                    PreferenceStorage.saveCouponID(getApplicationContext(), "");
+                    String status = null;
+                    status = "Transaction Successful!";
+                    Intent intent = new Intent(this, StatusActivity.class);
+
+                    intent.putExtra("transStatus", status);
+                    intent.putExtra("page", "service_pay");
+                    startActivity(intent);
+                    finish();
+                }
+                if (res.equalsIgnoreCase("pay_with_wallet")) {
+//                    total.setText(String.valueOf(Float.valueOf(getData.getString("payable_amount"))));
+                    PreferenceStorage.saveWalletStatus(this, true);
+                    Intent i = new Intent(this, ServiceSummaryActivity.class);
+                    i.putExtra("serviceObj", serviceHistory);
+                    startActivity(i);
+                    finish();
+                }
+                if (res.equalsIgnoreCase("uncheck_wallet")) {
+//                    total.setText(String.valueOf(Float.valueOf(getData.getString("payable_amount"))));
+                    PreferenceStorage.saveWalletStatus(this, false);
+                    Intent i = new Intent(this, ServiceSummaryActivity.class);
+                    i.putExtra("serviceObj", serviceHistory);
+                    startActivity(i);
+                    finish();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -543,14 +652,18 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
             startActivity(i);
         }
         if (v == payBill) {
-            Intent i = new Intent(this, InitialScreenActivity.class);
-            PreferenceStorage.saveCoupon(this, "");
-            i.putExtra("advpay", total.getText().toString());
-            i.putExtra("page", "service_pay");
-            startActivity(i);
-            PreferenceStorage.saveCoupon(getApplicationContext(), "");
-            PreferenceStorage.saveCouponID(getApplicationContext(), "");
-            finish();
+            if (total.getText().toString().equalsIgnoreCase("0.0")) {
+                paidUsingWallet();
+            } else {
+                Intent i = new Intent(this, InitialScreenActivity.class);
+                PreferenceStorage.saveCoupon(this, "");
+                i.putExtra("advpay", total.getText().toString());
+                i.putExtra("page", "service_pay");
+                startActivity(i);
+                PreferenceStorage.saveCoupon(getApplicationContext(), "");
+                PreferenceStorage.saveCouponID(getApplicationContext(), "");
+                finish();
+            }
         }
         if (v == shareInvoice) {
 

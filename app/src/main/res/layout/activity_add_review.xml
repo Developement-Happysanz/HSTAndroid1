@@ -47,7 +47,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
         android:layout_below="@+id/toolbar">
 
         <RatingBar
@@ -56,6 +55,8 @@
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_alignStart="@id/edtComments"
+            android:layout_alignEnd="@id/edtComments"
             android:layout_marginTop="20dp"
             android:numStars="5"
             android:stepSize="1.0" />
@@ -75,11 +76,21 @@
             android:paddingEnd="10dp"
             android:textSize="16sp" />
 
+        <ListView
+            android:layout_width="match_parent"
+            android:id="@+id/listfedd"
+            android:layout_below="@id/edtComments"
+            android:layout_above="@id/btnSubmit"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:dividerHeight="0dp"/>
+
+
         <Button
             android:id="@+id/btnSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/edtComments"
+            android:layout_above="@+id/skip"
             android:layout_centerHorizontal="true"
             android:background="@drawable/button_round_color"
             android:paddingStart="40dp"
@@ -101,11 +112,11 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="@string/skip"
+            android:layout_alignParentBottom="true"
             android:textSize="16sp"
             android:layout_centerHorizontal="true"
             android:textAllCaps="false"
             android:fontFamily="@font/helvetica"
-            android:layout_below="@id/btnSubmit"
             android:textColor="@color/blue"
             android:textStyle="bold" />
 

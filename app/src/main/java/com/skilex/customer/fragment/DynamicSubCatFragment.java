@@ -291,6 +291,7 @@ public class DynamicSubCatFragment extends Fragment implements IServiceListener,
 
         Intent intent = new Intent(view.getContext(), ServiceDetailActivity.class);
         intent.putExtra("serviceObj", service);
+        intent.putExtra("page", "service");
         startActivity(intent);
     }
 

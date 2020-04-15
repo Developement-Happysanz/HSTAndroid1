@@ -113,6 +113,72 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/wallet_pay_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/toolbar"
+            android:layout_margin="40dp"
+            android:visibility="gone"
+            android:background="@drawable/shadow_round"
+            android:elevation="6dp"
+            android:gravity="center">
+
+            <RelativeLayout
+                android:id="@+id/wallet_disp_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/wallet_payment_icon"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_wallet_popupicon" />
+
+                <TextView
+                    android:id="@+id/wallet_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/wallet_payment_icon"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/amount"
+                    android:layout_centerHorizontal="true"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/wallet_amount_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/wallet_txt"
+                    android:layout_centerHorizontal="true"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/wallet_pay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/wallet_disp_layout"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:textAllCaps="false"
+                android:background="@drawable/button_round_color"
+                android:onClick="onClick"
+                android:text="@string/pay_button"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/serv_pay_layout"
             android:layout_width="match_parent"

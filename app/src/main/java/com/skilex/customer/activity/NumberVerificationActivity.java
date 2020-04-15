@@ -214,6 +214,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
                         jsonObject.put(SkilExConstants.DEVICE_TOKEN, PreferenceStorage.getGCM(getApplicationContext()));
                         jsonObject.put(SkilExConstants.MOBILE_TYPE, "1");
                         jsonObject.put(SkilExConstants.UNIQUE_NUMBER, PreferenceStorage.getIMEI(getApplicationContext()));
+                        jsonObject.put(SkilExConstants.REFERRAL_CODE, PreferenceStorage.getReferralNo(getApplicationContext()));
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -251,10 +252,10 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
         if ((response != null)) {
             try {
                 String status = response.getString("status");
-                String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+//                String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
                 String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
                 String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
-                d(TAG, "status val" + status + "msg" + msg);
+                d(TAG, "status val" + status + "msg" + msg_en);
 
                 if ((status != null)) {
                     if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
@@ -315,13 +316,16 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 
 //                    PreferenceStorage.saveUserId(getApplicationContext(), userId);
 //                    PreferenceStorage.saveCheckFirstTimeProfile(getApplicationContext(), "new");
+                    setSda();
+
+
+                } else if (checkVerify.equalsIgnoreCase("set_lang")) {
                     Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
 //                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 ////                    homeIntent.putExtra("profile_state", "new");
                     startActivity(homeIntent);
 //                    this.finish();
                     finish();
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -392,6 +396,27 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 
         progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.USER_LOGIN;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
+    private void setSda() {
+        checkVerify = "set_lang";
+        String langID = "";
+        if (PreferenceStorage.getLang(getApplicationContext()).equalsIgnoreCase("eng")) {
+            langID = "2";
+        } else {
+            langID = "1";
+        }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(getApplicationContext()));
+            jsonObject.put(SkilExConstants.LANG_ID, langID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.SET_USER_LANG;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 

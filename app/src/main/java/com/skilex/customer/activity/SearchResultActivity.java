@@ -169,6 +169,7 @@ public class SearchResultActivity extends AppCompatActivity implements IServiceL
 
         Intent intent = new Intent(this, ServiceDetailActivity.class);
         intent.putExtra("serviceObj", service);
+        intent.putExtra("page", "service");
         startActivity(intent);
     }
 

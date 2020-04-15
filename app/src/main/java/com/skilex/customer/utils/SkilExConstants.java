@@ -26,6 +26,7 @@ public class SkilExConstants {
     //Payment Gateway
     public static final String API_ADVANCE_PAYMENT_URL = BASE_URL + JOINT_URL + "ccavenue_app/customer_advance.php";
     public static final String API_PAYMENT_URL = BASE_URL + JOINT_URL + "ccavenue_app/service_net_amount.php";
+    public static final String API_WALLET_URL = BASE_URL + JOINT_URL + "ccavenue_app/adding_money_to_wallet.php";
     public static final String API_RSA_URL = BASE_URL + JOINT_URL + "ccavenue_app/GetRSA.php";
 
 
@@ -34,6 +35,9 @@ public class SkilExConstants {
 
     //GUEST LOGIN URL
     public static final String GUEST_LOGIN = "guest_login/";
+
+    //GUEST LOGIN URL
+    public static final String SET_USER_LANG = "user_lang_update/";
 
     //NUMBER VRIFICATION URL
     public static final String MOBILE_VERIFICATION = "mobile_check/";
@@ -69,6 +73,15 @@ public class SkilExConstants {
     //SERVICE DETAIL URL
     public static final String GET_SERVICE_DETAIL = "service_details/";
 
+    //SERVICE DETAIL URL
+    public static final String GET_REFERRAL_DETAIL = "user_points_referral_code/";
+
+    //SERVICE DETAIL URL
+    public static final String GET_WALLET_DETAIL = "check_wallet_balance_and_history/";
+
+    //SERVICE DETAIL URL
+    public static final String GET_CLAIM = "check_to_claim_points/";
+
     //ADD SERVICE CART URL
     public static final String ADD_TO_CART = "add_service_to_cart/";
 
@@ -83,6 +96,9 @@ public class SkilExConstants {
 
     //CLEAR CART URL
     public static final String CLEAR_CART = "clear_cart/";
+
+    //CLEAR CART URL
+    public static final String GET_TREND_SERIVES = "top_trending_services/";
 
     //SERVICE TIME SLOT URL
     public static final String GET_TIME_SLOT = "view_time_slot/";
@@ -135,6 +151,15 @@ public class SkilExConstants {
     //SERVICE COUPON URL
     public static final String COUPON_LIST = "service_coupon_list/";
 
+    //APPLY WALLET URL
+    public static final String PAY_WALLET = "pay_using_wallet/";
+
+    //APPLY WALLET URL
+    public static final String PAID_USING_WALLET = "paid_on_wallet/";
+
+    //REMOVE WALLET URL
+    public static final String UNCHECK_WALLET = "uncheck_from_wallet/";
+
     //APPLY COUPON URL
     public static final String APPLY_COUPON = "apply_coupon_to_order/";
 
@@ -143,6 +168,12 @@ public class SkilExConstants {
 
     //APPLY COUPON URL
     public static final String PROCEED_TO_PAY = "proceed_for_payment/";
+
+    //APPLY COUPON URL
+    public static final String FEEDBACK_QUESTION = "customer_feedback_question/";
+
+    //APPLY COUPON URL
+    public static final String FEEDBACK_ANSWER = "customer_feedback_answer/";
 
 
     //APPLY COUPON URL
@@ -202,6 +233,7 @@ public class SkilExConstants {
 
     // Login Parameters
     public static String PHONE_NUMBER = "phone_no";
+    public static String REFERRAL_CODE = "referral_code";
     public static String OTP = "otp";
     public static String DEVICE_TOKEN = "device_token";
     public static String MOBILE_TYPE = "mobile_type";
@@ -209,6 +241,7 @@ public class SkilExConstants {
     public static String UNIQUE_NUMBER = "unique_number";
     public static String MOBILE_KEY = "mobile_key";
     public static String USER_STATUS = "user_stat";
+    public static String LANG_ID = "lang_id";
 
     // Category Parameters
     public static String MAIN_CATEGORY_ID = "main_cat_id";
@@ -226,7 +259,10 @@ public class SkilExConstants {
     public static String SERVICE_COUNT = "service_count";
     public static String SERVICE_DATE = "service_date";
     public static String SERVICE_STATUS = "sat";
+    public static String WALLET_STATUS = "wall";
     public static String CART_STATUS = "car_sat";
+    public static String FEEDBAC_ID = "feedback_id";
+    public static String FEEDBAC_tEXT = "feedback_text";
 
     // Service Parameters
     public static String CART_ID = "cart_id";

@@ -21,7 +21,9 @@ import com.skilex.customer.R;
 import com.skilex.customer.activity.AboutUsActivity;
 import com.skilex.customer.activity.MainActivity;
 import com.skilex.customer.activity.ProfileActivity;
+import com.skilex.customer.activity.ReferAndEarnActivity;
 import com.skilex.customer.activity.SplashScreenActivity;
+import com.skilex.customer.activity.WalletActivity;
 import com.skilex.customer.customview.CircleImageView;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
@@ -45,7 +47,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
     private ProgressDialogHelper progressDialogHelper;
     private View rootView;
     private CircleImageView profileImage;
-    private LinearLayout profile, about, share, logout, rate;
+    private LinearLayout profile, about, refer, share, logout, rate, wallet;
     TextView userNmae,number, mail;
     ImageView lan;
 
@@ -78,6 +80,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
         profile.setOnClickListener(this);
         about = rootView.findViewById(R.id.layout_about);
         about.setOnClickListener(this);
+        refer = rootView.findViewById(R.id.layout_refer);
+        refer.setOnClickListener(this);
+        wallet = rootView.findViewById(R.id.layout_wallet);
+        wallet.setOnClickListener(this);
         share = rootView.findViewById(R.id.layout_share);
         share.setOnClickListener(this);
         rate = rootView.findViewById(R.id.layout_rate);
@@ -122,6 +128,14 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
         }
         if (v == about) {
                 Intent homeIntent = new Intent(getActivity(), AboutUsActivity.class);
+                startActivity(homeIntent);
+        }
+        if (v == refer) {
+                Intent homeIntent = new Intent(getActivity(), ReferAndEarnActivity.class);
+                startActivity(homeIntent);
+        }
+        if (v == wallet) {
+                Intent homeIntent = new Intent(getActivity(), WalletActivity.class);
                 startActivity(homeIntent);
         }
         if (v == share) {
