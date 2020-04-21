@@ -55,8 +55,6 @@
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_alignStart="@id/edtComments"
-            android:layout_alignEnd="@id/edtComments"
             android:layout_marginTop="20dp"
             android:numStars="5"
             android:stepSize="1.0" />
@@ -76,14 +74,29 @@
             android:paddingEnd="10dp"
             android:textSize="16sp" />
 
-        <ListView
+<!--        <ListView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:id="@+id/listfedd"-->
+<!--            android:layout_below="@id/edtComments"-->
+<!--            android:layout_above="@id/btnSubmit"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="10dp"-->
+<!--            android:dividerHeight="0dp"/>-->
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:id="@+id/listfedd"
             android:layout_below="@id/edtComments"
             android:layout_above="@id/btnSubmit"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:dividerHeight="0dp"/>
+            android:layout_margin="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/listfedd"
+                android:orientation="vertical"/>
+
+        </ScrollView>
 
 
         <Button

@@ -105,30 +105,11 @@ public class FeebackListAdapter extends BaseAdapter implements IServiceListener,
 
             holder = new ViewHolder();
             holder.txtCatName = (TextView) convertView.findViewById(R.id.feedback_question);
-            if (PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
-                holder.txtCatName.setText(services.get(position).getfeedback_question());
-            } else {
-                holder.txtCatName.setText(services.get(position).getfeedback_question());
-            }
+
             holder.yess = (RadioButton) convertView.findViewById(R.id.rad_yes);
             holder.noo = (RadioButton) convertView.findViewById(R.id.rad_no);
             holder.grp = (RadioGroup) convertView.findViewById(R.id.rad_group);
-            holder.yess.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (v == holder.yess) {
-                        onRadioButtonClicked(holder.yess);
-                    }
-                }
-            });
-            holder.noo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (v == holder.noo) {
-                        onRadioButtonClicked(holder.noo);
-                    }
-                }
-            });
+
 
 //            holder.imgCat.setImageDrawable(subCategories.get(position).ge());
 //            holder.txtStatus = (TextView) convertView.findViewById(R.id.txt_mobilizer_status);
@@ -137,32 +118,32 @@ public class FeebackListAdapter extends BaseAdapter implements IServiceListener,
         } else {
             holder = (FeebackListAdapter.ViewHolder) convertView.getTag();
             holder.txtCatName = (TextView) convertView.findViewById(R.id.feedback_question);
-            if (PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
-                holder.txtCatName.setText(services.get(position).getfeedback_question());
-            } else {
-                holder.txtCatName.setText(services.get(position).getfeedback_question());
-            }
             holder.yess = (RadioButton) convertView.findViewById(R.id.rad_yes);
             holder.noo = (RadioButton) convertView.findViewById(R.id.rad_no);
             holder.grp = (RadioGroup) convertView.findViewById(R.id.rad_group);
-            holder.yess.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (v == holder.yess) {
-                        onRadioButtonClicked(holder.yess);
-                    }
-                }
-            });
-            holder.noo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (v == holder.noo) {
-                        onRadioButtonClicked(holder.noo);
-                    }
-                }
-            });
-        }
 
+        }
+        if (PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+            holder.txtCatName.setText(services.get(position).getfeedback_question());
+        } else {
+            holder.txtCatName.setText(services.get(position).getfeedback_question());
+        }
+        holder.yess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == holder.yess) {
+                    onRadioButtonClicked(holder.yess);
+                }
+            }
+        });
+        holder.noo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v == holder.noo) {
+                    onRadioButtonClicked(holder.noo);
+                }
+            }
+        });
         if (mSearching) {
             position = mValidSearchIndices.get(position);
 
