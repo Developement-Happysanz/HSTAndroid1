@@ -34,13 +34,27 @@
     <!--User Data-->
 
     <string name="mobile_number">Mobile Number</string>
+    <string name="agree">I, agree to the </string>
+    <string name="terms_and_conditions"> Terms and Conditions </string>
+    <string name="skilex_service"> of SkilEx services.</string>
     <string name="referral">Referral Code</string>
+    <string name="refer_friends">Refer Friends</string>
+    <string name="wallet_add_money">Proceed to add money</string>
+    <string name="enter_wallet_money">₹   Enter Amount</string>
+    <string name="proceed_add_money">Add money to</string>
+    <string name="total_points">Total Points Earned</string>
+    <string name="claim">Claim Reward</string>
+    <string name="earn_amt">Earn Amount</string>
+    <string name="earn_amt_line">Invite your friends to SkilEx and earn more money!</string>
     <string name="mobile_number_tag">: \n</string>
     <string name="user_name">Name</string>
     <string name="user_address">Address</string>
     <string name="user_mail">E-Mail</string>
     <string name="user_gender">Gender</string>
     <string name="select_user_gender">Select Gender</string>
+    <string name="submit">Submit</string>
+    <string name="trend">Trending Services</string>
+    <string name="trend_text">Take a look at some of the popular services from SkilEx!</string>
 
     <!--Google API key-->
 
@@ -101,7 +115,7 @@
     <string name="req_services">Requested Services</string>
     <string name="ong_services">Ongoing Services</string>
     <string name="refer_and_earn">Refer and Earn</string>
-    <string name="wallet_title">Wallet</string>
+    <string name="wallet_title">Skilex Wallet</string>
     <string name="use_wallet_amt">Use Wallet Amount</string>
     <string name="service_history">Service History</string>
     <string name="service_detail">Service Detail</string>
@@ -179,7 +193,7 @@
     <!--Profile Settings Page-->
 
     <string name="profile_title">Profile</string>
-    <string name="about">About</string>
+    <string name="about">About Skilex</string>
     <string name="share">Share app</string>
     <string name="rate_app">Rate app</string>
     <string name="logout">Logout</string>

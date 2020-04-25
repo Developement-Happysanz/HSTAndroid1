@@ -49,11 +49,19 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar">
 
+        <ImageView
+            android:id="@+id/rateimg"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="10dp"
+            android:layout_alignParentTop="true"
+            android:src="@drawable/ic_rate_review"/>
+
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/rateimg"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
             android:numStars="5"
@@ -111,7 +119,7 @@
             android:fontFamily="@font/helvetica"
             android:paddingEnd="40dp"
             android:textAllCaps="false"
-            android:text="Submit"
+            android:text="@string/submit"
             android:textColor="@color/white"
             android:textSize="16dp" />
 

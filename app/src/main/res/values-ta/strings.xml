@@ -57,7 +57,9 @@
 
 
     <!--General-->
-
+    <string name="agree">நான் ஸ்கில்எக்ஸ் சேவைகளின் </string>
+    <string name="terms_and_conditions">விதிமுறைகள் மற்றும் நிபந்தனைகளுக்கு </string>
+    <string name="skilex_service">உடன்படுகிறேன்.</string>
     <string name="confirm">உறுதி செய்க</string>
     <string name="progress_loading">உருவாக்கப்படுகிறது&#8230;</string>
     <string name="error_entry">அளித்த தகவல் தவறாக உள்ளது.</string>
@@ -75,6 +77,9 @@
     <string name="cart_clear">பெட்டகத்தில் உள்ள உருப்படிகள் அழிக்கப்படும். தொடர விரும்புகிறீர்களா?</string>
     <string name="language">மொழி</string>
     <string name="choose_language">உங்கள் விருப்பமான மொழியைத் தேர்வுசெய்க</string>
+    <string name="submit">சமர்ப்பிக்கவும்</string>
+    <string name="trend">பிரபலமான சேவைகள்</string>
+    <string name="trend_text">ஸ்கில்எக்சின் பிரபலமான சேவைகள் சில...</string>
 
 
     <!--OTP Page-->
@@ -126,10 +131,18 @@
     <string name="service_restarting_date">Service restarting date</string>
     <string name="service_approximate">கணிக்கப்பட்ட தொகை</string>
     <string name="cancel_service">சேவையை ரத்து செய்க</string>
-    <string name="referral">Referral Code</string>
-    <string name="refer_and_earn">Refer and Earn</string>
-    <string name="wallet_title">Wallet</string>
+    <string name="referral">பரிந்துரை குறியீடு</string>
+    <string name="refer_friends">பரிந்துரைக்கவும்</string>
+    <string name="total_points">ஈட்டிய மொத்த புள்ளிகள்</string>
+    <string name="claim">வெகுமானம் கோரவும்</string>
+    <string name="earn_amt">பணம் சம்பாதிக்கலாம்!</string>
+    <string name="earn_amt_line">ஸ்கில்எக்ஸை உங்கள் நண்பர்களுக்கு பரிந்துரைத்து பணம் சம்பாதியுங்கள்!</string>
+    <string name="refer_and_earn">பரிந்துரைத்து சம்பாதிக்கவும்</string>
+    <string name="wallet_title">ஸ்கில்எக்ஸ் வாலட்</string>
     <string name="use_wallet_amt">Use Wallet Amount</string>
+    <string name="wallet_add_money">தொடரவும்</string>
+    <string name="enter_wallet_money">தொகையை உள்ளிடவும்</string>
+    <string name="proceed_add_money">ஸ்கில்எக்ஸ் ஈ-வாலட்டில் பணத்தை சேருங்கள்</string>
 
 
     <!--Booking Page-->
@@ -185,7 +198,7 @@
 
     <!--Profile Settings Page-->
     <string name="profile_title">சுயவிவரம்</string>
-    <string name="about">விபரங்கள்</string>
+    <string name="about">ஸ்கில்எக்ஸை பற்றி</string>
     <string name="share">ஸ்கில்எக்ஸை பகிரவும்</string>
     <string name="rate_app">ஸ்கில்எக்ஸை மதிப்பீடு</string>
     <string name="logout">வெளியேறு</string>
