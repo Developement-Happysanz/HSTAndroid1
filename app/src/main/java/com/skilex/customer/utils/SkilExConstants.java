@@ -86,6 +86,9 @@ public class SkilExConstants {
     public static final String ADD_TO_CART = "add_service_to_cart/";
 
     //ADD SERVICE CART URL
+    public static final String SERVICE_REVIEW_LIST = "service_rating_and_reviews/";
+
+    //ADD SERVICE CART URL
     public static final String REMOVE_FROM_CART_IMMEDIATELY = "remove_service_from_cart/";
 
     //CART SUMMARY URL

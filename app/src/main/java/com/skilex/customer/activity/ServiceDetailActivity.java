@@ -6,16 +6,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.gson.Gson;
 import com.skilex.customer.R;
+import com.skilex.customer.adapter.ReviewAdapter;
 import com.skilex.customer.bean.support.Category;
+import com.skilex.customer.bean.support.Review;
+import com.skilex.customer.bean.support.ReviewList;
 import com.skilex.customer.bean.support.Service;
 import com.skilex.customer.bean.support.TrendingServices;
 import com.skilex.customer.helper.AlertDialogHelper;
@@ -32,6 +38,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import static android.util.Log.d;
 
 public class ServiceDetailActivity extends AppCompatActivity implements IServiceListener, View.OnClickListener, DialogClickListener {
@@ -47,6 +55,11 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
     Button bookNow;
     String res = "";
     String page = "";
+    int totalCount = 0;
+    protected boolean isLoadingForFirstTime = true;
+    ReviewAdapter reviewAdapter;
+    ArrayList<Review> reviewArrayList = new ArrayList<>();
+    ListView reviewsListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +79,16 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        reviewsListView = findViewById(R.id.listView_reviews);
+        reviewsListView.setOnTouchListener(new View.OnTouchListener() {
+            // Setting on Touch Listener for handling the touch inside ScrollView
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // Disallow the touch request for parent scroll on touch of child view
+                v.getParent().requestDisallowInterceptTouchEvent(true);
+                return false;
             }
         });
 
@@ -220,6 +243,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                     if (!url.isEmpty()) {
                         Picasso.get().load(url).into(serviceImage);
                     }
+                    loadReviewList();
                 } else if (res.equalsIgnoreCase("cart")) {
 
                     JSONObject data = response.getJSONObject("cart_total");
@@ -234,12 +258,30 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                     Intent newIntent = new Intent(this, BookingSummaryAcivity.class);
                     newIntent.putExtra("page", "serviceDetail");
                     startActivity(newIntent);
+                } else if (res.equalsIgnoreCase("reviewList")) {
+                    Gson gson = new Gson();
+                    ReviewList reviewList = gson.fromJson(response.toString(), ReviewList.class);
+                    if (reviewList.getReviews() != null && reviewList.getReviews().size() > 0) {
+                        totalCount = reviewList.getCount();
+                        isLoadingForFirstTime = false;
+                        updateListAdapter(reviewList.getReviews());
+                    }
                 }
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    protected void updateListAdapter(ArrayList<Review> reviewArrayList) {
+        this.reviewArrayList.addAll(reviewArrayList);
+//        if (bookingPlanAdapter == null) {
+        reviewAdapter = new ReviewAdapter(this, this.reviewArrayList);
+        reviewsListView.setAdapter(reviewAdapter);
+//        } else {
+        reviewAdapter.notifyDataSetChanged();
+//        }
     }
 
     @Override
@@ -295,4 +337,31 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
     public void onAlertNegativeClicked(int tag) {
 
     }
+
+    private void loadReviewList() {
+        res = "reviewList";
+        JSONObject jsonObject = new JSONObject();
+        String id = "";
+        if (page.equalsIgnoreCase("category")) {
+            trendingServices= (TrendingServices) getIntent().getSerializableExtra("cat");
+            id = trendingServices.getservice_id();
+        } else {
+            service = (Service) getIntent().getSerializableExtra("serviceObj");
+            id = service.getservice_id();
+        }
+
+        try {
+
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(this));
+            jsonObject.put(SkilExConstants.SERVICE_ID, id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.SERVICE_REVIEW_LIST;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
 }
