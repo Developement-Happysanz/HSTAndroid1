@@ -647,10 +647,30 @@
                         android:fontFamily="@font/helvetica" />
 
                     <TextView
-                        android:id="@+id/grand_total"
+                        android:id="@+id/travel_allowance"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/advance_charge"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/helvetica"
+                        android:text="@string/travel_allowance"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/travel_allowance_amount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/travel_allowance"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="20dp"
+                        android:fontFamily="@font/helvetica" />
+
+                    <TextView
+                        android:id="@+id/grand_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/travel_allowance"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:fontFamily="@font/helvetica"

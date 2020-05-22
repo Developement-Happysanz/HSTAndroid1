@@ -109,7 +109,7 @@ public class ServiceHelper {
 ////            jsonBody.put("company_id", "");
 ////            jsonBody.put("status", "");
 //
-//            JsonObjectRequest jsonOblect = new JsonObjectRequest(Request.Method.POST, baseURL, params, new Response.Listener<JSONObject>() {
+//            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, baseURL, params, new Response.Listener<JSONObject>() {
 //                @Override
 //                public void onResponse(JSONObject response) {
 //

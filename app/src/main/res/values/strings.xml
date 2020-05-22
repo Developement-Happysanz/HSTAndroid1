@@ -148,6 +148,7 @@
     <string name="booking_status">Booking status</string>
     <string name="service_charge">Service charge</string>
     <string name="additional_charge">Additional charge</string>
+    <string name="travel_allowance">Travel Allowance</string>
     <string name="additional_services">Addditional Services </string>
     <string name="grand_total">Total Service Cost</string>
     <string name="view_summary">View Summary</string>

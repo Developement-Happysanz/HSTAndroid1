@@ -152,6 +152,7 @@
     <string name="booking_status">முன்பதிவு நிலவரம்</string>
     <string name="service_charge">சேவை கட்டணம்</string>
     <string name="additional_charge">அட்வான்ஸ் தொகை</string>
+    <string name="travel_allowance">Travel Allowance</string>
     <string name="additional_services">கூடுதல் சேவைகள்</string>
     <string name="grand_total">மொத்த சேவைக்கான கட்டணம்</string>
     <string name="view_summary">நிறைவுச்சுருக்கம்</string>

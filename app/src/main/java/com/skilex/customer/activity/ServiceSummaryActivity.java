@@ -56,7 +56,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
     ImageView go;
 
     TextView catName, serviceName, custName, serviceDate, timeSlot, providerName, servicePersonName, couponAmt,
-            serviceStartTime, serviceEndTime, materials, serviceCharge, additionalCharge, subTotal, advanceAmt, advanceAmtLayout, total, viewBill,
+            serviceStartTime, serviceEndTime, materials, serviceCharge, additionalCharge, travelAllowance, subTotal, advanceAmt, advanceAmtLayout, total, viewBill,
             chooseCoupon, applyCoupon, cancelCoupon, couponContent;
     LinearLayout startEndLayout, additionalServiceLayout;
     RelativeLayout paymentLayout, materialsLayout, applyCouponLayout, couponAppliedLayout;
@@ -102,6 +102,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
         materials = (TextView) findViewById(R.id.material_list);
         serviceCharge = (TextView) findViewById(R.id.service_charge_amount);
         additionalCharge = (TextView) findViewById(R.id.additional_service_charge_amount);
+        travelAllowance = (TextView) findViewById(R.id.travel_allowance_amount);
         subTotal = (TextView) findViewById(R.id.sub_total_amount);
         advanceAmt = (TextView) findViewById(R.id.advance_charge_amount);
         advanceAmtLayout = (TextView) findViewById(R.id.advance_charge);
@@ -457,6 +458,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                             getData.getString("additional_service_amt").isEmpty()) {
 //                        additionalServiceLayout.setVisibility(View.GONE);
                     }
+                    travelAllowance.setText(getData.getString("travelling_allowance"));
                     subTotal.setText(getData.getString("total_service_cost"));
                     advanceAmt.setText(getData.getString("paid_advance_amt"));
                     couponAmt.setText(getData.getString("discount_amt"));
