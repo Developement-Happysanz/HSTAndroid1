@@ -77,6 +77,9 @@ public class SkilExConstants {
     public static final String GET_REFERRAL_DETAIL = "user_points_referral_code/";
 
     //SERVICE DETAIL URL
+    public static final String CLAIM_POINTS = "confirm_to_claim/";
+
+    //SERVICE DETAIL URL
     public static final String GET_WALLET_DETAIL = "check_wallet_balance_and_history/";
 
     //SERVICE DETAIL URL

@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,11 +38,12 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
     private ImageView serviceImage;
-    private TextView pointsEarned, referralCode, referFriend;
+    private TextView pointsEarned, referralCode, referFriend, pointsText;
     private ScrollView scrollView;
     Service service;
-    Button claimReward;
+    Button claimReward, done;
     String res = "";
+    private LinearLayout addMOneeey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +65,14 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
         referralCode = (TextView) findViewById(R.id.referral_code);
 
         claimReward = (Button) findViewById(R.id.claim);
+        done = (Button) findViewById(R.id.done);
         referFriend = (TextView) findViewById(R.id.btn_refer);
         claimReward.setOnClickListener(this);
+        done.setOnClickListener(this);
         referFriend.setOnClickListener(this);
-
+        addMOneeey = (LinearLayout) findViewById(R.id.alerere);
+        addMOneeey.setVisibility(View.GONE);
+        pointsText = (TextView) findViewById(R.id.teett);
         callGetSubCategoryService();
     }
 
@@ -118,14 +124,33 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
+    private void claimPoint() {
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        res = "claim";
+        JSONObject jsonObject = new JSONObject();
+
+        String id = "";
+        id = PreferenceStorage.getUserId(this);
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.CLAIM_POINTS;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
     private boolean validateResponse(JSONObject response) {
         boolean signInSuccess = false;
         if ((response != null)) {
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
-                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
-                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
+//                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+//                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -135,7 +160,7 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
                         d(TAG, "Show error dialog");
 
                         if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
                         } else {
                             AlertDialogHelper.showSimpleAlertDialog(this, msg);
                         }
@@ -162,7 +187,12 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
                     pointsEarned.setText(data.getString("points_to_claim"));
 
                 } else if (res.equalsIgnoreCase("cart")) {
-                    Toast.makeText(this, response.getString("msg"), Toast.LENGTH_SHORT).show();
+                    pointsText.setText("Your amount for points earned is " + response.getString("amount_to_be_claim"));
+                    addMOneeey.setVisibility(View.VISIBLE);
+                } else if (res.equalsIgnoreCase("claim")) {
+                    Toast.makeText(this, "Amount claimed and added to wallet", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(getIntent());
                 }
 
             } catch (JSONException e) {
@@ -206,6 +236,8 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
             i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Refer");
             i.putExtra(android.content.Intent.EXTRA_TEXT, referralCode.getText());
             startActivity(Intent.createChooser(i, "Share via"));
+        } if (v == done) {
+            claimPoint();
         }
     }
 
