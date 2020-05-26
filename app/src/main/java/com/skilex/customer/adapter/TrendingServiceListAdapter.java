@@ -142,9 +142,9 @@ public class TrendingServiceListAdapter extends RecyclerView.Adapter<TrendingSer
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
-            holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_name());
-        } else {
             holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_ta_name());
+        } else {
+            holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_name());
         }
 
         //imageLoader.displayImage(events.get(position).getEventLogo(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());

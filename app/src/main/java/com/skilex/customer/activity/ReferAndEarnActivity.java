@@ -149,8 +149,8 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
             try {
                 String status = response.getString("status");
                 String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
-//                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
-//                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
+                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
                 d(TAG, "status val" + status + "msg" + msg);
 
                 if ((status != null)) {
@@ -160,7 +160,7 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
                         d(TAG, "Show error dialog");
 
                         if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg);
+                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
                         } else {
                             AlertDialogHelper.showSimpleAlertDialog(this, msg);
                         }

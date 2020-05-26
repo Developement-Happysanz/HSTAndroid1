@@ -48,8 +48,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
     private View rootView;
     private CircleImageView profileImage;
     private LinearLayout profile, about, refer, share, logout, rate, wallet;
-    TextView userNmae,number, mail;
+    TextView userNmae, number, mail;
     ImageView lan;
+    private String checkVerify = "";
 
     public static ProfileFragment newInstance(int position) {
         ProfileFragment frag = new ProfileFragment();
@@ -102,7 +103,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
     }
 
     private void getUserInfo() {
-        String id ="";
+        checkVerify = "user_info";
+        String id = "";
         if (!PreferenceStorage.getUserId(rootView.getContext()).isEmpty()) {
             id = PreferenceStorage.getUserId(rootView.getContext());
         }
@@ -127,16 +129,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
             }
         }
         if (v == about) {
-                Intent homeIntent = new Intent(getActivity(), AboutUsActivity.class);
-                startActivity(homeIntent);
+            Intent homeIntent = new Intent(getActivity(), AboutUsActivity.class);
+            startActivity(homeIntent);
         }
         if (v == refer) {
-                Intent homeIntent = new Intent(getActivity(), ReferAndEarnActivity.class);
-                startActivity(homeIntent);
+            Intent homeIntent = new Intent(getActivity(), ReferAndEarnActivity.class);
+            startActivity(homeIntent);
         }
         if (v == wallet) {
-                Intent homeIntent = new Intent(getActivity(), WalletActivity.class);
-                startActivity(homeIntent);
+            Intent homeIntent = new Intent(getActivity(), WalletActivity.class);
+            startActivity(homeIntent);
         }
         if (v == share) {
             Intent i = new Intent(android.content.Intent.ACTION_SEND);
@@ -169,8 +171,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
                 PreferenceStorage.saveLang(rootView.getContext(), "eng");
                 Toast.makeText(rootView.getContext(), "App language is set to English", Toast.LENGTH_SHORT).show();
                 LocaleHelper.setLocale(rootView.getContext(), "en");
-                Intent i = new Intent(rootView.getContext(), MainActivity.class);
-                startActivity(i);
+                setSda();
             }
         });
         alertDialogBuilder.setNegativeButton("தமிழ்", new DialogInterface.OnClickListener() {
@@ -179,8 +180,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
                 PreferenceStorage.saveLang(rootView.getContext(), "tamil");
                 Toast.makeText(rootView.getContext(), "மொழி தமிழுக்கு அமைக்கப்பட்டுள்ளது", Toast.LENGTH_SHORT).show();
                 LocaleHelper.setLocale(rootView.getContext(), "ta");
-                Intent i = new Intent(rootView.getContext(), MainActivity.class);
-                startActivity(i);
+                setSda();
+
 //                rootView.finish();
             }
         });
@@ -233,6 +234,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
         getActivity().finish();
     }
 
+    private void setSda() {
+        checkVerify = "set_lang";
+        String langID = "";
+        if (PreferenceStorage.getLang(getActivity()).equalsIgnoreCase("eng")) {
+            langID = "2";
+        } else {
+            langID = "1";
+        }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.USER_MASTER_ID, PreferenceStorage.getUserId(getActivity()));
+            jsonObject.put(SkilExConstants.LANG_ID, langID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.SET_USER_LANG;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+    }
+
     private boolean validateResponse(JSONObject response) {
         boolean signInSuccess = false;
         if ((response != null)) {
@@ -271,15 +293,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
         progressDialogHelper.hideProgressDialog();
         if (validateResponse(response)) {
             try {
-                JSONObject data = response.getJSONObject("user_details");
-                String url = data.getString("profile_pic");
-                if (!url.isEmpty()) {
-                    Picasso.get().load(url).into(profileImage);
+                if (checkVerify.equalsIgnoreCase("user_info")) {
+                    JSONObject data = response.getJSONObject("user_details");
+                    String url = data.getString("profile_pic");
+                    if (!url.isEmpty()) {
+                        Picasso.get().load(url).into(profileImage);
+                    }
+                    userNmae.setText(data.getString("full_name"));
+                    number.setText(data.getString("phone_no"));
+                    mail.setText(data.getString("email"));
+                } else if (checkVerify.equalsIgnoreCase("set_lang")) {
+                    Intent homeIntent = new Intent(getActivity(), MainActivity.class);
+//                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+////                    homeIntent.putExtra("profile_state", "new");
+                    startActivity(homeIntent);
+//                    this.finish();
+                    getActivity().finish();
                 }
-                userNmae.setText(data.getString("full_name"));
-                number.setText(data.getString("phone_no"));
-                mail.setText(data.getString("email"));
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
