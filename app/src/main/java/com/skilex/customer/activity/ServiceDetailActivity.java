@@ -71,7 +71,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         progressDialogHelper = new ProgressDialogHelper(this);
         page = getIntent().getStringExtra("page");
         if (page.equalsIgnoreCase("category")) {
-            trendingServices= (TrendingServices) getIntent().getSerializableExtra("cat");
+            trendingServices = (TrendingServices) getIntent().getSerializableExtra("cat");
         } else {
             service = (Service) getIntent().getSerializableExtra("serviceObj");
         }
@@ -190,13 +190,13 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-
-                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
-                        } else {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                        if (!res.equalsIgnoreCase("reviewList")) {
+                            if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                                AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                            } else {
+                                AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                            }
                         }
-
                     } else {
                         signInSuccess = true;
                     }
@@ -343,7 +343,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
         JSONObject jsonObject = new JSONObject();
         String id = "";
         if (page.equalsIgnoreCase("category")) {
-            trendingServices= (TrendingServices) getIntent().getSerializableExtra("cat");
+            trendingServices = (TrendingServices) getIntent().getSerializableExtra("cat");
             id = trendingServices.getservice_id();
         } else {
             service = (Service) getIntent().getSerializableExtra("serviceObj");

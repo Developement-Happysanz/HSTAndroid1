@@ -64,8 +64,21 @@
             android:layout_below="@+id/rateimg"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
+            android:onClick="onClickFunc"
             android:numStars="5"
+            android:theme="@style/RatingBar"
             android:stepSize="1.0" />
+
+        <TextView
+            android:id="@+id/rating_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ratingBar"
+            android:layout_below="@id/ratingBar"
+            android:layout_alignRight="@id/ratingBar"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
 
         <EditText
             android:id="@+id/edtComments"

@@ -22,6 +22,13 @@ public class Review  implements Serializable {
     @SerializedName("customer_id")
     @Expose
     private String customer_id;
+    @SerializedName("profile_picture")
+    @Expose
+    private String profile_picture;
+
+    @SerializedName("review_date")
+    @Expose
+    private String review_date;
 
     public String getService_id() {
         return service_id;
@@ -61,5 +68,21 @@ public class Review  implements Serializable {
 
     public void setCustomer_id(String customer_id) {
         this.customer_id = customer_id;
+    }
+
+    public String getProfile_picture() {
+        return profile_picture;
+    }
+
+    public void setProfile_picture(String profile_picture) {
+        this.profile_picture = profile_picture;
+    }
+
+    public String getReview_date() {
+        return review_date;
+    }
+
+    public void setReview_date(String review_date) {
+        this.review_date = review_date;
     }
 }

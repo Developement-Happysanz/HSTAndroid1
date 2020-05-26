@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -15,6 +16,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.skilex.customer.R;
 import com.skilex.customer.app.AppController;
 import com.skilex.customer.bean.support.Review;
+import com.skilex.customer.customview.CircleImageView;
+import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
@@ -84,6 +87,8 @@ public class ReviewAdapter  extends BaseAdapter {
             holder.txtComments = convertView.findViewById(R.id.txtComments);
             holder.rtbRating = convertView.findViewById(R.id.ratingBar);
             holder.txtUsernameDisp = convertView.findViewById(R.id.username_disp);
+            holder.ratingName = convertView.findViewById(R.id.rating_name);
+            holder.profileImage = convertView.findViewById(R.id.user_profile_img);
 
             convertView.setTag(holder);
         } else {
@@ -92,16 +97,34 @@ public class ReviewAdapter  extends BaseAdapter {
 
         Review review = reviews.get(position);
 
-        holder.txtComments.setText(reviews.get(position).getReview());
+        holder.txtComments.setText(reviews.get(position).getReview_date());
         holder.txtUsernameDisp.setText(reviews.get(position).getCustomer_name());
         holder.rtbRating.setRating(Integer.parseInt(reviews.get(position).getRating()));
+        switch (Integer.parseInt(reviews.get(position).getRating())) {
+            case 1: holder.ratingName.setText("Poor");
+            break;
+            case 2: holder.ratingName.setText("Average");
+            break;
+            case 3: holder.ratingName.setText("Good");
+            break;
+            case 4: holder.ratingName.setText("Very Good");
+            break;
+            case 5: holder.ratingName.setText("Excellent");
+            break;
+            default: holder.ratingName.setText("Not available");
+        }
+        String url = reviews.get(position).getProfile_picture();
+        if (!url.isEmpty()) {
+            Picasso.get().load(url).into(holder.profileImage);
+        }
 
         return convertView;
     }
 
     public class ViewHolder {
-        public TextView txtComments, txtUsernameDisp;
+        public TextView txtComments, txtUsernameDisp, ratingName;
         public RatingBar rtbRating;
+        private CircleImageView profileImage;
     }
 
     public void startSearch(String eventName) {

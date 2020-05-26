@@ -52,7 +52,7 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
     private String checkString;
     private String reviewId = "";
     private ImageView ivBack;
-    TextView skip;
+    TextView skip, ratingName;
     private ArrayList<Feedback> feedbackArrayList = new ArrayList<>();
     private FeebackListAdapter feebackListAdapter;
 //    private ListView feedList;
@@ -71,6 +71,7 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
         progressDialogHelper = new ProgressDialogHelper(this);
         rtbComments = findViewById(R.id.ratingBar);
         edtComments = findViewById(R.id.edtComments);
+        ratingName = findViewById(R.id.rating_name);
         btnSubmit = findViewById(R.id.btnSubmit);
         btnSubmit.setOnClickListener(this);
 
@@ -129,6 +130,21 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
+    public void onClickFunc(View view) {
+        switch (rtbComments.getNumStars()) {
+            case 1: ratingName.setText("Poor");
+                break;
+            case 2: ratingName.setText("Average");
+                break;
+            case 3: ratingName.setText("Good");
+                break;
+            case 4: ratingName.setText("Very Good");
+                break;
+            case 5: ratingName.setText("Excellent");
+                break;
+            default: ratingName.setText("Not available");
+        }
+    }
 
     private void getQues() {
 

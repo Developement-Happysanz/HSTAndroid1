@@ -8,6 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+
+        <com.skilex.customer.customview.CircleImageView
+            android:id="@+id/user_profile_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:src="@drawable/ic_user_profile_image" />
+
         <RatingBar
             android:id="@+id/ratingBar"
             style="@style/Base.Widget.AppCompat.RatingBar.Small"
@@ -17,7 +27,20 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="10dp"
             android:numStars="5"
-            android:stepSize="1" />
+            android:stepSize="1"
+            android:theme="@style/RatingBar" />
+
+        <TextView
+            android:id="@+id/rating_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ratingBar"
+            android:layout_below="@id/ratingBar"
+            android:layout_alignRight="@id/ratingBar"
+            android:gravity="center"
+            android:layout_toRightOf="@id/user_profile_img"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/username_disp"
@@ -25,6 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:layout_toRightOf="@id/user_profile_img"
             android:text="Username"
             android:textColor="@color/black"
             android:textSize="18sp"
@@ -34,12 +58,12 @@
             android:id="@+id/txtComments"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/username_disp"
             android:layout_below="@id/username_disp"
-            android:layout_marginBottom="10dp"
+            android:layout_alignStart="@id/username_disp"
             android:layout_marginTop="5dp"
-            android:textColor="@color/black"
+            android:layout_marginBottom="10dp"
             android:text="Review"
+            android:textColor="@color/black"
             android:textSize="14sp" />
 
     </RelativeLayout>
