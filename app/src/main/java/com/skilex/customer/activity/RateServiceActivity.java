@@ -70,6 +70,13 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
         rtbComments = findViewById(R.id.ratingBar);
+        rtbComments.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                int rateInt = (int) rating;
+                onClickFunc(rateInt);
+            }
+        });
         edtComments = findViewById(R.id.edtComments);
         ratingName = findViewById(R.id.rating_name);
         btnSubmit = findViewById(R.id.btnSubmit);
@@ -130,8 +137,8 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
-    public void onClickFunc(View view) {
-        switch (rtbComments.getNumStars()) {
+    public void onClickFunc(int rating) {
+        switch (rating) {
             case 1: ratingName.setText("Poor");
                 break;
             case 2: ratingName.setText("Average");

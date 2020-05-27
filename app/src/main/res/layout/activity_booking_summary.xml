@@ -149,6 +149,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="0.5"
+                    android:layout_marginEnd="20dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/helvetica"
+                    android:text="*General information: The Prices are exclusive of materials/spares required for the job and the same should be provided by the customer."
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:gravity="center"

@@ -234,7 +234,7 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
             Intent i = new Intent(android.content.Intent.ACTION_SEND);
             i.setType("text/plain");
             i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Refer");
-            i.putExtra(android.content.Intent.EXTRA_TEXT, referralCode.getText());
+            i.putExtra(android.content.Intent.EXTRA_TEXT, "https://bit.ly/2msvgwt \n" +referralCode.getText());
             startActivity(Intent.createChooser(i, "Share via"));
         } if (v == done) {
             claimPoint();

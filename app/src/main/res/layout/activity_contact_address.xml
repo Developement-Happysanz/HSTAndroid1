@@ -125,7 +125,7 @@
                     android:layout_marginRight="10dp"
                     android:inputType="number"
                     android:fontFamily="@font/helvetica"
-                    android:maxLength="10"
+                    android:maxLength="13"
                     android:hint="@string/mobile_number"
                     android:singleLine="true" />
 
@@ -181,6 +181,24 @@
                     android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="0.5"
+                    android:layout_marginEnd="20dp"
+                    android:textColor="@color/black"
+                    android:fontFamily="@font/helvetica"
+                    android:text="*Note: Any Specific details about the service or regarding material."
+                    android:textSize="14sp" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/book_now"

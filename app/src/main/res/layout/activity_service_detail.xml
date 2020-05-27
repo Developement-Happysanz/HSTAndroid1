@@ -257,6 +257,16 @@
                 android:descendantFocusability="blocksDescendants"
                 android:layout_alignParentBottom="true">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rating"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"/>
+
                 <ListView
                     android:id="@+id/listView_reviews"
                     android:layout_width="match_parent"

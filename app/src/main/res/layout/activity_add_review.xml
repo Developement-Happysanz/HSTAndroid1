@@ -44,116 +44,114 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/rateimg"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="10dp"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/ic_rate_review"/>
+            android:layout_height="wrap_content">
 
-        <RatingBar
-            android:id="@+id/ratingBar"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_below="@+id/rateimg"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
-            android:onClick="onClickFunc"
-            android:numStars="5"
-            android:theme="@style/RatingBar"
-            android:stepSize="1.0" />
+            <ImageView
+                android:id="@+id/rateimg"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/ic_rate_review" />
 
-        <TextView
-            android:id="@+id/rating_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/ratingBar"
-            android:layout_below="@id/ratingBar"
-            android:layout_alignRight="@id/ratingBar"
-            android:gravity="center"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_below="@+id/rateimg"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:theme="@style/RatingBar" />
 
-        <EditText
-            android:id="@+id/edtComments"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ratingBar"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="20dp"
-            android:fontFamily="@font/helvetica"
-            android:hint="@string/comment"
-            android:minHeight="50dp"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/rating_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ratingBar"
+                android:layout_alignLeft="@+id/ratingBar"
+                android:layout_alignRight="@id/ratingBar"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
-<!--        <ListView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:id="@+id/listfedd"-->
-<!--            android:layout_below="@id/edtComments"-->
-<!--            android:layout_above="@id/btnSubmit"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_margin="10dp"-->
-<!--            android:dividerHeight="0dp"/>-->
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_below="@id/edtComments"
-            android:layout_above="@id/btnSubmit"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
-
-            <LinearLayout
+            <EditText
+                android:id="@+id/edtComments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/ratingBar"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:fontFamily="@font/helvetica"
+                android:hint="@string/comment"
+                android:minHeight="50dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:textSize="16sp" />
+
+            <!--        <ListView-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:id="@+id/listfedd"-->
+            <!--            android:layout_below="@id/edtComments"-->
+            <!--            android:layout_above="@id/btnSubmit"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_margin="10dp"-->
+            <!--            android:dividerHeight="0dp"/>-->
+
+
+            <LinearLayout
                 android:id="@+id/listfedd"
-                android:orientation="vertical"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/edtComments"
+                android:layout_margin="20dp"
+                android:orientation="vertical" />
 
-        </ScrollView>
 
+            <Button
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/listfedd"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_round_color"
+                android:fontFamily="@font/helvetica"
+                android:paddingStart="40dp"
+                android:paddingEnd="40dp"
+                android:text="@string/submit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16dp" />
 
-        <Button
-            android:id="@+id/btnSubmit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/skip"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/button_round_color"
-            android:paddingStart="40dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/helvetica"
-            android:paddingEnd="40dp"
-            android:textAllCaps="false"
-            android:text="@string/submit"
-            android:textColor="@color/white"
-            android:textSize="16dp" />
+            <TextView
+                android:id="@+id/skip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/btnSubmit"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/helvetica"
+                android:padding="10dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="@string/skip"
+                android:textAllCaps="false"
+                android:textColor="@color/blue"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/skip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="@string/skip"
-            android:layout_alignParentBottom="true"
-            android:textSize="16sp"
-            android:layout_centerHorizontal="true"
-            android:textAllCaps="false"
-            android:fontFamily="@font/helvetica"
-            android:textColor="@color/blue"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 </LinearLayout>

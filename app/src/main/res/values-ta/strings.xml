@@ -209,6 +209,7 @@
     <string name="rating_title">சேவையை மதிப்பிடுங்கள்</string>
     <string name="rating_text">உங்கள் சேவையை மதிப்பிடுங்கள்</string>
     <string name="rate">மதிப்பீடு</string>
+    <string name="rating">மதிப்பிடுங்கள்</string>
 
     <!--History Page-->
     <!--<string name="service_charge">Service Charge</string>-->

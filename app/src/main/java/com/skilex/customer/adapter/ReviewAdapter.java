@@ -21,6 +21,7 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class ReviewAdapter  extends BaseAdapter {
 
@@ -37,7 +38,7 @@ public class ReviewAdapter  extends BaseAdapter {
 
         this.context = context;
         this.reviews = reviews;
-
+        Collections.reverse(reviews);
         transformation = new RoundedTransformationBuilder()
                 .cornerRadiusDp(5)
                 .oval(false)
@@ -96,11 +97,14 @@ public class ReviewAdapter  extends BaseAdapter {
         }
 
         Review review = reviews.get(position);
-
-        holder.txtComments.setText(reviews.get(position).getReview_date());
-        holder.txtUsernameDisp.setText(reviews.get(position).getCustomer_name());
-        holder.rtbRating.setRating(Integer.parseInt(reviews.get(position).getRating()));
-        switch (Integer.parseInt(reviews.get(position).getRating())) {
+        String url = review.getProfile_picture();
+//        if (!url.isEmpty()) {
+//            Picasso.get().load(url).error(R.drawable.ic_profile).into(holder.profileImage);
+//        }
+        holder.txtComments.setText(review.getReview_date());
+        holder.txtUsernameDisp.setText(review.getCustomer_name());
+        holder.rtbRating.setRating(Integer.parseInt(review.getRating()));
+        switch (Integer.parseInt(review.getRating())) {
             case 1: holder.ratingName.setText("Poor");
             break;
             case 2: holder.ratingName.setText("Average");
@@ -113,10 +117,7 @@ public class ReviewAdapter  extends BaseAdapter {
             break;
             default: holder.ratingName.setText("Not available");
         }
-        String url = reviews.get(position).getProfile_picture();
-        if (!url.isEmpty()) {
-            Picasso.get().load(url).into(holder.profileImage);
-        }
+
 
         return convertView;
     }

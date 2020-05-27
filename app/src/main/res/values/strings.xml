@@ -204,6 +204,7 @@
     <string name="rating_title">Rate Service</string>
     <string name="rating_text">Rate your service</string>
     <string name="rate">Rate</string>
+    <string name="rating">Reviews</string>
 
     <!--History Page-->
     <!--<string name="service_charge">Service Charge</string>-->
