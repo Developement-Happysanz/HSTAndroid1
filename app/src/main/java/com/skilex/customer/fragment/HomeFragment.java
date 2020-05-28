@@ -480,7 +480,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                 paramsImageView.setMargins(0, 50, 0, 0);
                 paramsImageView.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-                RelativeLayout.LayoutParams paramsTextView = new RelativeLayout.LayoutParams(200, ViewGroup.LayoutParams.WRAP_CONTENT);
+                RelativeLayout.LayoutParams paramsTextView = new RelativeLayout.LayoutParams(240, ViewGroup.LayoutParams.WRAP_CONTENT);
                 paramsTextView.setMargins(0, 10, 0, 10);
                 paramsTextView.addRule(RelativeLayout.BELOW, R.id.trend_img);
                 paramsTextView.addRule(RelativeLayout.CENTER_HORIZONTAL);
