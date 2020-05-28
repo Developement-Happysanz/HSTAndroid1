@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +14,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +42,7 @@ import com.skilex.customer.adapter.PreferenceListAdapter;
 import com.skilex.customer.adapter.TrendingServiceListAdapter;
 import com.skilex.customer.bean.support.Category;
 import com.skilex.customer.bean.support.TrendingServices;
+import com.skilex.customer.bean.support.TrendingServicesList;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -45,6 +51,7 @@ import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
+import com.skilex.customer.utils.SkilExValidator;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -56,7 +63,7 @@ import java.util.ArrayList;
 
 import static android.util.Log.d;
 
-public class HomeFragment extends Fragment implements IServiceListener, DialogClickListener, PreferenceListAdapter.OnItemClickListener , TrendingServiceListAdapter.OnItemClickListener {
+public class HomeFragment extends Fragment implements IServiceListener, DialogClickListener, PreferenceListAdapter.OnItemClickListener{
 
     private static final String TAG = HomeFragment.class.getName();
     Context context;
@@ -67,13 +74,14 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     protected boolean isLoadingForFirstTime = true;
     private ArrayList<Category> categoryArrayList;
     private CategoryListAdapter categoryListAdapter;
-    private ArrayList<TrendingServices> trendingServicesArrayList;
+    private ArrayList<TrendingServices> trendingArrayList = new ArrayList<>();
+    TrendingServicesList trendingServicesArrayList;
     private TrendingServiceListAdapter trendingServiceListAdapter;
     ListView loadMoreListView;
     Category category;
     private PreferenceListAdapter preferenceAdatper;
     private GridLayoutManager mLayoutManager;
-    private RecyclerView mRecyclerView, mRecyclerView1;
+    private RecyclerView mRecyclerView;
     private SearchView searchView;
     private Animation slide_in_left, slide_in_right, slide_out_left, slide_out_right;
     private View rootView;
@@ -82,6 +90,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private ArrayList<String> imgUrl = new ArrayList<>();
     private String id = "";
     private Intent intent;
+    private LinearLayout layout_all;
 
     public static HomeFragment newInstance(int position) {
         HomeFragment frag = new HomeFragment();
@@ -105,7 +114,8 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
 
         categoryArrayList = new ArrayList<>();
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.listView_categories);
-        mRecyclerView1 = (RecyclerView) rootView.findViewById(R.id.listView_trends);
+//        mRecyclerView1 = (RecyclerView) rootView.findViewById(R.id.listView_trends);
+        layout_all = (LinearLayout) rootView.findViewById(R.id.layout_all);
 
 //      create animations
         slide_in_left = AnimationUtils.loadAnimation(getActivity(), R.anim.in_from_left);
@@ -136,9 +146,9 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         });
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        LinearLayoutManager layoutManager= new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
 
-        mRecyclerView1.setLayoutManager(layoutManager);
+//        mRecyclerView1.setLayoutManager(layoutManager);
 
         searchView = rootView.findViewById(R.id.search_cat_list);
         searchView.setOnClickListener(new View.OnClickListener() {
@@ -176,7 +186,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         });
         PreferenceStorage.saveServiceCount(getActivity(), "");
         PreferenceStorage.saveRate(getActivity(), "");
-        loadMob();
+        getTrendSerives();
 
         return rootView;
     }
@@ -231,7 +241,6 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private void loadMob() {
         res = "category";
         JSONObject jsonObject = new JSONObject();
-        id = PreferenceStorage.getUserId(getActivity());
 
         try {
             jsonObject.put(SkilExConstants.KEY_USER_MASTER_ID, id);
@@ -241,7 +250,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
             e.printStackTrace();
         }
 
-        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+//        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
         String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_MAIN_CAT_LIST;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
@@ -293,7 +302,6 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                         // create dynamic image view and add them to ViewFlipper
                         setImageInFlipr(imgUrl.get(i));
                     }
-                    getTrendSerives();
                 } else if (res.equalsIgnoreCase("category")) {
                     JSONArray getData = response.getJSONArray("categories");
                     Gson gson = new Gson();
@@ -310,14 +318,32 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                     PreferenceStorage.savePurchaseStatus(rootView.getContext(), false);
                     getBannerImg();
 
-                }else if (res.equalsIgnoreCase("trend")) {
-                    JSONArray getData = response.getJSONArray("services");
+                } else if (res.equalsIgnoreCase("trend")) {
+//                    JSONArray getData = response.getJSONArray("services");
+//                    Gson gson = new Gson();
+//                    Type listType = new TypeToken<ArrayList<TrendingServices>>() {
+//                    }.getType();
+//                    trendingServicesArrayList = (ArrayList<TrendingServices>) gson.fromJson(getData.toString(), listType);
+//                    trendingServiceListAdapter = new TrendingServiceListAdapter(getActivity(), trendingServicesArrayList, HomeFragment.this);
+//                    mRecyclerView1.setAdapter(trendingServiceListAdapter);
+
                     Gson gson = new Gson();
-                    Type listType = new TypeToken<ArrayList<TrendingServices>>() {
-                    }.getType();
-                    trendingServicesArrayList = (ArrayList<TrendingServices>) gson.fromJson(getData.toString(), listType);
-                    trendingServiceListAdapter = new TrendingServiceListAdapter(getActivity(), trendingServicesArrayList, HomeFragment.this);
-                    mRecyclerView1.setAdapter(trendingServiceListAdapter);
+                    trendingServicesArrayList = gson.fromJson(response.toString(), TrendingServicesList.class);
+                    if (trendingServicesArrayList.getserviceArrayList() != null && trendingServicesArrayList.getserviceArrayList().size() > 0) {
+                        int totalCount = trendingServicesArrayList.getCount();
+//                    this.serviceHistoryArrayList.addAll(ongoingServiceList.getserviceArrayList());
+                        boolean isLoadingForFirstTime = false;
+//                        updateListAdapter(serviceHistoryList.getFeedbackArrayList());
+                        loadMembersList(trendingServicesArrayList.getserviceArrayList().size());
+                    } else {
+                        if (trendingArrayList != null) {
+                            trendingArrayList.clear();
+//                            updateListAdapter(serviceHistoryList.getFeedbackArrayList());
+                            loadMembersList(trendingServicesArrayList.getserviceArrayList().size());
+                        }
+                    }
+
+                    loadMob();
 
                 }
             } catch (JSONException e) {
@@ -383,24 +409,24 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
 
     }
 
-    @Override
-    public void onItemCslick(View view, int position) {
-        d(TAG, "onEvent list item click" + position);
-        TrendingServices category = null;
-//        if ((trendingServiceListAdapter != null) && (trendingServiceListAdapter.ismSearching())) {
-//            d(TAG, "while searching");
-//            int actualindex = trendingServiceListAdapter.getActualEventPos(position);
-//            d(TAG, "actual index" + actualindex);
-//            category = trendingServicesArrayList.get(actualindex);
-//        } else {
-//        }
-        category = trendingServicesArrayList.get(position);
-        intent = new Intent(getActivity(), ServiceDetailActivity.class);
-        intent.putExtra("cat", category);
-        intent.putExtra("page", "category");
-        startActivity(intent);
-
-    }
+//    @Override
+//    public void onItemCslick(View view, int position) {
+//        d(TAG, "onEvent list item click" + position);
+//        TrendingServices category = null;
+////        if ((trendingServiceListAdapter != null) && (trendingServiceListAdapter.ismSearching())) {
+////            d(TAG, "while searching");
+////            int actualindex = trendingServiceListAdapter.getActualEventPos(position);
+////            d(TAG, "actual index" + actualindex);
+////            category = trendingServicesArrayList.get(actualindex);
+////        } else {
+////        }
+//        category = trendingServicesArrayList.get(position);
+//        intent = new Intent(getActivity(), ServiceDetailActivity.class);
+//        intent.putExtra("cat", category);
+//        intent.putExtra("page", "category");
+//        startActivity(intent);
+//
+//    }
 
     private void setImageInFlipr(String imgUrl) {
         ImageView image = new ImageView(rootView.getContext());
@@ -426,6 +452,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private void getTrendSerives() {
         res = "trend";
         JSONObject jsonObject = new JSONObject();
+        id = PreferenceStorage.getUserId(getActivity());
         try {
             jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
 
@@ -437,5 +464,84 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_TREND_SERIVES;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
+
+    private void loadMembersList(int memberCount) {
+
+        try {
+
+            for (int c1 = 0; c1 < memberCount; c1++) {
+                final int aa = c1;
+                RelativeLayout cell = new RelativeLayout(getActivity());
+                cell.setLayoutParams(new RelativeLayout.LayoutParams(300, 300));
+                cell.setPadding(0, 0, 0, 0);
+                cell.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+
+                RelativeLayout.LayoutParams paramsImageView = new RelativeLayout.LayoutParams(150, 150);
+                paramsImageView.setMargins(0, 50, 0, 0);
+                paramsImageView.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+                RelativeLayout.LayoutParams paramsTextView = new RelativeLayout.LayoutParams(200, ViewGroup.LayoutParams.WRAP_CONTENT);
+                paramsTextView.setMargins(0, 10, 0, 10);
+                paramsTextView.addRule(RelativeLayout.BELOW, R.id.trend_img);
+                paramsTextView.addRule(RelativeLayout.CENTER_HORIZONTAL);
+
+                RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(4, ViewGroup.LayoutParams.MATCH_PARENT);
+                params2.setMargins(0, 80, 10, 80);
+                params2.addRule(RelativeLayout.ALIGN_PARENT_END);
+                params2.addRule(RelativeLayout.CENTER_VERTICAL);
+
+
+                TextView line1 = new TextView(getActivity());
+                line1.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                line1.setText(trendingServicesArrayList.getserviceArrayList().get(c1).getservice_name());
+
+
+                line1.setId(R.id.trend_name);
+                line1.requestFocusFromTouch();
+                line1.setGravity(Gravity.CENTER_HORIZONTAL);
+                line1.setTextSize(12.0f);
+                line1.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                line1.setLayoutParams(paramsTextView);
+
+                ImageView line2 = new ImageView(getActivity());
+                line2.setId(R.id.trend_img);
+                line2.setLayoutParams(paramsImageView);
+
+                if (SkilExValidator.checkNullString(trendingServicesArrayList.getserviceArrayList().get(c1).getservice_pic_url())) {
+                    Picasso.get().load(trendingServicesArrayList.getserviceArrayList().get(c1).getservice_pic_url()).into(line2);
+                } else {
+                    line2.setImageResource(R.drawable.ic_user_profile_image);
+                }
+                line2.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.button_circle_white));
+                line2.setPadding(20,20,20,20);
+
+                TextView line3 = new TextView(getActivity());
+                line3.setLayoutParams(params2);
+                line3.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+
+                cell.addView(line2);
+                cell.addView(line1);
+                cell.addView(line3);
+//                cell.addView(border);
+                cell.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        TrendingServices category = null;
+                        category = trendingServicesArrayList.getserviceArrayList().get(aa);
+                        intent = new Intent(getActivity(), ServiceDetailActivity.class);
+                        intent.putExtra("cat", category);
+                        intent.putExtra("page", "category");
+                        startActivity(intent);
+                    }
+                });
+                layout_all.addView(cell);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
 
 }

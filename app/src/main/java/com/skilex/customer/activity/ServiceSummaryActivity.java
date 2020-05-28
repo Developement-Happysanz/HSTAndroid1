@@ -410,10 +410,29 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
 
-                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        if (!res.equalsIgnoreCase("pay_with_wallet")) {
+                            if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                                AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                            } else {
+                                AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                            }
                         } else {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+
+                            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+                            alertDialogBuilder.setTitle("Error");
+                            if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                                alertDialogBuilder.setMessage(msg_ta);
+                            } else {
+                                alertDialogBuilder.setMessage(msg_en);
+                            }
+                            alertDialogBuilder.setPositiveButton(R.string.alert_button_ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface arg0, int arg1) {
+                                    useWallet.setChecked(false);
+                                }
+                            });
+
+                            alertDialogBuilder.show();
                         }
 
                     } else {

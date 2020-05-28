@@ -7,6 +7,15 @@
     <item name="feedback_questionn" type="id" />
     <item name="radio_yes" type="id" />
     <item name="radio_no" type="id" />
+    <item name="trend_name" type="id" />
+    <item name="trend_img" type="id" />
+
+    <!--   Clas List   -->
+    <item name="user_profile_img" type="id" />
+    <item name="username_disp" type="id" />
+    <item name="txtComments" type="id" />
+    <item name="ratingBar" type="id" />
+    <item name="rating_name" type="id" />
 
     <!--   Clas List   -->
     <item name="class_section_name" type="id" />

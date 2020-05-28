@@ -1,6 +1,7 @@
 package com.skilex.customer.adapter;
 
 import android.content.Context;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
@@ -74,7 +76,7 @@ public class TrendingServiceListAdapter extends RecyclerView.Adapter<TrendingSer
         // each data item is just a string in this case
         public ImageView mImageView, Selecttick;
         public CheckBox checkTick;
-        public TextView mPrefTextView;
+        public TextView mPrefTextView, mtrick;
         public RelativeLayout rlPref;
         public RelativeLayout slPref;
 
@@ -82,6 +84,7 @@ public class TrendingServiceListAdapter extends RecyclerView.Adapter<TrendingSer
             super(v);
             mImageView = (ImageView) v.findViewById(R.id.txt_preference_name);
             mPrefTextView = (TextView) v.findViewById(R.id.txt_pref_category_name);
+//            mtrick = (TextView) v.findViewById(R.id.trick);
             Selecttick = (ImageView) v.findViewById(R.id.pref_tick);
             if (viewType == 1) {
                 rlPref = (RelativeLayout) v.findViewById(R.id.rlPref);
@@ -153,7 +156,14 @@ public class TrendingServiceListAdapter extends RecyclerView.Adapter<TrendingSer
         } else {
             holder.mImageView.setImageResource(R.drawable.ic_user_profile_image);
         }
-
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(4, ViewGroup.LayoutParams.MATCH_PARENT);
+//        params.setMargins(0,0,0,0);
+//        params.addRule(RelativeLayout.ALIGN_PARENT_END);
+//        TextView line1 = new TextView(context);
+//        line1.setLayoutParams(new RelativeLayout.LayoutParams(4, ViewGroup.LayoutParams.MATCH_PARENT));
+//        line1.setLayoutParams(params);
+//        line1.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
+//        holder.rlPref.addView(line1);
     }
 
     @Override

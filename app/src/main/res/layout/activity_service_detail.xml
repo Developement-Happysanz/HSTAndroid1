@@ -267,15 +267,28 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"/>
 
-                <ListView
-                    android:id="@+id/listView_reviews"
+<!--                <ListView-->
+<!--                    android:id="@+id/listView_reviews"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_marginLeft="2dp"-->
+<!--                    android:layout_marginRight="2dp"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:clickable="false"-->
+<!--                    android:dividerHeight="2dp" />-->
+
+                <ScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="2dp"
-                    android:layout_marginTop="10dp"
-                    android:clickable="false"
-                    android:dividerHeight="2dp" />
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:id="@+id/listView_reviews"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical"/>
+
+                </ScrollView>
 
             </LinearLayout>
 
