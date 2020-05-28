@@ -51,58 +51,105 @@
     <!--tools:context=".activity.AboutUsActivity">-->
 
     <!--</WebView>-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/helvetica"
-        android:text="@string/about"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/helvetica"
-        android:gravity="left"
-        android:justificationMode="inter_word"
-        android:lineSpacingExtra="5dp"
-        android:text="@string/about_content"
-        android:textSize="16sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/helvetica"
+                android:text="@string/about"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/helvetica"
-        android:text="Skilex Multiservices Private Limited
-30/6, New Damu Nagar,
-Pappanaickenpalayam,
-Coimbatore-641037."
-        android:textSize="18sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/helvetica"
+                android:gravity="left"
+                android:justificationMode="inter_word"
+                android:lineSpacingExtra="5dp"
+                android:text="@string/about_content"
+                android:textSize="16sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/helvetica"
-        android:text="info@skilex.in"
-        android:textSize="18sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/black" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/helvetica"
-        android:text="+91 9843254040"
-        android:textSize="18sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="20dp"
+                android:text="For service related queries or general help please contact us"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@drawable/ic_mail"
+                android:drawablePadding="20dp"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center"
+                android:text="info@skilex.in"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@drawable/ic_phone"
+                android:drawablePadding="20dp"
+                android:fontFamily="@font/helvetica"
+                android:gravity="center"
+                android:text="+91 9843254040"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:drawableStart="@drawable/ic_location"
+                android:drawablePadding="20dp"
+                android:fontFamily="@font/helvetica"
+                android:gravity="bottom"
+                android:text="Skilex Multiservices Private Limited"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="1dp"
+                android:drawableStart="@drawable/ic_remove_black_24dp"
+                android:drawablePadding="20dp"
+                android:fontFamily="@font/helvetica"
+                android:lineSpacingExtra="5dp"
+                android:text="30/6, New Damu Nagar,\nPappanaickenpalayam,\nCoimbatore-641037."
+                android:textSize="16sp" />
+
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
