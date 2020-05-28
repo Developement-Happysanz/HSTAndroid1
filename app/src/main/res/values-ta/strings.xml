@@ -35,7 +35,8 @@
     <string name="mobile_number">தொலைபேசி எண்</string>
     <string name="mobile_number_tag">: \n</string>
     <string name="user_name">பெயர்</string>
-    <string name="user_address">முகவரி</string>
+    <string name="user_address">கதவு எண்</string>
+    <string name="user_address1">முகவரி</string>
     <string name="user_mail">மின்னஞ்சல் முகவரி</string>
     <string name="user_gender">பாலினம்</string>
     <string name="select_user_gender">தேர்ந்தெடுக்கவும்</string>

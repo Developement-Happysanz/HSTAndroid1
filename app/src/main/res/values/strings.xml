@@ -48,7 +48,8 @@
     <string name="earn_amt_line">Invite your friends to SkilEx and earn more money!</string>
     <string name="mobile_number_tag">: \n</string>
     <string name="user_name">Name</string>
-    <string name="user_address">Address</string>
+    <string name="user_address">Door No/Building Name/Street Name</string>
+    <string name="user_address1">Area/Locality</string>
     <string name="user_mail">E-Mail</string>
     <string name="user_gender">Gender</string>
     <string name="select_user_gender">Select Gender</string>

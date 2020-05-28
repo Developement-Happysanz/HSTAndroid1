@@ -90,6 +90,26 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_custaddress1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <EditText
+                    android:id="@+id/customer_address1"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:enabled="false"
+                    android:fontFamily="@font/helvetica"
+                    android:hint="@string/user_address1"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ti_custname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -123,9 +143,11 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:inputType="number"
+                    android:inputType="phone|textNoSuggestions"
+                    android:digits="0123456789"
                     android:fontFamily="@font/helvetica"
                     android:maxLength="13"
+                    android:longClickable="false"
                     android:hint="@string/mobile_number"
                     android:singleLine="true" />
 
