@@ -233,8 +233,8 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
         } if (v == referFriend) {
             Intent i = new Intent(android.content.Intent.ACTION_SEND);
             i.setType("text/plain");
-            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Refer");
-            i.putExtra(android.content.Intent.EXTRA_TEXT, "https://bit.ly/2msvgwt \n" +referralCode.getText());
+            i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Refer and Earn");
+            i.putExtra(android.content.Intent.EXTRA_TEXT, "Download SkilEx – The ultimate service app for all you home and office service needs. Enter my code "+ referralCode.getText() +" to earn 50 points worth ₹25 in your SkilEx wallet redeemed during service payment. Download our app now https://bit.ly/3c5Vr0h");
             startActivity(Intent.createChooser(i, "Share via"));
         } if (v == done) {
             claimPoint();
