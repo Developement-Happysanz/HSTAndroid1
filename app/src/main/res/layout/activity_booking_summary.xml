@@ -159,7 +159,7 @@
                     android:layout_marginEnd="20dp"
                     android:textColor="@color/black"
                     android:fontFamily="@font/helvetica"
-                    android:text="*General information: The Prices are exclusive of materials/spares required for the job and the same should be provided by the customer."
+                    android:text="*The Prices are exclusive of materials/spares required for the job and the same should be provided by the customer."
                     android:textSize="14sp" />
 
             </LinearLayout>
