@@ -106,7 +106,11 @@ public class ServiceHistoryListAdapter extends BaseAdapter {
             holder.imgStatus = (ImageView) convertView.findViewById(R.id.status_image);
             holder.relativeLayout = (RelativeLayout) convertView.findViewById(R.id.rl_hist);
             if(services.get(position).getorder_status().equalsIgnoreCase("Paid")) {
-                holder.txtStatus.setText(services.get(position).getorder_status());
+                if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+                    holder.txtStatus.setText("செலுத்தப்பட்டது");
+                } else {
+                    holder.txtStatus.setText(services.get(position).getorder_status());
+                }
                 holder.imgStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.button_circle_completed));
                 holder.imgStatus.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_completed));
                 holder.rtbRating.setVisibility(View.VISIBLE);
@@ -115,14 +119,23 @@ public class ServiceHistoryListAdapter extends BaseAdapter {
                     holder.relativeLayout.setForeground(ContextCompat.getDrawable(context, R.drawable.transparent_round));
                 }
             } else if(services.get(position).getorder_status().equalsIgnoreCase("Cancelled")) {
-                holder.txtStatus.setText(services.get(position).getorder_status());
+                if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+                    holder.txtStatus.setText("ரத்து செய்யப்பட்டது");
+                } else {
+                    holder.txtStatus.setText(services.get(position).getorder_status());
+                }
+
                 holder.imgStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.button_circle_failed));
                 holder.imgStatus.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_cancel_service));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     holder.relativeLayout.setForeground(ContextCompat.getDrawable(context, R.drawable.transparent_round));
                 }
             } else if(services.get(position).getorder_status().equalsIgnoreCase("Completed")) {
-                holder.txtStatus.setText(services.get(position).getorder_status());
+                if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+                    holder.txtStatus.setText("வேலை முடிந்தது");
+                } else {
+                    holder.txtStatus.setText(services.get(position).getorder_status());
+                }
                 holder.imgStatus.setBackground(ContextCompat.getDrawable(context, R.drawable.button_requested_services_filled));
                 holder.imgStatus.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_requested));
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

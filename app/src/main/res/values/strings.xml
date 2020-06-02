@@ -45,6 +45,7 @@
     <string name="enter_wallet_money">₹   Enter Amount</string>
     <string name="proceed_add_money">Add money to</string>
     <string name="total_points">Total Points Earned</string>
+    <string name="popular_services">Most popular services from Skilex</string>
     <string name="claim">Claim Reward</string>
     <string name="earn_amt">Earn Amount</string>
     <string name="earn_amt_line">Invite your friends to SkilEx and earn more money!</string>
@@ -152,7 +153,8 @@
     <string name="service_charge">Service charge</string>
     <string name="additional_charge">Additional charge</string>
     <string name="travel_allowance">Travel Allowance</string>
-    <string name="additional_services">Addditional Services </string>
+    <string name="additional_services">Additional Services</string>
+    <string name="materials_used">Materials Used</string>
     <string name="book_terms_content">*Any Specific details about the service or regarding material.</string>
     <string name="pay_terms_content">*The Prices are exclusive of materials/spares required for the job and the same should be provided by the customer.</string>
     <string name="grand_total">Total Service Cost</string>
