@@ -431,6 +431,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private void setImageInFlipr(String imgUrl) {
         ImageView image = new ImageView(rootView.getContext());
         Picasso.get().load(imgUrl).into(image);
+        image.setScaleType(ImageView.ScaleType.FIT_XY);
         viewFlipper.addView(image);
     }
 

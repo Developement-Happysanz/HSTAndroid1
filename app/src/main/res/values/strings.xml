@@ -35,6 +35,8 @@
 
     <string name="mobile_number">Mobile Number</string>
     <string name="agree">I, agree to the </string>
+    <string name="agree_alert">Agree to the terms to continue</string>
+    <string name="all_cancel">All orders cancelled</string>
     <string name="terms_and_conditions"> Terms and Conditions </string>
     <string name="skilex_service"> of SkilEx services.</string>
     <string name="referral">Referral Code</string>
@@ -151,6 +153,8 @@
     <string name="additional_charge">Additional charge</string>
     <string name="travel_allowance">Travel Allowance</string>
     <string name="additional_services">Addditional Services </string>
+    <string name="book_terms_content">*Any Specific details about the service or regarding material.</string>
+    <string name="pay_terms_content">*The Prices are exclusive of materials/spares required for the job and the same should be provided by the customer.</string>
     <string name="grand_total">Total Service Cost</string>
     <string name="view_summary">View Summary</string>
     <string name="service_summary">Service Summary</string>

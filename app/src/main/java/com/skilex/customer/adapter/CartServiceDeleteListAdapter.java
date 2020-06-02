@@ -147,9 +147,9 @@ public class CartServiceDeleteListAdapter extends RecyclerView.Adapter<CartServi
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         if (PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
-            holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_ta_name());
+            holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_ta_name() + " - ₹" +categoryArrayList.get(position).getRate_card());
         } else {
-            holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_name());
+            holder.mPrefTextView.setText(categoryArrayList.get(position).getservice_name() + " - ₹" +categoryArrayList.get(position).getRate_card());
         }
 
         //imageLoader.displayImage(events.get(position).getEventLogo(), holder.imageView, AppController.getInstance().getLogoDisplayOptions());

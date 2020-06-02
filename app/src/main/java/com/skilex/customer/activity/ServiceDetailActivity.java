@@ -404,15 +404,15 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                 paramsTextViewReview.addRule(RelativeLayout.BELOW, R.id.username_disp);
 
                 RelativeLayout.LayoutParams paramsRatingBar = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                paramsRatingBar.setMargins(0, 0, 10, 0);
+                paramsRatingBar.setMargins(0, 0, 10, 15);
                 paramsRatingBar.addRule(RelativeLayout.ALIGN_PARENT_END);
-                paramsRatingBar.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.username_disp);
+                paramsRatingBar.addRule(RelativeLayout.ALIGN_BOTTOM, R.id.user_profile_img);
 
                 RelativeLayout.LayoutParams paramsTextViewRatingName = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 paramsTextViewRatingName.setMargins(0, 10, 0, 10);
                 paramsTextViewRatingName.addRule(RelativeLayout.ALIGN_LEFT, R.id.ratingBar);
                 paramsTextViewRatingName.addRule(RelativeLayout.ALIGN_RIGHT, R.id.ratingBar);
-                paramsTextViewRatingName.addRule(RelativeLayout.BELOW, R.id.ratingBar);
+                paramsTextViewRatingName.addRule(RelativeLayout.ABOVE, R.id.ratingBar);
 
 
                 TextView txtUserName = new TextView(this);
@@ -459,7 +459,7 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                 rateName.setId(R.id.rating_name);
                 rateName.requestFocusFromTouch();
                 rateName.setLayoutParams(paramsTextViewRatingName);
-                rateName.setTextSize(14.0f);
+                rateName.setTextSize(12.0f);
                 rateName.setGravity(Gravity.CENTER);
                 rateName.setTextColor(ContextCompat.getColor(this, R.color.black));
                 switch (Integer.parseInt(reviewList.getReviews().get(c1).getRating())) {
@@ -469,9 +469,9 @@ public class ServiceDetailActivity extends AppCompatActivity implements IService
                         break;
                     case 3: rateName.setText("Good");
                         break;
-                    case 4: rateName.setText("Very Good");
+                    case 4: rateName.setText("Very Good!");
                         break;
-                    case 5: rateName.setText("Excellent");
+                    case 5: rateName.setText("Excellent!");
                         break;
                     default: rateName.setText("Not available");
                 }
