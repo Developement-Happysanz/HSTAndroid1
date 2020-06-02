@@ -87,7 +87,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     private ProgressDialogHelper progressDialogHelper;
     Geocoder geocoder;
     private List<Address> addresses;
-    EditText customerAddress, customerName, customerNumber, serviceTimeSlot, serviceDate, customerNotes;
+    EditText customerAddress, customerAreaInfo, customerName, customerNumber, serviceTimeSlot, serviceDate, customerNotes;
     Button bookNow;
     final Calendar myCalendar = Calendar.getInstance();
     private String res = "";
@@ -153,6 +153,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 
     private void initializeThings() {
         customerAddress = (EditText) findViewById(R.id.customer_address);
+        customerAreaInfo = (EditText) findViewById(R.id.customer_address1);
         customerName = (EditText) findViewById(R.id.customer_name);
         customerNumber = (EditText) findViewById(R.id.customer_phone);
         serviceDate = (EditText) findViewById(R.id.date);
@@ -384,6 +385,8 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 
                     String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                     customerAddress.setText(address);
+                    String area = addresses.get(0).getSubLocality();
+                    customerAreaInfo.setText(area);
                 }
 
 //                String city = addresses.get(0).getLocality();
@@ -605,11 +608,11 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             jsonObject.put(SkilExConstants.CONTACT_PERSON, customerName.getText().toString());
             jsonObject.put(SkilExConstants.CONTACT_PERSON_NUMBER, customerNumber.getText().toString());
             jsonObject.put(SkilExConstants.SERVICE_LATLNG, latLng);
-            if (addresses.isEmpty()) {
-                jsonObject.put(SkilExConstants.SERVICE_LOCATION, "");
-            } else {
-                jsonObject.put(SkilExConstants.SERVICE_LOCATION, addresses.get(0).getSubLocality());
-            }
+//            if (addresses.isEmpty()) {
+//                jsonObject.put(SkilExConstants.SERVICE_LOCATION, "");
+//            } else {
+            jsonObject.put(SkilExConstants.SERVICE_LOCATION, customerAreaInfo.getText().toString());
+//            }
             jsonObject.put(SkilExConstants.SERVICE_ADDRESS, customerAddress.getText().toString());
             jsonObject.put(SkilExConstants.ORDER_DATE, newDate);
             jsonObject.put(SkilExConstants.ORDER_TIMESLOT, timeSlotId);
@@ -642,6 +645,11 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         if (!SkilExValidator.checkNullString(this.customerAddress.getText().toString().trim())) {
             customerAddress.setError(getString(R.string.empty_entry));
             requestFocus(customerAddress);
+            return false;
+        }
+        if (!SkilExValidator.checkNullString(this.customerAreaInfo.getText().toString().trim())) {
+            customerAreaInfo.setError(getString(R.string.empty_entry));
+            requestFocus(customerAreaInfo);
             return false;
         }
         if (!SkilExValidator.checkNullString(this.serviceTimeSlot.getText().toString().trim())) {
