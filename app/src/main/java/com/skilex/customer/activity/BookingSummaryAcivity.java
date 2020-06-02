@@ -174,7 +174,7 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
     private void showExit() {
         android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(BookingSummaryAcivity.this);
         alertDialogBuilder.setTitle(R.string.cart);
-        alertDialogBuilder.setMessage("All orders cancelled");
+        alertDialogBuilder.setMessage(R.string.all_cancel);
         alertDialogBuilder.setPositiveButton(R.string.alert_button_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
@@ -393,7 +393,7 @@ public class BookingSummaryAcivity extends AppCompatActivity implements IService
                     showExit();
                 }
             } else {
-                AlertDialogHelper.showSimpleAlertDialog(this, "Agree to the terms to continue");
+                AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.agree_alert));
             }
         }
         if (v == termsAndCOnditions) {

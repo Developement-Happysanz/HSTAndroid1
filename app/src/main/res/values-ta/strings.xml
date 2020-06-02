@@ -59,6 +59,8 @@
 
     <!--General-->
     <string name="agree">நான் ஸ்கில்எக்ஸ் சேவைகளின் </string>
+    <string name="agree_alert">தொடர விதிமுறைகளை ஒப்புக்கொள்க</string>
+    <string name="all_cancel">அனைத்து ஆர்டர்களும் ரத்து செய்யப்பட்டன</string>
     <string name="terms_and_conditions">விதிமுறைகள் மற்றும் நிபந்தனைகளுக்கு </string>
     <string name="skilex_service">உடன்படுகிறேன்.</string>
     <string name="confirm">உறுதி செய்க</string>
@@ -135,6 +137,7 @@
     <string name="referral">பரிந்துரை குறியீடு</string>
     <string name="refer_friends">பரிந்துரைக்கவும்</string>
     <string name="total_points">ஈட்டிய மொத்த புள்ளிகள்</string>
+    <string name="popular_services">ஸ்கைலெக்ஸிலிருந்து மிகவும் பிரபலமான சேவைகள்</string>
     <string name="claim">வெகுமானம் கோரவும்</string>
     <string name="earn_amt">பணம் சம்பாதிக்கலாம்!</string>
     <string name="earn_amt_line">ஸ்கில்எக்ஸை உங்கள் நண்பர்களுக்கு பரிந்துரைத்து பணம் சம்பாதியுங்கள்!</string>
@@ -152,9 +155,12 @@
     <string name="booking">சேவை பதிவு நிறைவுச்சுருக்கம்</string>
     <string name="booking_status">முன்பதிவு நிலவரம்</string>
     <string name="service_charge">சேவை கட்டணம்</string>
-    <string name="additional_charge">அட்வான்ஸ் தொகை</string>
-    <string name="travel_allowance">Travel Allowance</string>
+    <string name="additional_charge">கூடுதல் கட்டணம்</string>
+    <string name="travel_allowance">பயணப்படி</string>
     <string name="additional_services">கூடுதல் சேவைகள்</string>
+    <string name="materials_used">பயன்படுத்திய பொருட்கள்</string>
+    <string name="book_terms_content">*சேவையைப் பற்றிய அல்லது பொருள் தொடர்பான ஏதேனும் குறிப்பிட்ட விவரங்கள்</string>
+    <string name="pay_terms_content">*"விலைகள் வேலைக்குத் தேவையான பொருட்கள் / உதிரிபாகங்கள் பிரத்தியேகமானவை, அதே வாடிக்கையாளரால் வழங்கப்பட வேண்டும்</string>
     <string name="grand_total">மொத்த சேவைக்கான கட்டணம்</string>
     <string name="view_summary">நிறைவுச்சுருக்கம்</string>
     <string name="service_summary">சேவை நிறைவுச்சுருக்கம்</string>

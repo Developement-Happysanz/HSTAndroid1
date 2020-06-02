@@ -431,6 +431,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
     private void setImageInFlipr(String imgUrl) {
         ImageView image = new ImageView(rootView.getContext());
         Picasso.get().load(imgUrl).into(image);
+        image.setScaleType(ImageView.ScaleType.FIT_XY);
         viewFlipper.addView(image);
     }
 
@@ -495,8 +496,11 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                 line1.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
 
-                line1.setText(trendingServicesArrayList.getserviceArrayList().get(c1).getservice_name());
-
+                if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+                    line1.setText(trendingServicesArrayList.getserviceArrayList().get(c1).getservice_ta_name());
+                } else {
+                    line1.setText(trendingServicesArrayList.getserviceArrayList().get(c1).getservice_name());
+                }
 
                 line1.setId(R.id.trend_name);
                 line1.requestFocusFromTouch();

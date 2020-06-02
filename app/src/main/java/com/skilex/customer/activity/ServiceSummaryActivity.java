@@ -472,7 +472,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                     materials.setText(getData.getString("material_notes"));
                     serviceCharge.setText(getData.getString("service_amount"));
                     additionalCharge.setText(getData.getString("additional_service_amt"));
-                    additionalService.setText("Additional services - " + getData.getString("additional_service"));
+                    additionalService.setText(getString(R.string.additional_services) + " - " + getData.getString("additional_service"));
                     if (getData.getString("additional_service").equalsIgnoreCase("0") ||
                             getData.getString("additional_service_amt").isEmpty()) {
 //                        additionalServiceLayout.setVisibility(View.GONE);
