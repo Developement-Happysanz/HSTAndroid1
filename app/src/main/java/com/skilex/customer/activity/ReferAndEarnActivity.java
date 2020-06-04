@@ -187,10 +187,10 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
                     pointsEarned.setText(data.getString("points_to_claim"));
 
                 } else if (res.equalsIgnoreCase("cart")) {
-                    pointsText.setText("Your amount for points earned is " + response.getString("amount_to_be_claim"));
+                    pointsText.setText(getString(R.string.points_earned_success) + response.getString("amount_to_be_claim"));
                     addMOneeey.setVisibility(View.VISIBLE);
                 } else if (res.equalsIgnoreCase("claim")) {
-                    Toast.makeText(this, "Amount claimed and added to wallet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.points_claim_success), Toast.LENGTH_SHORT).show();
                     finish();
                     startActivity(getIntent());
                 }

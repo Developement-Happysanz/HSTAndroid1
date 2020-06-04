@@ -69,6 +69,7 @@
     <string name="error_mail">சரியான மின்னஞ்சல் முகவரியை என்டர் செய்யவும்.</string>
     <string name="error_number">சரியான தொலைபேசி எண்ணை என்டர் செய்யவும்.</string>
     <string name="empty_entry">கட்டாயமாக நிரப்பப்பட வேண்டிய இடம்.</string>
+    <string name="empty_locality">சரியான முகவரியை உள்ளிடவும் அல்லது வரைபடத்தில் இருப்பிடத்தைத் தேர்ந்தெடுக்கவும்</string>
     <string name="title_location_permission">இருப்பிடத்தை அறிவதற்கான அனுமதி</string>
     <string name="text_location_permission">ஸ்கிலெக்ஸ் உங்கள் இருப்பிடத்தை அறிவதற்கு அனுமதி அளிக்க விரும்புகிறீர்களா?</string>
     <string name="time">நேரம்</string>
@@ -142,6 +143,7 @@
     <string name="earn_amt">பணம் சம்பாதிக்கலாம்!</string>
     <string name="earn_amt_line">ஸ்கில்எக்ஸை உங்கள் நண்பர்களுக்கு பரிந்துரைத்து பணம் சம்பாதியுங்கள்!</string>
     <string name="refer_and_earn">பரிந்துரைத்து சம்பாதிக்கவும்</string>
+    <string name="points_claim_success">பணம் வெற்றிகரமாக சேர்க்கப்பட்டது</string>
     <string name="wallet_title">ஸ்கில்எக்ஸ் வாலட்</string>
     <string name="use_wallet_amt">Use Wallet Amount</string>
     <string name="wallet_add_money">தொடரவும்</string>
@@ -189,8 +191,12 @@
     <string name="status">கட்டண நிலவரம்</string>
     <string name="booking_success">வெற்றி!</string>
     <string name="booking_failed">மன்னிக்கவும்!</string>
-    <string name="wallet_success_comment">Money added to wallet \n successfully</string>
-    <string name="wallet_failed_comment">Your transaction failed</string>
+    <string name="wallet_amt">வாலட் இருப்பு</string>
+    <string name="wallet_add">பணத்தைச் சேர்க்கவும்</string>
+    <string name="wallet_success_comment">பணம் வெற்றிகரமாக சேர்க்கப்பட்டது</string>
+    <string name="wallet_failed_comment">உங்கள் பரிவர்த்தனை தோல்வியடைந்தது</string>
+    <string name="points_earned_success">சம்பாதித்த புள்ளிகளுக்கான உங்கள் தொகை </string>
+    <string name="points_earned_fail">உங்கள் புள்ளி குறைவாக உள்ளது. எனவே நீங்கள் உரிமை கோர முடியாது</string>
     <string name="booking_success_comment">உங்களுடைய முன் பதிவு வெற்றிகரமாக நிறைவுற்றது.</string>
     <string name="booking_failed_comment">உங்களுடைய முன் பதிவு தோல்வியுற்றது.</string>
     <string name="payment_success">அற்புதம்!</string>

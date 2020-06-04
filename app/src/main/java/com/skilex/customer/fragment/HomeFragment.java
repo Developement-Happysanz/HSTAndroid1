@@ -63,7 +63,7 @@ import java.util.ArrayList;
 
 import static android.util.Log.d;
 
-public class HomeFragment extends Fragment implements IServiceListener, DialogClickListener, PreferenceListAdapter.OnItemClickListener{
+public class HomeFragment extends Fragment implements IServiceListener, DialogClickListener, PreferenceListAdapter.OnItemClickListener {
 
     private static final String TAG = HomeFragment.class.getName();
     Context context;
@@ -495,12 +495,14 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                 TextView line1 = new TextView(getActivity());
                 line1.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
-                    line1.setText(trendingServicesArrayList.getserviceArrayList().get(c1).getservice_ta_name());
+                String name = "";
+                if (PreferenceStorage.getLang(getActivity()).equalsIgnoreCase("tamil")) {
+                    name = trendingServicesArrayList.getserviceArrayList().get(c1).getservice_ta_name();
                 } else {
-                    line1.setText(trendingServicesArrayList.getserviceArrayList().get(c1).getservice_name());
+                    name = trendingServicesArrayList.getserviceArrayList().get(c1).getservice_name();
                 }
+
+                line1.setText(name);
 
                 line1.setId(R.id.trend_name);
                 line1.requestFocusFromTouch();
@@ -519,7 +521,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                     line2.setImageResource(R.drawable.ic_user_profile_image);
                 }
                 line2.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.button_circle_white));
-                line2.setPadding(20,20,20,20);
+                line2.setPadding(20, 20, 20, 20);
 
                 TextView line3 = new TextView(getActivity());
                 line3.setLayoutParams(params2);

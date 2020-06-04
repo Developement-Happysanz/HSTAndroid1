@@ -88,9 +88,38 @@ public class OngoingServiceListAdapter extends BaseAdapter {
             holder.onHold = (ImageView) convertView.findViewById(R.id.img_hol);
             holder.txtStatus = (TextView) convertView.findViewById(R.id.service_status);
             holder.txtStatus.setText(services.get(position).getorder_status());
-            if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+            if (PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
                 holder.txtCatName.setText(services.get(position).getmain_category_ta());
                 holder.txtSubCatName.setText(services.get(position).getservice_ta_name());
+                switch (services.get(position).getorder_status()) {
+                    case "Assigned":
+                        holder.txtStatus.setText("ஒதுக்கப்பட்டுள்ளது");
+                        break;
+
+                    case "Hold":
+                        holder.txtStatus.setText("நிறுத்தி வைக்கப்பட்டுள்ளது");
+                        break;
+
+                    case "Ongoing":
+                        holder.txtStatus.setText("நடக்கிறது");
+                        break;
+
+                    case "Accepted":
+                        holder.txtStatus.setText("ஏற்றுக்கொள்ளப்பட்டது");
+                        break;
+
+                    case "Initiated":
+                        holder.txtStatus.setText("தொடங்கப்பட்டது");
+                        break;
+
+                    case "Started":
+                        holder.txtStatus.setText("ஆரம்பித்துவிட்டது");
+                        break;
+
+                    default:
+                        holder.txtStatus.setText("");
+
+                }
             } else {
                 holder.txtCatName.setText(services.get(position).getmain_category());
                 holder.txtSubCatName.setText(services.get(position).getservice_name());
@@ -100,7 +129,7 @@ public class OngoingServiceListAdapter extends BaseAdapter {
             holder.txtTime = (TextView) convertView.findViewById(R.id.service_date);
             holder.txtTime.setText(services.get(position).getOrder_date());
             holder.txtStatus.setText(services.get(position).getorder_status());
-            if(services.get(position).getorder_status().equalsIgnoreCase("Hold")){
+            if (services.get(position).getorder_status().equalsIgnoreCase("Hold")) {
                 holder.onHold.setImageResource(R.drawable.ic_onhold);
                 holder.onHold.setBackgroundColor(ContextCompat.getColor(context, R.color.on_hold));
             } else {
@@ -112,9 +141,37 @@ public class OngoingServiceListAdapter extends BaseAdapter {
             holder = (OngoingServiceListAdapter.ViewHolder) convertView.getTag();
             holder.txtCatName = (TextView) convertView.findViewById(R.id.category_name);
             holder.txtSubCatName = (TextView) convertView.findViewById(R.id.sub_category_name);
-            if(PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
+            if (PreferenceStorage.getLang(context).equalsIgnoreCase("tamil")) {
                 holder.txtCatName.setText(services.get(position).getmain_category_ta());
                 holder.txtSubCatName.setText(services.get(position).getservice_ta_name());
+                switch (services.get(position).getorder_status()) {
+                    case "Assigned":
+                        holder.txtStatus.setText("ஒதுக்கப்பட்டுள்ளது");
+                        break;
+                    case "Hold":
+                        holder.txtStatus.setText("நிறுத்தி வைக்கப்பட்டுள்ளது");
+                        break;
+
+                    case "Ongoing":
+                        holder.txtStatus.setText("நடக்கிறது");
+                        break;
+
+                    case "Accepted":
+                        holder.txtStatus.setText("ஏற்றுக்கொள்ளப்பட்டது");
+                        break;
+
+                    case "Initiated":
+                        holder.txtStatus.setText("தொடங்கப்பட்டது");
+                        break;
+
+                    case "Started":
+                        holder.txtStatus.setText("ஆரம்பித்துவிட்டது");
+                        break;
+
+                    default:
+                        holder.txtStatus.setText("");
+
+                }
             } else {
                 holder.txtCatName.setText(services.get(position).getmain_category());
                 holder.txtSubCatName.setText(services.get(position).getservice_name());
@@ -123,7 +180,7 @@ public class OngoingServiceListAdapter extends BaseAdapter {
             holder.txtDate.setText(services.get(position).getContact_person_name());
             holder.txtTime = (TextView) convertView.findViewById(R.id.service_date);
             holder.txtTime.setText(services.get(position).getOrder_date());
-            if(services.get(position).getorder_status().equalsIgnoreCase("Hold")){
+            if (services.get(position).getorder_status().equalsIgnoreCase("Hold")) {
                 holder.onHold.setImageResource(R.drawable.ic_onhold);
                 holder.onHold.setBackgroundColor(ContextCompat.getColor(context, R.color.on_hold));
             } else {
@@ -183,6 +240,10 @@ public class OngoingServiceListAdapter extends BaseAdapter {
         } else {
             return 0;
         }
+    }
+
+    private void getStat(String stat) {
+
     }
 
 }

@@ -83,6 +83,7 @@
     <string name="error_mail">Enter vaild mail ID</string>
     <string name="error_number">Enter vaild phone number</string>
     <string name="empty_entry">Field cannot be empty</string>
+    <string name="empty_locality">Enter proper address or pin location on map</string>
     <string name="title_location_permission">Location Permission</string>
     <string name="text_location_permission">Allow app to access your location?</string>
     <string name="time">Select Time Slot</string>
@@ -185,8 +186,13 @@
     <string name="booking_failed">Sorry!</string>
     <string name="booking_success_comment">Your booking completed \n successfully</string>
     <string name="booking_failed_comment">Your booking failed</string>
+    <string name="wallet_amt">Wallet Balance</string>
+    <string name="wallet_add">Add Money to Wallet</string>
     <string name="wallet_success_comment">Money added to wallet \n successfully</string>
     <string name="wallet_failed_comment">Your transaction failed</string>
+    <string name="points_earned_success">Your amount for points earned is </string>
+    <string name="points_earned_fail">Your transaction failed</string>
+    <string name="points_claim_success">Amount claimed and added to wallet</string>
     <string name="payment_success">Awesome!</string>
     <string name="payment_failed">Something\'s wrong!</string>
     <string name="payment_success_comment">Your service order completed \n successfully</string>

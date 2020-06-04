@@ -378,14 +378,19 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                 geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                 if (position != null) {
                     try {
-                        addresses = geocoder.getFromLocation(position.latitude, position.longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                        addresses = geocoder.getFromLocation(position.latitude, position.longitude, 4); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-                    String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    String address = addresses.get(2).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                     customerAddress.setText(address);
-                    String area = addresses.get(0).getSubLocality();
+                    String area = "";
+                    if (addresses.get(2).getSubLocality() != null) {
+                        area = addresses.get(2).getSubLocality();
+                    } else {
+                        area = addresses.get(2).getLocality();
+                    }
                     customerAreaInfo.setText(area);
                 }
 
@@ -648,7 +653,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             return false;
         }
         if (!SkilExValidator.checkNullString(this.customerAreaInfo.getText().toString().trim())) {
-            customerAreaInfo.setError(getString(R.string.empty_entry));
+            customerAreaInfo.setError(getString(R.string.empty_locality));
             requestFocus(customerAreaInfo);
             return false;
         }
