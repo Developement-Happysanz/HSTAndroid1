@@ -125,6 +125,7 @@
                         android:layout_marginTop="30dp"
                         android:text="@string/trend"
                         android:textColor="@color/black"
+                        android:textStyle="bold"
                         android:textSize="18sp" />
 
                     <TextView
