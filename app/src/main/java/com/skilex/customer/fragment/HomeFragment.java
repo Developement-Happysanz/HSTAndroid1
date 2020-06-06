@@ -24,6 +24,7 @@ import android.widget.ViewFlipper;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -472,24 +473,34 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
 
             for (int c1 = 0; c1 < memberCount; c1++) {
                 final int aa = c1;
-                RelativeLayout cell = new RelativeLayout(getActivity());
-                cell.setLayoutParams(new RelativeLayout.LayoutParams(300, 300));
-                cell.setPadding(0, 0, 0, 0);
-                cell.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+                RelativeLayout maincell = new RelativeLayout(getActivity());
+//                cell.setLayoutParams(new RelativeLayout.LayoutParams(300, 300));
+                maincell.setPadding(10, 10, 10, 10);
+                maincell.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.grey_history));
 
-                RelativeLayout.LayoutParams paramsImageView = new RelativeLayout.LayoutParams(150, 150);
-                paramsImageView.setMargins(0, 50, 0, 0);
+                RelativeLayout cell = new RelativeLayout(getActivity());
+//                cell.setLayoutParams(new RelativeLayout.LayoutParams(300, 300));
+                cell.setPadding(0, 0, 0, 0);
+                cell.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.shadow_round));
+
+                RelativeLayout.LayoutParams cellParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 300);
+                cellParams.setMargins(10, 10, 10, 10);
+                cell.setLayoutParams(cellParams);
+                cell.setElevation(10.0f);
+
+
+                RelativeLayout.LayoutParams paramsImageView = new RelativeLayout.LayoutParams(400, 200);
+                paramsImageView.setMargins(0, 0, 0, 0);
                 paramsImageView.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-                RelativeLayout.LayoutParams paramsTextView = new RelativeLayout.LayoutParams(240, ViewGroup.LayoutParams.WRAP_CONTENT);
-                paramsTextView.setMargins(0, 10, 0, 10);
+                RelativeLayout.LayoutParams paramsTextView = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                paramsTextView.setMargins(10, 10, 0, 0);
                 paramsTextView.addRule(RelativeLayout.BELOW, R.id.trend_img);
-                paramsTextView.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-                RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(4, ViewGroup.LayoutParams.MATCH_PARENT);
-                params2.setMargins(0, 80, 10, 80);
-                params2.addRule(RelativeLayout.ALIGN_PARENT_END);
-                params2.addRule(RelativeLayout.CENTER_VERTICAL);
+//                RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(4, ViewGroup.LayoutParams.MATCH_PARENT);
+//                params2.setMargins(0, 80, 10, 80);
+//                params2.addRule(RelativeLayout.ALIGN_PARENT_END);
+//                params2.addRule(RelativeLayout.CENTER_VERTICAL);
 
 
                 TextView line1 = new TextView(getActivity());
@@ -506,30 +517,36 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
 
                 line1.setId(R.id.trend_name);
                 line1.requestFocusFromTouch();
-                line1.setGravity(Gravity.CENTER_HORIZONTAL);
-                line1.setTextSize(12.0f);
-                line1.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                line1.setGravity(Gravity.CENTER_VERTICAL);
+                line1.setTextSize(14.0f);
+                line1.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
                 line1.setLayoutParams(paramsTextView);
 
                 ImageView line2 = new ImageView(getActivity());
-                line2.setId(R.id.trend_img);
+//                line2.setId(R.id.trend_img);
                 line2.setLayoutParams(paramsImageView);
-
+                line2.setScaleType(ImageView.ScaleType.FIT_XY);
                 if (SkilExValidator.checkNullString(trendingServicesArrayList.getserviceArrayList().get(c1).getservice_pic_url())) {
                     Picasso.get().load(trendingServicesArrayList.getserviceArrayList().get(c1).getservice_pic_url()).into(line2);
                 } else {
-                    line2.setImageResource(R.drawable.ic_user_profile_image);
+                    line2.setImageResource(R.drawable.banner_img_sample);
                 }
-                line2.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.button_circle_white));
-                line2.setPadding(20, 20, 20, 20);
+//                line2.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.shadow_round));
+                line2.setPadding(0, 0, 0, 0);
 
-                TextView line3 = new TextView(getActivity());
-                line3.setLayoutParams(params2);
-                line3.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+//                TextView line3 = new TextView(getActivity());
+//                line3.setLayoutParams(params2);
+//                line3.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.grey));
 
-                cell.addView(line2);
+                CardView cardView = new CardView(getActivity());
+                cardView.setRadius(5.0f);
+                cardView.addView(line2);
+                cardView.setLayoutParams(paramsImageView);
+                cardView.setId(R.id.trend_img);
+
                 cell.addView(line1);
-                cell.addView(line3);
+                cell.addView(cardView);
+//                cell.addView(line3);
 //                cell.addView(border);
                 cell.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -542,7 +559,8 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                         startActivity(intent);
                     }
                 });
-                layout_all.addView(cell);
+                maincell.addView(cell);
+                layout_all.addView(maincell);
             }
         } catch (Exception ex) {
             ex.printStackTrace();

@@ -239,7 +239,7 @@ public class RequestedServicesDetailActivity extends AppCompatActivity implement
                 } else {
 
                     JSONObject getData = response.getJSONObject("service_list");
-                    if (PreferenceStorage.getLang(this).equalsIgnoreCase("tam")) {
+                    if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
                         catName.setText(getData.getString("main_category_ta"));
                         subCatName.setText(getData.getString("service_ta_name"));
 
