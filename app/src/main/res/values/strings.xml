@@ -121,7 +121,7 @@
     <string name="ong_services">Ongoing Services</string>
     <string name="refer_and_earn">Refer and Earn</string>
     <string name="wallet_title">Skilex Wallet</string>
-    <string name="use_wallet_amt">Use Wallet Amount</string>
+    <string name="use_wallet_amt">Pay by wallet</string>
     <string name="service_history">Service History</string>
     <string name="service_detail">Service Detail</string>
     <string name="service_cost">Cost after inspection. Minimum charge is</string>
