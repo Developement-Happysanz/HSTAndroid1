@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -514,12 +515,13 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                 }
 
                 line1.setText(name);
-                line1.setSingleLine(true);
+                line1.setMaxLines(1);
+                line1.setEllipsize(TextUtils.TruncateAt.END);
                 line1.setId(R.id.trend_name);
                 line1.requestFocusFromTouch();
                 line1.setGravity(Gravity.CENTER_VERTICAL);
                 line1.setTextSize(14.0f);
-                line1.setPadding(10,10,10,10);
+                line1.setPadding(10,10,20,10);
                 line1.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
                 line1.setLayoutParams(paramsTextView);
 
