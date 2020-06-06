@@ -475,7 +475,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                 RelativeLayout cell = new RelativeLayout(getActivity());
                 cell.setLayoutParams(new RelativeLayout.LayoutParams(300, 300));
                 cell.setPadding(0, 0, 0, 0);
-                cell.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
+                cell.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
 
                 RelativeLayout.LayoutParams paramsImageView = new RelativeLayout.LayoutParams(150, 150);
                 paramsImageView.setMargins(0, 50, 0, 0);
