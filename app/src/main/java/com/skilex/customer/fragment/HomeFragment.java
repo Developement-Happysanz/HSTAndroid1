@@ -489,12 +489,12 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                 cell.setElevation(10.0f);
 
 
-                RelativeLayout.LayoutParams paramsImageView = new RelativeLayout.LayoutParams(400, 200);
+                RelativeLayout.LayoutParams paramsImageView = new RelativeLayout.LayoutParams(450, 200);
                 paramsImageView.setMargins(0, 0, 0, 0);
                 paramsImageView.addRule(RelativeLayout.CENTER_HORIZONTAL);
 
-                RelativeLayout.LayoutParams paramsTextView = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                paramsTextView.setMargins(10, 10, 0, 0);
+                RelativeLayout.LayoutParams paramsTextView = new RelativeLayout.LayoutParams(450, ViewGroup.LayoutParams.MATCH_PARENT);
+                paramsTextView.setMargins(0, 0, 0, 0);
                 paramsTextView.addRule(RelativeLayout.BELOW, R.id.trend_img);
 
 //                RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(4, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -514,11 +514,12 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                 }
 
                 line1.setText(name);
-
+                line1.setSingleLine(true);
                 line1.setId(R.id.trend_name);
                 line1.requestFocusFromTouch();
                 line1.setGravity(Gravity.CENTER_VERTICAL);
                 line1.setTextSize(14.0f);
+                line1.setPadding(10,10,10,10);
                 line1.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
                 line1.setLayoutParams(paramsTextView);
 
