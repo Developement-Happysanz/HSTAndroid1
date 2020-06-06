@@ -11,7 +11,7 @@ public class SkilExConstants {
     private static final String BASE_URL = "https://skilex.in/";
 
     //Development Mode
-    //delopment
+    //development
     public static final String JOINT_URL = "development/";
     //uat
 //    public static final String JOINT_URL = "uat/";
