@@ -454,7 +454,7 @@ public class ServiceSummaryActivity extends AppCompatActivity implements IServic
                 if (res.equalsIgnoreCase("summary")) {
                     JSONObject getData = response.getJSONObject("service_list");
 
-                    if (PreferenceStorage.getLang(this).equalsIgnoreCase("tam")) {
+                    if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
                         catName.setText(getData.getString("main_category_ta"));
                         serviceName.setText(getData.getString("service_ta_name"));
                     } else {
