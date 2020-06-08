@@ -19,6 +19,7 @@ import com.skilex.customer.activity.AdvancePaymentActivity;
 import com.skilex.customer.activity.BookingSummaryAcivity;
 import com.skilex.customer.activity.MainActivity;
 import com.skilex.customer.activity.RateServiceActivity;
+import com.skilex.customer.activity.RequestedServicesActivity;
 import com.skilex.customer.activity.ServiceHistoryActivity;
 import com.skilex.customer.activity.ServiceSummaryActivity;
 import com.skilex.customer.activity.WalletActivity;
@@ -201,11 +202,11 @@ public class StatusActivity extends AppCompatActivity implements IServiceListene
 				bookingIcon.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_servicebook_success));
 				bookingStatus.setText(R.string.booking_success);
 				bookingComment.setText(R.string.booking_success_comment);
-				booking.setText(R.string.go_home);
+				booking.setText(R.string.alert_button_ok);
 				booking.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
+						Intent newIntent = new Intent(getApplicationContext(), RequestedServicesActivity.class);
 						newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 						startActivity(newIntent);
 						finish();

@@ -96,7 +96,7 @@
             android:paddingRight="40dp"
             android:textAllCaps="false"
             android:fontFamily="@font/helvetica"
-            android:text="@string/go_home"
+            android:text="@string/alert_button_ok"
             android:textColor="@color/white" />
 
 
