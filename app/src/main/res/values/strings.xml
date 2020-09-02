@@ -39,7 +39,7 @@
     <string name="all_cancel">All orders cancelled</string>
     <string name="terms_and_conditions"> Terms and Conditions </string>
     <string name="skilex_service"> of SkilEx services.</string>
-    <string name="referral">Referral Code</string>
+    <string name="referral">Referral Code (Optional)</string>
     <string name="refer_friends">Refer Friends</string>
     <string name="wallet_add_money">Proceed to add money</string>
     <string name="enter_wallet_money">₹   Enter Amount</string>
@@ -83,7 +83,7 @@
     <string name="error_mail">Enter vaild mail ID</string>
     <string name="error_number">Enter vaild phone number</string>
     <string name="empty_entry">Field cannot be empty</string>
-    <string name="empty_locality">Enter proper address or pin location on map</string>
+    <string name="empty_locality">Enter proper locality or pin location on map</string>
     <string name="title_location_permission">Location Permission</string>
     <string name="text_location_permission">Allow app to access your location?</string>
     <string name="time">Select Time Slot</string>
@@ -93,6 +93,8 @@
     <string name="customer_name">Customer Name</string>
     <string name="cart">Cart</string>
     <string name="cart_clear">Items in cart will be cleared. Do you wish to continue?</string>
+    <string name="cart_clear_1">Kindly select only one service from sub-category , Additional Service will be added by the service expert during the service time.</string>
+    <string name="proceed_more">Clear &amp; Proceed</string>
     <string name="language">Language</string>
     <string name="choose_language">Choose your prefered language</string>
 

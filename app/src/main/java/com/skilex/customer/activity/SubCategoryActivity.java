@@ -278,8 +278,8 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
                     tabPosition = tab.getPosition();
                     android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(SubCategoryActivity.this);
                     alertDialogBuilder.setTitle(R.string.cart);
-                    alertDialogBuilder.setMessage(R.string.cart_clear);
-                    alertDialogBuilder.setPositiveButton(R.string.alert_button_ok, new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setMessage(R.string.cart_clear_1);
+                    alertDialogBuilder.setPositiveButton(R.string.proceed_more, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
                             clearCart();
@@ -289,7 +289,7 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
                              recreate();
                         }
                     });
-                    alertDialogBuilder.setNegativeButton(R.string.alert_button_cancel, new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setNegativeButton(R.string.alert_button_ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();

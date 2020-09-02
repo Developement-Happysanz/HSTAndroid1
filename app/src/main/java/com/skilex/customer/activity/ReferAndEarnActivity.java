@@ -234,7 +234,8 @@ public class ReferAndEarnActivity extends AppCompatActivity implements IServiceL
             Intent i = new Intent(android.content.Intent.ACTION_SEND);
             i.setType("text/plain");
             i.putExtra(android.content.Intent.EXTRA_SUBJECT, "Refer and Earn");
-            i.putExtra(android.content.Intent.EXTRA_TEXT, "Download SkilEx – The ultimate service app for all you home and office service needs. Enter my code "+ referralCode.getText() +" to earn 50 points worth ₹25 in your SkilEx wallet redeemed during service payment. Download our app now https://bit.ly/3c5Vr0h");
+            i.putExtra(android.content.Intent.EXTRA_TEXT, "SkilEx by Skilex Multiservices Private Limited\n\nDownload SkilEx – The ultimate service app for all your home and office service needs. Enter my code "+ referralCode.getText() +" to earn 50 points worth ₹25 in your SkilEx wallet redeemed during your service payment. Download our app now:\nPlay store: https://bit.ly/3c5Vr0h \n" +
+                    "App store: https://apple.co/2Ya8AjS");
             startActivity(Intent.createChooser(i, "Share via"));
         } if (v == done) {
             claimPoint();

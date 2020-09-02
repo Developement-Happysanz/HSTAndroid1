@@ -81,7 +81,8 @@ public class AdvancePaymentActivity extends AppCompatActivity implements IServic
         goHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent newIntent = new Intent(getApplicationContext(), RequestedServicesActivity.class);
+                newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(newIntent);
                 finish();
             }
