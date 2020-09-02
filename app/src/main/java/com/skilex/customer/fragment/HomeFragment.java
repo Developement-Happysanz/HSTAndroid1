@@ -169,7 +169,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
             public boolean onQueryTextSubmit(String query) {
 
 //                if (categoryArrayList.contains(query)) {
-//                    preferenceAdatper.getFilter().filter(query);
+                    preferenceAdatper.getFilter().filter(query);
 //                } else {
 //                    Toast.makeText(getActivity(), "No Match found", Toast.LENGTH_LONG).show();
 //                }

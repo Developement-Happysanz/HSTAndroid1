@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.skilex.customer.R;
 import com.skilex.customer.bean.support.OngoingService;
-import com.skilex.customer.fragment.DynamicSubCatFragment;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.utils.PreferenceStorage;
@@ -31,7 +30,6 @@ public class RequestedServiceListAdapter extends BaseAdapter {
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
 
-    DynamicSubCatFragment dsf = new DynamicSubCatFragment();
 
     public RequestedServiceListAdapter(Context context, ArrayList<OngoingService> services) {
         this.context = context;

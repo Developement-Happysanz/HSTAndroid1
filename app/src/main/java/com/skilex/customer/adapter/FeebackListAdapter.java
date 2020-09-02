@@ -16,13 +16,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
 
 import com.skilex.customer.R;
-import com.skilex.customer.activity.SplashScreenActivity;
 import com.skilex.customer.bean.support.Feedback;
-import com.skilex.customer.bean.support.Service;
-import com.skilex.customer.fragment.DynamicSubCatFragment;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -30,7 +26,6 @@ import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;

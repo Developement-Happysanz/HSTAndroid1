@@ -29,7 +29,6 @@ import com.skilex.customer.adapter.SubCategoryTabAdapter;
 import com.skilex.customer.bean.support.Category;
 import com.skilex.customer.bean.support.SubCategory;
 import com.skilex.customer.bean.support.SubCategoryList;
-import com.skilex.customer.fragment.DynamicSubCatFragment;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -246,121 +245,6 @@ public class SubCategoryActivity extends AppCompatActivity implements IServiceLi
 //            categoryListAdapter.notifyDataSetChanged();
 //        }
 //    }
-
-    private void loadMembersList(int memberCount) {
-
-        try {
-
-            for (int c1 = 0; c1 < memberCount; c1++) {
-
-                RelativeLayout.LayoutParams paramsMain = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 120);
-                paramsMain.setMargins(40, 20, 40, 20);
-
-                FrameLayout.LayoutParams paramsMain1 = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 120);
-                paramsMain1.setMargins(40, 20, 40, 20);
-
-                FrameLayout maincell = new FrameLayout(this);
-                maincell.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                maincell.setBackgroundColor(ContextCompat.getColor(this, R.color.white));
-                maincell.setElevation(12.0f);
-                maincell.setLayoutParams(paramsMain1);
-
-                RelativeLayout cell = new RelativeLayout(this);
-                cell.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 120));
-                cell.setPadding(0, 0, 0, 0);
-                cell.setLayoutParams(paramsMain);
-
-
-                RelativeLayout.LayoutParams paramsCategoryName = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                paramsCategoryName.setMargins(320, 0, 0, 0);
-                paramsCategoryName.addRule(RelativeLayout.CENTER_IN_PARENT);
-                paramsCategoryName.addRule(RelativeLayout.LEFT_OF, R.id.add_to_list);
-
-
-                RelativeLayout.LayoutParams paramsAddToList = new RelativeLayout.LayoutParams(80, ViewGroup.LayoutParams.MATCH_PARENT);
-                paramsAddToList.setMargins(0, 0, 0, 0);
-                paramsAddToList.addRule(RelativeLayout.ALIGN_PARENT_END);
-
-                FrameLayout.LayoutParams paramsCategoryImage = new FrameLayout.LayoutParams(180, 100);
-                paramsCategoryImage.setMargins(40, 0, 0, 0);
-                paramsCategoryImage.gravity = Gravity.CENTER_VERTICAL;
-
-                TextView categoryName = new TextView(this);
-                categoryName.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                categoryName.setText("samplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesamplesample");
-
-
-                categoryName.setId(R.id.sub_category_name);
-                categoryName.requestFocusFromTouch();
-                categoryName.setTextSize(16.0f);
-                categoryName.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                categoryName.setSingleLine(true);
-                categoryName.setTextColor(Color.parseColor("#000000"));
-                categoryName.setLayoutParams(paramsCategoryName);
-
-                ImageView categoryImage = new ImageView(this);
-                categoryImage.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                categoryImage.setImageDrawable(getResources().getDrawable(R.drawable.sample_test, getApplicationContext().getTheme()));
-
-                categoryImage.setId(R.id.sub_category_image);
-                categoryImage.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                categoryImage.setLayoutParams(paramsCategoryImage);
-
-                final ImageView addToList = new ImageView(this);
-                addToList.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                        ViewGroup.LayoutParams.WRAP_CONTENT));
-
-
-                addToList.setId(R.id.add_to_list);
-                addToList.setBackgroundColor(Color.parseColor("#3F6CB4"));
-                addToList.setImageDrawable(getResources().getDrawable(R.drawable.ic_control_point_black_24dp, getApplicationContext().getTheme()));
-
-                addToList.requestFocusFromTouch();
-                addToList.setPressed(true);
-//                if (gnStaffList.getGroups().get(c1).getStatus().equalsIgnoreCase("1")) {
-//                    addToList.setImageResource(R.drawable.ic_select);
-//                } else {
-//                    addToList.setImageResource(R.drawable.ic_de_select);
-//                }
-                addToList.setPadding(10, 10, 10, 10);
-                addToList.setLayoutParams(paramsAddToList);
-                final int finalC = c1;
-                addToList.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (addToList.getDrawable().equals(R.drawable.ic_control_point_black_24dp)) {
-                            addToList.setImageDrawable(getResources().getDrawable(R.drawable.ic_completed, getApplicationContext().getTheme()));
-                            addToList.setBackgroundColor(Color.parseColor("#39B54A"));
-                        } else {
-                            addToList.setBackgroundColor(Color.parseColor("#3F6CB4"));
-                            addToList.setImageDrawable(getResources().getDrawable(R.drawable.ic_control_point_black_24dp, getApplicationContext().getTheme()));
-                        }
-                    }
-                });
-
-//                TextView border = new TextView(this);
-//                border.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-//                        ViewGroup.LayoutParams.WRAP_CONTENT, 1f));
-//                border.setHeight(1);
-//                border.setBackgroundColor(Color.BLACK);
-
-                cell.addView(categoryName);
-                cell.addView(addToList);
-//                cell.addView(border);
-
-                maincell.addView(cell);
-                maincell.addView(categoryImage);
-                loadMoreListView.addView(maincell);
-
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
     private void initialiseTabs(JSONArray subCategory) {
         startTimer();

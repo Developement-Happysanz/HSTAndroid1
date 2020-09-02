@@ -18,7 +18,6 @@ import com.skilex.customer.R;
 import com.skilex.customer.activity.SplashScreenActivity;
 import com.skilex.customer.bean.support.AdditionalService;
 import com.skilex.customer.bean.support.Service;
-import com.skilex.customer.fragment.DynamicSubCatFragment;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -50,7 +49,6 @@ public class AdditionalServiceListAdapter extends BaseAdapter {
     private ProgressDialogHelper progressDialogHelper;
     private ArrayList<Integer> pos = new ArrayList<>();
     private String res = "";
-    DynamicSubCatFragment dsf = new DynamicSubCatFragment();
 
     public AdditionalServiceListAdapter(Context context, ArrayList<AdditionalService> services) {
         this.context = context;

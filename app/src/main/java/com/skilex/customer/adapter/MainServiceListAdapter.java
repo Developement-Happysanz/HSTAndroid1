@@ -18,10 +18,7 @@ import androidx.core.content.ContextCompat;
 
 import com.skilex.customer.R;
 import com.skilex.customer.activity.SplashScreenActivity;
-import com.skilex.customer.activity.SubCategoryActivity;
 import com.skilex.customer.bean.support.Service;
-import com.skilex.customer.bean.support.SubCategory;
-import com.skilex.customer.fragment.DynamicSubCatFragment;
 import com.skilex.customer.helper.AlertDialogHelper;
 import com.skilex.customer.helper.ProgressDialogHelper;
 import com.skilex.customer.interfaces.DialogClickListener;
@@ -53,7 +50,6 @@ public class MainServiceListAdapter extends BaseAdapter implements IServiceListe
     private ProgressDialogHelper progressDialogHelper;
     private ArrayList<Integer> pos = new ArrayList<>();
     private String res = "";
-    DynamicSubCatFragment dsf = new DynamicSubCatFragment();
 
     public MainServiceListAdapter(Context context, ArrayList<Service> services) {
         this.context = context;
