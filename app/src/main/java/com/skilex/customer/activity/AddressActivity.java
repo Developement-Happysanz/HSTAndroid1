@@ -596,17 +596,17 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                     } else {
                         latlng = "";
                     }
-                    if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 25.000) {
+                    if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
                         sendVals(id, latlng, newDate);
                     } else {
-                        AlertDialogHelper.showSimpleAlertDialog(this, "Please pick a location in map within coimbatore district");
+                        AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
                     }
                 }
             } else {
-                if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 25.000) {
+                if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
                     sendVals(id, latlng, newDate);
                 } else {
-                    AlertDialogHelper.showSimpleAlertDialog(this, "Please pick a location in map within coimbatore district");
+                    AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
                 }
             }
         }
