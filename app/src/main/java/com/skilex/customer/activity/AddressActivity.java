@@ -153,6 +153,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 
     private void initializeThings() {
         customerAddress = (EditText) findViewById(R.id.customer_address);
+        customerAddress.setEnabled(false);
         customerAreaInfo = (EditText) findViewById(R.id.customer_address1);
         customerName = (EditText) findViewById(R.id.customer_name);
         customerNumber = (EditText) findViewById(R.id.customer_phone);
@@ -384,6 +385,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                     }
 
                     String address = addresses.get(2).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    customerAddress.setEnabled(true);
                     customerAddress.setText(address);
                     String area = "";
                     if (addresses.get(2).getSubLocality() != null) {
