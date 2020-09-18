@@ -65,7 +65,8 @@ android {
 
         variant.outputs.all { output ->
 //            output.outputFile = file("$project.buildDir/apk/MQube.apk")
-            outputFileName = "${variant.name}-${variant.versionName}.apk"
+//            outputFileName = "${variant.name}-${variant.versionName}.apk"
+            outputFileName = "${rootProject.name}_${variant.name}_${android.defaultConfig.versionName}.apk"
         }
     }
 
