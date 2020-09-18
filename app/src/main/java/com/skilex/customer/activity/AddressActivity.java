@@ -364,8 +364,9 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             myPosition = latLng1;
         } else {
         }
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 15));
 //        googleMap.addMarker(new MarkerOptions().position(myPosition).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+        googleMap.addMarker(new MarkerOptions().position(myPosition).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
 
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
