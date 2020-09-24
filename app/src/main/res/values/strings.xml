@@ -83,6 +83,7 @@
     <string name="error_mail">Enter vaild mail ID</string>
     <string name="error_number">Enter vaild phone number</string>
     <string name="empty_entry">Field cannot be empty</string>
+    <string name="empty_address">Pin location on map to get address</string>
     <string name="empty_locality">Enter proper locality or pin location on map</string>
     <string name="title_location_permission">Location Permission</string>
     <string name="text_location_permission">Allow app to access your location?</string>

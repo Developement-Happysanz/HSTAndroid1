@@ -69,6 +69,7 @@
     <string name="error_mail">சரியான மின்னஞ்சல் முகவரியை என்டர் செய்யவும்.</string>
     <string name="error_number">சரியான தொலைபேசி எண்ணை என்டர் செய்யவும்.</string>
     <string name="empty_entry">கட்டாயமாக நிரப்பப்பட வேண்டிய இடம்.</string>
+    <string name="empty_address">வரைபடத்தில் இருப்பிடத்தைத் தேர்ந்தெடுக்கவும்</string>
     <string name="empty_locality">சரியான இருப்பிடத்தைத் உள்ளிடவும் அல்லது வரைபடத்தில் இருப்பிடத்தைத் தேர்ந்தெடுக்கவும்</string>
     <string name="title_location_permission">இருப்பிடத்தை அறிவதற்கான அனுமதி</string>
     <string name="text_location_permission">ஸ்கிலெக்ஸ் உங்கள் இருப்பிடத்தை அறிவதற்கு அனுமதி அளிக்க விரும்புகிறீர்களா?</string>

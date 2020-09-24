@@ -140,7 +140,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
 
-
+        showDialog();
     }
 
     @Override
@@ -155,6 +155,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         customerAddress = (EditText) findViewById(R.id.customer_address);
         customerAddress.setEnabled(false);
         customerAreaInfo = (EditText) findViewById(R.id.customer_address1);
+        customerAreaInfo.setEnabled(false);
         customerName = (EditText) findViewById(R.id.customer_name);
         customerNumber = (EditText) findViewById(R.id.customer_phone);
         serviceDate = (EditText) findViewById(R.id.date);
@@ -663,6 +664,19 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 
     }
 
+    private void showDialog() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Location");
+        alertDialogBuilder.setMessage(R.string.empty_address);
+        alertDialogBuilder.setPositiveButton(R.string.alert_button_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialogBuilder.show();
+    }
+
     private boolean validateFields() {
         if (!SkilExValidator.checkMobileNumLength(this.customerNumber.getText().toString().trim())) {
             customerNumber.setError(getString(R.string.error_number));
@@ -680,8 +694,9 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             return false;
         }
         if (!SkilExValidator.checkNullString(this.customerAddress.getText().toString().trim())) {
-            customerAddress.setError(getString(R.string.empty_entry));
-            requestFocus(customerAddress);
+//            customerAddress.setError(getString(R.string.empty_address));
+//            requestFocus(customerAddress);
+            showDialog();
             return false;
         }
         if (!SkilExValidator.checkNullString(this.customerAreaInfo.getText().toString().trim())) {
