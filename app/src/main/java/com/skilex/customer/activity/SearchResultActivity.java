@@ -47,7 +47,7 @@ public class SearchResultActivity extends AppCompatActivity implements IServiceL
     Handler mHandler = new Handler();
     private SearchView mSearchView = null;
     String advSearch = "";
-
+    JSONObject responsasde;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,6 +143,7 @@ public class SearchResultActivity extends AppCompatActivity implements IServiceL
                 totalCount = serviceList.getCount();
                 isLoadingForFirstTime = false;
                 updateListAdapter(serviceList.getserviceArrayList());
+                responsasde = response;
             }
         }
     }
@@ -166,7 +167,12 @@ public class SearchResultActivity extends AppCompatActivity implements IServiceL
         } else {
             service = serviceArrayList.get(position);
         }
-
+        try {
+            PreferenceStorage.saveCatClick(this, responsasde.getJSONArray("services").getJSONObject(position).getString("main_cat_id"));
+            PreferenceStorage.saveSubCatClick(this,responsasde.getJSONArray("services").getJSONObject(position).getString("sub_cat_id"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         Intent intent = new Intent(this, ServiceDetailActivity.class);
         intent.putExtra("serviceObj", service);
         intent.putExtra("page", "service");

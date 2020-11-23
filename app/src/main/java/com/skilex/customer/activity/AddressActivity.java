@@ -140,7 +140,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
 
-
+        showDialog();
     }
 
     @Override
@@ -153,7 +153,9 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 
     private void initializeThings() {
         customerAddress = (EditText) findViewById(R.id.customer_address);
+        customerAddress.setEnabled(false);
         customerAreaInfo = (EditText) findViewById(R.id.customer_address1);
+        customerAreaInfo.setEnabled(false);
         customerName = (EditText) findViewById(R.id.customer_name);
         customerNumber = (EditText) findViewById(R.id.customer_phone);
         serviceDate = (EditText) findViewById(R.id.date);
@@ -363,8 +365,9 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             myPosition = latLng1;
         } else {
         }
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myPosition, 15));
 //        googleMap.addMarker(new MarkerOptions().position(myPosition).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
+        googleMap.addMarker(new MarkerOptions().position(myPosition).icon(BitmapDescriptorFactory.fromBitmap(smallMarker)));
 
         googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
@@ -384,6 +387,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                     }
 
                     String address = addresses.get(2).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    customerAddress.setEnabled(true);
                     customerAddress.setText(address);
                     String area = "";
                     if (addresses.get(2).getSubLocality() != null) {
@@ -660,6 +664,19 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 
     }
 
+    private void showDialog() {
+        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Location");
+        alertDialogBuilder.setMessage(R.string.empty_address);
+        alertDialogBuilder.setPositiveButton(R.string.alert_button_ok, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        alertDialogBuilder.show();
+    }
+
     private boolean validateFields() {
         if (!SkilExValidator.checkMobileNumLength(this.customerNumber.getText().toString().trim())) {
             customerNumber.setError(getString(R.string.error_number));
@@ -677,8 +694,9 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             return false;
         }
         if (!SkilExValidator.checkNullString(this.customerAddress.getText().toString().trim())) {
-            customerAddress.setError(getString(R.string.empty_entry));
-            requestFocus(customerAddress);
+//            customerAddress.setError(getString(R.string.empty_address));
+//            requestFocus(customerAddress);
+            showDialog();
             return false;
         }
         if (!SkilExValidator.checkNullString(this.customerAreaInfo.getText().toString().trim())) {

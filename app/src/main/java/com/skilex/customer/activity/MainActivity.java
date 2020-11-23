@@ -1,17 +1,11 @@
 package com.skilex.customer.activity;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -22,16 +16,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-import com.google.gson.Gson;
 import com.skilex.customer.R;
-import com.skilex.customer.bean.support.AdditionalServiceList;
 import com.skilex.customer.fragment.HomeFragment;
 import com.skilex.customer.fragment.ProfileFragment;
 import com.skilex.customer.fragment.ServicesFragment;
@@ -41,14 +27,10 @@ import com.skilex.customer.interfaces.DialogClickListener;
 import com.skilex.customer.servicehelpers.ServiceHelper;
 import com.skilex.customer.serviceinterfaces.IServiceListener;
 import com.skilex.customer.utils.CommonUtils;
-import com.skilex.customer.utils.PreferenceStorage;
 import com.skilex.customer.utils.SkilExConstants;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static android.util.Log.d;
 
 public class MainActivity extends AppCompatActivity implements IServiceListener, DialogClickListener {
 
