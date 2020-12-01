@@ -37,6 +37,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static android.util.Log.d;
 
@@ -55,7 +57,7 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
     TextView skip, ratingName;
     private ArrayList<Feedback> feedbackArrayList = new ArrayList<>();
     private FeebackListAdapter feebackListAdapter;
-//    private ListView feedList;
+    //    private ListView feedList;
     private LinearLayout layout_all;
     FeedbackList serviceHistoryList;
     private String feebackAns = "";
@@ -139,17 +141,23 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
 
     public void onClickFunc(int rating) {
         switch (rating) {
-            case 1: ratingName.setText("Poor");
+            case 1:
+                ratingName.setText("Poor");
                 break;
-            case 2: ratingName.setText("Average");
+            case 2:
+                ratingName.setText("Average");
                 break;
-            case 3: ratingName.setText("Good");
+            case 3:
+                ratingName.setText("Good");
                 break;
-            case 4: ratingName.setText("Very Good");
+            case 4:
+                ratingName.setText("Very Good");
                 break;
-            case 5: ratingName.setText("Excellent");
+            case 5:
+                ratingName.setText("Excellent");
                 break;
-            default: ratingName.setText("Not available");
+            default:
+                ratingName.setText("Not available");
         }
     }
 
@@ -235,7 +243,7 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
                             loadMembersList(serviceHistoryList.getFeedbackArrayList().size());
                         }
                     }
-                } else if (checkString.equalsIgnoreCase("ANS")){
+                } else if (checkString.equalsIgnoreCase("ANS")) {
 
                 } else {
                     String status = response.getString("status");
@@ -294,10 +302,10 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
                 cell.setOrientation(LinearLayout.VERTICAL);
 
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params.setMargins(0,0,0,0);
+                params.setMargins(0, 0, 0, 0);
 
                 LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                params1.setMargins(10,10,10,10);
+                params1.setMargins(10, 10, 10, 10);
 
 
                 TextView line1 = new TextView(this);
@@ -321,39 +329,64 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
                 line2.setOrientation(LinearLayout.HORIZONTAL);
                 line2.setLayoutParams(params);
 
-                RadioButton yess = new RadioButton(this);
-                yess.setId(R.id.radio_yes);
-                yess.setText(R.string.alert_button_yes);
-                yess.setLayoutParams(params1);
-
-                RadioButton noo = new RadioButton(this);
-                noo.setId(R.id.radio_no);
-                noo.setText(R.string.alert_button_no);
-                noo.setLayoutParams(params1);
+                String str = "";
+                str = serviceHistoryList.getFeedbackArrayList().get(c1).getAnswer_option();
+                List<String> answerList = Arrays.asList(str.split(","));
                 final int finalC = c1;
 
-                yess.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (v == yess) {
-                            pooos = finalC;
-                            onRadioButtonClicked(yess);
-                        }
-                    }
-                });
-                noo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (v == noo) {
-                            pooos = finalC;
-                            onRadioButtonClicked(noo);
-                        }
-                    }
-                });
+                for (int a = 0; a < answerList.size(); a++) {
+                    RadioButton yess = new RadioButton(this);
+                    yess.setId(R.id.radio_yes);
+                    yess.setText(answerList.get(a));
+                    yess.setLayoutParams(params1);
+                    final int finalC1 = a;
 
+                    yess.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (v == yess) {
+                                pooos = finalC;
+                                feebackAns = answerList.get(finalC1);
+                                onRadioButtonClicked(yess);
+                            }
+                        }
+                    });
+                    line2.addView(yess);
+                }
 
-                line2.addView(yess);
-                line2.addView(noo);
+//                RadioButton yess = new RadioButton(this);
+//                yess.setId(R.id.radio_yes);
+//                yess.setText(R.string.alert_button_yes);
+//                yess.setLayoutParams(params1);
+//
+//                RadioButton noo = new RadioButton(this);
+//                noo.setId(R.id.radio_no);
+//                noo.setText(R.string.alert_button_no);
+//                noo.setLayoutParams(params1);
+//                final int finalC = c1;
+//
+//                yess.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (v == yess) {
+//                            pooos = finalC;
+//                            onRadioButtonClicked(yess);
+//                        }
+//                    }
+//                });
+//                noo.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (v == noo) {
+//                            pooos = finalC;
+//                            onRadioButtonClicked(noo);
+//                        }
+//                    }
+//                });
+//
+//
+//                line2.addView(yess);
+//                line2.addView(noo);
 
 
                 cell.addView(line1);
@@ -372,19 +405,8 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
         boolean checked = ((RadioButton) view).isChecked();
 
         // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.radio_yes:
-                if (checked)
-                    // Pirates are the best
-                    feebackAns = "Yes";
-                sendFeedbac(pooos);
-                break;
-            case R.id.radio_no:
-                if (checked)
-                    // Ninjas rule
-                    feebackAns = "No";
-                sendFeedbac(pooos);
-                break;
+        if (view.getId() == R.id.radio_yes) {
+            sendFeedbac(pooos);
         }
     }
 
