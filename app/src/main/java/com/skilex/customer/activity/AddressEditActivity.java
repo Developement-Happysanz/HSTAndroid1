@@ -1,11 +1,10 @@
 package com.skilex.customer.activity;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Build;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +12,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -24,7 +24,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -78,7 +77,7 @@ import java.util.Locale;
 
 import static android.util.Log.d;
 
-public class AddressActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
+public class AddressEditActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback, IServiceListener, DialogClickListener, View.OnClickListener {
 
     private static final String TAG = SubCategoryActivity.class.getName();
@@ -120,19 +119,26 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     private View clickbait;
     private RadioButton addressOne, addressTwo;
     private Button submitAddress;
-    private String addressStringOne, nameOne, contactOne, latlanOne, locationOne;
-    private String addressStringTwo, nameTwo, contactTwo, latlanTwo, locationTwo;
+    private String addressID, addressString, name, contact, locationString;
     private String selectedLatLan;
     private Boolean radioAddress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_contact_address);
+        setContentView(R.layout.activity_edit_address);
 
         serviceHelper = new ServiceHelper(this);
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
+
+        addressID = getIntent().getStringExtra("addressID");
+        addressString = getIntent().getStringExtra("addressStringOne");
+        name = getIntent().getStringExtra("nameOne");
+        contact = getIntent().getStringExtra("contactOne");
+        selectedLatLan = getIntent().getStringExtra("latlanOne");
+        locationString = getIntent().getStringExtra("locationOne");
+
 
         findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,17 +178,14 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         customerAreaInfo.setEnabled(false);
         customerName = (EditText) findViewById(R.id.customer_name);
         customerNumber = (EditText) findViewById(R.id.customer_phone);
-        serviceDate = (EditText) findViewById(R.id.date);
-        serviceDate.setOnClickListener(this);
 
-        addressPopup = (RelativeLayout) findViewById(R.id.address_popup);
-        addressPopup.setOnClickListener(this);
-        clickbait = (View) findViewById(R.id.clickbait_layout);
-        clickbait.setOnClickListener(this);
-        addressOne = (RadioButton) findViewById(R.id.address_one);
-        addressTwo = (RadioButton) findViewById(R.id.address_two);
         submitAddress = (Button) findViewById(R.id.btn_submit_address);
         submitAddress.setOnClickListener(this);
+
+        customerAddress.setText(addressString);
+        customerName.setText(name);
+        customerNumber.setText(contact);
+        customerAreaInfo.setText(locationString);
 //        serviceDate.setOnClickListener(new View.OnClickListener() {
 //
 //            @Override
@@ -222,24 +225,6 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         Date result = cal.getTime();
         dP.setMinDate(System.currentTimeMillis() - 1000);
         dP.setMaxDate(result.getTime());
-
-        serviceTimeSlot = (EditText) findViewById(R.id.time_slot);
-        serviceTimeSlot.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                showTimeSlotList();
-            }
-        });
-        customerNotes = (EditText) findViewById(R.id.customer_notes);
-        bookNow = (Button) findViewById(R.id.book_now);
-        bookNow.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                setVals();
-            }
-        });
 
 //        LocationManager locationManager = (LocationManager)
 //                getSystemService(Context.LOCATION_SERVICE);
@@ -465,7 +450,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         //Prompt the user once explanation has been shown
-                        ActivityCompat.requestPermissions(AddressActivity.this,
+                        ActivityCompat.requestPermissions(AddressEditActivity.this,
                                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                                 99);
                     }
@@ -540,96 +525,9 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     public void onResponse(JSONObject response) {
         progressDialogHelper.hideProgressDialog();
         if (validateResponse(response)) {
-            try {
-                if (res.equalsIgnoreCase("time")) {
-                    JSONArray getData = response.getJSONArray("service_time_slot");
-                    int getLength = getData.length();
-                    String timeId = "";
-                    String timeName = "";
-                    timeList = new ArrayList<>();
-
-                    for (int i = 0; i < getLength; i++) {
-
-                        timeId = getData.getJSONObject(i).getString("timeslot_id");
-                        timeName = getData.getJSONObject(i).getString("time_range");
-                        timeList.add(new StoreTimeSlot(timeId, timeName));
-                    }
-
-                    timeSlotAdapter = new ArrayAdapter<StoreTimeSlot>(getApplicationContext(), R.layout.time_slot_layout, R.id.time_slot_range, timeList) { // The third parameter works around ugly Android legacy. http://stackoverflow.com/a/18529511/145173
-                        @Override
-                        public View getView(int position, View convertView, ViewGroup parent) {
-                            Log.d(TAG, "getview called" + position);
-                            View view = getLayoutInflater().inflate(R.layout.time_slot_layout, parent, false);
-                            TextView gendername = (TextView) view.findViewById(R.id.time_slot_range);
-                            gendername.setText(timeList.get(position).getTimeName());
-
-                            // ... Fill in other views ...
-                            return view;
-                        }
-                    };
-
-
-                } else if (res.equalsIgnoreCase("send")) {
-                    JSONObject getData = response.getJSONObject("service_details");
-                    PreferenceStorage.saveOrderId(this, getData.getString("order_id"));
-                    if (getData.getString("advance_payment_status").equalsIgnoreCase("NA")) {
-//                        Toast.makeText(this, "Order Placed", Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(this, AdvancePaymentActivity.class);
-                        startActivity(i);
-                        finish();
-                    } else if (getData.getString("advance_payment_status").equalsIgnoreCase("N")) {
-                        PreferenceStorage.saveAdvanceAmt(this, getData.getString("advance_amount"));
-                        Intent i = new Intent(this, InitialScreenActivity.class);
-                        i.putExtra("advpay", getData.getString("advance_amount"));
-                        i.putExtra("page", "advance_pay");
-                        startActivity(i);
-                        finish();
-                    }
-                    addAddress();
-                } else if (res.equalsIgnoreCase("address_list")) {
-                    JSONArray list = response.getJSONArray("address_list");
-                    addressPopup.setVisibility(View.VISIBLE);
-                    findViewById(R.id.scroll).setVisibility(View.GONE);
-                    switch (list.length()) {
-                        case 1:
-                            addressOne.setText(list.getJSONObject(0).getString("serv_address") +
-                                    "\n" + list.getJSONObject(0).getString("contact_name") +
-                                    "\nPhone: " + list.getJSONObject(0).getString("contact_no"));
-                            addressOne.setChecked(true);
-                            addressStringOne = list.getJSONObject(0).getString("serv_address");
-                            nameOne = list.getJSONObject(0).getString("contact_name");
-                            contactOne = list.getJSONObject(0).getString("contact_no");
-                            latlanOne = list.getJSONObject(0).getString("serv_lat_lon");
-                            locationOne = list.getJSONObject(0).getString("serv_loc");
-                            addressTwo.setVisibility(View.GONE);
-                            break;
-                        case 2:
-                            addressOne.setText(list.getJSONObject(0).getString("serv_address") +
-                                    "\n" + list.getJSONObject(0).getString("contact_name") +
-                                    "\nPhone: " + list.getJSONObject(0).getString("contact_no"));
-                            addressOne.setChecked(true);
-                            addressStringOne = list.getJSONObject(0).getString("serv_address");
-                            nameOne = list.getJSONObject(0).getString("contact_name");
-                            contactOne = list.getJSONObject(0).getString("contact_no");
-                            latlanOne = list.getJSONObject(0).getString("serv_lat_lon");
-                            locationOne = list.getJSONObject(0).getString("serv_loc");
-
-                            addressTwo.setText(list.getJSONObject(1).getString("serv_address") +
-                                    "\n" + list.getJSONObject(1).getString("contact_name") +
-                                    "\nPhone: " + list.getJSONObject(1).getString("contact_no"));
-
-                            addressStringTwo = list.getJSONObject(0).getString("serv_address");
-                            nameTwo = list.getJSONObject(0).getString("contact_name");
-                            contactTwo = list.getJSONObject(0).getString("contact_no");
-                            latlanTwo = list.getJSONObject(0).getString("serv_lat_lon");
-                            locationTwo = list.getJSONObject(0).getString("serv_loc");
-                            break;
-                    }
-                }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            Intent homeIntent = new Intent(this, AddressManageActivity.class);
+            startActivity(homeIntent);
+            finish();
         } else {
             Log.d(TAG, "Error while sign In");
         }
@@ -642,24 +540,6 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 
     private void setVals() {
         if (validateFields()) {
-
-            String id = "";
-            id = PreferenceStorage.getUserId(this);
-
-            String oldDate = "";
-            Date date = null;
-            String newDate = "";
-            oldDate = serviceDate.getText().toString();
-            String myFormat = "yyyy-MM-dd"; //In which you need put here
-            String format = "dd-MM-yyyy"; //In which you need put here
-            SimpleDateFormat sdf = new SimpleDateFormat(myFormat);
-            SimpleDateFormat formatter = new SimpleDateFormat(format);
-            try {
-                date = formatter.parse(oldDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            newDate = sdf.format(date);
 
             String latlng = "";
             if (position != null) {
@@ -674,15 +554,6 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                     } else {
                         AlertDialogHelper.showSimpleAlertDialog(this, "Please pick your location in map or enter address.");
                     }
-                } else if (radioAddress) {
-                    position = getLocationFromAddress(customerAddress.getText().toString());
-                    latlng = selectedLatLan;
-
-                    if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
-                        sendVals(id, latlng, newDate);
-                    } else {
-                        AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
-                    }
                 } else {
                     position = getLocationFromAddress(customerAddress.getText().toString());
                     if (position != null) {
@@ -691,14 +562,14 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                         latlng = "";
                     }
                     if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
-                        sendVals(id, latlng, newDate);
+                        addAddress();
                     } else {
                         AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
                     }
                 }
             } else {
                 if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
-                    sendVals(id, latlng, newDate);
+                    addAddress();
                 } else {
                     AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
                 }
@@ -727,38 +598,12 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         return dist; // output distance, in MILES
     }
 
-    private void sendVals(String id, String latLng, String newDate) {
-        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-        res = "send";
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
-            jsonObject.put(SkilExConstants.CONTACT_PERSON, customerName.getText().toString());
-            jsonObject.put(SkilExConstants.CONTACT_PERSON_NUMBER, customerNumber.getText().toString());
-            jsonObject.put(SkilExConstants.SERVICE_LATLNG, latLng);
-//            if (addresses.isEmpty()) {
-//                jsonObject.put(SkilExConstants.SERVICE_LOCATION, "");
-//            } else {
-            jsonObject.put(SkilExConstants.SERVICE_LOCATION, customerAreaInfo.getText().toString());
-//            }
-            jsonObject.put(SkilExConstants.SERVICE_ADDRESS, customerAddress.getText().toString());
-            jsonObject.put(SkilExConstants.ORDER_DATE, newDate);
-            jsonObject.put(SkilExConstants.ORDER_TIMESLOT, timeSlotId);
-            jsonObject.put(SkilExConstants.ORDER_NOTES, customerNotes.getText().toString());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        String url = SkilExConstants.BUILD_URL + SkilExConstants.PROCEED_TO_BOOK;
-        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-
-    }
 
     private void addAddress() {
         res = "add_address";
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put(SkilExConstants.KEY_CUST_ID, PreferenceStorage.getUserId(this));
+            jsonObject.put(SkilExConstants.ADDRESS_ID, addressID);
             jsonObject.put(SkilExConstants.CONTACT_NAME, customerName.getText().toString());
             jsonObject.put(SkilExConstants.CONTACT_NUMBER, customerNumber.getText().toString());
             jsonObject.put(SkilExConstants.SERV_LATLNG, selectedLatLan);
@@ -768,7 +613,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String url = SkilExConstants.BUILD_URL + SkilExConstants.ADD_ADDRESS;
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.EDIT_ADDRESS;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
     }
@@ -812,16 +657,6 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             customerAreaInfo.setError(getString(R.string.empty_locality));
             requestFocus(customerAreaInfo);
             return false;
-        }
-        if (!SkilExValidator.checkNullString(this.serviceTimeSlot.getText().toString().trim())) {
-            serviceTimeSlot.setError(getString(R.string.empty_entry));
-            requestFocus(serviceTimeSlot);
-            return false;
-        }
-        if (!SkilExValidator.checkNullString(this.serviceDate.getText().toString().trim())) {
-            customerAddress.setError(getString(R.string.empty_entry));
-            requestFocus(customerAddress);
-            return false;
         } else {
             return true;
         }
@@ -832,29 +667,6 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
-    }
-
-    private void showTimeSlotList() {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.header_layout, null);
-        TextView header = (TextView) view.findViewById(R.id.header);
-        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
-            header.setText("நேரத்தைத் தேர்ந்தெடுக்கவும்");
-        } else {
-            header.setText("Select Time Slot");
-        }
-        builderSingle.setCustomTitle(view);
-
-        builderSingle.setAdapter(timeSlotAdapter,
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        StoreTimeSlot cty = timeList.get(which);
-                        serviceTimeSlot.setText(cty.getTimeName());
-                        timeSlotId = cty.getTimeId();
-                    }
-                });
-        builderSingle.show();
     }
 
     private boolean checkPlayServices() {
@@ -1032,7 +844,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                 if (permissionsRejected.size() > 0) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         if (shouldShowRequestPermissionRationale(permissionsRejected.get(0))) {
-                            new AlertDialog.Builder(AddressActivity.this).
+                            new AlertDialog.Builder(AddressEditActivity.this).
                                     setMessage("These permissions are mandatory to get your location. You need to allow them.").
                                     setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                         @Override
@@ -1064,29 +876,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             fromDatePickerDialog.show();
         }
         if (v == submitAddress) {
-            radioAddress = true;
-            findViewById(R.id.scroll).setVisibility(View.VISIBLE);
-            addressPopup.setVisibility(View.GONE);
-            if (addressOne.isSelected()) {
-                customerAddress.setText(addressStringOne);
-                customerName.setText(nameOne);
-                customerNumber.setText(contactOne);
-                customerAddress.setText(addressStringOne);
-                customerAreaInfo.setText(locationOne);
-                selectedLatLan = (latlanOne);
-            } else {
-                customerAddress.setText(addressStringTwo);
-                customerName.setText(nameTwo);
-                customerNumber.setText(contactTwo);
-                customerAddress.setText(addressStringTwo);
-                customerAreaInfo.setText(locationTwo);
-                selectedLatLan = (latlanTwo);
-            }
-        }
-        if (v == clickbait) {
-            radioAddress = false;
-            addressPopup.setVisibility(View.GONE);
-            findViewById(R.id.scroll).setVisibility(View.VISIBLE);
+            setVals();
         }
     }
 }

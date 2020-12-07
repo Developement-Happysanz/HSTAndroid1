@@ -27,6 +27,7 @@
     <color name="add_money_green">#00A14B</color>
     <color name="add_money_red">#ED1C24</color>
     <color name="golden">#FBB040</color>
+    <color name="fore">#2DD3D2D2</color>
 
 
 </resources>

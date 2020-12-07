@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import com.skilex.customer.R;
 import com.skilex.customer.activity.AboutUsActivity;
+import com.skilex.customer.activity.AddressManageActivity;
 import com.skilex.customer.activity.MainActivity;
 import com.skilex.customer.activity.ProfileActivity;
 import com.skilex.customer.activity.ReferAndEarnActivity;
@@ -47,7 +48,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
     private ProgressDialogHelper progressDialogHelper;
     private View rootView;
     private CircleImageView profileImage;
-    private LinearLayout profile, about, refer, share, logout, rate, wallet;
+    private LinearLayout profile, about, refer, manage, share, logout, rate, wallet;
     TextView userNmae, number, mail;
     ImageView lan;
     private String checkVerify = "";
@@ -83,6 +84,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
         about.setOnClickListener(this);
         refer = rootView.findViewById(R.id.layout_refer);
         refer.setOnClickListener(this);
+        manage = rootView.findViewById(R.id.layout_manage_address);
+        manage.setOnClickListener(this);
         wallet = rootView.findViewById(R.id.layout_wallet);
         wallet.setOnClickListener(this);
         share = rootView.findViewById(R.id.layout_share);
@@ -134,6 +137,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener, I
         }
         if (v == refer) {
             Intent homeIntent = new Intent(getActivity(), ReferAndEarnActivity.class);
+            startActivity(homeIntent);
+        }
+        if (v == manage) {
+            Intent homeIntent = new Intent(getActivity(), AddressManageActivity.class);
             startActivity(homeIntent);
         }
         if (v == wallet) {
