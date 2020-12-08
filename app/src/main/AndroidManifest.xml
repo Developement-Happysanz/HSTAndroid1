@@ -326,7 +326,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeNoActionBarLogin"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
             android:name=".activity.ViewBillImageZoom"

@@ -517,13 +517,14 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
-                        } else {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
-                        }
                         if (res.equalsIgnoreCase("address_list")) {
                             showDialog();
+                        } else {
+                            if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                                AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                            } else {
+                                AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                            }
                         }
                     }
                 } else {

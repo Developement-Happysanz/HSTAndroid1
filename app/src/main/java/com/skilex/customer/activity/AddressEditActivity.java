@@ -158,8 +158,6 @@ public class AddressEditActivity extends FragmentActivity implements GoogleApiCl
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
 
-        addressAlert();
-
     }
 
     @Override
@@ -213,8 +211,6 @@ public class AddressEditActivity extends FragmentActivity implements GoogleApiCl
                 updateLabel();
                 serviceTimeSlot.setText("");
                 serviceTimeSlot.setHint(R.string.time);
-                callTimeSlotService();
-
             }
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
@@ -267,23 +263,6 @@ public class AddressEditActivity extends FragmentActivity implements GoogleApiCl
                 addOnConnectionFailedListener(this).build();
     }
 
-    private void addressAlert() {
-        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-        res = "address_list";
-        String id = "";
-        id = PreferenceStorage.getUserId(this);
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put(SkilExConstants.KEY_CUST_ID, id);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        String url = SkilExConstants.BUILD_URL + SkilExConstants.ADDRESS_LIST;
-        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
-
-    }
-
-
     private ArrayList<String> permissionsToRequest(ArrayList<String> wantedPermissions) {
         ArrayList<String> result = new ArrayList<>();
 
@@ -326,7 +305,6 @@ public class AddressEditActivity extends FragmentActivity implements GoogleApiCl
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.UK);
 
         serviceDate.setText(sdf.format(myCalendar.getTime()));
-        callTimeSlotService();
     }
 
     @Override
@@ -432,16 +410,6 @@ public class AddressEditActivity extends FragmentActivity implements GoogleApiCl
         });
     }
 
-    public void callTimeSlotService() {
-
-        if (CommonUtils.isNetworkAvailable(this)) {
-            progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
-            loadSlot();
-        } else {
-            AlertDialogHelper.showSimpleAlertDialog(this, getString(R.string.error_no_net));
-        }
-    }
-
     private void showAlert() {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.title_location_permission)
@@ -457,25 +425,6 @@ public class AddressEditActivity extends FragmentActivity implements GoogleApiCl
                 })
                 .create()
                 .show();
-    }
-
-    private void loadSlot() {
-        res = "time";
-        JSONObject jsonObject = new JSONObject();
-        String id = "";
-        String date = "";
-        PreferenceStorage.getUserId(this);
-        date = serviceDate.getText().toString();
-        try {
-            jsonObject.put(SkilExConstants.USER_MASTER_ID, id);
-            jsonObject.put(SkilExConstants.SERVICE_DATE, date);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        String url = SkilExConstants.BUILD_URL + SkilExConstants.GET_TIME_SLOT;
-        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
     }
 
     @Override
@@ -603,6 +552,7 @@ public class AddressEditActivity extends FragmentActivity implements GoogleApiCl
         res = "add_address";
         JSONObject jsonObject = new JSONObject();
         try {
+            jsonObject.put(SkilExConstants.KEY_CUST_ID, PreferenceStorage.getUserId(this));
             jsonObject.put(SkilExConstants.ADDRESS_ID, addressID);
             jsonObject.put(SkilExConstants.CONTACT_NAME, customerName.getText().toString());
             jsonObject.put(SkilExConstants.CONTACT_NUMBER, customerNumber.getText().toString());

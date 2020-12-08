@@ -83,7 +83,7 @@ public class AddressManageActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         if (v == addressOneEdit) {
             Intent homeIntent = new Intent(this, AddressEditActivity.class);
-            homeIntent.putExtra("addressID", addressStringOne);
+            homeIntent.putExtra("addressID", addressIDOne);
             homeIntent.putExtra("addressStringOne", addressStringOne);
             homeIntent.putExtra("nameOne", nameOne);
             homeIntent.putExtra("contactOne", contactOne);
@@ -94,7 +94,7 @@ public class AddressManageActivity extends AppCompatActivity implements View.OnC
         }
         if (v == addressTwoEdit) {
             Intent homeIntent = new Intent(this, AddressEditActivity.class);
-            homeIntent.putExtra("addressID", addressStringTwo);
+            homeIntent.putExtra("addressID", addressIDTwo);
             homeIntent.putExtra("addressStringOne", addressStringTwo);
             homeIntent.putExtra("nameOne", nameTwo);
             homeIntent.putExtra("contactOne", contactTwo);
@@ -135,6 +135,8 @@ public class AddressManageActivity extends AppCompatActivity implements View.OnC
                             AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
                         }
                         if (res.equalsIgnoreCase("address_list")) {
+                            addressOneEdit.setClickable(false);
+                            addressTwoEdit.setClickable(false);
                         }
                     }
                 } else {
