@@ -33,7 +33,7 @@ public class AddressManageActivity extends AppCompatActivity implements View.OnC
     private ProgressDialogHelper progressDialogHelper;
     private String res = "";
 
-    private RelativeLayout addressTwoLayout;
+    private RelativeLayout addressOneLayout, addressTwoLayout;
     private View clickbait;
     private TextView addressOne, addressTwo;
     private ImageView addressOneEdit, addressTwoEdit;
@@ -52,7 +52,15 @@ public class AddressManageActivity extends AppCompatActivity implements View.OnC
         serviceHelper.setServiceListener(this);
         progressDialogHelper = new ProgressDialogHelper(this);
 
-        addressTwoLayout = findViewById(R.id.address_one_layout);
+        findViewById(R.id.back_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        addressOneLayout = findViewById(R.id.address_one_layout);
+        addressTwoLayout = findViewById(R.id.address_two_layout);
         addressOne = findViewById(R.id.address_one);
         addressTwo = findViewById(R.id.address_two);
         addressOneEdit = findViewById(R.id.edit_address_one);

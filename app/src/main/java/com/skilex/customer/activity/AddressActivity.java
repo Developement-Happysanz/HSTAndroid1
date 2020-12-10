@@ -124,6 +124,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     private String addressStringTwo, nameTwo, contactTwo, latlanTwo, locationTwo;
     private String selectedLatLan;
     private Boolean radioAddress = false;
+    TextView addressTwotext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +182,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         clickbait.setOnClickListener(this);
         addressOne = (RadioButton) findViewById(R.id.address_one);
         addressTwo = (RadioButton) findViewById(R.id.address_two);
+        addressTwotext = (TextView) findViewById(R.id.address_two_text);
         submitAddress = (Button) findViewById(R.id.btn_submit_address);
         submitAddress.setOnClickListener(this);
 //        serviceDate.setOnClickListener(new View.OnClickListener() {
@@ -604,6 +606,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                             latlanOne = list.getJSONObject(0).getString("serv_lat_lon");
                             locationOne = list.getJSONObject(0).getString("serv_loc");
                             addressTwo.setVisibility(View.GONE);
+                            addressTwotext.setVisibility(View.GONE);
                             break;
                         case 2:
                             addressOne.setText(list.getJSONObject(0).getString("serv_address") +
@@ -1069,7 +1072,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             radioAddress = true;
             findViewById(R.id.scroll).setVisibility(View.VISIBLE);
             addressPopup.setVisibility(View.GONE);
-            if (addressOne.isSelected()) {
+            if (addressOne.isChecked()) {
                 customerAddress.setText(addressStringOne);
                 customerName.setText(nameOne);
                 customerNumber.setText(contactOne);
