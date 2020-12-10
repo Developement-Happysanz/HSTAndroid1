@@ -435,6 +435,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                     } else {
                         area = addresses.get(2).getLocality();
                     }
+                    customerAreaInfo.setEnabled(true);
                     customerAreaInfo.setText(area);
                 }
 
