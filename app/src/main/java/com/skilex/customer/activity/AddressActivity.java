@@ -623,11 +623,11 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                                     "\n" + list.getJSONObject(1).getString("contact_name") +
                                     "\nPhone: " + list.getJSONObject(1).getString("contact_no"));
 
-                            addressStringTwo = list.getJSONObject(0).getString("serv_address");
-                            nameTwo = list.getJSONObject(0).getString("contact_name");
-                            contactTwo = list.getJSONObject(0).getString("contact_no");
-                            latlanTwo = list.getJSONObject(0).getString("serv_lat_lon");
-                            locationTwo = list.getJSONObject(0).getString("serv_loc");
+                            addressStringTwo = list.getJSONObject(1).getString("serv_address");
+                            nameTwo = list.getJSONObject(1).getString("contact_name");
+                            contactTwo = list.getJSONObject(1).getString("contact_no");
+                            latlanTwo = list.getJSONObject(1).getString("serv_lat_lon");
+                            locationTwo = list.getJSONObject(1).getString("serv_loc");
                             break;
                     }
                 }
