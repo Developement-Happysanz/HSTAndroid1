@@ -12,11 +12,11 @@ android {
         }
     }
 
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.skilex.customer"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 38
         versionName "1.054"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
