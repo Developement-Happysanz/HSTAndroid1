@@ -31,13 +31,13 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/back_btn"
+            android:fontFamily="@font/helvetica"
             android:gravity="center_vertical|left"
             android:minHeight="60dp"
             android:padding="5dp"
-            android:fontFamily="@font/helvetica"
             android:text="@string/profile_title"
-            android:layout_marginLeft="10dp"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -47,10 +47,10 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_language"
-            android:padding="10dp"
+            android:layout_centerVertical="true"
             android:onClick="showLangsAlert"
-            android:layout_centerVertical="true"/>
+            android:padding="10dp"
+            android:src="@drawable/ic_language" />
 
     </RelativeLayout>
 
@@ -78,10 +78,10 @@
             android:layout_toRightOf="@id/user_profile_img"
             android:fontFamily="@font/helvetica"
             android:gravity="center"
-            android:textStyle="bold"
             android:text="Guest"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:id="@+id/phone"
@@ -101,9 +101,9 @@
                 android:id="@+id/user_phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/helvetica"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
+                android:fontFamily="@font/helvetica"
                 android:text="1234567890" />
 
         </LinearLayout>
@@ -128,8 +128,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:fontFamily="@font/helvetica"
                 android:layout_marginStart="10dp"
+                android:fontFamily="@font/helvetica"
                 android:text="abc@efgh.xzy" />
 
         </LinearLayout>
@@ -162,8 +162,8 @@
                 android:id="@+id/layout_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
@@ -188,9 +188,9 @@
                 android:id="@+id/layout_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginStart="20dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -214,9 +214,9 @@
                 android:id="@+id/layout_refer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginStart="20dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -237,12 +237,38 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layout_manage_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_manage_address" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="@font/helvetica"
+                    android:text="@string/manage_address"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/layout_wallet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginStart="20dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -266,9 +292,9 @@
                 android:id="@+id/layout_share"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginStart="20dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -287,13 +313,14 @@
                     android:textSize="16sp" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/layout_rate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginStart="20dp"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -337,9 +364,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
                         android:fontFamily="@font/helvetica"
                         android:text="@string/logout"
-                        android:layout_marginStart="10dp"
                         android:textColor="@color/Logout"
                         android:textSize="18sp" />
 

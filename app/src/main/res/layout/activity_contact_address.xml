@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/tool_bar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar_result"
@@ -34,14 +36,13 @@
             android:gravity="center_vertical|left"
             android:minHeight="60dp"
             android:padding="5dp"
-            android:text="@string/user_address"
+            android:text="Address"
             android:fontFamily="@font/helvetica"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
-
 
     <TextView
         android:id="@+id/distance"
@@ -52,194 +53,209 @@
         android:visibility="gone"
         android:textColor="@color/black"/>
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map"
-        android:layout_weight="0.5"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        map:cameraTargetLat="11.127123"
-        map:cameraTargetLng="78.656891"/>
+        android:layout_below="@+id/tool_bar">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.5">
-
-        <LinearLayout
+        <include
+            android:id="@+id/address_popup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_alignParentBottom="true"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            layout="@layout/popup_address"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_custaddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
 
-                <EditText
-                    android:id="@+id/customer_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:fontFamily="@font/helvetica"
-                    android:hint="@string/user_address"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_custaddress1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <EditText
-                    android:id="@+id/customer_address1"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:enabled="true"
-                    android:fontFamily="@font/helvetica"
-                    android:hint="@string/user_address1"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_custname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <EditText
-                    android:id="@+id/customer_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:fontFamily="@font/helvetica"
-                    android:maxLength="20"
-                    android:hint="@string/user_name"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_custphone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <EditText
-                    android:id="@+id/customer_phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:inputType="phone|textNoSuggestions"
-                    android:digits="0123456789"
-                    android:fontFamily="@font/helvetica"
-                    android:maxLength="13"
-                    android:longClickable="false"
-                    android:hint="@string/mobile_number"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="0.5"
-                    android:layout_marginRight="5dp"
-                    android:hint="@string/date"
-                    android:fontFamily="@font/helvetica"
-                    android:focusable="false"
-                    android:singleLine="true" />
-
-                <EditText
-                    android:id="@+id/time_slot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_weight="0.5"
-                    android:layout_marginLeft="5dp"
-                    android:hint="@string/time"
-                    android:fontFamily="@font/helvetica"
-                    android:focusable="false"
-                    android:singleLine="true" />
-
-            </LinearLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ti_custcomment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp">
-
-                <EditText
-                    android:id="@+id/customer_notes"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:fontFamily="@font/helvetica"
-                    android:hint="@string/note"
-                    android:singleLine="true" />
-
-            </com.google.android.material.textfield.TextInputLayout>
+        <ScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    map:cameraTargetLat="11.127123"
+                    map:cameraTargetLng="78.656891"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_custaddress"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_weight="0.5"
-                    android:layout_marginEnd="20dp"
-                    android:textColor="@color/black"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <EditText
+                        android:id="@+id/customer_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/helvetica"
+                        android:hint="@string/user_address"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_custaddress1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <EditText
+                        android:id="@+id/customer_address1"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:enabled="true"
+                        android:fontFamily="@font/helvetica"
+                        android:hint="@string/user_address1"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_custname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <EditText
+                        android:id="@+id/customer_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/helvetica"
+                        android:maxLength="20"
+                        android:hint="@string/user_name"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_custphone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <EditText
+                        android:id="@+id/customer_phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:inputType="phone|textNoSuggestions"
+                        android:digits="0123456789"
+                        android:fontFamily="@font/helvetica"
+                        android:maxLength="13"
+                        android:longClickable="false"
+                        android:hint="@string/mobile_number"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_weight="0.5"
+                        android:layout_marginRight="5dp"
+                        android:hint="@string/date"
+                        android:fontFamily="@font/helvetica"
+                        android:focusable="false"
+                        android:singleLine="true" />
+
+                    <EditText
+                        android:id="@+id/time_slot"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_weight="0.5"
+                        android:layout_marginLeft="5dp"
+                        android:hint="@string/time"
+                        android:fontFamily="@font/helvetica"
+                        android:focusable="false"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/ti_custcomment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <EditText
+                        android:id="@+id/customer_notes"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:fontFamily="@font/helvetica"
+                        android:hint="@string/note"
+                        android:singleLine="true" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
+                        android:layout_weight="0.5"
+                        android:layout_marginEnd="20dp"
+                        android:textColor="@color/black"
+                        android:fontFamily="@font/helvetica"
+                        android:text="@string/book_terms_content"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/book_now"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/button_round_color"
                     android:fontFamily="@font/helvetica"
-                    android:text="@string/book_terms_content"
-                    android:textSize="14sp" />
+                    android:text="@string/book_now"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
-            <Button
-                android:id="@+id/book_now"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/button_round_color"
-                android:fontFamily="@font/helvetica"
-                android:text="@string/book_now"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
+        </ScrollView>
 
+    </RelativeLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
-
-</LinearLayout>
+</RelativeLayout>

@@ -51,6 +51,7 @@
     <string name="earn_amt_line">Invite your friends to SkilEx and earn more money!</string>
     <string name="mobile_number_tag">: \n</string>
     <string name="user_name">Name</string>
+    <string name="address_activity">Address</string>
     <string name="user_address">Door No/Building Name/Street Name</string>
     <string name="user_address1">Area/Locality</string>
     <string name="user_mail">E-Mail</string>
@@ -129,6 +130,7 @@
     <string name="service_detail">Service Detail</string>
     <string name="service_cost">Cost after inspection. Minimum charge is</string>
     <string name="book_now">Book Now</string>
+    <string name="save_address">Save Address</string>
     <string name="inclusion">Inclusions</string>
     <string name="exclusion">Exclusion</string>
     <string name="procedure">Procedure</string>
@@ -165,6 +167,13 @@
     <string name="view_summary">View Summary</string>
     <string name="service_summary">Service Summary</string>
     <string name="clear">Clear All</string>
+
+    <!--Address Page-->
+
+    <string name="choose_address">Choose Address</string>
+    <string name="manage_address">Manage Address</string>
+    <string name="address_1">Address 1</string>
+    <string name="address_2">Address 2</string>
 
     <!--Payment Page-->
 

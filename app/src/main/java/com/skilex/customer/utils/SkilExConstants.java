@@ -12,11 +12,11 @@ public class SkilExConstants {
 
     //Development Mode
     //development
-    public static final String JOINT_URL = "development/";
+//    public static final String JOINT_URL = "development/";
     //uat
 //    public static final String JOINT_URL = "uat/";
     //live
-//    public static final String JOINT_URL = "";
+    public static final String JOINT_URL = "";
 //
 //    //BUILD URL
     public static final String BUILD_URL = BASE_URL + JOINT_URL + "apicustomer/";
@@ -111,6 +111,15 @@ public class SkilExConstants {
 
     //PROCEED TO BOOK SERVICE URL
     public static final String SUCCESSFUL_PAYMENT = "service_payment_success/";
+
+    //CHECK PREVIOUS ADDRESS URL
+    public static final String ADDRESS_LIST = "customer_address_list/";
+
+    //ADD ADDRESS URL
+    public static final String ADD_ADDRESS = "customer_address_add/";
+
+    //ADD ADDRESS URL
+    public static final String EDIT_ADDRESS = "customer_address_edit/";
 
     //PROCEED TO BOOK SERVICE URL
     public static final String PROCEED_TO_BOOK = "proceed_to_book_order/";
@@ -221,6 +230,7 @@ public class SkilExConstants {
 
     public static final String KEY_USER_ID = "user_id";
     public static final String KEY_USER_MASTER_ID = "user_master_id";
+    public static final String KEY_CUST_ID = "cust_id";
     public static final String KEY_USER_NAME = "full_name";
     public static final String KEY_USER_GENDER = "gender";
     public static final String KEY_USER_ADDRESS = "address";
@@ -294,6 +304,13 @@ public class SkilExConstants {
     public static String ORDER_TIMESLOT = "order_timeslot_id";
     public static final String PARAMS_AMOUNT = "amount";
 
+    // Address Parameters
+    public static String CONTACT_NAME = "contact_name";
+    public static String ADDRESS_ID = "address_id";
+    public static String CONTACT_NUMBER = "contact_no";
+    public static String SERV_LATLNG = "serv_lat_lon";
+    public static String SERV_LOCATION = "serv_loc";
+    public static String SERV_ADDRESS = "serv_address";
 
     // Advance Payment
     public static String ADVANCE_AMOUNT = "advance_amount";
@@ -305,6 +322,6 @@ public class SkilExConstants {
     public static String KEY_RATINGS = "ratings";
     public static String KEY_COMMENTS = "reviews";
     public static String KEY_APP_VERSION = "version_code";
-    public static String KEY_APP_VERSION_VALUE = "4";
+    public static String KEY_APP_VERSION_VALUE = "5";
 
 }

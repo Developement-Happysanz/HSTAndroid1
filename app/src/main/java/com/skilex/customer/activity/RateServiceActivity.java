@@ -336,7 +336,23 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
 
                 for (int a = 0; a < answerList.size(); a++) {
                     RadioButton yess = new RadioButton(this);
-                    yess.setId(R.id.radio_yes);
+                    switch (a) {
+                        case 0 :
+                            yess.setId(R.id.radio_one);
+                            break;
+                        case 1 :
+                            yess.setId(R.id.radio_two);
+                            break;
+                        case 2 :
+                            yess.setId(R.id.radio_three);
+                            break;
+                        case 3 :
+                            yess.setId(R.id.radio_four);
+                            break;
+                        case 4 :
+                            yess.setId(R.id.radio_five);
+                            break;
+                    }
                     yess.setText(answerList.get(a));
                     yess.setLayoutParams(params1);
                     final int finalC1 = a;
@@ -405,9 +421,7 @@ public class RateServiceActivity extends AppCompatActivity implements DialogClic
         boolean checked = ((RadioButton) view).isChecked();
 
         // Check which radio button was clicked
-        if (view.getId() == R.id.radio_yes) {
             sendFeedbac(pooos);
-        }
     }
 
     private void sendFeedbac(int position) {

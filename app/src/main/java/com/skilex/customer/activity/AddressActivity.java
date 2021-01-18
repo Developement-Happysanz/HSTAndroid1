@@ -24,6 +24,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -113,6 +116,16 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
 
     private DatePickerDialog fromDatePickerDialog;
 
+    private RelativeLayout addressPopup;
+    private View clickbait;
+    private RadioButton addressOne, addressTwo;
+    private Button submitAddress;
+    private String addressStringOne, nameOne, contactOne, latlanOne, locationOne;
+    private String addressStringTwo, nameTwo, contactTwo, latlanTwo, locationTwo;
+    private String selectedLatLan;
+    private Boolean radioAddress = false;
+    TextView addressTwotext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,7 +153,8 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         mapView.onCreate(mapViewBundle);
         mapView.getMapAsync(this);
 
-        showDialog();
+        addressAlert();
+
     }
 
     @Override
@@ -152,6 +166,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     }
 
     private void initializeThings() {
+
         customerAddress = (EditText) findViewById(R.id.customer_address);
         customerAddress.setEnabled(false);
         customerAreaInfo = (EditText) findViewById(R.id.customer_address1);
@@ -160,6 +175,16 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         customerNumber = (EditText) findViewById(R.id.customer_phone);
         serviceDate = (EditText) findViewById(R.id.date);
         serviceDate.setOnClickListener(this);
+
+        addressPopup = (RelativeLayout) findViewById(R.id.address_popup);
+        addressPopup.setOnClickListener(this);
+        clickbait = (View) findViewById(R.id.clickbait_layout);
+        clickbait.setOnClickListener(this);
+        addressOne = (RadioButton) findViewById(R.id.address_one);
+        addressTwo = (RadioButton) findViewById(R.id.address_two);
+        addressTwotext = (TextView) findViewById(R.id.address_two_text);
+        submitAddress = (Button) findViewById(R.id.btn_submit_address);
+        submitAddress.setOnClickListener(this);
 //        serviceDate.setOnClickListener(new View.OnClickListener() {
 //
 //            @Override
@@ -258,6 +283,23 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                 addConnectionCallbacks(this).
                 addOnConnectionFailedListener(this).build();
     }
+
+    private void addressAlert() {
+        progressDialogHelper.showProgressDialog(getString(R.string.progress_loading));
+        res = "address_list";
+        String id = "";
+        id = PreferenceStorage.getUserId(this);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.KEY_CUST_ID, id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.ADDRESS_LIST;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+    }
+
 
     private ArrayList<String> permissionsToRequest(ArrayList<String> wantedPermissions) {
         ArrayList<String> result = new ArrayList<>();
@@ -395,6 +437,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                     } else {
                         area = addresses.get(2).getLocality();
                     }
+                    customerAreaInfo.setEnabled(true);
                     customerAreaInfo.setText(area);
                 }
 
@@ -468,25 +511,27 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
         if ((response != null)) {
             try {
                 String status = response.getString("status");
-                String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
-                String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
-                String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
-                d(TAG, "status val" + status + "msg" + msg);
-
-                if ((status != null)) {
+                if (!status.equalsIgnoreCase("success") && !(res.equalsIgnoreCase("add_address"))) {
+//                    String msg = response.getString(SkilExConstants.PARAM_MESSAGE);
+                    String msg_en = response.getString(SkilExConstants.PARAM_MESSAGE_ENG);
+                    String msg_ta = response.getString(SkilExConstants.PARAM_MESSAGE_TAMIL);
+                    d(TAG, "status val" + status + "msg" + msg_en);
                     if (((status.equalsIgnoreCase("activationError")) || (status.equalsIgnoreCase("alreadyRegistered")) ||
                             (status.equalsIgnoreCase("notRegistered")) || (status.equalsIgnoreCase("error")))) {
                         signInSuccess = false;
                         d(TAG, "Show error dialog");
-                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                        if (res.equalsIgnoreCase("address_list")) {
+                            showDialog();
                         } else {
-                            AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                            if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                                AlertDialogHelper.showSimpleAlertDialog(this, msg_ta);
+                            } else {
+                                AlertDialogHelper.showSimpleAlertDialog(this, msg_en);
+                            }
                         }
-
-                    } else {
-                        signInSuccess = true;
                     }
+                } else {
+                    signInSuccess = true;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -544,6 +589,47 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                         startActivity(i);
                         finish();
                     }
+                    addAddress();
+                } else if (res.equalsIgnoreCase("address_list")) {
+                    JSONArray list = response.getJSONArray("address_list");
+                    addressPopup.setVisibility(View.VISIBLE);
+                    findViewById(R.id.scroll).setVisibility(View.GONE);
+                    switch (list.length()) {
+                        case 1:
+                            addressOne.setText(list.getJSONObject(0).getString("serv_address") +
+                                    "\n" + list.getJSONObject(0).getString("contact_name") +
+                                    "\nPhone: " + list.getJSONObject(0).getString("contact_no"));
+                            addressOne.setChecked(true);
+                            addressStringOne = list.getJSONObject(0).getString("serv_address");
+                            nameOne = list.getJSONObject(0).getString("contact_name");
+                            contactOne = list.getJSONObject(0).getString("contact_no");
+                            latlanOne = list.getJSONObject(0).getString("serv_lat_lon");
+                            locationOne = list.getJSONObject(0).getString("serv_loc");
+                            addressTwo.setVisibility(View.GONE);
+                            addressTwotext.setVisibility(View.GONE);
+                            break;
+                        case 2:
+                            addressOne.setText(list.getJSONObject(0).getString("serv_address") +
+                                    "\n" + list.getJSONObject(0).getString("contact_name") +
+                                    "\nPhone: " + list.getJSONObject(0).getString("contact_no"));
+                            addressOne.setChecked(true);
+                            addressStringOne = list.getJSONObject(0).getString("serv_address");
+                            nameOne = list.getJSONObject(0).getString("contact_name");
+                            contactOne = list.getJSONObject(0).getString("contact_no");
+                            latlanOne = list.getJSONObject(0).getString("serv_lat_lon");
+                            locationOne = list.getJSONObject(0).getString("serv_loc");
+
+                            addressTwo.setText(list.getJSONObject(1).getString("serv_address") +
+                                    "\n" + list.getJSONObject(1).getString("contact_name") +
+                                    "\nPhone: " + list.getJSONObject(1).getString("contact_no"));
+
+                            addressStringTwo = list.getJSONObject(1).getString("serv_address");
+                            nameTwo = list.getJSONObject(1).getString("contact_name");
+                            contactTwo = list.getJSONObject(1).getString("contact_no");
+                            latlanTwo = list.getJSONObject(1).getString("serv_lat_lon");
+                            locationTwo = list.getJSONObject(1).getString("serv_loc");
+                            break;
+                    }
                 }
 
             } catch (JSONException e) {
@@ -592,6 +678,15 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                         AlertDialogHelper.showSimpleAlertDialog(this, "வரைபடத்தில் உங்கள் இருப்பிடத்தைத் தேர்வுசெய்யவும் அல்லது முகவரியை உள்ளிடவும்.");
                     } else {
                         AlertDialogHelper.showSimpleAlertDialog(this, "Please pick your location in map or enter address.");
+                    }
+                } else if (radioAddress) {
+                    position = getLocationFromAddress(customerAddress.getText().toString());
+                    latlng = selectedLatLan;
+
+                    if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
+                        sendVals(id, latlng, newDate);
+                    } else {
+                        AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
                     }
                 } else {
                     position = getLocationFromAddress(customerAddress.getText().toString());
@@ -660,6 +755,25 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             e.printStackTrace();
         }
         String url = SkilExConstants.BUILD_URL + SkilExConstants.PROCEED_TO_BOOK;
+        serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
+
+    }
+
+    private void addAddress() {
+        res = "add_address";
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put(SkilExConstants.KEY_CUST_ID, PreferenceStorage.getUserId(this));
+            jsonObject.put(SkilExConstants.CONTACT_NAME, customerName.getText().toString());
+            jsonObject.put(SkilExConstants.CONTACT_NUMBER, customerNumber.getText().toString());
+            jsonObject.put(SkilExConstants.SERV_LATLNG, selectedLatLan);
+            jsonObject.put(SkilExConstants.SERV_LOCATION, customerAreaInfo.getText().toString());
+            jsonObject.put(SkilExConstants.SERV_ADDRESS, customerAddress.getText().toString());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        String url = SkilExConstants.BUILD_URL + SkilExConstants.ADD_ADDRESS;
         serviceHelper.makeGetServiceCall(jsonObject.toString(), url);
 
     }
@@ -953,6 +1067,31 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     public void onClick(View v) {
         if (v == serviceDate) {
             fromDatePickerDialog.show();
+        }
+        if (v == submitAddress) {
+            radioAddress = true;
+            findViewById(R.id.scroll).setVisibility(View.VISIBLE);
+            addressPopup.setVisibility(View.GONE);
+            if (addressOne.isChecked()) {
+                customerAddress.setText(addressStringOne);
+                customerName.setText(nameOne);
+                customerNumber.setText(contactOne);
+                customerAddress.setText(addressStringOne);
+                customerAreaInfo.setText(locationOne);
+                selectedLatLan = (latlanOne);
+            } else {
+                customerAddress.setText(addressStringTwo);
+                customerName.setText(nameTwo);
+                customerNumber.setText(contactTwo);
+                customerAddress.setText(addressStringTwo);
+                customerAreaInfo.setText(locationTwo);
+                selectedLatLan = (latlanTwo);
+            }
+        }
+        if (v == clickbait) {
+            radioAddress = false;
+            addressPopup.setVisibility(View.GONE);
+            findViewById(R.id.scroll).setVisibility(View.VISIBLE);
         }
     }
 }

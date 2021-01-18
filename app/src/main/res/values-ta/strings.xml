@@ -30,11 +30,18 @@
     <string name="alert_button_cancel">ரத்து செய்</string>
 
 
+    <string name="choose_address">Choose Address</string>
+    <string name="manage_address">Manage Address</string>
+    <string name="address_1">Address 1</string>
+    <string name="address_2">Address 2</string>
+
+
     <!--User Data-->
 
     <string name="mobile_number">தொலைபேசி எண்</string>
     <string name="mobile_number_tag">: \n</string>
     <string name="user_name">பெயர்</string>
+    <string name="address_activity">Address</string>
     <string name="user_address">கதவு எண்</string>
     <string name="user_address1">முகவரி</string>
     <string name="user_mail">மின்னஞ்சல் முகவரி</string>
@@ -117,6 +124,7 @@
     <string name="service_history">நிறைவுற்ற சேவைகளின் விபரங்கள்</string>
     <string name="service_detail">சேவை விபரம்</string>
     <string name="service_cost">ஒரு சேவைக்கான கட்டணங்கள் நுகர்வோரின் தேவையை ஆய்வு செய்யப்பட்ட பிறகு நிர்ணயிக்கப்படும்.குறைந்தபட்ச கட்டணம்: ₹</string>
+    <string name="save_address">Save Address</string>
     <string name="book_now">முன் பதிவு செய்யவும்</string>
     <string name="inclusion">உள்ளடக்கம்</string>
     <string name="exclusion">விலக்குகள்</string>

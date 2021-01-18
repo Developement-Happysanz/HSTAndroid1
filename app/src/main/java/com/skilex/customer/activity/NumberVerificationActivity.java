@@ -321,7 +321,7 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 
                 } else if (checkVerify.equalsIgnoreCase("set_lang")) {
                     Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
-//                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 ////                    homeIntent.putExtra("profile_state", "new");
                     startActivity(homeIntent);
 //                    this.finish();
