@@ -12,11 +12,11 @@ public class SkilExConstants {
 
     //Development Mode
     //development
-//    public static final String JOINT_URL = "development/";
+    public static final String JOINT_URL = "development/";
     //uat
 //    public static final String JOINT_URL = "uat/";
     //live
-    public static final String JOINT_URL = "";
+//    public static final String JOINT_URL = "";
 //
 //    //BUILD URL
     public static final String BUILD_URL = BASE_URL + JOINT_URL + "apicustomer/";
@@ -248,7 +248,7 @@ public class SkilExConstants {
     public static String ALERT_DIALOG_NEG_BUTTON = "alert_dialog_neg_button";
 
     // Login Parameters
-    public static String PHONE_NUMBER = "mobile_number";
+    public static String PHONE_NUMBER = "phone_no";
     public static String REFERRAL_CODE = "referral_code";
     public static String OTP = "otp";
     public static String DEVICE_TOKEN = "device_token";
