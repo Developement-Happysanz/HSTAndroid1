@@ -238,7 +238,7 @@ public class SkilExConstants {
     public static String ALERT_DIALOG_NEG_BUTTON = "alert_dialog_neg_button";
 
     // Login Parameters
-    public static String PHONE_NUMBER = "phone_no";
+    public static String PHONE_NUMBER = "mobile_number";
     public static String REFERRAL_CODE = "referral_code";
     public static String OTP = "otp";
     public static String DEVICE_TOKEN = "device_token";
