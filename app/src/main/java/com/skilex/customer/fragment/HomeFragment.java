@@ -189,7 +189,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
         PreferenceStorage.saveServiceCount(getActivity(), "");
         PreferenceStorage.saveRate(getActivity(), "");
         getTrendSerives();
-
+//        loadMob();
         return rootView;
     }
 
@@ -313,6 +313,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                     preferenceAdatper = new PreferenceListAdapter(getActivity(), categoryArrayList, HomeFragment.this);
                     mRecyclerView.setAdapter(preferenceAdatper);
                     clearCart();
+//                    getBannerImg();
 
                 } else if (res.equalsIgnoreCase("clear")) {
                     PreferenceStorage.saveServiceCount(rootView.getContext(), "");
@@ -344,9 +345,7 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
                             loadMembersList(trendingServicesArrayList.getserviceArrayList().size());
                         }
                     }
-
                     loadMob();
-
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

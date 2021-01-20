@@ -124,7 +124,6 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
         });
 
         countDownTimers();
-
     }
 
     void countDownTimers() {
@@ -317,7 +316,6 @@ public class NumberVerificationActivity extends AppCompatActivity implements Vie
 //                    PreferenceStorage.saveUserId(getApplicationContext(), userId);
 //                    PreferenceStorage.saveCheckFirstTimeProfile(getApplicationContext(), "new");
                     setSda();
-
 
                 } else if (checkVerify.equalsIgnoreCase("set_lang")) {
                     Intent homeIntent = new Intent(getApplicationContext(), MainActivity.class);
