@@ -8,7 +8,7 @@ public class SkilExConstants {
 
     //URL'S
     //BASE URL
-    private static final String BASE_URL = "https://skilex.in/";
+    private static final String BASE_URL = "https://www.skilex.in/";
 
     //Development Mode
     //development
@@ -24,10 +24,12 @@ public class SkilExConstants {
 //    public static final String BUILD_URL = BASE_URL + "apicustomer/";
 
     //Payment Gateway
-    public static final String API_ADVANCE_PAYMENT_URL = BASE_URL + JOINT_URL + "ccavenue_app/customer_advance.php";
+//    public static final String API_ADVANCE_PAYMENT_URL = BASE_URL + JOINT_URL + "ccavenue_app/customer_advance.php";
+    public static final String API_ADVANCE_PAYMENT_URL = BASE_URL + JOINT_URL + "payment_test/ccavResponseHandler.php";
     public static final String API_PAYMENT_URL = BASE_URL + JOINT_URL + "ccavenue_app/service_net_amount.php";
     public static final String API_WALLET_URL = BASE_URL + JOINT_URL + "ccavenue_app/adding_money_to_wallet.php";
-    public static final String API_RSA_URL = BASE_URL + JOINT_URL + "ccavenue_app/GetRSA.php";
+//    public static final String API_RSA_URL = BASE_URL + JOINT_URL + "ccavenue_app/GetRSA.php";
+    public static final String API_RSA_URL = BASE_URL + JOINT_URL + "payment_test/GetRSA.php";
 
 
     //LOGIN URL

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.skilex.customer",
+  "variantName": "flavorRelease",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 36,
+      "versionName": "36",
+      "enabled": true,
+      "outputFile": "flavorRelease-1.052.apk"
+    }
+  ]
+}
