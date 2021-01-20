@@ -122,7 +122,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     private Button submitAddress;
     private String addressStringOne, nameOne, contactOne, latlanOne, locationOne;
     private String addressStringTwo, nameTwo, contactTwo, latlanTwo, locationTwo;
-    private String selectedLatLan;
+    private String selectedLatLan = "";
     private Boolean radioAddress = false;
     TextView addressTwotext;
 
@@ -681,10 +681,12 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                     }
                 } else if (radioAddress) {
                     position = getLocationFromAddress(customerAddress.getText().toString());
-                    latlng = selectedLatLan;
+//                    latlng = selectedLatLan;
+                    selectedLatLan = latlng;
 
                     if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
                         sendVals(id, latlng, newDate);
+                        selectedLatLan = latlng;
                     } else {
                         AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
                     }
@@ -697,6 +699,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                     }
                     if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
                         sendVals(id, latlng, newDate);
+                        selectedLatLan = latlng;
                     } else {
                         AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
                     }
@@ -704,6 +707,7 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
             } else {
                 if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
                     sendVals(id, latlng, newDate);
+                    selectedLatLan = latlng;
                 } else {
                     AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
                 }
