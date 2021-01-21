@@ -288,7 +288,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="AVQM86GG76CA98MQAC">
+                android:text="@string/access_code_value">
 
                 <requestFocus />
             </EditText>
@@ -305,7 +305,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:text="225068" />
+                android:text="@string/merchant_id_value" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -377,7 +377,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textUri"
-                android:text="https://www.skilex.in/development/ccavenue_app/customer_advance.php" />
+                android:text="@string/redirect_url_advance" />
             <!--http://122.182.6.216/merchant/ccavResponseHandler.jsp-->
 
             <TextView
@@ -393,7 +393,7 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textUri"
-                android:text="https://www.skilex.in/development/ccavenue_app/GetRSA.php" />
+                android:text="@string/rsa_url_value" />
             <!--https://secure.ccavenue.com/transaction/jsp/GetRSA.jsp-->
 
             <Button

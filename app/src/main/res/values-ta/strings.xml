@@ -183,19 +183,23 @@
     <!--Payment Page-->
 
     <string name="access_code">அணுகல் குறியீடு</string>
+    <string name="access_code_value">AVQM86GG76CA98MQAC</string>
     <string name="pay_button">செலுத்தவும்</string>
     <string name="pay_button_online">ஆன்லைனில் பணம் செலுத்து</string>
     <string name="pay_button_cash">நேரடியாக பணம் செலுத்து</string>
     <string name="payment">கட்டணம்</string>
     <string name="merchant_id">வணிகர் அடையாள எண்</string>
+    <string name="merchant_id_value">225068</string>
     <string name="currency">நாணயம்</string>
     <string name="amount">தொகை</string>
-    <!--    <string name="redirect_url_advance">https://www.skilex.in/development/ccavenue_app/customer_advance.php</string>-->
-    <!--    <string name="redirect_url">https://www.skilex.in/development/ccavenue_app/service_net_amount.php</string>-->
-    <string name="redirect_url_advance">https://www.skilex.in/ccavenue_app/customer_advance.php</string>
-    <string name="redirect_url">https://www.skilex.in/ccavenue_app/service_net_amount.php</string>
+    <string name="redirect_url_advance">https://www.skilex.in/development/ccavenue_app/customer_advance.php</string>
+    <string name="redirect_url">https://www.skilex.in/development/ccavenue_app/service_net_amount.php</string>
+<!--    <string name="redirect_url_advance">https://www.skilex.in/ccavenue_app/customer_advance.php</string>-->
+<!--    <string name="redirect_url">https://www.skilex.in/ccavenue_app/service_net_amount.php</string>-->
     <string name="cancel_url">Cancel Url</string>
     <string name="rsa_url">RSA Key Url</string>
+    <string name="rsa_url_value">https://www.skilex.in/development/ccavenue_app/GetRSA.php</string>
+<!--    <string name="rsa_url_value">https://www.skilex.in/ccavenue_app/GetRSA.php</string>-->
 
     <string name="advance_payment">கட்டணம்</string>
     <string name="advance_amount">முன் பணம்</string>
