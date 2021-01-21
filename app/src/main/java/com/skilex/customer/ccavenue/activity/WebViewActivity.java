@@ -115,6 +115,7 @@ public class WebViewActivity extends AppCompatActivity {
                     super.onPageFinished(webview, url);
                     LoadingDialog.cancelLoading();
                     if (url.indexOf("/customer_advance.php") != -1) {
+//                        webview.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
                         webview.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
                     } else if (url.contains("/service_net_amount.php")) {
                         webview.loadUrl("javascript:window.HTMLOUT.processHTML('<head>'+document.getElementsByTagName('html')[0].innerHTML+'</head>');");
