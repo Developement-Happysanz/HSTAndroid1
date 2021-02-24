@@ -17,8 +17,8 @@ android {
         applicationId "com.skilex.customer"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 39
-        versionName "1.055"
+        versionCode 41
+        versionName "1.0552"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
