@@ -568,6 +568,4 @@ public class HomeFragment extends Fragment implements IServiceListener, DialogCl
             ex.printStackTrace();
         }
     }
-
-
 }

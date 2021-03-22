@@ -3,19 +3,29 @@ package com.skilex.customer.activity;
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationListener;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.skilex.customer.R;
 import com.skilex.customer.fragment.HomeFragment;
@@ -32,20 +42,25 @@ import com.skilex.customer.utils.SkilExConstants;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity implements IServiceListener, DialogClickListener {
+public class MainActivity extends AppCompatActivity implements IServiceListener, DialogClickListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener, LocationListener, OnMapReadyCallback {
 
     BottomNavigationView bottomNavigationView;
     Toolbar toolbar;
+    MapView mDummyMapInitializer;
     int checkPointSearch = 0;
     boolean doubleBackToExitPressedOnce = false;
 
+    private static final String MAP_VIEW_BUNDLE_KEY = "MapViewBundleKey";
+
     private ServiceHelper serviceHelper;
     private ProgressDialogHelper progressDialogHelper;
-
+    private static final String TAG = MainActivity.class.getName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        MapsInitializer.initialize(this);
 //        toolbar = (Toolbar) findViewById(R.id.activity_toolbar);
 //        setSupportActionBar(toolbar);
         serviceHelper = new ServiceHelper(this);
@@ -80,7 +95,23 @@ public class MainActivity extends AppCompatActivity implements IServiceListener,
         changeFragment(0);
         bottomNavigationView.setSelectedItemId(R.id.action_home);
 
+        Bundle mapViewBundle = null;
+        if (savedInstanceState != null) {
+            mapViewBundle = savedInstanceState.getBundle(MAP_VIEW_BUNDLE_KEY);
+        }
+
+        mDummyMapInitializer = findViewById(R.id.map);
+        mDummyMapInitializer.onCreate(mapViewBundle);
+        mDummyMapInitializer.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                Log.d(TAG, "onMapReady");
+            }
+        });
+
     }
+
+
 
     private void showAlert() {
         new AlertDialog.Builder(this)
@@ -206,6 +237,31 @@ public class MainActivity extends AppCompatActivity implements IServiceListener,
 
     @Override
     public void onError(String error) {
+
+    }
+
+    @Override
+    public void onLocationChanged(@NonNull Location location) {
+
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
 
     }
 }

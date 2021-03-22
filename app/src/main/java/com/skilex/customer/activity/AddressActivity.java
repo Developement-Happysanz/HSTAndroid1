@@ -673,36 +673,40 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
                 latlng = "";
             }
             if (latlng.isEmpty() || latlng.equalsIgnoreCase(",")) {
-                if (customerAddress.getText().toString().isEmpty()) {
-                    if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
-                        AlertDialogHelper.showSimpleAlertDialog(this, "வரைபடத்தில் உங்கள் இருப்பிடத்தைத் தேர்வுசெய்யவும் அல்லது முகவரியை உள்ளிடவும்.");
-                    } else {
-                        AlertDialogHelper.showSimpleAlertDialog(this, "Please pick your location in map or enter address.");
-                    }
-                } else if (radioAddress) {
-                    position = getLocationFromAddress(customerAddress.getText().toString());
+                try {
+                    if (customerAddress.getText().toString().isEmpty()) {
+                        if (PreferenceStorage.getLang(this).equalsIgnoreCase("tamil")) {
+                            AlertDialogHelper.showSimpleAlertDialog(this, "வரைபடத்தில் உங்கள் இருப்பிடத்தைத் தேர்வுசெய்யவும் அல்லது முகவரியை உள்ளிடவும்.");
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, "Please pick your location in map or enter address.");
+                        }
+                    } else if (radioAddress) {
+                        position = getLocationFromAddress(customerAddress.getText().toString());
 //                    latlng = selectedLatLan;
-                    selectedLatLan = latlng;
+                        selectedLatLan = latlng;
 
-                    if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
-                        sendVals(id, latlng, newDate);
-                        selectedLatLan = latlng;
+                        if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
+                            sendVals(id, latlng, newDate);
+                            selectedLatLan = latlng;
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
+                        }
                     } else {
-                        AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
+                        position = getLocationFromAddress(customerAddress.getText().toString());
+                        if (position != null) {
+                            latlng = position.latitude + "," + position.longitude;
+                        } else {
+                            latlng = "";
+                        }
+                        if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
+                            sendVals(id, latlng, newDate);
+                            selectedLatLan = latlng;
+                        } else {
+                            AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
+                        }
                     }
-                } else {
-                    position = getLocationFromAddress(customerAddress.getText().toString());
-                    if (position != null) {
-                        latlng = position.latitude + "," + position.longitude;
-                    } else {
-                        latlng = "";
-                    }
-                    if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
-                        sendVals(id, latlng, newDate);
-                        selectedLatLan = latlng;
-                    } else {
-                        AlertDialogHelper.showSimpleAlertDialog(this, "We don't provide this service in your area currently");
-                    }
+                } catch (Exception ex) {
+
                 }
             } else {
                 if (distance(position.latitude, position.longitude, 11.021238, 76.966356) < 20.000) {
@@ -887,10 +891,12 @@ public class AddressActivity extends FragmentActivity implements GoogleApiClient
     public void onLocationChanged(Location location) {
         if (location != null) {
             // Logic to handle location object
-
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-            myPosition = new LatLng(latitude, longitude);
+            try {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                myPosition = new LatLng(latitude, longitude);
+            } catch (NumberFormatException e) {
+            }
         }
     }
 

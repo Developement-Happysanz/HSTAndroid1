@@ -10,30 +10,38 @@
     tools:context=".activity.MainActivity">
 
     <!--<include-->
-        <!--android:id="@+id/activity_toolbar"-->
-        <!--layout="@layout/tool_bar" />-->
+    <!--android:id="@+id/activity_toolbar"-->
+    <!--layout="@layout/tool_bar" />-->
 
     <FrameLayout
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation"/>
+        android:layout_above="@+id/bottom_navigation" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/grey"
-        android:layout_above="@+id/bottom_navigation"/>
+        android:layout_above="@+id/bottom_navigation"
+        android:background="@color/grey" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="6dp"
         android:layout_alignParentBottom="true"
+        android:elevation="6dp"
         app:itemBackground="@color/white"
         app:itemIconTint="@color/bottom_nav_item_color"
         app:itemTextColor="@color/bottom_nav_item_color"
         app:menu="@menu/bottom_menu" />
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:visibility="invisible"
+        map:cameraTargetLat="11.127123"
+        map:cameraTargetLng="78.656891" />
 
 </RelativeLayout>
